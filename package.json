@@ -1,0 +1,19 @@
+{
+  "name": "onesimpleidea.xyz",
+  "version": "1.0.0",
+  "description": "homepage,portafoli,site,ec,ui,cyrstem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "homepage",
+    "portafoli",
+    "site",
+    "ec",
+    "ui",
+    "cyrstem"
+  ],
+  "author": "cyrstem",
+  "license": "ISC"
+}

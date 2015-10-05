@@ -1,0 +1,926 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"col",
+				"color"
+			],
+			[
+				"tra",
+				"translateY"
+			],
+			[
+				"pr",
+				"projector"
+			],
+			[
+				"fi",
+				"fixed	(style.css)"
+			],
+			[
+				"colo",
+				"color:#fff	(index.html)"
+			],
+			[
+				"on",
+				"onProgress"
+			],
+			[
+				"st",
+				"style	(style.css)"
+			],
+			[
+				"ca",
+				"carga"
+			],
+			[
+				"to",
+				"total"
+			],
+			[
+				"tota",
+				"totalModelo"
+			],
+			[
+				"al",
+				"align	(style.css)"
+			],
+			[
+				"tr",
+				"true"
+			],
+			[
+				"an",
+				"antialiased	(style.css)"
+			],
+			[
+				"V",
+				"VIEW_ANGLE"
+			],
+			[
+				"Sce",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"Sc",
+				"Scene"
+			],
+			[
+				"ren",
+				"renderer"
+			],
+			[
+				"html",
+				"htmls"
+			],
+			[
+				"brow",
+				"browserSync"
+			],
+			[
+				"rel",
+				"reload"
+			],
+			[
+				"brw",
+				"browserSync"
+			],
+			[
+				"re",
+				"require"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"p",
+				"pipe"
+			],
+			[
+				"mim",
+				"mimifyCss"
+			],
+			[
+				"mi",
+				"mimify"
+			],
+			[
+				"con",
+				"concat"
+			],
+			[
+				"ma",
+				"main-bower-files"
+			],
+			[
+				"g",
+				"gulp"
+			],
+			[
+				"dist",
+				"dist/js	(gulpfile.js)"
+			],
+			[
+				"b",
+				"browserSync"
+			],
+			[
+				"bro",
+				"browser-sync"
+			],
+			[
+				"dis",
+				"dist	(gulpfile.js)"
+			],
+			[
+				"be",
+				"browser-sync"
+			],
+			[
+				"bo",
+				"browserSync"
+			],
+			[
+				"f",
+				"fixed"
+			],
+			[
+				"min",
+				"min	(index.html)"
+			],
+			[
+				"mini",
+				"minifyCSS"
+			],
+			[
+				"fon",
+				"font-family"
+			],
+			[
+				"s",
+				"style	Tag"
+			],
+			[
+				"boo",
+				"bottom"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"rig",
+				"right"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"te",
+				"texture1"
+			],
+			[
+				"he",
+				"height	(volcanes.js)"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"flo",
+				"float"
+			],
+			[
+				"canva",
+				"canvas	(volcanes.js)"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"over",
+				"overflow	(rutas.css)"
+			],
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"h",
+				"h1	Tag"
+			],
+			[
+				"li",
+				"li	Tag"
+			],
+			[
+				"se",
+				"section	Tag"
+			],
+			[
+				"hei",
+				"height"
+			],
+			[
+				"cont",
+				"container"
+			],
+			[
+				"ov",
+				"overflow	(tezt.html)"
+			],
+			[
+				"mar",
+				"margin"
+			],
+			[
+				"rut",
+				"ruta_1"
+			],
+			[
+				"rend",
+				"render"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"O",
+				"OrbitControls	(Sprite-Text-Labels.html)"
+			],
+			[
+				"W",
+				"WindowResize	(Rutas.html)"
+			],
+			[
+				"T",
+				"THREEx	(mapa.js)"
+			],
+			[
+				"SC",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"setS",
+				"setSize	(mapa.js)"
+			],
+			[
+				"anti",
+				"antialias	(mapa.js)"
+			],
+			[
+				"SCR",
+				"SCREEN_HEIGHT"
+			],
+			[
+				"P",
+				"PerspectiveCamera	(mapa.js)"
+			],
+			[
+				"clo",
+				"clock	(Sprite-Text-Labels.html)"
+			],
+			[
+				"text",
+				"text-decoration"
+			],
+			[
+				"do",
+				"dotted	(style.css)"
+			],
+			[
+				"l",
+				"line"
+			],
+			[
+				"op",
+				"opacity"
+			],
+			[
+				"Ru",
+				"Ruta_1"
+			],
+			[
+				"ru",
+				"Ruta_1"
+			],
+			[
+				"ec",
+				"ecuador"
+			],
+			[
+				"ecu",
+				"ecuador"
+			],
+			[
+				"mate",
+				"materials"
+			],
+			[
+				"mo",
+				"models/ecuador"
+			],
+			[
+				"loa",
+				"load"
+			],
+			[
+				"js",
+				"js/OBJMTLLoader	(Rutas.html)"
+			],
+			[
+				"red",
+				"renderer"
+			],
+			[
+				"OB",
+				"OBJMTLLoader"
+			],
+			[
+				"a",
+				"a	Tag"
+			],
+			[
+				"rede",
+				"render"
+			],
+			[
+				"sc",
+				"scene"
+			],
+			[
+				"c",
+				"camera"
+			],
+			[
+				"get",
+				"getDelta"
+			],
+			[
+				"C",
+				"Clock"
+			],
+			[
+				"ruta",
+				"ruta"
+			],
+			[
+				"F",
+				"FogExp2"
+			],
+			[
+				"S",
+				"Scene"
+			],
+			[
+				"in",
+				"innerHeight"
+			],
+			[
+				"inn",
+				"innerWidth"
+			],
+			[
+				"co",
+				"container	(Rutas.html)"
+			],
+			[
+				"rende",
+				"renderer"
+			],
+			[
+				"max",
+				"maxDistance"
+			],
+			[
+				"contr",
+				"controls	(markers.html)"
+			],
+			[
+				"d",
+				"div	(Rutas.html)"
+			],
+			[
+				"set",
+				"setSize	(markers.html)"
+			],
+			[
+				"loo",
+				"lookAt	(markers.html)"
+			],
+			[
+				"inne",
+				"innerHeight"
+			],
+			[
+				"ins",
+				"instanceof"
+			],
+			[
+				"ch",
+				"child"
+			],
+			[
+				"item",
+				"item,loaded,total"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"lo",
+				"log"
+			],
+			[
+				"tot",
+				"totalModels"
+			],
+			[
+				"pro",
+				"progress"
+			],
+			[
+				"ap",
+				"appendChild"
+			],
+			[
+				"cre",
+				"createElement"
+			],
+			[
+				"o",
+				"obj"
+			],
+			[
+				"load",
+				"loader"
+			],
+			[
+				"t",
+				"true"
+			],
+			[
+				"fo",
+				"fog"
+			],
+			[
+				"iner",
+				"innerHeight"
+			],
+			[
+				"Orb",
+				"OrbitControls	(cotopaxi.js)"
+			],
+			[
+				"cub",
+				"cube"
+			],
+			[
+				"cu",
+				"cubeMaterial"
+			],
+			[
+				"ta",
+				"transparent	(volcanes.js)"
+			],
+			[
+				"cube",
+				"cubeMaterial"
+			],
+			[
+				"M",
+				"MeshNormalMaterial	(volcanes.js)"
+			],
+			[
+				"R",
+				"Rotacion	(volcanes.js)"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 1389,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/jacos/Sites/portafolio/assets/css/style.css",
+			"settings":
+			{
+				"buffer_size": 3592,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/jacos/Sites/portafolio/index.html",
+			"settings":
+			{
+				"buffer_size": 2492,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 375.0,
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 435.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/jacos/Sites/routes/js/cojitambo.js",
+		"/Users/jacos/Sites/routes/app/index.html",
+		"/Users/jacos/Sites/routes/index.html",
+		"/Users/jacos/Sites/routes/cojitambo.html",
+		"/Users/jacos/Sites/routes/app/cojitambo.html",
+		"/Users/jacos/Sites/routes/package.json",
+		"/Users/jacos/Sites/routes/.gitignore",
+		"/Users/jacos/Sites/rutasm/index.html",
+		"/Users/jacos/Sites/enmarcar/dist/index.html",
+		"/Users/jacos/Sites/enmarcar/dist/css/style.min.css",
+		"/Users/jacos/Sites/enmarcar/index.html",
+		"/Users/jacos/Sites/enmarcar/dist/js/third-party.js",
+		"/Users/jacos/Sites/enmarcar/package.json",
+		"/Users/jacos/Sites/enmarcar/css/style.css",
+		"/Users/jacos/Sites/enmarcar/basic.md",
+		"/Users/jacos/Sites/enmarcar/.gitignore",
+		"/Users/jacos/Sites/rutas/readme.txt",
+		"/Users/jacos/Sites/XYZ/onesimpleidea.sublime-project",
+		"/Users/jacos/Sites/rutas/cojitamboV.html",
+		"/Users/jacos/Sites/rutas/Avolcanes.html",
+		"/Users/jacos/Sites/rutas/index.html",
+		"/Users/jacos/Sites/rutas/Rutas.html",
+		"/Users/jacos/Sites/rutas/intro.html",
+		"/Users/jacos/Sites/rutas/css/rutas.css",
+		"/Users/jacos/Sites/rutas/js/volcanes.js",
+		"/Users/jacos/Sites/rutas/rutadelosvolcanes.html",
+		"/Users/jacos/Sites/rutas/js/cojitambo.js",
+		"/Users/jacos/Sites/rutas/cojitamboR.html",
+		"/Users/jacos/Sites/rutas/jondachiV.html",
+		"/Users/jacos/Sites/rutas/css/webgl.css",
+		"/Users/jacos/Sites/rutas/css/fonts.css",
+		"/Users/jacos/Sites/rutas/css/style.css",
+		"/Users/jacos/Sites/rutas/cerro-coji.html",
+		"/Users/jacos/Sites/rutas/Ingapirca.html",
+		"/Users/jacos/Sites/rutas/jondachi-alto.html",
+		"/Users/jacos/Sites/rutas/lasegua.html",
+		"/Users/jacos/Sites/rutas/Oyacach.html",
+		"/Users/jacos/Sites/rutas/Qhapac.html",
+		"/Users/jacos/Sites/rutas/cicloviaO.html",
+		"/Users/jacos/Sites/rutas/js/jondachiV.html",
+		"/Users/jacos/Sites/rutas/sub/untitled.html",
+		"/Users/jacos/Sites/rutas/js/mapa.js",
+		"/Users/jacos/Sites/rutas/sub/jondachi-alto.html",
+		"/Users/jacos/Sites/rutas/sub/lasegua.html",
+		"/Users/jacos/Sites/rutas/sub/cerro-coji.html",
+		"/Users/jacos/Sites/rutas/sub/Ingapirca.html",
+		"/Users/jacos/Sites/rutas/sub/otavalo.html",
+		"/Users/jacos/Sites/rutas/tezt.html",
+		"/Users/jacos/Sites/rutas/Av.html",
+		"/Users/jacos/Sites/rutas/css/bootstrap.min.css",
+		"/Users/jacos/Sites/rutas/font/glyphicons-halflings-regular.woff2",
+		"/Users/jacos/Sites/rutas/garbage/exmachina/volcanes.js",
+		"/Users/jacos/Sites/stemosThree.js/Sprite-Text-Labels.html",
+		"/Users/jacos/Sites/rutas/js/three.min.js",
+		"/Users/jacos/Sites/Three.js Cookbook/02-geometries-meshes/02.14-use-objmtlloader-with-multiple-materials.html",
+		"/Users/jacos/Sites/rutas/models/ecuador.mtl",
+		"/Users/jacos/Sites/rutas/models/coji.mtl",
+		"/Users/jacos/Sites/rutas/ruta2.html",
+		"/Users/jacos/Sites/rutas/ruta1.html",
+		"/Users/jacos/Sites/rutas/js/rutas.js",
+		"/Users/jacos/Sites/rutas/js/test.js",
+		"/Users/jacos/Sites/rutas/js/cotopaxi.js",
+		"/Users/jacos/Sites/rutas/js/OBJLoader.js",
+		"/Users/jacos/Sites/rutas/markers.html",
+		"/Users/jacos/Sites/rutas/cotopaxi.html",
+		"/Users/jacos/Downloads/mrdoob-three.js-d6384d2/utils/npm/footer.js",
+		"/Users/jacos/Sites/test_framework 2/your-sketch.js",
+		"/Users/jacos/Sites/rutas/webgl/js/script1.js",
+		"/Users/jacos/Sites/rutas/webgl/models/Coto.obj",
+		"/Users/jacos/Sites/rutas/webgl/models/cotos.obj",
+		"/Users/jacos/Sites/rutas/webgl/models/cotopaxi.obj",
+		"/Users/jacos/Sites/rutas/style.css",
+		"/Users/jacos/Sites/rutas/webgl/index.html",
+		"/Users/jacos/Sites/rutas/webgl/css/main.css",
+		"/Users/jacos/Sites/rutas/quechua test.css",
+		"/Users/jacos/Sites/rutas/webgl/js/script.js",
+		"/Users/jacos/Sites/rutas/webgl/js/MTLLoader.js",
+		"/Users/jacos/Downloads/test_framework/your-sketch.js",
+		"/Users/jacos/Sites/rutas/assets/css/style.css",
+		"/Users/jacos/Sites/Volcanes/style.css",
+		"/Users/jacos/Sites/Volcanes/assets/css/style.css",
+		"/Users/jacos/Sites/Volcanes/.bowerrc",
+		"/Users/jacos/Sites/portafolio/assets/js/sketch2.js",
+		"/Users/jacos/Sites/portafolio/index.html",
+		"/Users/jacos/Sites/portafolio/assets/js/sketch1.js",
+		"/Users/jacos/Sites/portafolio/assets/js/sketch.js",
+		"/Users/jacos/Sites/rutas/rutas.sublime-project",
+		"/Users/jacos/Sites/portafolio/sketch1.js",
+		"/Users/jacos/Sites/portafolio/.bowerrc",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/nacionalidades/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/fuentes/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/padres_tag_noticias/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/padres_tag_noticias/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/email_contacto/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/email_contacto/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/email_contacto/show.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/nivel_urgencias/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/planes/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_usuarios/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_noticias/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/usuarios/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/fuentes/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/fuentes/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/buscados/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/news/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/usuarios/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/frontend/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/frontend/quienes.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/buscados/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/news/index.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_usuarios/eliminar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/buscados/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/news/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/public/css/style.css",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/planes/create.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/planes/eliminar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/planes/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/planes/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_noticias/create.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_noticias/eliminar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_noticias/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_noticias/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_usuarios/create.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_usuarios/edit.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_usuarios/eliminarLista.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/tipos_usuarios/modificar.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/usuarios/create.blade.php",
+		"/Users/jacos/Sites/Techkum /techkum-aws/techkum/resources/views/usuarios/edit.blade.php"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/Users/jacos/Sites/rutas/webgl/models"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"50",
+			"obj",
+			"js",
+			")\n",
+			"kakakskdksdsk",
+			"t",
+			"topmenu",
+			"6",
+			"*/\n",
+			"620px",
+			"please fill out this fild",
+			"form",
+			"please 	",
+			"please fill up",
+			"7",
+			"(../",
+			"40px",
+			"down",
+			";\n",
+			"200px",
+			"modal",
+			"          \n"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 1389,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1341,
+								1341
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/jacos/Sites/portafolio/assets/css/style.css",
+					"settings":
+					{
+						"buffer_size": 3592,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								789,
+								772
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 470.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/jacos/Sites/portafolio/index.html",
+					"settings":
+					{
+						"buffer_size": 2492,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1073,
+								1073
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 49.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 33.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": false,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"",
+				"index.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/jacos 1/Desktop/onesimpleidea/DevelopWEb/final /ONE.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 206.0,
+	"status_bar_visible": true
+}
