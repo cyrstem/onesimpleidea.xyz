@@ -1,36 +1,33 @@
 var order=[];
 var lastToDraw;
-//var current=[];
-
 function setup() {
   createCanvas(800, 800);
-
   lastToDraw=0;
- 
 }
 
 function draw() {
     // we can add 1 to lastToDraw every 15 frames like so
-  if (frameCount % 15 == 0) {   // this will evaluate to true every 60 frames
-    lastToDraw = lastToDraw + 1;
+  if (frameCount % 12 == 0) {   // this will evaluate to true every 60 frames
+    lastToDraw = lastToDraw +1;
     lastToDraw = min(lastToDraw, 16); // we don't want lastToDraw to exceed the number of vertices we have
   }
   
-    createOrder();
+  createOrder();
+  
   createLines();
 }
 function createLines(){
   background(255);
   //noFill();
-  fill(0);
+  //strokeWeight(random(5));
+  fill(random(100));
   beginShape();
   for (var i=0; i<lastToDraw; i++) {
     var index = order[i];
-    var col = index % random(4);  // use modulo (remainder) to get column of our index
-    var row = floor(index / 4); // floor the division to get row of our index
-    
-    var x = map(col, random(10), 3, 100, width);
-    var y = map(row, random(10), 3, 100, height);
+    var col = index % 12;  // use modulo (remainder) to get column of our index
+    var row = floor(index / 12); // floor the division to get row of our index
+    var x = map(col, width/2,random(100) , 0, width);
+    var y = map(row, random(50), 100, 200, height-200);
     
     vertex(x, y);
   }
