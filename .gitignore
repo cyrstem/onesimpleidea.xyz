@@ -1,7 +1,7 @@
-
-/app/*
+libs/*
 node_modules/*
 *.DS_Store
 *.jpg
 home.sublime-project
 home.sublime-workspace
+dist/img/*

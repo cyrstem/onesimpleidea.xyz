@@ -1,27 +1,24 @@
 {
   "name": "onesimpleidea.xyz",
-  "version": "1",
+  "homepage": "https://github.com/cyrstem/onesimpleidea.xyz",
   "authors": [
-    "cyrstem <cyrstem@gmail.com>"
+    "y"
   ],
-  "description": "homepage,portafoli,site,ec,ui,cyrstem",
+  "description": "home site 2016 portafolio preview",
   "main": "index.html",
   "moduleType": [],
   "keywords": [
-    "homepage",
-    "portafoli",
-    "site",
-    "ec",
-    "ui",
-    "cyrstem"
+    "cyrstem",
+    "onesimpleidea",
+    "portafolio"
   ],
   "license": "MIT",
-  "homepage": "onesimpleidea.xyx",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
+    "libs",
     "test",
     "tests"
   ]
