@@ -519,6 +519,41 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "css/style.css",
+			"settings":
+			{
+				"buffer_size": 635,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "//------------------------------------\n// Setup and Varibles\n//------------------------------------\nvar gulp = 	 require('gulp'),\n	uglify = require('gulp-uglify');\n	concat = require('gulp-concat');\n	filter = require('gulp-filter');\n	mainBowerFiles= require('main-bower-files');\n	browserSync = require('browser-sync'),\n	reload = browserSync.reload,\n	minify = require('gulp-minify-css');\n	plumber = require('gulp-plumber')\n	rename = require('gulp-rename');\n\nvar filterByExtension = function(extension){  \n    return filter(function(file){\n        return file.path.match(new RegExp('.' + extension + '$'));\n    });\n};\n// ////////////////////////////////////////////\n// task start css niceeeee\n// ////////////////////////////////////////////\n\ngulp.task('minifyCSS', function(){\n	gulp.src('css/*.css')\n		.pipe(plumber())\n		.pipe(minify())\n		.pipe(rename({suffix:'.min'}))\n		.pipe(gulp.dest('dist/css'))\n		.pipe(reload({stream:true}));\n});\n// ////////////////////////////////////////////\n// task start imgs Compresss\n// ////////////////////////////////////////////\n\n\n// ////////////////////////////////////////////\n// task start htmls Move dist\n// ////////////////////////////////////////////\n\ngulp.task('moveHTML',function(){\n	gulp.src('*.html')\n		.pipe(plumber())\n		.pipe(gulp.dest('dist'));\n});\n\n// ////////////////////////////////////////////\n// task start Js\n// ////////////////////////////////////////////\n\ngulp.task('bower', function() {\n  return gulp.src(mainBowerFiles(), {\n      base: 'libs/'\n\n    })\n    .pipe(gulp.dest('/dist/libs'));\n\n});\n\n// ////////////////////////////////////////////\n// task start move asstessss!!! bower to dist\n// ////////////////////////////////////////////\n\n// ////////////////////////////////////////////\n// task start Browser Sync\n// ////////////////////////////////////////////\ngulp.task('browser-sync', function(){\n	browserSync({\n		server:{\n			baseDir:\"dist\"\n		}\n	});\n	gulp.watch(\"dist/*.html\").on(\"change\", browserSync.reload);\n});\n\n// ////////////////////////////////////////////\n// task start watchs CSS\n// ////////////////////////////////////////////\ngulp.task('watch', function(){\n	gulp.watch('css/*.css',['minifyCSS']);\n	gulp.watch('*.html',['moveHTML']);\n\n});\n// ////////////////////////////////////////////\n// master start -comand or default task\n// ////////////////////////////////////////////\ngulp.task('default',['bower','browser-sync','watch','moveHTML','minifyCSS' ]);\n\n\n\n\n\n\n",
+			"file": "gulpfile.js",
+			"file_size": 2437,
+			"file_write_time": 1451324858000000,
+			"settings":
+			{
+				"buffer_size": 2424,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 1417,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "// ////////////////////////////////////////////\n// require start\n// ////////////////////////////////////////////\nvar gulp = 	 require('gulp'),\n	uglify = require('gulp-uglify');\n	concat = require('gulp-concat');\n	filter = require('gulp-filter');\n	mainBowerFiles= require('main-bower-files');\n	browserSync = require('browser-sync'),\n	reload = browserSync.reload,\n	minify = require('gulp-minify-css');\n	plumber = require('gulp-plumber')\n	rename = require('gulp-rename');\n\nvar filterByExtension = function(extension){  \n    return filter(function(file){\n        return file.path.match(new RegExp('.' + extension + '$'));\n    });\n};\n// ////////////////////////////////////////////\n// task start css niceeeee\n// ////////////////////////////////////////////\n\ngulp.task('minifyCSS', function(){\n	gulp.src('css/*.css')\n		.pipe(plumber())\n		.pipe(minify())\n		.pipe(rename({suffix:'.min'}))\n		.pipe(gulp.dest('dist/css'))\n		.pipe(reload({stream:true}));\n});\n// ////////////////////////////////////////////\n// task start imgs Compresss\n// ////////////////////////////////////////////\n\n\n// ////////////////////////////////////////////\n// task start htmls Move dist\n// ////////////////////////////////////////////\n\ngulp.task('moveHTML',function(){\n	gulp.src('*.html')\n		.pipe(plumber())\n		.pipe(gulp.dest('dist'));\n});\n\n// ////////////////////////////////////////////\n// task start Js\n// ////////////////////////////////////////////\n\ngulp.task('bower', function() {\n  return gulp.src(mainBowerFiles(), {\n      base: 'libs/'\n\n    })\n    .pipe(gulp.dest('/dist/libs'));\n\n});\n\n// ////////////////////////////////////////////\n// task start move asstessss!!! bower to dist\n// ////////////////////////////////////////////\n\n// ////////////////////////////////////////////\n// task start Browser Sync\n// ////////////////////////////////////////////\ngulp.task('browser-sync', function(){\n	browserSync({\n		server:{\n			baseDir:\"dist\"\n		}\n	});\n	gulp.watch(\"dist/*.html\").on(\"change\", browserSync.reload);\n});\n\n// ////////////////////////////////////////////\n// task start watchs CSS\n// ////////////////////////////////////////////\ngulp.task('watch', function(){\n	gulp.watch('css/*.css',['minifyCSS']);\n	gulp.watch('*.html',['moveHTML']);\n\n});\n// ////////////////////////////////////////////\n// master start -comand or default task\n// ////////////////////////////////////////////\ngulp.task('default',['bower','browser-sync','watch','moveHTML','minifyCSS' ]);\n\n\n\n\n\n\n",
+			"settings":
+			{
+				"buffer_size": 2437,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -743,6 +778,118 @@
 		{
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "css/style.css",
+					"settings":
+					{
+						"buffer_size": 635,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								631,
+								631
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "gulpfile.js",
+					"settings":
+					{
+						"buffer_size": 2424,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								197,
+								197
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 1417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								914,
+								1021
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"settings":
+					{
+						"buffer_size": 2437,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								2437
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 115.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -763,11 +910,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":

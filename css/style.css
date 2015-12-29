@@ -1,3 +1,4 @@
+/*css.*/
 
 html,body{
 	padding:0;
@@ -13,7 +14,7 @@ font-size: 100px;
 font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:black;
 }
 h2,h3,p{
-		font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:200;color:black;
+			font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:200;color:black;
 		}
 		.container{
 			padding:10px;

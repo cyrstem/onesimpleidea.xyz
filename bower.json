@@ -1,25 +1,31 @@
 {
   "name": "onesimpleidea.xyz",
-  "homepage": "https://github.com/cyrstem/onesimpleidea.xyz",
+  "description": "Portafolio, home, proyects, staff UIO -EC",
+  "main": "gulpfile.js",
   "authors": [
-    "y"
+    "cyrstem"
   ],
-  "description": "home site 2016 portafolio preview",
-  "main": "index.html",
-  "moduleType": [],
+  "license": "ISC",
   "keywords": [
-    "cyrstem",
-    "onesimpleidea",
-    "portafolio"
+    "Portafolio",
+    "home",
+    "proyects",
+    "staff",
+    "UIO",
+    "-EC"
   ],
-  "license": "MIT",
-  "private": true,
+  "homepage": "https://github.com/cyrstem/onesimpleidea.xyz",
+  "moduleType": [],
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "libs",
+    "third-party",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "p5.js": "p5js#~0.4.20"
+  }
 }
