@@ -1,6 +1,6 @@
 third-party/*
 node_modules/*
-
+app/third-party/*
 *.DS_Store
 *.jpg
 home.sublime-project
