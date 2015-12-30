@@ -1,8 +1,22 @@
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Folder staff #
+#################
 third-party/*
+./app/third-party/*
 node_modules/*
 app/third-party/*
-*.DS_Store
+
+# Files staff #
+##################
 *.jpg
-home.sublime-project
-home.sublime-workspace
-app/img/*
+*.sublime-project
+*.sublime-workspace
