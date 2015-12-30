@@ -3,10 +3,7 @@
 html,body{
 	padding:0;
 	margin:0;
-	overflow:hidden;
-	font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-	font-weight:200;
-	color:black;
+/*	overflow:hidden;*/
 	background-color:white;
 }
 h1{
@@ -20,3 +17,14 @@ h2,h3,p{
 			padding:10px;
 			max-resolution: 10px;
 		}
+a{
+	font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+	font-weight:200;
+
+	color:black;
+}
+.col-md-3{
+	text-align: right;
+	text-decoration: underline;
+
+}
