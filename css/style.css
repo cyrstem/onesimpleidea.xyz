@@ -1,5 +1,9 @@
-/*css.*/
-
+/*
+Description: ONESMPLEIDEA
+Version: -0.0.1
+Author: -cyrstem@gmail.com
+Author URI: -onesimpleidea.info
+*/
 html,body{
 	padding:0;
 	margin:0;
@@ -7,24 +11,43 @@ html,body{
 	background-color:white;
 }
 h1{
-font-size: 100px;
-font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;color:black;
+	font-size: 100px;
+	font-family:'Dosis', sans-serif;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
 }
+
 h2,h3,p{
-			font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-weight:200;color:black;
+		font-family:'Dosis', sans-serif;
+		font-weight:200;
+		-webkit-font-smoothing:antialiased;
+		-moz-osx-font-smoothing:grayscale;
+
 		}
-		.container{
-			padding:10px;
+
+a{	font-size: 15px;
+	/*font-family:'Dosis', sans-serif;*/
+	font-family: 'Source Code Pro', ;
+/*	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;*/
+/*	font-weight:200;*/
+	color:white;
+}
+/*a:link {color:#6A94B8;}
+
+a:visited {color:#C0E2FC;}
+
+a:hover {background-color:#fcffd3;}
+
+a:active {color:#F3FAFF;}*/
+
+.boxes{
+	padding:5px;
+	color:white;
+	background-color: black;
+/*  	opacity: 0.8;*/
+}
+/*		.container{
+			padding:5px;
 			max-resolution: 10px;
-		}
-a{
-	font-family:'Dosis', sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-	font-weight:200;
-
-	color:black;
-}
-.col-md-3{
-	text-align: right;
-	text-decoration: underline;
-
-}
+		}*/
