@@ -53,7 +53,7 @@ a:active {
 }
 
 .boxes{
-	margin:5px;
+	margin:4px;
 	padding:2px;
 	color:white;
 	background-color: black;
@@ -61,6 +61,12 @@ a:active {
 }
 /*===========Contenidos REGLAS=================================*/ 
  /*cell horizonta*/
+     @media only screen and (max-width : 720px) {
+    	html,body{
+    	width:100%;
+		overflow:scroll;
+		}
+    }
     @media only screen and (max-width : 480px) {
     	html,body{
     	width:100%;
@@ -74,7 +80,6 @@ a:active {
 		overflow:scroll;
       }    
     }
-
     /*===========Contenidos REGLAS=================================*/ 
    @media only screen and (max-width : 360px) {
       html,body{
