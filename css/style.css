@@ -5,13 +5,13 @@ Author: -cyrstem@gmail.com
 Author URI: -onesimpleidea.info
 */
 html,body{
-	padding:5px;
-	margin:2px;
+	margin:1px;
+	bottom: 1px;
 	overflow:hidden;
 	background-color:white;
 }
 h1{
-	font-size: 100px;
+	font-size: 90px;
 	font-family:'Dosis', sans-serif;
 	-webkit-font-smoothing:antialiased;
 	-moz-osx-font-smoothing:grayscale;
