@@ -1,73 +1,77 @@
 <!DOCTYPE html>
+<!-- /*Description: ONESMPLEIDEA,Version: -0.0.1,Author: -cyrstem@gmail.com,Author URI: -onesimpleidea.xyz*/ -->
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="onesimpleidea.xyz, Portafolio, cyrstem, Uio, Web Design, Creative Coding, Web, Ecuador, Quito  ">
+    <meta name="description" content="onesimpleidea.xyz, Portafolio, Uio, Web Design, Creative Coding, Web, Ecuador, Quito  ">
     <meta name="author" content="cyrstem, onesimpleidea.xyz, uio, Ecuador 2015">
     <meta property="og:image" content="http://onesimpleidea.xyz/social.png" />
     <meta property="og:title" content="onesimpleidea"/>
   	<meta property="og:url" content="onesimpleidea.xyz"/>
     <meta property="og:description" content="Portafolio,cyrstem[at]gmail[dot]com,works,info,contacto,uio,ec,Ecuador, cyrstem, Uio, Web Design, Creative Coding, Web,Quito " />
-	<title>|-One Simple Idea-|</title>
-	<meta property="og:title" content="|-One Simple Idea-|"/>
+	<title>/.One Simple Idea </title>
+	<meta property="og:title" content="/.One Simple Idea"/>
 	<link rel="shortcut icon" href="favicon.ico"/>
 	<link rel="icon" href="favicon.ico" type="image/x-icon">
 	<!-- styles and fonts -->
   	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis:200,300,400,500" type="text/css">
-	<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 	<!-- scripts starts -->
 	<script language="javascript" type="text/javascript" src="third-party/p5.min.js"></script>
+	<script language="javascript" type="text/javascript" src="third-party/addons/p5.dom.js"></script>
 	<script language="javascript" type="text/javascript" src="js/main.min.js"></script>
 </head>
 <body>
 	<!-- menos click mas  simple -->
 	<div class="container-fluid">
+		<div id ="paint"></div>	
 		<div class= "row">
-			<div class ="col-sm-12 col-lg-6"> 
-				<h1>hello..</h1>
-				<h2>I am a Front-End Developer with a background in Multimedia Design</h2>
-				<h2>I use code to create Visual Art and have experience in:</h2>
-				<h3>Interaction Design - 3d Animation - Motion Design. </h3>
+			<div class ="col-sm-12 col-lg-12"> 
 				<div class ="row"> 
-					<div class ="col-sm-12 col-lg-6">
-						<div class ="boxes">
-							<h3>Most Recent Work:</h3>
+					<header>
+						<h1>hello..</h1>
+						<h2>I am a Front-End Developer with a background in Multimedia Design</h2>
+						<h2>I use code to create Visual Art and have experience in:</h2>
+						<h3 style="background-color:#BFFFF5;">Interaction Design - 3d Animation - Motion Design.</h3>
+					</header>
+					<div class ="col-sm-12 col-lg-4">
+						<section>
+							<h3 style="background-color:#BFFFF5;">Most Recent Work:</h3>
 							<ul class="list-group">
+								<li><a href="http://unjardinpropio.com" target="_blank">Jardin Propio</a></li>
 								<li><a href="http://enmarcar.xyz" target = "_blank">Enmarcar</a></li>
 								<li><a href="http://techkum.com" target = "_blank">Techkum</a></li>
 								<li><a href="http://onesimpleidea.xyz/rutas" target = "_blank">Rutas</a></li>
-								<h3>Archive and Experiments: </h3>
+								<h3 style="background-color:#BFFFF5;">Archive and Experiments:</h3>
 								<li><a href="http://cargocollective.com/onesimpleidea" target = "_blank">Other Work</a></li>
-								<!-- <li><a href="">Gen/Lut</a></li> -->
 							</ul>
-						</div><!--  end boxes -->
+						</section>
 					</div>
-				</div><!-- end inside row 2 -->
-				<div class ="row">
-					<div class="col-sm-12 col-lg-6">
-						<div class= "boxes">
-							<h3>Contact:</h3>
-							<h4>mail: cyrstem[at]gmail[dot]com</h4>
-							<a href="http://ec.linkedin.com/in/jacobohz">Linkedin</a>
-							<a href="https://github.com/cyrstem/">Github</a>
+					<div class ="visible-xs row">
+						<div class="col-xs-12">
+							<section>
+								<h3 style="background-color:#BFFFF5;">Contact:</h3>
+								<h4>Mail: cyrstem[at]gmail[dot]com</h4>
+								<a href="http://ec.linkedin.com/in/jacobohz">Linkedin</a> 
+								<a href="https://github.com/cyrstem/">Github</a>
+							</section>
 						</div>
 					</div>
-				</div>
+				</div><!-- end inside row 2 -->
 			</div>
-			<div class ="col-md-6 col-lg-6 hidden-xs"> 
-				<p class="text-center"><b>Move the mouse around</b></p>
-				<div id ="paint"></div>		
-			</div>
-			<div class= "col-md-6 visible-xs">
-				<h2 class="text-center"><b>More interesting on Desktop</b></h2>
-			</div>
-
 		</div>
 	</div> <!-- end container -->
+<footer class="footer hidden-xs">
+	<h3 style="display:inline;background-color:#BFFFF5;padding:4px;margin:2px;">Contact:</h3>
+      	<span><a href="http://ec.linkedin.com/in/jacobohz">Linkedin</a></span>
+		<span><a href="https://github.com/cyrstem/">Github</a></span>
+		<p style="display:inline;font-weight:500;">Mail: cyrstem [at] gmail [dot] com </p>
+</footer>
+
 	<!-- external libs and staff -->
 	<script src="third-party/jquery.min.js"></script>
 	<script src="third-party/bootstrap.min.js"></script>

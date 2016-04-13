@@ -1,38 +1,42 @@
+
 var scaler = 200;
 var value =360;
 var d =0;
 var c0;
+var things;
+
 function setup() { 
-  //var myCanvas = createCanvas (windowWidth,windowHeight);
-  var myCanvas = createCanvas (800,800);
+  var myCanvas = createCanvas (windowWidth,windowHeight);
+  things = selectAll('h3');
   myCanvas.parent('paint');
   noFill();
   stroke(0);
-  c0 = new esfera(width/ 2, height/ 2);
+  c0 = new esfera(width/2, height/ 2);
 }
 
 function draw() {
   background(255);
   c0.display();
   c0.update();
+  // d+=10;
 }
-// function windowResized() {
-//   resizeCanvas(windowWidth, windowHeight);
-// }
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 function esfera(x, y) {
   this.x = x;
   this.y = y;
   this.m = 1;
-  this.n1 = 12;
+  this.n1 = 15;
   this.n2 = 1;
-  this.n3 = 10;
+  this.n3 = 5;
   this.display = function() {
-    //drawShape(windowWidth/3, windowHeight/2,this.m,this.n1,this.n2,this.n3);
     drawShape(width/2, height/2,this.m,this.n1,this.n2,this.n3);
   }
   this.update = function() {
-    this.m = random(1,5);
+    this.m = random(0.9,5);
     this.n1 = map(mouseY, 0, height, 0, 180);
     this.n2 = map(mouseX, 0, width, 0, 180);
     this.n3 = noise(0,0.55);
@@ -65,14 +69,21 @@ function drawShape(x, y, m, n1,n2,n3) {
   pop();
 }
 
-function mousePressed() {
-  if (d == 0) {
-
-    d =random(0,255);
-
+function mouseMoved(){
+    if (d == 0) {
+    d++;
   } else {
     d = 0;
   }
+  if (value==360){
+    value= value-10;
+  }
+}
+function mousePressed() {
+for (var i = 0; i < things.length; i++){
+    things[i].style('');
+  }
+
 }
 
 function superformula(m, n1, n2, n3) {
