@@ -1,111 +1,227 @@
-/*
-Description: ONESMPLEIDEA
-Version: -0.0.1
-Author: -cyrstem@gmail.com
-Author URI: -onesimpleidea.info
-*/
 html,body{
-	font-family:'Dosis', sans-serif;
-	overflow:hidden;
-	background-color:white;
-	-webkit-font-smoothing:antialiased;
-	-moz-osx-font-smoothing:grayscale;
+  padding:0px;
+  margin:0px;
+  font-family:'Dosis', sans-serif;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
+/*---------------------------------------------
+tipografias y links 
+-----------------------------------------------
+*/
 h1{
-	font-family: 'Lato', sans-serif;
-	font-size: 90px;
-
+  font-size: 2.5em;
+  font-weight: 400;
+  color:#121216;
 }
 h3{
-	color:black;
-	font-weight:400;
+    font-weight: 300;
+   /* color: #313B3A;*/
+   color:#EDE6E6;
+
+}
+h4{
+  width:200px;
+  color:#fff;
+  font-weight: 500;
+  background-color: #3B3F4C;
 }
 
-h2,h4,p{
-		font-weight:200;
-		}
-
-a{	font-size: 15px;
-	font-weight:500;
-	color:white;
-}
-header{
-	width:40%;
-	padding: 10px;
-}
-#paint{
-	z-index:0;
-	position:fixed;
-}
-.footer {
-  display:inline-block;
-  color:white;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
-  text-align: left;
-  background-color:black;
-}
-a:hover {
-	background-color:#BFFFF5;
-	color:#000000;
-	padding:5px;
-}
-
-a:active {
-	color:#FFFFF;
-}
 a{
-	font-size: 16px;
+  margin:6px;
+  color:black;
+  text-decoration: none;
+  font-weight: 400;
+}
+a:hover{
+  color:#313B3A;
+}
+/*---------------------------------------------
+Intro
+-----------------------------------------------
+*/
+#paint{
+  z-index: -9;
+  position:fixed;
+}
+.intro{
+   z-index: -9;
+  text-align: center;
+}
+.hello{
+  font-size: 2.3em;
+  font-weight: 200;
+  color:#121216;
+}
+.contact{
+  background-color:#313B3A;
+  padding:5px;
+}
+.devices{
+  display:none;
+}
+/*---------------------------------------------
+Parte de los trabajos
+-----------------------------------------------
+*/
+.work{
+  padding:0px;
+  margin:0px;
+}
+.about{
+  position:fixed;
+  width:100%;
+  z-index:9;
+  background-color:#313B3A;
+}
+
+#cont:hover{
+  color:white;
+  background-color: #3B3F4C;
+  border-bottom: inset;
+  border-color: #E0FBFC;
+}
+center{
+font-size: 1.6em;
+color:#EDE6E6;
+background-color: #46494C;
+}
+
+nav,a{
+  font-weight: 500;
+  padding:5px;
+  color:#EDE6E6;
+}
+.data{
+  padding:5px;
+  position:relative;
+  float: right;
+}
+.portfolioContainer{
+
+}
+.webs{
+  width:100%;
 }
 section{
-	margin:4px;
-	padding:2px;
-	color:white;
-	background-color: black;
+  width:30%;
+}
+.info{
+/*  width:100%;*/
+  margin-top: 30px;
+  padding:8px;
+  text-align: center;
+  font-weight: 500;
+  color:white;
+  background-color: #3B3F4C;
+}
+/*---------------------------------------------
+Animacion CSS boton intro  Flecha
+-----------------------------------------------
+*/
+button{
+  cursor:pointer;
+  background:transparent;
+  border-style: none;
+  outline:none !important;
+}
+.arrow{
+  display:block;
+
+}
+.bounce {
+    position: absolute;
+    bottom: 10px;
+    left: 50% ;
+    width: 60px;
+    height: 60px ;
+    margin-left:-30px;
+    animation: bounce 1.5s infinite;
+    -webkit-animation: bounce 1.5s infinite;
+    -moz-animation: bounce 1.5s infinite;
+    -o-animation: bounce 1.5s infinite;
 }
 
-/*===========Contenidos REGLAS=================================*/ 
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);} 
+    40% {-webkit-transform: translateY(-30px);}
+    60% {-webkit-transform: translateY(-15px);}
+}
+ 
+@-moz-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
+    40% {-moz-transform: translateY(-30px);}
+    60% {-moz-transform: translateY(-15px);}
+}
+ 
+@-o-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
+    40% {-o-transform: translateY(-30px);}
+    60% {-o-transform: translateY(-15px);}
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-15px);}
+}
+/*---------------------------------------------
+Dispositivios rules 
+-----------------------------------------------
+*/
  /*cell horizonta*/
-     @media only screen and (max-width : 720px) {
-    	html,body{
-    	width:100%;
-		overflow:scroll;
-		}
-		header{
-      	width:100%;
-      }
-    @media only screen and (max-width : 480px) {
-    	html,body{
-    	width:100%;
-		overflow:scroll;
-		}
-		header{
-      	width:100%;
-      }
+@media only screen and (max-width : 720px) {
+   html,body{
+      width:100%;
+      overflow:scroll;
     }
-/*===========Contenidos REGLAS=================================*/ 
-   @media only screen and (max-width : 320px) {  
+    .bounce{
+      display:none;
+    }
+    .devices{
+      display:inline;
+    }
+    
+}
+
+@media only screen and (max-width : 480px) {
     html,body{
-    	width:100%;
-		overflow:scroll;
-      }    
-      header{
-      	width:100%;
-      }
-      .footer {
-      	z-index: 2;
-  		bottom: 0;
+      width:100%;
+      overflow:scroll;
+     }
+      .bounce{
+      display:none;
     }
+    .devices{
+      display:inline;
     }
-    /*===========Contenidos REGLAS=================================*/ 
-   @media only screen and (max-width : 360px) {
+    
+}
+/*===========Contenidos REGLAS=================================*/ 
+@media only screen and (max-width : 320px) {  
+    html,body{
+      width:100%;
+      overflow:scroll;
+  }  
+   .bounce{
+      display:none;
+    }
+    .devices{
+      display:inline;
+    }
+    
+}
+/*===========Contenidos REGLAS=================================*/ 
+@media only screen and (max-width : 360px) {
       html,body{
-      		width:100%;
-		overflow:scroll;
+      width:100%;
+      overflow:scroll;
       }
-      header{
-      	width:100%;
-      }
+  .bounce{
+      display:none;
     }
+    .devices{
+      display:inline;
+    }
+    
+}

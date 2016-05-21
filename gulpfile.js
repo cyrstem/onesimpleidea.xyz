@@ -9,6 +9,7 @@ var gulp = require('gulp');
 	uglify = require('gulp-uglify');
 	rename = require('gulp-rename');
 	concat = require('gulp-concat');
+	header = require('gulp-header');
 
 //------------------------------------
 // Bower move 
@@ -40,6 +41,7 @@ gulp.task('minifyCss',function(){
 		.pipe(plumber())
 		.pipe(minify())
 		.pipe(rename({suffix:'.min'}))
+		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/'))
 		.pipe(gulp.dest('app/css'))
 		.pipe(reload({stream:true}));
 });
@@ -47,10 +49,11 @@ gulp.task('minifyCss',function(){
 // JS P5js  mio 
 //------------------------------------
 gulp.task('scripts',function(){
-	gulp.src('js/main.js')
+	gulp.src(['js/main.js','js/works.js'])
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(rename({suffix:'.min'}))
+		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/'))
 		.pipe(gulp.dest('./app/js'))
 		.pipe(reload({stream:true}));
 });

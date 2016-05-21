@@ -26,6 +26,8 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.6",
-    "p5.js": "p5js#~0.4.20"
+    "p5.js": "p5js#~0.4.20",
+    "masonry": "^4.1.0",
+    "isotope": "^3.0.0"
   }
 }

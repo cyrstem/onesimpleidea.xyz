@@ -1,79 +1,124 @@
-<!DOCTYPE html>
-<!-- /*Description: ONESMPLEIDEA,Version: -0.0.1,Author: -cyrstem@gmail.com,Author URI: -onesimpleidea.xyz*/ -->
-<html lang="en">
+<!doctype html>
+<!--
+ ___   _      ____  __   _   _      ___   _     ____  _   ___   ____   __   
+/ / \ | |\ | | |_  ( (` | | | |\/| | |_) | |   | |_  | | | | \ | |_   / /\  
+\_\_/ |_| \| |_|__ _)_) |_| |_|  | |_|   |_|__ |_|__ |_| |_|_/ |_|__ /_/- -\                                                                                
+-->
+<html>
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="onesimpleidea.xyz, Portafolio, Uio, Web Design, Creative Coding, Web, Ecuador, Quito  ">
-    <meta name="author" content="cyrstem, onesimpleidea.xyz, uio, Ecuador 2015">
-    <meta property="og:image" content="http://onesimpleidea.xyz/social.png" />
-    <meta property="og:title" content="onesimpleidea"/>
-  	<meta property="og:url" content="onesimpleidea.xyz"/>
-    <meta property="og:description" content="Portafolio,cyrstem[at]gmail[dot]com,works,info,contacto,uio,ec,Ecuador, cyrstem, Uio, Web Design, Creative Coding, Web,Quito " />
-	<title>/.One Simple Idea </title>
-	<meta property="og:title" content="/.One Simple Idea"/>
-	<link rel="shortcut icon" href="favicon.ico"/>
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
-	<!-- styles and fonts -->
-  	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<title>./OneSimpleIdea</title>
 	<link href="css/style.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Dosis:200,300,400,500" type="text/css">
-	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dosis:200,300,400,500" type="text/css">
 	<!-- scripts starts -->
-	<script language="javascript" type="text/javascript" src="third-party/p5.min.js"></script>
-	<script language="javascript" type="text/javascript" src="third-party/addons/p5.dom.js"></script>
-	<script language="javascript" type="text/javascript" src="js/main.min.js"></script>
+	<!-- <script language="javascript" type="text/javascript" src="third-party/p5.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.0/p5.min.js"></script>
+	<script src="js/main.min.js"></script>
 </head>
 <body>
-	<!-- menos click mas  simple -->
-	<div class="container-fluid">
-		<div id ="paint"></div>	
-		<div class= "row">
-			<div class ="col-sm-12 col-lg-12"> 
-				<div class ="row"> 
-					<header>
-						<h1>hello..</h1>
-						<h2>I am a Front-End Developer with a background in Multimedia Design</h2>
-						<h2>I use code to create Visual Art and have experience in:</h2>
-						<h3 style="background-color:#BFFFF5;">Interaction Design - 3d Animation - Motion Design.</h3>
-					</header>
-					<div class ="col-sm-12 col-lg-4">
-						<section>
-							<h3 style="background-color:#BFFFF5;">Most Recent Work:</h3>
-							<ul class="list-group">
-								<li><a href="http://unjardinpropio.com" target="_blank">Jardin Propio</a></li>
-								<li><a href="http://enmarcar.xyz" target = "_blank">Enmarcar</a></li>
-								<li><a href="http://techkum.com" target = "_blank">Techkum</a></li>
-								<li><a href="http://onesimpleidea.xyz/rutas" target = "_blank">Rutas</a></li>
-								<h3 style="background-color:#BFFFF5;">Archive and Experiments:</h3>
-								<li><a href="http://cargocollective.com/onesimpleidea" target = "_blank">Other Work</a></li>
-							</ul>
-						</section>
-					</div>
-					<div class ="visible-xs row">
-						<div class="col-xs-12">
-							<section>
-								<h3 style="background-color:#BFFFF5;">Contact:</h3>
-								<h4>Mail: cyrstem[at]gmail[dot]com</h4>
-								<a href="http://ec.linkedin.com/in/jacobohz">Linkedin</a> 
-								<a href="https://github.com/cyrstem/">Github</a>
-							</section>
-						</div>
-					</div>
-				</div><!-- end inside row 2 -->
-			</div>
-		</div>
-	</div> <!-- end container -->
-<footer class="footer hidden-xs">
-	<h3 style="display:inline;background-color:#BFFFF5;padding:4px;margin:2px;">Contact:</h3>
-      	<span><a href="http://ec.linkedin.com/in/jacobohz">Linkedin</a></span>
-		<span><a href="https://github.com/cyrstem/">Github</a></span>
-		<p style="display:inline;font-weight:500;">Mail: cyrstem [at] gmail [dot] com </p>
-</footer>
+<div id="paint"></div>
+<div class="intro">
+	<div class="hello">
+		<h1>Hello...</h1>
+		<p>I'm a Web-Developer with a background in Multimedia Design</p>
+		<p>i like to code and create Visual and Interactive Apps.</p>
+		<p>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</p>
+		<a href="http://cargocollective.com/onesimpleidea" class="devices"><p>works</p></a>
+	</div>
+	<footer>
+		<div class="contact">
+			<a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="25"></a>
+			<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="25"></a>
+			<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/mail.png" width="25"></a>
 
-	<!-- external libs and staff -->
+		</div>
+			<div class="bounce">
+				<button class="next">
+					<img src="assets/arrow.png"width="25"><i class="arrow"></i>
+				</button>
+			</div>
+
+	</footer>
+</div> <!-- end intro -->
+
+<div class="work">
+<div class="about">
+	<center>
+		<h3>~./Here you can find examples of recent works</h3>
+	</center>
+	<div class="data">
+		<a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="25"></a>
+		<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="25"></a>
+		<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/mail.png" width="25"></a>
+	</div>
+	<nav class="portfolioFilter">
+		<a href="#" data-filter="*" class="current" id ="cont">| All | </a>
+		<a href="#" data-filter=".front-end" id ="cont">| Web |</a>
+		<a href="#" data-filter=".grap"id ="cont">| Graphics |</a>
+		<a href="#" data-filter=".code"id ="cont">| Code |</a>
+	</nav>
+</div><!--  end about -->
+	<div class="portfolioContainer">
+		<div class = "all webs grap code"></div>
+		<div class = "grap">
+			<div class="info">
+				<p>Graphics - Ilustrations and 3d Models</p>
+			</div>
+				<img src="assets/flower1.png" alt="image">
+				<img src="assets/flower2.png" alt="image">
+				<img src="assets/flower3.png" alt="image">
+				<img src="assets/flower4.png" alt="image">
+				<img src="assets/concept1.png" alt="image">
+				<img src="assets/concept2.png" alt="image">
+				<img src="assets/concept3.png" alt="image">
+				<img src="assets/concept4.png" alt="image">
+				<img src="assets/concept5.png" alt="image">
+				<img src="assets/concept6.png" alt="image">
+				<img src="assets/earth.png" alt="image">
+				<img src="assets/earth3.png" alt="image">
+				<img src="assets/city1.png" alt="image">
+				<img src="assets/city2.png" alt="image">
+				<img src="assets/poster1.png" alt="image">
+				<img src="assets/poster2.png" alt="image">
+				<img src="assets/poster3.png" alt="image">
+				<img src="assets/poster4.png" alt="image">
+				<img src="assets/DRAW.jpg" alt="image">
+				<img src="assets/DRAW2.jpg" alt="image">
+				<img src="assets/skull1.png" alt="image">
+				<img src="assets/skull.gif" alt="image">
+				<img src="assets/machine1.png" alt="image">
+		</div>
+
+		<div class = "code">
+			<div class="info">
+				<p>./Creative Coding - Programming with aesthetic intent.(i like that name better)</p>
+			</div>
+				<img src="assets/shaders.jpg" alt="image">
+				<img src="assets/shaders1.jpg" alt="image">
+				<img src="assets/generative.jpg" alt="image">
+				<img src="assets/generative1.jpg" alt="image">
+				<img src="assets/generative2.jpg" alt="image">
+				<img src="assets/generative3.jpg" alt="image">
+				<img src="assets/glitch.jpg" alt="image">
+				<img src="assets/glitch1.jpg" alt="image">
+				<img src="assets/sphere.jpg" alt="image">
+				<img src="assets/sphere1.jpg" alt="image">
+				<img src="assets/sphere2.jpg" alt="image">
+				<img src="assets/sphere3.jpg" alt="image">
+		</div>
+		<div class="front-end">
+			<div class="info">
+				<p>./Web - Front end developer</p>
+			</div>
+			<a href="http://www.techkum.com" target="_blank"><img src="assets/web1.png" alt="image"></a>
+			<a href="http://www.onesimpleidea.xyz/rutas" target="_blank"><img src="assets/web2.png" alt="image"></a>
+			<a href="http://enmarcar.xyz" target="_blank"><img src="assets/web3.png" alt="image"></a>
+			<a href="http://www.cedenma.org" target="_blank"><img src="assets/web4.png" alt="image"></a>
+		</div>
+	</div><!-- end portafolio -->
+</div> <!-- end work -->
 	<script src="third-party/jquery.min.js"></script>
-	<script src="third-party/bootstrap.min.js"></script>
+	<script src="third-party/isotope.pkgd.min.js"></script>
+	<script src="js/works.min.js"></script>	
 </body>
 </html>
