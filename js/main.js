@@ -1,11 +1,12 @@
-var myCanvas;
-var num =800;
+
+var num;
 var ns;
 function setup(){
   myCanvas = createCanvas(windowWidth,windowHeight);
   myCanvas.parent('#paint');
   smooth();
   noStroke();
+  num =800;
 }
 
 function draw(){

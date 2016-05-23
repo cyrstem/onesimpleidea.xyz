@@ -1,30 +1,24 @@
-
-
-$(".work").css("display","none");
-//  var $elementos = $('.webs,.grap,.code');
-
-//inicia  lalalal
 function inicio(){
+    // $(".work").css("display","none");
     console.log("./ready Clear");
-	//esconde  portafolio
-
-	$('button').click(function(){
-        $('html').css("overflow-y","scroll");
-		$(".intro").fadeOut("slow", function(){
-			$(".intro").remove();
+     $('button').click(function(){
+        $(".intro").fadeOut("slow", function(){
+            $(".intro").remove();
             $("#paint").remove();
-		});
-	 		$(".work").css("display","block");
-            $(".work").fadeIn("slow");
+        });
             misCosas();
-	});
-
-    
+    });
 }//end setup
 
- function misCosas(){
-     //$elementos.hide();
-    console.log("./Loading Proyectos");
+function misCosas(){
+ console.log("./Loading Proyectos");
+ $(".work").load("work.html").prepend("body");
+ $('html').css("overflow-y","scroll");
+iso();
+}// mis cosas 
+
+function iso(){
+ console.log("./listo -fin creo ojala ya nose qmas hacer ");
      var $container = $('.portfolioContainer');
     $container.isotope({
         filter: '*',
@@ -50,11 +44,9 @@ function inicio(){
          });
          return false;
     }); 
- }
- 
+}
 $( window ).scroll(function() {
     $('center').remove();
-    });
-
+});
 
 window.onload = inicio;

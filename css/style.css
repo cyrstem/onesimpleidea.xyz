@@ -17,7 +17,6 @@ h1{
 }
 h3{
     font-weight: 300;
-   /* color: #313B3A;*/
    color:#EDE6E6;
 
 }
@@ -66,10 +65,11 @@ Parte de los trabajos
 -----------------------------------------------
 */
 .work{
-  padding:0px;
-  margin:0px;
+/*  padding:0px;
+  margin:0px;*/
 }
 .about{
+  top: 0;
   position:fixed;
   width:100%;
   z-index:9;
@@ -94,18 +94,20 @@ nav,a{
   color:#EDE6E6;
 }
 .data{
+  top: 0px;
   padding:5px;
   position:relative;
   float: right;
+}
+img{
+  text-align: center;
+  padding:5px;
 }
 .portfolioContainer{
 
 }
 .webs{
   width:100%;
-}
-section{
-  width:30%;
 }
 .info{
 /*  width:100%;*/
