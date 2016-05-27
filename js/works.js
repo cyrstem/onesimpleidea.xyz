@@ -1,59 +1,69 @@
+  console.log("./ready Clear");
+//----------------------------------------------------
+//Inicio
+//----------------------------------------------------
+var isUp;
+var $container;
+
 function inicio(){
-    console.log("./ready Clear");
-     $('button').click(function(){
-        $(".intro").fadeOut("slow", function(){
-            $(".intro").remove();
-            $("#paint").remove();
-        });
-            misCosas();
+    $("button").click(function(){
+    $(".intro").fadeOut("slow",function(){
+        $(".intro").remove();
+        $("#paint").remove();
     });
-}//end setup
-
-function misCosas(){
- console.log("./Loading Proyectos");
-    $(".work").load("work.html").prependTo("body");
+//ejecuta despue del click
+  $(".work").load("work.html",laGrid).prependTo("body");
+   $('body').css("background-color","000000");
     $('html').css("overflow-y","scroll");
+   
+//funcion del scroll
+  
+});//aqui termina boton
 
-    isoTest();  
-}// mis cosas 
+}//fin setup
 
-function isoTest(){
-console.log("./listo -fin creo ojala ya nose qmas hacer ");
-$('body').css("background-color","000000");
-}
 
-$( window ).scroll(function() {
-    $('center').remove();
-});
-
-function listo(){
-var $container = $('.portfolioContainer');
-    $container.isotope({
-        filter: '*',
-        animationOptions: {
+//----------------------------------------------------
+//loading y fincionamiento de isotope
+//----------------------------------------------------
+function laGrid(){
+    $container = $('.portfolioContainer');
+        $container.isotope({
+            filter: '*',
+            animationOptions: {
             duration: 750,
             easing: 'linear',
             queue: false
         }
-});//load init
+    });
+    $('.portfolioFilter a').click(function(){
+      $('#mensaje').fadeOut("slow");
+       $('#mensaje').remove();
 
-$('.portfolioFilter a').click(function(){
         $('.portfolioFilter .current').removeClass('current');
         $(this).addClass('current');
+
         var selector = $(this).attr('data-filter');
         $container.isotope({
             filter: selector,
-            animationOptions: {
-                duration: 750,
-                easing: 'linear',
+            animationOptions:{
+                duration:750,
+                easing:'linear',
                 queue: false
             }
-         });
-         return false;
-    }); //end filter lit
+        });
+        return true;
+    });
+}
+//----------------------------------------------------
+// update creo 
+//----------------------------------------------------
+function update(){
+
 }
 
+//----------------------------------------------------
+//inicia todo 
+//----------------------------------------------------
 
 window.onload = inicio;
-window.ready = listo;
-

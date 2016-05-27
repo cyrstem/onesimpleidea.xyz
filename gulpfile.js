@@ -41,7 +41,7 @@ gulp.task('minifyCss',function(){
 		.pipe(plumber())
 		.pipe(minify())
 		.pipe(rename({suffix:'.min'}))
-		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/'))
+		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
 		.pipe(gulp.dest('app/css'))
 		.pipe(reload({stream:true}));
 });
@@ -53,7 +53,7 @@ gulp.task('scripts',function(){
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(rename({suffix:'.min'}))
-		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/'))
+		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
 		.pipe(gulp.dest('./app/js'))
 		.pipe(reload({stream:true}));
 });
