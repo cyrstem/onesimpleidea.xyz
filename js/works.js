@@ -13,7 +13,7 @@ function inicio(){
     });
 //ejecuta despue del click
   $(".work").load("work.html",laGrid).prependTo("body");
-   $('body').css("background-color","000000");
+   $('body').css("background-color","#1f1f1f");
     $('html').css("overflow-y","scroll");
    
 //funcion del scroll
