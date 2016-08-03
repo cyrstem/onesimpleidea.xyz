@@ -1,33 +1,52 @@
-
+var r,g,b;
+var i;
 var num;
 var ns;
 function setup(){
+
   myCanvas = createCanvas(windowWidth,windowHeight);
   myCanvas.parent('#paint');
   smooth();
-  noStroke();
+  //noStroke();
+  
   num =800;
+  colores();
 }
 
 function draw(){
+  noFill();
   noiseSeed(ns);
   for(var i =0; i<num; i++){
     var offset = TWO_PI/num*i;
     push();
     translate(width/2,height/2);
     rotate(offset);
-    //fill(random(0,100),1);
-     fill(random(0,200),random(1,3));
-    var w = noise(sin(offset)*3, cos(offset)*3)*500;
+    stroke(r,g,b,5);
+    var w = noise(sin(offset)*3, cos(offset)*1)*500;
     rect(0,10,w,4);
     pop();
   }
 }
 
+
  function mouseMoved(){
-    ns= log(random(100000));
+    thing();
+  
+  }
+  function thing(){
+    rotate(TWO_PI);
+    noStroke();
+    fill(random(255),random(111),random(55),55);
+    rectMode(CENTER);
+    rect(mouseX,mouseY,random(25,50),random(50,80));
   }
 
   function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  }
+
+function colores(){
+  r = random(255);
+  g = random(111);
+  b = random(55);
 }

@@ -1,3 +1,4 @@
+@import 'https://fonts.googleapis.com/css?family=Unica+One';
 html,body{
   padding:0px;
   margin:0px;
@@ -5,6 +6,7 @@ html,body{
   overflow:hidden;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
+  //background-color: blue;
 }
 /*---------------------------------------------
 tipografias y links 
@@ -14,10 +16,12 @@ h1{
   font-size: 2.5em;
   font-weight: 400;
   color:#121216;
+/*  font-family: 'Bungee Shade', cursive;*/
+  font-family: 'Bungee Inline', cursive;
 }
 h3{
     font-weight: 300;
-   color:#EDE6E6;
+    color:#EDE6E6;
 
 }
 h4{
@@ -51,8 +55,11 @@ Intro
 .hello{
   font-size: 2.3em;
   font-weight: 200;
-  color:#121216;
+  color:#38053f;
+  font-family: 'Unica One', cursive;
+
 }
+
 .contact{
   background-color:#1f1f1f;
   padding:5px;
@@ -60,6 +67,12 @@ Intro
 .devices{
   display:none;
 }
+.netscape{
+  float:right;
+  position:absolute;
+  bottom:0;
+}
+
 /*---------------------------------------------
 Parte de los trabajos
 -----------------------------------------------
@@ -85,7 +98,7 @@ Parte de los trabajos
   border-bottom: 2px solid #fff000;
 }
 #mensaje{
-
+  font-family: 'Codystar', cursive;
   z-index: 9999;
   display:block;
   width:100%;

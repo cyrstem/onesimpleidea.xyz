@@ -5,15 +5,11 @@ var gulp = require('gulp');
 	browserSync = require('browser-sync');
 	reload =  browserSync.reload;
 	plumber = require('gulp-plumber');
-	minify = require('gulp-minify-css');
+	minify = require('gulp-clean-css');
 	uglify = require('gulp-uglify');
 	rename = require('gulp-rename');
 	concat = require('gulp-concat');
 	header = require('gulp-header');
-
-//------------------------------------
-// Bower move 
-//------------------------------------
 
 //------------------------------------
 // Third party libs boostrap&jquery concat
@@ -46,10 +42,10 @@ gulp.task('minifyCss',function(){
 		.pipe(reload({stream:true}));
 });
 //------------------------------------
-// JS P5js  mio 
+// THREEJS mio 
 //------------------------------------
 gulp.task('scripts',function(){
-	gulp.src(['js/main.js','js/works.js'])
+	gulp.src('js/main.js')
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(rename({suffix:'.min'}))
