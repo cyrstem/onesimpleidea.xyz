@@ -15,8 +15,7 @@ tipografias y links
 h1{
   font-size: 2.5em;
   font-weight: 400;
-  color:#121216;
-/*  font-family: 'Bungee Shade', cursive;*/
+  color:#000000;
   font-family: 'Bungee Inline', cursive;
 }
 h3{
@@ -55,9 +54,14 @@ Intro
 .hello{
   font-size: 2.3em;
   font-weight: 200;
-  color:#38053f;
+  color:black;
   font-family: 'Unica One', cursive;
 
+}
+footer{
+  width: 100%;
+  position:absolute;
+  bottom:0px;
 }
 
 .contact{
@@ -159,8 +163,8 @@ button{
 
 }
 .bounce {
-    position: absolute;
-    bottom: 10px;
+    position: relative;
+   /* bottom: 10px;*/
     left: 50% ;
     width: 60px;
     height: 60px ;

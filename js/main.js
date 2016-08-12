@@ -14,6 +14,9 @@ function setup(){
 }
 
 function draw(){
+  glitch();
+}
+function glitch(){
   noFill();
   noiseSeed(ns);
   for(var i =0; i<num; i++){
