@@ -4,9 +4,7 @@
 Personal works and contact info, continuously changing and developing 
 
 //------------------------------
-
 //tools at the moment:
-
 //------------------------------
 
 - P5js
@@ -18,9 +16,7 @@ Personal works and contact info, continuously changing and developing
  -nodejs
 
 //------------------------------
-
 // should change to :
-
 //------------------------------
 -SASS
 -ThreeJS
