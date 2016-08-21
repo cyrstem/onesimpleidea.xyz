@@ -40,8 +40,8 @@ function glitch(){
     rotate(TWO_PI);
     noStroke();
     fill(random(255),random(111),random(55),55);
-    rectMode(CENTER);
-    rect(mouseX,mouseY,random(25,50),random(50,80));
+    // rectMode(CENTER);
+    // rect(mouseX,mouseY,random(25,50),random(50,80));
   }
 
   function windowResized() {
