@@ -1,4 +1,4 @@
- console.log("./ready Clear");
+ //console.log("./ready Clear");
 var me =[
 	"<h2>I'm a designer/coder with a background in Multimedia Design, i love to code and create interactive apps.</h2>",
 	"<h2>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</h2>"
@@ -15,19 +15,15 @@ var misDatos =  [
 
 
 $(document).ready(function(){	
+
 	$("#w").click(function(){
 		$('.all').html($('<div>', {class: 'work'}));
 
 		$(".work").css("display","block");
 		$(".work").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
 		// $(".work").append(works);
-		var $grid = $('.grid').imagesLoaded( function() {
-  			$grid.masonry({
-   				 itemSelector: '.grid-item',
-    			percentPosition: true,
-    			columnWidth: '.grid-sizer'
-  				}); 
-			});
+		carga();
+				
 	});
 
 	$("#i").click(function(){
@@ -35,6 +31,7 @@ $(document).ready(function(){
 		$('.all').html($('<div>', {class: 'me'}));
 		$(".me").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
 		$(".me").append(me);
+
 	});
 
 	$("#c").click(function(){
@@ -46,3 +43,20 @@ $(document).ready(function(){
 	});
 
 });
+
+function carga(){
+	$('#container').imagesLoaded()
+  .always( function( instance ) {
+    console.log('all images loaded');
+  })
+  .done( function( instance ) {
+    console.log('all images successfully loaded');
+  })
+  .fail( function() {
+    console.log('all images loaded, at least one is broken');
+  })
+  .progress( function( instance, image ) {
+    var result = image.isLoaded ? 'loaded' : 'broken';
+    console.log( 'image is ' + result + ' for ' + image.img.src );
+  });
+}

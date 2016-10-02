@@ -14,9 +14,6 @@ h1 {
 p {
   font-size: 0.8em; }
 
-h2 {
-  text-align: center; }
-
 nav {
   position: absolute;
   top: 70%;
@@ -283,6 +280,107 @@ header {
 
 ::-webkit-scrollbar-track {
   background: slategray; }
+
+.logo {
+  float: left;
+  color: #62C85B;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+  color: #61F5A1;
+  position: absolute; }
+
+@keyframes glitch-anim-1 {
+  0% {
+    clip: rect(10px, 1084px, 107px, 0); }
+  5.88235% {
+    clip: rect(70px, 1084px, 53px, 0); }
+  11.76471% {
+    clip: rect(84px, 1084px, 48px, 0); }
+  17.64706% {
+    clip: rect(20px, 1084px, 85px, 0); }
+  23.52941% {
+    clip: rect(67px, 1084px, 115px, 0); }
+  29.41176% {
+    clip: rect(96px, 1084px, 69px, 0); }
+  35.29412% {
+    clip: rect(93px, 1084px, 105px, 0); }
+  41.17647% {
+    clip: rect(53px, 1084px, 27px, 0); }
+  47.05882% {
+    clip: rect(37px, 1084px, 13px, 0); }
+  52.94118% {
+    clip: rect(28px, 1084px, 73px, 0); }
+  58.82353% {
+    clip: rect(29px, 1084px, 96px, 0); }
+  64.70588% {
+    clip: rect(19px, 1084px, 4px, 0); }
+  70.58824% {
+    clip: rect(19px, 1084px, 108px, 0); }
+  76.47059% {
+    clip: rect(73px, 1084px, 53px, 0); }
+  82.35294% {
+    clip: rect(54px, 1084px, 12px, 0); }
+  88.23529% {
+    clip: rect(10px, 1084px, 66px, 0); }
+  94.11765% {
+    clip: rect(72px, 1084px, 30px, 0); }
+  100% {
+    clip: rect(58px, 1084px, 66px, 0); } }
+
+@keyframes glitch-anim-2 {
+  0% {
+    clip: rect(95px, 1084px, 44px, 0); }
+  5.88235% {
+    clip: rect(40px, 1084px, 34px, 0); }
+  11.76471% {
+    clip: rect(20px, 1084px, 81px, 0); }
+  17.64706% {
+    clip: rect(93px, 1084px, 30px, 0); }
+  23.52941% {
+    clip: rect(22px, 1084px, 114px, 0); }
+  29.41176% {
+    clip: rect(2px, 1084px, 29px, 0); }
+  35.29412% {
+    clip: rect(33px, 1084px, 57px, 0); }
+  41.17647% {
+    clip: rect(92px, 1084px, 3px, 0); }
+  47.05882% {
+    clip: rect(97px, 1084px, 19px, 0); }
+  52.94118% {
+    clip: rect(27px, 1084px, 61px, 0); }
+  58.82353% {
+    clip: rect(92px, 1084px, 29px, 0); }
+  64.70588% {
+    clip: rect(71px, 1084px, 60px, 0); }
+  70.58824% {
+    clip: rect(38px, 1084px, 71px, 0); }
+  76.47059% {
+    clip: rect(88px, 1084px, 99px, 0); }
+  82.35294% {
+    clip: rect(56px, 1084px, 94px, 0); }
+  88.23529% {
+    clip: rect(84px, 1084px, 79px, 0); }
+  94.11765% {
+    clip: rect(31px, 1084px, 26px, 0); }
+  100% {
+    clip: rect(107px, 1084px, 109px, 0); } }
+  .logo:before, .logo:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: black;
+    clip: rect(0, 0, 0, 0); }
+  .logo:after {
+    left: 2px;
+    text-shadow: -3px 0 red;
+    animation: glitch-anim-1 2s infinite linear alternate-reverse; }
+  .logo:before {
+    left: -3px;
+    text-shadow: 2px 0 blue;
+    animation: glitch-anim-2 3s infinite linear alternate-reverse; }
 
 * {
   box-sizing: border-box; }
