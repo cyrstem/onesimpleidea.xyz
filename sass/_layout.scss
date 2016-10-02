@@ -1,0 +1,44 @@
+@import "neat-helpers";
+@import "nav";
+@import "content";
+
+* { box-sizing: border-box; }
+html, body, {
+	-webkit-font-smoothing: antialiased;
+	@include linear-gradient(#232526, #1b1b1b);
+	@include margin(0 0 0 0);
+	@include padding(0 0 0 0);
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	@include respondTo(phones){
+		z-index:-1;
+		background:red;
+	}
+}
+canvas{z-index:0;}
+
+
+
+/* ---- .grid-item ---- */
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  width: 100%;
+}

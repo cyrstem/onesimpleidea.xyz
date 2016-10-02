@@ -1,0 +1,165 @@
+<div id="paint"></div>
+<div class="intro">
+	<div class="hello">
+		<h1>Hello</h1>
+		<p>I'm a Web-Developer with a background in Multimedia Design</p>
+		<p>i like to code and create Visual and Interactive Apps.</p>
+		<p>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</p>
+		<a href="http://cargocollective.com/onesimpleidea" class="devices"><p>works</p></a>
+	</div>
+	<!-- <div class="bounce">
+				<button class="next">
+					<img src="assets/arrow.png"width="25"><i class="arrow"><h1 style="text-align:"center;"">WORKS</h1><!-- </i> -->
+				</button>
+			</div> -->
+
+	<footer>
+		<div class="contact">
+			<a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="25"></a>
+			<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="25"></a>
+			<a href="mailto:cyrstem@gmail.com"><img src="assets/mail.png" width="25"></a>
+		</div>
+			
+	</footer>
+
+
+</div>
+<div class="work"></div>
+
+
+
+
+//----------------------------------------------------
+//Inicio
+//----------------------------------------------------
+var estaCorriendo;
+
+function inicio(){
+    console.log("./ready Clear");
+     $('button').click(function(){
+        $(".intro").fadeOut("slow", function(){
+            $(".intro").remove();
+            $("#paint").remove();
+            
+        });
+         console.log("./Loading Proyectos");
+            misCosas();
+    });
+    //----------------------------------------------------
+//loading y fincionamiento de isotope
+//----------------------------------------------------
+ function opciones () {
+
+var $container = $('.portfolioContainer');
+    $container.isotope({
+        filter: '*',
+        animationOptions: {
+            duration: 750,
+            easing: 'linear',
+            queue: false
+        }
+});
+
+$('.portfolioFilter a').click(function(){
+        $('.portfolioFilter .current').removeClass('current');
+        $(this).addClass('current');
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+            filter: selector,
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false
+            }
+         });
+         return false;
+    });
+ }
+ estaCorriendo =true;
+    if (estaCorriendo) {
+        opciones();
+    };
+
+}
+
+//----------------------------------------------------
+//mis cosas
+//----------------------------------------------------
+function misCosas(){
+    $(".work").load("work.html").prependTo("body");
+    $('html').css("overflow-y","scroll");
+    $('body').css("background-color","000000");
+
+}
+
+ //----------------------------------------------------
+// el puto scrolll
+//----------------------------------------------------
+
+
+
+//----------------------------------------------------
+//inicia todo 
+//----------------------------------------------------
+
+window.onload = inicio;
+
+
+
+
+
+var r,g,b;
+var i;
+var num;
+var ns;
+function setup(){
+
+  myCanvas = createCanvas(windowWidth,windowHeight);
+  myCanvas.parent('#paint');
+  smooth();
+  //noStroke();
+  
+  num =800;
+  colores();
+}
+
+function draw(){
+  glitch();
+}
+function glitch(){
+  noFill();
+  noiseSeed(ns);
+  for(var i =0; i<num; i++){
+    var offset = TWO_PI/num*i;
+    push();
+    translate(width/2,height/2);
+    rotate(offset);
+    stroke(r,g,b,5);
+    var w = noise(sin(offset)*3, cos(offset)*1)*500;
+    rect(0,10,w,4);
+    pop();
+  }
+}
+
+
+ function mouseMoved(){
+    thing();
+  
+  }
+  function thing(){
+    rotate(TWO_PI);
+    noStroke();
+    fill(random(255),random(111),random(55),55);
+    // rectMode(CENTER);
+    // rect(mouseX,mouseY,random(25,50),random(50,80));
+  }
+
+  function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  }
+
+function colores(){
+  r = random(255);
+  g = random(111);
+  b = random(55);
+}

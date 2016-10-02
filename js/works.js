@@ -1,69 +1,48 @@
-  console.log("./ready Clear");
-//----------------------------------------------------
-//Inicio
-//----------------------------------------------------
-var isUp;
-var $container;
+ console.log("./ready Clear");
+var me =[
+	"<h2>I'm a designer/coder with a background in Multimedia Design, i love to code and create interactive apps.</h2>",
+	"<h2>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</h2>"
+].join("\n");
 
-function inicio(){
-    $("button").click(function(){
-    $(".intro").fadeOut("slow",function(){
-        $(".intro").remove();
-        $("#paint").remove();
-    });
-//ejecuta despue del click
-  $(".work").load("work.html",laGrid).prependTo("body");
-   $('body').css("background-color","#1f1f1f");
-    $('html').css("overflow-y","scroll");
-   
-//funcion del scroll
-  
-});//aqui termina boton
-
-}//fin setup
+var misDatos =  [
+	"<h2>you can contact me on this networks:</h2>",
+    '<center>',
+    '<a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="45"></a>',
+	'<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="45"></a>',
+	'<a href="mailto:cyrstem@gmail.com"><img src="assets/mail.png" width="45"></a>',
+	'</center>'
+].join("\n");
 
 
-//----------------------------------------------------
-//loading y fincionamiento de isotope
-//----------------------------------------------------
-function laGrid(){
-    $container = $('.portfolioContainer');
-        $container.isotope({
-            filter: '*',
-            animationOptions: {
-            duration: 750,
-            easing: 'linear',
-            queue: false
-        }
-    });
-    $('.portfolioFilter a').click(function(){
-      $('#mensaje').fadeOut("slow");
-       $('#mensaje').remove();
+$(document).ready(function(){	
+	$("#w").click(function(){
+		$('.all').html($('<div>', {class: 'work'}));
 
-        $('.portfolioFilter .current').removeClass('current');
-        $(this).addClass('current');
+		$(".work").css("display","block");
+		$(".work").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
+		// $(".work").append(works);
+		var $grid = $('.grid').imagesLoaded( function() {
+  			$grid.masonry({
+   				 itemSelector: '.grid-item',
+    			percentPosition: true,
+    			columnWidth: '.grid-sizer'
+  				}); 
+			});
+	});
 
-        var selector = $(this).attr('data-filter');
-        $container.isotope({
-            filter: selector,
-            animationOptions:{
-                duration:750,
-                easing:'linear',
-                queue: false
-            }
-        });
-        return true;
-    });
-}
-//----------------------------------------------------
-// update creo 
-//----------------------------------------------------
-function update(){
+	$("#i").click(function(){
+		$(".work").hide();
+		$('.all').html($('<div>', {class: 'me'}));
+		$(".me").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
+		$(".me").append(me);
+	});
 
-}
+	$("#c").click(function(){
+		$(".work").hide();
+		$('.all').html($('<div>', {class: 'contact'}));
+		$(".contact").append(misDatos);
+		$(".contact").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.3s ease-in"});
 
-//----------------------------------------------------
-//inicia todo 
-//----------------------------------------------------
+	});
 
-window.onload = inicio;
+});

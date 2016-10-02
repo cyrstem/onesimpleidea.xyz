@@ -1,0 +1,310 @@
+@import 'https://fonts.googleapis.com/css?family=Unica+One';
+@import 'https://fonts.googleapis.com/css?family=Bungee+Inline';
+@import 'https://fonts.googleapis.com/css?family=Dosis:200,300,400,500';
+@import 'https://fonts.googleapis.com/css?family=Codystar';
+
+html,body{
+  padding:0px;
+  margin:0px;
+  font-family:'Dosis', sans-serif;
+  overflow:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+ /* background-color: blue;*/
+}
+
+/*:::::::::::::::::::::::::::::::
+---------------------------------------------
+tipografias y links 
+-----------------------------------------------
+*/
+
+h1{
+  font-size: 2.5em;
+  font-weight: 400;
+  color:#000000;
+/*  font-family: 'Bungee Inline', cursive;*/
+}
+h3{
+    font-weight: 300;
+    color:#EDE6E6;
+
+}
+h4{
+  width:200px;
+  color:#fff;
+  font-weight: 500;
+  background-color: #3B3F4C;
+}
+
+a{
+  margin:6px;
+  color:black;
+  text-decoration: none;
+  font-weight: 400;
+}
+a:hover{
+  color:#313B3A;
+}
+/*---------------------------------------------
+Intro
+-----------------------------------------------
+*/
+#paint{
+  z-index: -9;
+  position:fixed;
+}
+.intro{
+   z-index: -9;
+  text-align: center;
+}
+.hello{
+  font-size: 2.3em;
+  font-weight: 200;
+  color:black;
+  font-family: 'Unica One', cursive;
+}
+
+footer{
+  width: 100%;
+  position:absolute;
+  bottom:0px;
+}
+
+.contact{
+  background-color:#1f1f1f;
+  padding:5px;
+}
+.devices{
+  display:none;
+}
+.netscape{
+  float:right;
+  position:absolute;
+  bottom:0;
+}
+
+/*---------------------------------------------
+Parte de los trabajos
+-----------------------------------------------
+*/
+.work{
+
+/*  padding:0px;
+  margin:0px;*/
+}
+.about{
+  top: 0;
+  position:fixed;
+  width:100%;
+  z-index:9;
+  background-color: black;
+}
+
+#cont:hover{
+  color:white;
+  border-color: #E0FBFC;
+  border-bottom: 2px solid #fff000;
+}
+#mensaje{
+  font-family: 'Codystar', cursive;
+  z-index: 9999;
+  display:block;
+  width:100%;
+  height:100%;
+  background-color: #1f1f1f;
+  overflow:hidden;
+}
+center,span{
+  padding:20%;
+  font-size: 1.6em;
+  color:#EDE6E6;
+}
+
+nav,a{
+  font-weight: 500;
+  padding:5px;
+  color:#EDE6E6;
+/*  border-bottom: 2px solid #fff000;*/
+}
+.data{
+  top: 0px;
+  padding:5px;
+  position:relative;
+  float: right;
+}
+.portfolioContainer{
+ /*  //visibility: hidden;*/
+}
+
+
+img{
+  text-align: center;
+  padding:15px;
+}
+.webs{
+  width:100%;
+}
+.info{
+/*  width:100%;*/
+  margin-top: 30px;
+  padding:8px;
+  text-align: center;
+  font-weight: 500;
+  color:#fff000;
+/*  background-color: #3B3F4C;*/
+  background-color: #171111;
+}
+/*---------------------------------------------
+Animacion CSS boton intro  Flecha
+-----------------------------------------------
+*/
+button{
+  cursor:pointer;
+  background:transparent;
+  border-style: none;
+  outline:none !important;
+}
+.arrow{
+  display:block;
+
+}
+.bounce {
+    position: relative;
+   /* bottom: 10px;*/
+    left: 50% ;
+    width: 60px;
+    height: 60px ;
+    margin-left:-30px;
+    animation: bounce 1.5s infinite;
+    -webkit-animation: bounce 1.5s infinite;
+    -moz-animation: bounce 1.5s infinite;
+    -o-animation: bounce 1.5s infinite;
+}
+
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);} 
+    40% {-webkit-transform: translateY(-30px);}
+    60% {-webkit-transform: translateY(-15px);}
+}
+ 
+@-moz-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-moz-transform: translateY(0);}
+    40% {-moz-transform: translateY(-30px);}
+    60% {-moz-transform: translateY(-15px);}
+}
+ 
+@-o-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-o-transform: translateY(0);}
+    40% {-o-transform: translateY(-30px);}
+    60% {-o-transform: translateY(-15px);}
+}
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-30px);}
+    60% {transform: translateY(-15px);}
+}
+/*--::::::::::::::::::::::::::::::::::::::::::::::::;
+capas
+--::::::::::::::::::::::::::::::::::::::::::::::::::*/
+* { box-sizing: border-box; }
+
+/* force scrollbar */
+html { overflow-y: scroll; }
+
+body { font-family: sans-serif; }
+
+/* ---- grid ---- */
+
+.grid {
+  background: #DDD;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  width: 100%;
+}
+
+
+
+
+
+/*---------------------------------------------
+Dispositivios rules 
+-----------------------------------------------
+*/
+ /*cell horizonta*/
+@media only screen and (max-width : 720px) {
+   html,body{
+      width:100%;
+      overflow:scroll;
+    }
+    .bounce{
+      display:none;
+      
+    }
+    .devices{
+      display:inline;
+    }
+    
+}
+
+@media only screen and (max-width : 480px) {
+    html,body{
+      width:100%;
+      overflow:scroll;
+     }
+      .bounce{
+      display:none;
+    }
+    .devices{
+      display:inline;
+    }
+    
+}
+/*===========Contenidos REGLAS=================================*/ 
+@media only screen and (max-width : 320px) {  
+    html,body{
+      width:100%;
+      overflow:scroll;
+  }  
+   .bounce{
+      display:none;
+    }
+    .devices{
+      display:inline;
+    }
+    
+}
+/*===========Contenidos REGLAS=================================*/ 
+@media only screen and (max-width : 360px) {
+      html,body{
+      width:100%;
+      overflow:scroll;
+      }
+  .bounce{
+      display:none;
+    }
+    .devices{
+      display:inline;
+    }
+    
+}

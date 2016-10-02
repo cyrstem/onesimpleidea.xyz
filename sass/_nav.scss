@@ -1,0 +1,53 @@
+@import "base";
+@import "screen";
+nav{
+	@include position(absolute, 70% 0 null 0);
+	font-family: $customFont;
+	@include span-columns(2);
+	 @include clearfix;
+
+	ul{
+		@include outer-container;
+		list-style:none;
+		li{
+			border: 0.1em;
+	 		@include border-style(null null solid);
+			border-color:$menu-color;
+			text-align:center;
+			@include margin(1em null 1em null);
+			@include padding(0.4em null 0.4em null);
+			transform: skewX(-10deg);
+
+				@include respondTo(phones){
+					display: inline;
+					@include padding(0.8em);
+					@include margin(0);
+					@include span-columns(4);
+					@include transform(translateX(-30px));
+				}
+			a{
+				font-size:1em;
+				font-family: $customFont;
+
+				color: $menu-color;
+				text-decoration: none;
+				@include perspective-origin(30% 30%);
+			}
+			a:hover{
+				color: $link-hover;
+			}
+		}
+		li:hover{
+				@include border-style(solid solid solid);
+				@include transition(all 0.4s ease-in-out);
+				@include transform(translateX(-30px));
+			}
+
+	}
+	@include respondTo(phones){
+		@include position(relative, 0 0 null 0);
+		font-size:0.8em;
+		@include span-columns(12);
+		z-index:3;
+	}
+}

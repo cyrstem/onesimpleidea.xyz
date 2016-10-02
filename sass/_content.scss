@@ -1,0 +1,202 @@
+
+section{
+	background:white;
+	  overflow-y: scroll;
+}
+
+header{
+	background:black;
+	color:white;
+}
+
+.work{
+  font-family: $customFont;
+	display:none;
+	width:90%;
+	height: 80%;
+	z-index:999;
+   // background:white;
+ 
+
+	@include outer-container;
+	@include position(absolute, 5% 0 null 25%);
+	@include respondTo(phones){
+		display: inline;
+		@include position(relative, 30px null null 0);
+		@include margin(10px 10px 10px null);
+		@include span-columns(12);
+		height: 70%;
+	}
+	//@include animation(bounceIn 1s ease-in);
+}
+
+
+.me{
+  text-aligment:center;
+  width:70%;
+	@include outer-container;
+  font-family: $customFont;
+	@include position(absolute, 10% 15% null null);
+	background:$info-color;
+  opacity:0.7;
+	font-size:1.5em;
+
+    p{
+      @include padding(0.5em 15px 15px 15px);
+      @include outer-container;
+    }
+    @include respondTo(phones){
+      font-size:1em;
+        background:white;
+      @include position(relative, 30px null null 0);
+      @include margin(10px 10px 10px null);
+      @include span-columns(12);
+      height: 70%;
+    }
+}
+.contact{
+  font-family: $customFont;
+  width:55%;
+  height:34%;
+  opacity:0.7;
+  background:black;
+  color:$contact-info;
+  @include outer-container;
+  @include position(absolute, 10% 0 null 0);
+    h2{
+        @include outer-container;
+       h2{text-align:center;}
+    }
+  // @include margin(10px 10px 10px null);
+  // @include padding(10px 10px 10px null);
+  font-size:1.3em;
+
+  // @include respondTo(phones){
+  //  font-size:1em;
+  //  background:white;
+  //   @include position(relative, 30px null null 0);
+  //   @include margin(10px 10px 10px null);
+  //   @include span-columns(12);
+  //   height: 70%;
+  // }
+
+}
+
+
+//this part iNEWWWWW
+// footer{
+//   @include position(absolute, 90% 0 null 5%);
+//   font-family: $customFont;
+//   @include span-columns(2);
+//   @include clearfix;
+// }
+
+// this is  for images
+.hover-tile-outer {
+  $base-border-color: gainsboro !default;
+  $base-line-height: 1.5em !default;
+  $medium-screen: 40em !default;
+  $hover-tile-height: 10em;
+  $base-spacing: 1.5em;
+
+  background: url("/assets/part2.gif");
+  background-color: beige;
+  background-position: top;
+  background-size: cover;
+  border: 1px solid $base-border-color;
+  cursor: pointer;
+  height: $hover-tile-height;
+  margin-bottom: $base-line-height;
+
+  @include media($medium-screen) {
+    width: 80%;
+    height:60%;
+  }
+
+  .hover-tile-container {
+    height: $hover-tile-height;
+    overflow: hidden;
+  }
+
+  .hover-tile-container:hover > .hover-tile {
+    transform: translate(0, -100%);
+  }
+
+  .hover-tile {
+    background: inherit;
+    color: white;
+    height: inherit;
+    overflow: hidden;
+    padding: $base-spacing;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .hover-tile-hidden {
+    background: transparentize(#000, 0.5);
+
+    p {
+      color: transparentize(#fff, 0.3);
+      line-height: $base-line-height;
+    }
+
+    h4 {
+      margin: 0 0 0.5em 0;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+    background:#8F7E92;
+   @include triangle(12px, gray, up);
+   
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+     background:$info-color;
+    @include triangle(120px 6px, gray, up);
+
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 80%)) {
+  ::-webkit-scrollbar {
+      width:  $size;
+      height: $size;
+  }
+
+  ::-webkit-scrollbar-thumb {
+      background: #1b1b1b;
+  }
+
+  ::-webkit-scrollbar-track {
+      background: $foreground-color;
+  }
+}
+
+@include scrollbars(.5em, slategray);
+
+

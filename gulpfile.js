@@ -5,7 +5,12 @@ var gulp = require('gulp');
 	browserSync = require('browser-sync');
 	reload =  browserSync.reload;
 	plumber = require('gulp-plumber');
-	minify = require('gulp-clean-css');
+	sass = require('gulp-sass');
+	bourbon = require('node-bourbon').includePaths;
+	neat = require('node-neat').includePaths;
+	refills = require('node-refills').includePaths;
+
+	//minify = require('gulp-clean-css');
 	uglify = require('gulp-uglify');
 	rename = require('gulp-rename');
 	concat = require('gulp-concat');
@@ -16,36 +21,48 @@ var gulp = require('gulp');
 //------------------------------------ 
 gulp.task('build', function(){
 	gulp.src([
-		'third-party/bootstrap/dist/js/*.js',
-		'third-party/jquery/dist/*.js',
-		'third-party/p5.js/lib/*.js'
-
+		'third-party/three.js/build/*.js',
+		'third-party/jquery/dist/jquery.min.js',
+		'third-party/masonry/dist/masonry.pkgd.min.js',
+		'third-party/imagesloaded/imagesloaded.pkgd.min.js'
 		])
 	.pipe(plumber())
 	// .pipe(concat('app.js'))
 	.pipe(gulp.dest('./app/third-party'));
 
-	return gulp.src('third-party/bootstrap/dist/css/bootstrap.min.css')
-	.pipe(gulp.dest('./app/css'));
+	// return gulp.src('third-party/bootstrap/dist/css/bootstrap.min.css')
+	// .pipe(gulp.dest('./app/css'));
 
 });
 //------------------------------------
-// Personal css 
+// Gulp min end JS
 //------------------------------------
-gulp.task('minifyCss',function(){
-	gulp.src('css/*.css')
+gulp.task('end',function(){
+	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js' ])
+    .pipe(concat('all.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest('./app/js/'))
+	});
+//------------------------------------
+//  sass to css + bourbon + neat
+//------------------------------------
+gulp.task('sass', function(){
+	gulp.src('sass/*.scss')
+		.pipe(sass({
+			includePaths: bourbon,
+			includePaths: neat,
+			includePaths: refills
+		}))
+		.pipe(gulp.dest('app/css/'))
 		.pipe(plumber())
-		.pipe(minify())
-		.pipe(rename({suffix:'.min'}))
-		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
-		.pipe(gulp.dest('app/css'))
 		.pipe(reload({stream:true}));
 });
+
 //------------------------------------
 // THREEJS mio 
 //------------------------------------
 gulp.task('scripts',function(){
-	gulp.src('js/main.js')
+	gulp.src(['js/main.js','js/works.js'])
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(rename({suffix:'.min'}))
@@ -53,6 +70,7 @@ gulp.task('scripts',function(){
 		.pipe(gulp.dest('./app/js'))
 		.pipe(reload({stream:true}));
 });
+
 //------------------------------------
 // Browser-Sync and html change reload
 //------------------------------------
@@ -69,11 +87,11 @@ gulp.task('browser-sync', function(){
 // Watch task
 //------------------------------------
 gulp.task('watch', function(){
-	gulp.watch('css/*.css',['minifyCss']);
+	gulp.watch('sass/*.scss',['sass']);
 	gulp.watch('js/*.js',['scripts']);
 	gulp.watch('app/*.html');
 });
 //------------------------------------
 // Main task
 //------------------------------------
-gulp.task('default',['browser-sync','minifyCss','scripts','watch']);
+gulp.task('default',['browser-sync','sass','scripts','watch']);

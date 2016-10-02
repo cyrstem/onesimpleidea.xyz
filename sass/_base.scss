@@ -1,0 +1,23 @@
+//Colors
+$menu-color: #FFFFFF;
+$link-hover: #F9DDFF;
+$info-color: #74a48e;
+$contact-info: #1c6077;
+
+//Fonts
+@import url('https://fonts.googleapis.com/css?family=Oxygen+Mono');
+$customFont: 'Oxygen Mono', sans-serif;
+
+
+
+h1,h2,h3,a,p{
+	font-family: $customFont;
+}
+h1{
+	font-size:0.9em;
+}
+p{
+	font-size:0.8em;
+}
+
+h2{text-align:center;}
