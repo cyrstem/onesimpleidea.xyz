@@ -54,4 +54,10 @@
 	font-size: 2em;
 	font-weight: bold;
   @include textGlitch("glitch", 17, #61F5A1, black, red, blue, 1084, 115);
+  @include respondTo(phones){
+    font-size:0.9em;
+    @include position(absolute, 90% 0 null null);
+   @include linear-gradient(#232526, #1b1b1b);
+
+  }
 }

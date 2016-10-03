@@ -19,7 +19,16 @@ html, body, {
 }
 canvas{z-index:0;}
 
+progress{
+	width: 50%;
+	height: 0.3em;
+	@include position(absolute, 50% 10% null 25%);
+	background-color:green;
+}
 
+#progressbar{
+	background-color:#62C85B;
+}
 
 /* ---- .grid-item ---- */
 

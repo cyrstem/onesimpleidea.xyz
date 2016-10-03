@@ -14,16 +14,34 @@ var misDatos =  [
 ].join("\n");
 
 
-$(document).ready(function(){	
 
+$(document).ready(function(){
+  var progressbar = $('#progressbar'),
+    max = progressbar.attr('max'),
+    time = (1000/max)*5,  
+      value = progressbar.val();
+ 
+  var loading = function() {
+      value += 1;
+      addValue = progressbar.val(value);
+       
+      $('.progress-value').html(value + '%');
+ 
+      if (value == max) {
+          clearInterval(animate);  
+          $('#progressbar').remove();              
+      }
+  };
+ 
+  var animate = setInterval(function() {
+      loading();
+  }, time);
+
+	// carga();
 	$("#w").click(function(){
 		$('.all').html($('<div>', {class: 'work'}));
-
 		$(".work").css("display","block");
 		$(".work").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
-		// $(".work").append(works);
-		carga();
-				
 	});
 
 	$("#i").click(function(){
@@ -44,19 +62,7 @@ $(document).ready(function(){
 
 });
 
-function carga(){
-	$('#container').imagesLoaded()
-  .always( function( instance ) {
-    console.log('all images loaded');
-  })
-  .done( function( instance ) {
-    console.log('all images successfully loaded');
-  })
-  .fail( function() {
-    console.log('all images loaded, at least one is broken');
-  })
-  .progress( function( instance, image ) {
-    var result = image.isLoaded ? 'loaded' : 'broken';
-    console.log( 'image is ' + result + ' for ' + image.img.src );
-  });
-}
+
+
+
+
