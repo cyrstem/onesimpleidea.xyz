@@ -37,7 +37,10 @@ $(document).ready(function(){
       loading();
   }, time);
 
-	// carga();
+
+
+
+
 	$("#w").click(function(){
 		$('.all').html($('<div>', {class: 'work'}));
 		$(".work").css("display","block");

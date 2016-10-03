@@ -47,7 +47,7 @@
     <img src="assets/3.jpg" />
   </div>
   <div class="grid-item">
-    <img src="assets/4.png" />
+  <!--   <img src="assets/4.png" /> -->
   </div>
   <div class="grid-item">
     <img src="assets/5.png" />
@@ -62,18 +62,28 @@
     <img src="assets/8.png" />
   </div>
   <div class="grid-item">
-    <img src="assets/audr1.gif" />
+    <!-- <img src="assets/audr1.gif" /> -->
   </div>
 </div>
 
 </section>
 	<script src="third-party/three.js"></script>
-<!-- 	// <script src="js/all.js"></script> -->
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	 <script src="third-party/masonry.pkgd.min.js"></script>
-	 <script src="third-party/imagesloaded.pkgd.min.js"></script>
-	<script src="js/main.min.js"></script>
-	 <script src="js/works.min.js"></script>
+  <script type="text/javascript">
+    var $grid = $('.grid').imagesLoaded( function() {
+        $grid.masonry({
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          columnWidth: '.grid-sizer'
+        }); 
+    });
+  </script>
+	<script src="js/all.js"></script>
+  <script src="js/main.min.js"></script>
+	 <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	//  <script src="third-party/masonry.pkgd.min.js"></script>
+	//  <script src="third-party/imagesloaded.pkgd.min.js"></script>
+	// <script src="js/main.min.js"></script>
+	//  <script src="js/works.min.js"></script> -->
 
 </body>
 </html>

@@ -118,9 +118,8 @@ header {
   margin-left: auto;
   margin-right: auto;
   position: absolute;
-  top: 5%;
-  right: 0;
-  left: 25%; }
+  top: 10%;
+  right: 5%; }
   .work::after {
     clear: both;
     content: "";
@@ -283,6 +282,9 @@ header {
 
 .logo {
   float: left;
+  position: absolute;
+  top: 0.7em;
+  left: 0.5em;
   color: #62C85B;
   font-family: 'Orbitron', sans-serif;
   font-size: 2em;
@@ -292,79 +294,79 @@ header {
 
 @keyframes glitch-anim-1 {
   0% {
-    clip: rect(113px, 1084px, 19px, 0); }
+    clip: rect(64px, 1084px, 19px, 0); }
   5.88235% {
-    clip: rect(76px, 1084px, 88px, 0); }
+    clip: rect(112px, 1084px, 95px, 0); }
   11.76471% {
-    clip: rect(95px, 1084px, 114px, 0); }
+    clip: rect(89px, 1084px, 81px, 0); }
   17.64706% {
-    clip: rect(27px, 1084px, 106px, 0); }
+    clip: rect(90px, 1084px, 103px, 0); }
   23.52941% {
-    clip: rect(41px, 1084px, 104px, 0); }
+    clip: rect(12px, 1084px, 72px, 0); }
   29.41176% {
-    clip: rect(77px, 1084px, 9px, 0); }
+    clip: rect(23px, 1084px, 68px, 0); }
   35.29412% {
-    clip: rect(75px, 1084px, 84px, 0); }
+    clip: rect(90px, 1084px, 42px, 0); }
   41.17647% {
-    clip: rect(16px, 1084px, 1px, 0); }
+    clip: rect(87px, 1084px, 52px, 0); }
   47.05882% {
-    clip: rect(61px, 1084px, 9px, 0); }
+    clip: rect(47px, 1084px, 70px, 0); }
   52.94118% {
-    clip: rect(80px, 1084px, 77px, 0); }
+    clip: rect(98px, 1084px, 51px, 0); }
   58.82353% {
-    clip: rect(12px, 1084px, 74px, 0); }
+    clip: rect(69px, 1084px, 10px, 0); }
   64.70588% {
-    clip: rect(65px, 1084px, 101px, 0); }
+    clip: rect(26px, 1084px, 30px, 0); }
   70.58824% {
-    clip: rect(52px, 1084px, 23px, 0); }
+    clip: rect(73px, 1084px, 11px, 0); }
   76.47059% {
-    clip: rect(61px, 1084px, 100px, 0); }
+    clip: rect(3px, 1084px, 53px, 0); }
   82.35294% {
-    clip: rect(78px, 1084px, 104px, 0); }
+    clip: rect(67px, 1084px, 3px, 0); }
   88.23529% {
-    clip: rect(46px, 1084px, 70px, 0); }
+    clip: rect(111px, 1084px, 76px, 0); }
   94.11765% {
-    clip: rect(83px, 1084px, 16px, 0); }
+    clip: rect(52px, 1084px, 59px, 0); }
   100% {
-    clip: rect(88px, 1084px, 28px, 0); } }
+    clip: rect(31px, 1084px, 84px, 0); } }
 
 @keyframes glitch-anim-2 {
   0% {
-    clip: rect(111px, 1084px, 90px, 0); }
+    clip: rect(56px, 1084px, 59px, 0); }
   5.88235% {
-    clip: rect(41px, 1084px, 107px, 0); }
+    clip: rect(46px, 1084px, 62px, 0); }
   11.76471% {
-    clip: rect(50px, 1084px, 25px, 0); }
+    clip: rect(55px, 1084px, 45px, 0); }
   17.64706% {
-    clip: rect(109px, 1084px, 67px, 0); }
+    clip: rect(88px, 1084px, 103px, 0); }
   23.52941% {
-    clip: rect(31px, 1084px, 11px, 0); }
+    clip: rect(40px, 1084px, 91px, 0); }
   29.41176% {
-    clip: rect(7px, 1084px, 10px, 0); }
+    clip: rect(97px, 1084px, 91px, 0); }
   35.29412% {
-    clip: rect(44px, 1084px, 42px, 0); }
+    clip: rect(66px, 1084px, 63px, 0); }
   41.17647% {
-    clip: rect(104px, 1084px, 5px, 0); }
+    clip: rect(81px, 1084px, 93px, 0); }
   47.05882% {
-    clip: rect(69px, 1084px, 104px, 0); }
+    clip: rect(101px, 1084px, 3px, 0); }
   52.94118% {
-    clip: rect(75px, 1084px, 99px, 0); }
+    clip: rect(85px, 1084px, 44px, 0); }
   58.82353% {
-    clip: rect(43px, 1084px, 55px, 0); }
+    clip: rect(10px, 1084px, 89px, 0); }
   64.70588% {
-    clip: rect(45px, 1084px, 38px, 0); }
+    clip: rect(91px, 1084px, 102px, 0); }
   70.58824% {
-    clip: rect(2px, 1084px, 90px, 0); }
+    clip: rect(48px, 1084px, 62px, 0); }
   76.47059% {
-    clip: rect(23px, 1084px, 106px, 0); }
+    clip: rect(55px, 1084px, 105px, 0); }
   82.35294% {
-    clip: rect(114px, 1084px, 14px, 0); }
+    clip: rect(99px, 1084px, 5px, 0); }
   88.23529% {
-    clip: rect(1px, 1084px, 64px, 0); }
+    clip: rect(64px, 1084px, 94px, 0); }
   94.11765% {
-    clip: rect(11px, 1084px, 39px, 0); }
+    clip: rect(70px, 1084px, 53px, 0); }
   100% {
-    clip: rect(78px, 1084px, 25px, 0); } }
+    clip: rect(50px, 1084px, 52px, 0); } }
   .logo:before, .logo:after {
     content: attr(data-text);
     position: absolute;
@@ -380,7 +382,7 @@ header {
   .logo:before {
     left: -3px;
     text-shadow: 2px 0 blue;
-    animation: glitch-anim-2 3s infinite linear alternate-reverse; }
+    animation: glitch-anim-2 2.5s infinite linear alternate-reverse; }
   @media (max-width: 767px) {
     .logo {
       font-size: 0.9em;
@@ -403,7 +405,8 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden; }
+  overflow: hidden;
+  text-align: center; }
   @media (max-width: 767px) {
     html, body {
       z-index: -1;

@@ -38,7 +38,7 @@ gulp.task('build', function(){
 // Gulp min end JS
 //------------------------------------
 gulp.task('end',function(){
-	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js' ])
+	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js','./app/third-party/masonry.pkgd.min.js','./app/third-party/imagesloaded.pkgd.min.js' ])
     .pipe(concat('all.js'))
     .pipe(uglify())
     .pipe(gulp.dest('./app/js/'))
