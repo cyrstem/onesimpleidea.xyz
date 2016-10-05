@@ -13,24 +13,40 @@ html, body, {
 	height: 100%;
 	overflow: hidden;
 	text-align:center;
+
 	@include respondTo(phones){
 		z-index:-1;
-		background:red;
+		@include linear-gradient(#544e66, #1b1b1b);
 	}
+	// @include respondTo(tablet){
+	// 	@include linear-gradient(#544e66, #1b1b1b);
+		
+	// }
 }
 canvas{z-index:0;}
 
 progress{
 	width: 50%;
-	height: 0.3em;
+	height: 0.5em;
+	border-radius: 9px;
 	@include position(absolute, 50% 10% null 25%);
-	background-color:green;
+	background-color:#62C85B;
+	opacity:0.6;
+	z-index:3000;
 }
 
 #progressbar{
-	background-color:#62C85B;
+	background:#62C85B;
 }
 
+.danger{
+	background:red;
+	width:100%;
+	height:100%;
+	opacity:0.2;
+	display:block;
+
+}
 /* ---- .grid-item ---- */
 
 /* clear fix */

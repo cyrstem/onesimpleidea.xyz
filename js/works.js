@@ -1,4 +1,4 @@
- //console.log("./ready Clear");
+
 var me =[
 	"<h2>I'm a designer/coder with a background in Multimedia Design, i love to code and create interactive apps.</h2>",
 	"<h2>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</h2>"
@@ -14,8 +14,8 @@ var misDatos =  [
 ].join("\n");
 
 
-
 $(document).ready(function(){
+	
   var progressbar = $('#progressbar'),
     max = progressbar.attr('max'),
     time = (1000/max)*5,  
@@ -28,8 +28,11 @@ $(document).ready(function(){
       $('.progress-value').html(value + '%');
  
       if (value == max) {
-          clearInterval(animate);  
-          $('#progressbar').remove();              
+          clearInterval(animate); 
+          $('#progressbar').remove();
+          $('nav').css("opacity","1");
+          console.log("tjis is not finish ........... 67% done !!");
+          console.log("i'm working on this so don't judge me");
       }
   };
  
@@ -37,14 +40,11 @@ $(document).ready(function(){
       loading();
   }, time);
 
-
-
-
-
 	$("#w").click(function(){
 		$('.all').html($('<div>', {class: 'work'}));
 		$(".work").css("display","block");
 		$(".work").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
+	    $( ".all" ).add( "<button>close</button>" );
 	});
 
 	$("#i").click(function(){
@@ -64,8 +64,4 @@ $(document).ready(function(){
 	});
 
 });
-
-
-
-
 

@@ -1,11 +1,13 @@
 @import "base";
 @import "screen";
+
 nav{
+	opacity:0;
 	@include position(absolute, 70% 0 null 0);
 	font-family: $customFont;
 	@include span-columns(2);
 	 @include clearfix;
-
+	
 	ul{
 		@include outer-container;
 		list-style:none;
@@ -25,6 +27,7 @@ nav{
 					@include span-columns(4);
 					@include transform(translateX(-30px));
 				}
+
 			a{
 				font-size:1em;
 				font-family: $customFont;

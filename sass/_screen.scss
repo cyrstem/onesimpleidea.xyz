@@ -8,6 +8,9 @@ $fullscreen: 1200px;
 	@if $media == phones{
 		@media(max-width: $mobile){@content;}
 	}
+	@else if $media == tablet{
+		@media(max-width: $tablet){@content;}
+	}
 	@else if $media == pantallas{
 		@media(max-width: $desktop){@content;}
 	}

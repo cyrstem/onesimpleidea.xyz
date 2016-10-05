@@ -15,9 +15,6 @@ header{
 	width:90%;
 	height: 80%;
 	z-index:999;
-   // background:white;
- 
-
 	@include outer-container;
 	@include position(absolute, 10% 5% null null);
 	@include respondTo(phones){
@@ -66,21 +63,18 @@ header{
   @include outer-container;
   @include position(absolute, 10% 0 null 0);
     h2{
-        @include outer-container;
-       h2{text-align:center;}
-    }
-  // @include margin(10px 10px 10px null);
-  // @include padding(10px 10px 10px null);
+      @include outer-container;
+      }
   font-size:1.3em;
 
-  // @include respondTo(phones){
-  //  font-size:1em;
-  //  background:white;
-  //   @include position(relative, 30px null null 0);
-  //   @include margin(10px 10px 10px null);
-  //   @include span-columns(12);
-  //   height: 70%;
-  // }
+  @include respondTo(phones){
+   font-size:1em;
+
+    @include position(relative, 30px null null 0);
+    @include margin(10px 10px 10px null);
+    @include span-columns(12);
+    height: 70%;
+  }
 
 }
 

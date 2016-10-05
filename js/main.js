@@ -201,5 +201,5 @@ function handleMouseDown (){
     }
 }
 
-$(".info").hide();
+// $(".info").hide();
   init();
