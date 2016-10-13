@@ -15,7 +15,6 @@ var misDatos =  [
 
 
 $(document).ready(function(){
-	
   var progressbar = $('#progressbar'),
     max = progressbar.attr('max'),
     time = (1000/max)*5,  
@@ -44,7 +43,7 @@ $(document).ready(function(){
 		$('.all').html($('<div>', {class: 'work'}));
 		$(".work").css("display","block");
 		$(".work").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
-	    $( ".all" ).add( "<button>close</button>" );
+	    $("#close").css("visibility","visible")
 	});
 
 	$("#i").click(function(){
