@@ -31,7 +31,7 @@ nav{
 			a{
 				font-size:1em;
 				font-family: $customFont;
-
+				@include margin(5px);
 				color: $menu-color;
 				text-decoration: none;
 				@include perspective-origin(30% 30%);
@@ -54,3 +54,5 @@ nav{
 		z-index:3;
 	}
 }
+
+

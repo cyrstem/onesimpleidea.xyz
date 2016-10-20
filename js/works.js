@@ -30,7 +30,6 @@ $(document).ready(function(){
           clearInterval(animate); 
           $('#progressbar').remove();
           $('nav').css("opacity","1");
-          console.log("tjis is not finish ........... 67% done !!");
           console.log("i'm working on this so don't judge me");
       }
   };
@@ -43,15 +42,15 @@ $(document).ready(function(){
 		$('.all').html($('<div>', {class: 'work'}));
 		$(".work").css("display","block");
 		$(".work").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
-	    $("#close").css("visibility","visible")
+	    $("#close").css("visibility","visible");
 	});
 
 	$("#i").click(function(){
 		$(".work").hide();
 		$('.all').html($('<div>', {class: 'me'}));
 		$(".me").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.2s ease-in"});
+		$("#close").css("visibility","visible")
 		$(".me").append(me);
-
 	});
 
 	$("#c").click(function(){
@@ -59,7 +58,23 @@ $(document).ready(function(){
 		$('.all').html($('<div>', {class: 'contact'}));
 		$(".contact").append(misDatos);
 		$(".contact").css({"-webkit-animation":"bounceIn 1s ease-in"," -moz-animation":"bounceIn 1s ease-in","animation":"bounceIn 1.3s ease-in"});
+		$("#close").css("visibility","visible");
+	});
 
+	$("#close").click(function(){
+		if ($('.work').length > 0) { 
+    		$(".work").hide();
+    		$("#close").css("visibility","hidden");
+		}
+
+		 if ($('.me').length > 0) {
+			$(".me").hide();
+			$("#close").css("visibility","hidden");
+		}
+		else if ($('.contact').length > 0) {
+			$(".contact").hide();
+			$("#close").css("visibility","hidden");
+		}
 	});
 
 });

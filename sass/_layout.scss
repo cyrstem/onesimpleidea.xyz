@@ -40,12 +40,23 @@ progress{
 	background:#62C85B;
 }
 
+
+//butoon close
 #close{
- color:white;
- font-size:1em;
- position:absolute;
- font-family: 'Orbitron', sans-serif;
+  border-radius: 30px;
+  visibility: hidden;
+  background:transparent;
+    @include position(absolute, 3em 200px null null);
+  float:right;
+  color:#61F5A1;
+  font-size:1em;
+  font-family: 'Orbitron', sans-serif;
+  @include respondTo(phones){
+		 @include position(absolute, 300px null null null);
+	}
 }
+
+
 
 /* ---- .grid-item ---- */
 
