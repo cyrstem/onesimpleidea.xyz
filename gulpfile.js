@@ -10,7 +10,7 @@ var gulp = require('gulp');
 	neat = require('node-neat').includePaths;
 	refills = require('node-refills').includePaths;
 
-	//minify = require('gulp-clean-css');
+	minify = require('gulp-clean-css');
 	uglify = require('gulp-uglify');
 	rename = require('gulp-rename');
 	concat = require('gulp-concat');
@@ -40,8 +40,16 @@ gulp.task('build', function(){
 gulp.task('end',function(){
 	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js','./app/third-party/masonry.pkgd.min.js','./app/third-party/imagesloaded.pkgd.min.js' ])
     .pipe(concat('all.js'))
+
     .pipe(uglify())
+    .pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
     .pipe(gulp.dest('./app/js/'))
+    .pipe(plumber())
+     return gulp.src('./app/css/main.css')
+     	.pipe(minify())
+		.pipe(rename({suffix:'.min'}))
+		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
+		.pipe(gulp.dest('./app/css'));
 	});
 //------------------------------------
 //  sass to css + bourbon + neat
