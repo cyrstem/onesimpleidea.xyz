@@ -43,16 +43,16 @@ progress{
 
 //butoon close
 #close{
-  border-radius: 30px;
+  border-radius: 1px;
   visibility: hidden;
   background:transparent;
-    @include position(absolute, 3em 200px null null);
+    @include position(absolute, 3em 90px null null);
   float:right;
   color:#61F5A1;
   font-size:1em;
   font-family: 'Orbitron', sans-serif;
   @include respondTo(phones){
-		 @include position(absolute, 300px null null null);
+		 @include position(absolute, 4.6em 10px null null);
 	}
 }
 
@@ -67,7 +67,7 @@ progress{
 
 .grid-sizer,
 .grid-item {
-  width: 100%;
+  width: 20%;
 }
 
 .grid-item {
