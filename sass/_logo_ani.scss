@@ -56,7 +56,7 @@
   @include textGlitch("glitch", 17, #61F5A1, black, red, blue, 1084, 115);
   @include respondTo(phones){
     font-size:0.9em;
-    @include position(absolute, 95% 0 null null);
+    @include position(absolute, 0 12 null null);
     @include linear-gradient(#232526, #1b1b1b);
 
   }

@@ -1,7 +1,7 @@
 
 section{
 	background:white;
-	  overflow-y: scroll;
+	overflow-y: scroll;
 }
 
 header{
@@ -27,6 +27,23 @@ header{
 	//@include animation(bounceIn 1s ease-in);
 }
 
+article{
+    // @include outer-container;
+    @include span-columns(12);
+    font-family: $customFont;
+
+    a{
+      color:#F7FF00;
+    }
+
+  a:hover{
+        color: $link-hover;
+      }
+}
+
+b{
+  background-color:#62C85B;
+}
 
 .me{
 

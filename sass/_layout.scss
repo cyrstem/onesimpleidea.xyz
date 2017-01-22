@@ -40,7 +40,6 @@ progress{
 	background:#62C85B;
 }
 
-
 //butoon close
 #close{
   border-radius: 1px;
@@ -54,6 +53,8 @@ progress{
   @include respondTo(phones){
 		 @include position(absolute, 4.6em 10px null null);
 	}
+	animation: blink-animation 0.1s linear infinite;
+              -webkit-animation: blink-animation 0.1s linear infinite;
 }
 
 /* ---- .grid-item ---- */
@@ -67,7 +68,7 @@ progress{
 
 .grid-sizer,
 .grid-item {
-  width: 20%;
+  width: 50%;
 }
 
 .grid-item {
