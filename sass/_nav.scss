@@ -35,6 +35,9 @@ nav{
 				color: $menu-color;
 				text-decoration: none;
 				@include perspective-origin(30% 30%);
+				@include respondTo(phones){
+					color:$small-color;
+				}
 			}
 			a:hover{
 				color: $link-hover;
@@ -51,6 +54,7 @@ nav{
 		@include position(relative, 0 0 null 0);
 		font-size:0.8em;
 		@include span-columns(12);
+		background-color:#FF0400;
 		z-index:3;
 	}
 }

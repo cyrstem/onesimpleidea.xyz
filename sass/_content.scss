@@ -22,9 +22,15 @@ header{
 		@include position(relative, 0.5em null null 0);
 		@include margin(10px 10px 10px null);
 		@include span-columns(12);
-		height: 70%;
+		height: 100%;
 	}
 	//@include animation(bounceIn 1s ease-in);
+  iframe{
+    width:100%;
+  }
+  img{
+    width:100%;
+  }
 }
 
 article{

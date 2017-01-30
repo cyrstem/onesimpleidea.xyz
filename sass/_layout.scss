@@ -6,7 +6,7 @@
 * { box-sizing: border-box; }
 html, body, {
 	-webkit-font-smoothing: antialiased;
-	@include linear-gradient(#232526, #1b1b1b);
+	@include linear-gradient(#485563, #29323c);
 	@include margin(0 0 0 0);
 	@include padding(0 0 0 0);
 	width: 100%;
@@ -16,7 +16,7 @@ html, body, {
 
 	@include respondTo(phones){
 		z-index:-1;
-		@include linear-gradient(#544e66, #1b1b1b);
+		@include linear-gradient(#F8FFF7, #29323c);
 	}
 
 	// @include respondTo(tablet){
