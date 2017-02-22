@@ -21,7 +21,7 @@ html, body, {
 
 	// @include respondTo(tablet){
 	// 	@include linear-gradient(#544e66, #1b1b1b);
-		
+
 	// }
 }
 canvas{z-index:0;}
@@ -30,7 +30,7 @@ progress{
 	width: 50%;
 	height: 0.5em;
 	border-radius: 9px;
-	@include position(absolute, 50% 10% null 25%);
+	@include position(absolute, 45% 10% null 25%);
 	background-color:#62C85B;
 	opacity:0.6;
 	z-index:3000;
