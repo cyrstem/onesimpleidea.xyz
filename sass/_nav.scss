@@ -9,6 +9,7 @@ nav{
 	 @include clearfix;
 	
 	ul{
+		// padding:30px;
 		@include outer-container;
 		list-style:none;
 		li{
@@ -31,22 +32,31 @@ nav{
 			a{
 				font-size:1em;
 				font-family: $customFont;
-				@include margin(5px);
+				@include margin(15px);
 				color: $menu-color;
 				text-decoration: none;
-				@include perspective-origin(30% 30%);
+				@include perspective-origin(20% 20%);
 				@include respondTo(phones){
 					color:$small-color;
 				}
 			}
+
 			a:hover{
+				color: $link-hover;
+				// padding:15px 15px 15px 15px;
+				@include transition(all 0.2s ease-in-out);
+
+			}
+			a:focus{
 				color: $link-hover;
 			}
 		}
 		li:hover{
+
 				@include border-style(solid solid solid);
 				@include transition(all 0.4s ease-in-out);
-				@include transform(translateX(-30px));
+				//@include transform(translateX(-30px));
+				// background-color:#959595;
 			}
 
 	}
@@ -54,7 +64,7 @@ nav{
 		@include position(relative, 0 0 null 0);
 		font-size:0.8em;
 		@include span-columns(12);
-		background-color:#FF0400;
+		background-color:#000000;
 		z-index:3;
 	}
 }

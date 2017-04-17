@@ -139,4 +139,13 @@ b{
 
 @include scrollbars(.5em, slategray);
 
+button{
 
+ @include button(shiny, #DBFF1A);
+  font-size: 0.8em;
+  padding:2px;
+  border:none;
+
+
+
+}

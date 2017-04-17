@@ -16,7 +16,7 @@ html, body, {
 
 	@include respondTo(phones){
 		z-index:-1;
-		@include linear-gradient(#F8FFF7, #29323c);
+		@include linear-gradient( #29323c, #517363);
 	}
 
 	// @include respondTo(tablet){
