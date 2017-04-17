@@ -5,6 +5,8 @@ echo "# Que archivo o carpeta cambio"
 read input_variable
 cd docs
 rm -r $input_variable
+cd ..
+cd app
 echo "Remove  el archivo anterior"
 echo "pasando tus huevadas"
 cp -r $input_variable docs/$input_variable
