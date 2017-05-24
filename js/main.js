@@ -19,15 +19,14 @@
     createLight();
     createCubes();
     loop();
-    document.addEventListener('mousemove', handleMouseMove, false);
-    
+    document.addEventListener('mousemove', handleMouseMove, false);    
   }
 //=======================================================================
 //CREAR ESCENA
 //=======================================================================
   function createScene(){
     HEIGHT = window.innerHeight;
-      WIDTH = window.innerWidth;
+    WIDTH = window.innerWidth;
 
   // crea la scena y camara basico 
       scene = new THREE.Scene();
@@ -81,6 +80,7 @@ function createLight(){
   scene.add( light );
 
 
+
 }
 //=======================================================================
 //ELEMENTO o ELementos
@@ -90,10 +90,10 @@ function Cube (){
   this.mesh =  new THREE.Object3D();
   
   var geo = new THREE.BoxGeometry(2.5,2.5,2.5);
-  var mat = new THREE.MeshPhongMaterial({color:Colors.black, specular:Colors.white, shininess:5, reflectivity:10});
-  
-  
-  var nBlocks = 8 +Math.floor(Math.random()*4);//esto es no nuevo
+
+ var mat = new THREE.MeshPhongMaterial({color:Colors.black, specular:Colors.black, shininess:5, reflectivity:5});
+// numero de cubos y position  de los cubos
+  var nBlocks = 7 +Math.floor(Math.random()*3.2);//esto es no nuevo
 
   for(var i=0;i<nBlocks; i++){
     var c = new THREE.Mesh(geo,mat);
@@ -119,7 +119,7 @@ function Cube (){
   }
 //mouse click scale  random
   this.action = function(){
-    var s = .1 + Math.random()*2.5;
+    var s = .1 + Math.random()*1.5;
     c.scale.set(s,s,s);
   }
 }
@@ -161,8 +161,8 @@ function handleMouseMove(event) {
 
 }
 function updateCube(){
-  var targetX = normalize(mousePos.x, -1, 1, -WIDTH, WIDTH);
-  var targetY = normalize(mousePos.y, -1, 1, -HEIGHT, HEIGHT);
+  var targetX = normalize(mousePos.x, -0.6, 1, -WIDTH, WIDTH);
+  var targetY = normalize(mousePos.y, -0.6, 1, -HEIGHT, HEIGHT);
   //airplane.mesh.rotation.z = (targetY-airplane.mesh.position.y)*0.0128;
   cube.mesh.rotation.y = (targetY-cube.mesh.position.y)*0.0008;
   cube.mesh.rotation.x = (targetX-cube.mesh.position.x)*0.0008;
@@ -193,7 +193,7 @@ function handleMouseDown (){
       requestAnimationFrame( loop );
       renderer.render (scene, camera);
       for(var i= 0; i < cubes.length; i++){
-      cubes[i].rotation.x+=0.02;
+      cubes[i].rotation.x+=0.03;
       //var t = .1 + Math.random()*2.5;
       //cube[i].scale.set(t,t,t);
       //cubes[i].position.x = 0.3;

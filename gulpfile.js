@@ -9,7 +9,6 @@ var gulp = require('gulp');
 	bourbon = require('node-bourbon').includePaths;
 	neat = require('node-neat').includePaths;
 	refills = require('node-refills').includePaths;
-
 	minify = require('gulp-clean-css');
 	uglify = require('gulp-uglify');
 	rename = require('gulp-rename');
@@ -23,8 +22,8 @@ gulp.task('build', function(){
 	gulp.src([
 		'third-party/three.js/build/*.js',
 		'third-party/jquery/dist/jquery.min.js',
-		'third-party/masonry/dist/masonry.pkgd.min.js',
-		'third-party/imagesloaded/imagesloaded.pkgd.min.js'
+		'third-party/masonry/dist/masonry.pkgd.min.js'
+		//'third-party/imagesloaded/imagesloaded.pkgd.min.js'
 		])
 	.pipe(plumber())
 	// .pipe(concat('app.js'))
@@ -41,7 +40,7 @@ gulp.task('end',function(){
 	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js','./app/third-party/masonry.pkgd.min.js','./app/third-party/imagesloaded.pkgd.min.js' ])
     .pipe(concat('all.js'))
 
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
     .pipe(gulp.dest('./app/js/'))
     .pipe(plumber())
@@ -51,6 +50,7 @@ gulp.task('end',function(){
 		.pipe(header('/*Author: -cyrstem@gmail.com, Author URI: -onesimpleidea.xyz*/\n'))
 		.pipe(gulp.dest('./app/css'));
 	});
+
 //------------------------------------
 //  sass to css + bourbon + neat
 //------------------------------------

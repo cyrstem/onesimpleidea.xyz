@@ -6,7 +6,10 @@
 * { box-sizing: border-box; }
 html, body, {
 	-webkit-font-smoothing: antialiased;
-	@include linear-gradient(#485563, #29323c);
+	//@include linear-gradient(#485563, #29323c);
+	//cambio 
+	@include linear-gradient(#FFFEFF, #FFFFFF);
+	// background-color:red;
 	@include margin(0 0 0 0);
 	@include padding(0 0 0 0);
 	width: 100%;
@@ -26,18 +29,25 @@ html, body, {
 }
 canvas{z-index:0;}
 
+progress[value]::-webkit-progress-bar{
+	appearance: none;
+	@include linear-gradient(#544e66, #1b1b1b);
+
+}
+
 progress{
 	width: 50%;
-	height: 0.5em;
-	border-radius: 9px;
+	height: 0.9em;
+	border-radius: 10px;
 	@include position(absolute, 45% 10% null 25%);
-	background-color:#62C85B;
-	opacity:0.6;
+	background-color:#000000;
+	//opacity:0.8;
 	z-index:3000;
+	
 }
 
 #progressbar{
-	background:#62C85B;
+	background-color:black;
 }
 
 //butoon close
@@ -47,7 +57,7 @@ progress{
   background:transparent;
     @include position(absolute, 3em 90px null null);
   float:right;
-  color:#61F5A1;
+  color:black;
   font-size:1em;
   font-family: 'Orbitron', sans-serif;
   @include respondTo(phones){
@@ -79,3 +89,5 @@ progress{
   display: block;
   width: 100%;
 }
+
+ 

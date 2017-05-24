@@ -3,7 +3,7 @@
 
 nav{
 	opacity:0;
-	@include position(absolute, 70% 0 null 0);
+	@include position(absolute, 30% 0 null 0);
 	font-family: $customFont;
 	@include span-columns(2);
 	 @include clearfix;
@@ -13,13 +13,13 @@ nav{
 		@include outer-container;
 		list-style:none;
 		li{
-			border: 0.1em;
+			border: 0.01em;
 	 		@include border-style(null null solid);
 			border-color:$menu-color;
 			text-align:center;
 			@include margin(1em null 1em null);
 			@include padding(0.4em null 0.4em null);
-			transform: skewX(-10deg);
+			// transform: skewX(-10deg);
 
 				@include respondTo(phones){
 					display: inline;
