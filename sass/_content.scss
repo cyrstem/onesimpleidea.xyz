@@ -62,7 +62,7 @@ b{
 	@include outer-container;
   font-family: $customFont;
 	@include position(absolute, 10% 15% null null);
-	background:black;
+	background:white;
   // opacity:0.7;
 	font-size:1.5em;
   
@@ -78,6 +78,9 @@ b{
       @include margin(10px 10px 10px null);
       @include span-columns(12);
       height: 70%;
+      h2{
+        font-size: 0.5em;
+      }
     }
 }
 .contact{

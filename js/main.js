@@ -97,9 +97,9 @@ function Cube (){
 
   for(var i=0;i<nBlocks; i++){
     var c = new THREE.Mesh(geo,mat);
-    c.position.x = (Math.random()-0.3)* 9.5;
-    c.position.y = (Math.random()-0.4)* 9.5;
-    c.position.z = (Math.random()-0.4)* 10;
+    c.position.x = (Math.random()-0.3)* 4.5;
+    c.position.y = (Math.random()-0.4)* 4.5;
+    c.position.z = (Math.random()-0.4)* 4.5;
 
     c.rotation.z = Math.random()*Math.PI;
     c.rotation.x = Math.random()*Math.PI;
@@ -164,7 +164,7 @@ function updateCube(){
   var targetX = normalize(mousePos.x, -0.6, 1, -WIDTH, WIDTH);
   var targetY = normalize(mousePos.y, -0.6, 1, -HEIGHT, HEIGHT);
   //airplane.mesh.rotation.z = (targetY-airplane.mesh.position.y)*0.0128;
-  cube.mesh.rotation.y = (targetY-cube.mesh.position.y)*0.0008;
+  cube.mesh.rotation.y = (targetY-cube.mesh.position.y)*0.0408;
   cube.mesh.rotation.x = (targetX-cube.mesh.position.x)*0.0008;
 
 }

@@ -41,13 +41,13 @@ progress{
 	border-radius: 10px;
 	@include position(absolute, 45% 10% null 25%);
 	background-color:#000000;
-	//opacity:0.8;
+	opacity:0.5;
 	z-index:3000;
 	
 }
 
 #progressbar{
-	background-color:black;
+	background-color:white;
 }
 
 //butoon close
