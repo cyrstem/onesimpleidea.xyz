@@ -13,6 +13,7 @@ nav{
 		@include outer-container;
 		list-style:none;
 		li{
+			pointer-events: auto;
 			border: 0.01em;
 	 		@include border-style(null null solid);
 			border-color:$menu-color;
@@ -26,35 +27,47 @@ nav{
 					@include padding(0.8em);
 					@include margin(0);
 					@include span-columns(4);
-					@include transform(translateX(-30px));
+					// @include transform(translateX(-30px));
 				}
 
-			a{
+			a{  
+				
+				@include padding(null 35% null 35%);
+				// background:red;
+				content:""; 
 				font-size:1em;
+				// @include padding(25px);
 				font-family: $customFont;
-				@include margin(15px);
+				// @include margin(15px);
 				color: $menu-color;
 				text-decoration: none;
-				@include perspective-origin(20% 20%);
+				//@include perspective-origin(20% 20%);
 				@include respondTo(phones){
 					color:$small-color;
 				}
 			}
 
 			a:hover{
+				// @include padding(25px);
 				color: $link-hover;
 				// padding:15px 15px 15px 15px;
-				@include transition(all 0.2s ease-in-out);
+				@include transition(all 0.4s ease-in-out);
 
 			}
 			a:focus{
+				@include padding(25px);
 				color: $link-hover;
+			}
+			a:active{
+				color:black;
 			}
 		}
 		li:hover{
 
 				@include border-style(solid solid solid);
 				@include transition(all 0.4s ease-in-out);
+				// background-color:rgb(58, 0, 0);
+				// opacity:0.6;
 				//@include transform(translateX(-30px));
 				// background-color:#959595;
 			}

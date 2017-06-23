@@ -92,6 +92,16 @@ function Cube (){
   var geo = new THREE.BoxGeometry(2.5,2.5,2.5);
 
  var mat = new THREE.MeshPhongMaterial({color:Colors.black, specular:Colors.black, shininess:5, reflectivity:5});
+  // var mat = new THREE.ShaderMaterial({
+  //       uniforms: [],
+  //       vertexShader: document.getElementById('vertexShader').textContent,
+  //       fragmentShader: document.getElementById('fragmentShader').textContent
+  //   });
+
+
+
+
+ //var  mat = new THREE.ShaderMaterial( uniforms, attributes, defines, vertexShader );
 // numero de cubos y position  de los cubos
   var nBlocks = 7 +Math.floor(Math.random()*3.2);//esto es no nuevo
 
