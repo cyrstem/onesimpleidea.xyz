@@ -6,9 +6,9 @@ void 0!==c?null===c?void r.removeAttr(a,b):e&&"set"in e&&void 0!==(d=e.set(a,c,b
 
 
 var me =[
-	"<h2>I'm a designer/coder with a background in Multimedia Design, i love to code and create interactive apps.</h2>",
-	"<h2>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</h2>",
-    "<h2>you can contact me on this networks:</h2>",
+	"<h3>I'm a designer/coder with a background in Multimedia Design, i love to code and create interactive apps.</h3>",
+	"<h3>I'm also fluent in: /Interaction Design /3d Animation /Motion Design.</h3>",
+    "<h3>you can contact me on this networks:</h3>",
     '<center>',
     '<a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="45"></a>',
   '<a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="45"></a>',
