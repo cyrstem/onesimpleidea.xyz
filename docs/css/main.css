@@ -167,7 +167,8 @@ article {
     color: #41323D; }
 
 b {
-  background-color: #62C85B; }
+  background-color: #000000;
+  color: #FFFFFF; }
 
 .me {
   border: 0.05em;
