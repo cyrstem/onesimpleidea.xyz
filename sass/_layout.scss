@@ -21,11 +21,6 @@ html, body, {
 		z-index:-1;
 		@include linear-gradient( #29323c, #517363);
 	}
-
-	// @include respondTo(tablet){
-	// 	@include linear-gradient(#544e66, #1b1b1b);
-
-	// }
 }
 canvas{z-index:0;}
 

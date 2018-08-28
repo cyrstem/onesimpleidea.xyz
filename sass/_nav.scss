@@ -2,12 +2,12 @@
 @import "screen";
 
 nav{
-	opacity:0;
+
 	@include position(absolute, 30% 0 null 0);
 	font-family: $customFont;
 	@include span-columns(2);
 	 @include clearfix;
-	
+
 	ul{
 		// padding:30px;
 		@include outer-container;
@@ -27,14 +27,15 @@ nav{
 					@include padding(0.8em);
 					@include margin(0);
 					@include span-columns(4);
-					// @include transform(translateX(-30px));
+
+
 				}
 
-			a{  
-				
+			a{
+
 				@include padding(null 35% null 35%);
 				// background:red;
-				content:""; 
+				content:"";
 				font-size:1em;
 				// @include padding(25px);
 				font-family: $customFont;
@@ -72,14 +73,14 @@ nav{
 				// background-color:#959595;
 			}
 
+
 	}
 	@include respondTo(phones){
 		@include position(relative, 0 0 null 0);
+
 		font-size:0.8em;
 		@include span-columns(12);
 		background-color:#000000;
 		z-index:3;
 	}
 }
-
-

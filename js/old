@@ -1,0 +1,64 @@
+<section class="work">
+
+  <article>
+    <header><h1>//More Works <a href="https://www.behance.net/cyrstemf4b3" target="_blank">Here</a></h1></header>
+  </article>
+   <article>
+    <a href="http://www.pablorosero.com/polucion/"><img src="assets/polucion.png"></a>
+    <p><b>//WebApp and Interactive Installation: </b>Project develop for <a style="color:black;" href="http://www.pablorosero.com/">Pablo Rosero</a> for his expo Data in Quito .</p>
+    <p>this app conected to polution sensors develop by Pablo to measure air quality around Quito.</p>
+    <p>the app will be runing live until  dec-28-2017.</p>
+
+
+  </article>
+
+  <article>
+    <iframe src="https://player.vimeo.com/video/198069422" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <p><b>//Interactive Installation: </b> Custom Made Pacman Game into a 60m x 32m (8 floors) bulding in the middle of Quito, this is a preview of how the night turn out.</p>
+
+  </article>
+
+ <!--  <article>
+
+  <a href="http://onesimpleidea.xyz/rutas"><img src="assets/threejs.png"></a>
+    <p><b>//WebSite Senderos del Ecuador:</b>  Website tool to preview tourist routes for climbing in different parts of ecuador this one was Cojitambo, the project was beta, the idea was to load 3d models taken from a drone to a website were we preview commom routes taken by climbers of moutanins and a small description of cool spots on the mountain </p>
+
+     <p>The project was put on hold because of changes made on the ministry of Sports which was the official promoter</p>
+  </article> -->
+
+  <article>
+    <iframe src="https://player.vimeo.com/video/198601941" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+    <p><b>//OF app audio Reactive:</b> Audio Reactive OF app base on the book openFrameworks Essentials </p>
+  </article>
+
+   <article>
+    <header><h1>//Other works you can find more <a href="http://cargocollective.com/onesimpleidea">here</a></h1></header>
+     <div class="grid">
+<div class="grid-sizer"></div>
+  <div class="grid-item">
+    <img src="assets/1.png" />
+  </div>
+  <div class="grid-item">
+    <img src="assets/3.jpg" />
+  </div>
+  <div class="grid-item">
+    <img src="assets/4.png" />
+  </div>
+  <div class="grid-item">
+    <img src="assets/5.png" />
+  </div>
+  <div class="grid-item">
+    <img src="assets/6.jpg" />
+  </div>
+  <div class="grid-item">
+    <img src="assets/7.png" />
+  </div>
+  <div class="grid-item">
+    <img src="assets/8.png" />
+  </div>
+  </article>
+  <article>
+       <header><h1>//Other works you can find more <a href="http://cargocollective.com/onesimpleidea">here</a></h1></header>
+  </article>
+
+</section>

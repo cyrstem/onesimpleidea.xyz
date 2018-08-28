@@ -20,6 +20,7 @@
     createCubes();
     loop();
     document.addEventListener('mousemove', handleMouseMove, false);    
+    //document.addEventListener('mouseclick',handleMouseClick,false);
   }
 //=======================================================================
 //CREAR ESCENA
@@ -89,9 +90,16 @@ function createLight(){
 function Cube (){
   this.mesh =  new THREE.Object3D();
   
-  var geo = new THREE.BoxGeometry(2.5,2.5,2.5);
+  var geo = new THREE.BoxGeometry(3.5,3.5,3.5);
+  var mat = new THREE.MeshPhongMaterial({color:Colors.black, specular:Colors.black, shininess:5, reflectivity:5});
 
- var mat = new THREE.MeshPhongMaterial({color:Colors.black, specular:Colors.black, shininess:5, reflectivity:5});
+//esta parte es para wired
+var wireGeo = new THREE.EdgesGeometry(this.mesh);
+var wireMat =  new THREE.LineBasicMaterial( color:Color.brown, linewidth:8);
+var wire = new THREE.LineSegments(geo,wireMat);
+this.mesh.add(wire);
+
+
   // var mat = new THREE.ShaderMaterial({
   //       uniforms: [],
   //       vertexShader: document.getElementById('vertexShader').textContent,
@@ -103,7 +111,7 @@ function Cube (){
 
  //var  mat = new THREE.ShaderMaterial( uniforms, attributes, defines, vertexShader );
 // numero de cubos y position  de los cubos
-  var nBlocks = 7 +Math.floor(Math.random()*3.2);//esto es no nuevo
+  var nBlocks = 10 +Math.floor(Math.random()*3.2);//esto es no nuevo
 
   for(var i=0;i<nBlocks; i++){
     var c = new THREE.Mesh(geo,mat);
@@ -129,7 +137,7 @@ function Cube (){
   }
 //mouse click scale  random
   this.action = function(){
-    var s = .1 + Math.random()*1.5;
+    var s = .4 + Math.random()*1.5;
     c.scale.set(s,s,s);
   }
 }
@@ -188,9 +196,13 @@ function normalize(v,vmin,vmax,tmin,tmax){
   return tv;
 }
 
-function handleMouseDown (){
+function handleMouseDown(){
   // console.log("hello");
-  //cube.action();
+  // cube.action();
+}
+
+function handleMouseClick(){
+  console.log("hello");
 }
 
 //=======================================================================
