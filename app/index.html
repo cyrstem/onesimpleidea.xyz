@@ -33,6 +33,13 @@
 	</ul>
 </nav>
 
+<div class="main">
+  <section class="work">
+    
+  </section>
+</div>
+
+<!-- 
 
 <div class="main">
   <section class="work">
@@ -69,7 +76,7 @@
       </div>
     </article>
   </section>
-
+ -->
 
 </div>
 
@@ -78,8 +85,8 @@
 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js">
         </script>
-        <script src="https://cdn.rawgit.com/robin-dela/hover-effect/master/js/hover.min.js">
-        </script>
+ <!--        <script src="https://cdn.rawgit.com/robin-dela/hover-effect/master/js/hover.min.js">
+        </script> -->
 <!-- <script src="js/all.js"></script>
 <script src="js/main.min.js"></script> -->
 <script src="js/works.min.js"></script>
@@ -153,17 +160,20 @@ const phrases = [
   'o n e s i m p l e i d e a',
   ' not really my name',
   ' but any way...',
-  'heres  you can see what i do',
-  'spread the word',
+  'here you can see what i do',
+  'you can find most of the code ',
+  'for some of this proyects',
+  'on git     '
 ]
 
 const el = document.querySelector('.text')
+
 const fx = new TextScramble(el)
 
 let counter = 0
 const next = () => {
   fx.setText(phrases[counter]).then(() => {
-    setTimeout(next, 800)
+    setTimeout(next, 900)
   })
   counter = (counter + 1) % phrases.length
 }

@@ -2,17 +2,17 @@
 @import "screen";
 
 nav{
-
 	@include position(absolute, 30% 0 null 0);
 	font-family: $customFont;
 	@include span-columns(2);
-	 @include clearfix;
+	@include clearfix;
 
 	ul{
 		// padding:30px;
 		@include outer-container;
 		list-style:none;
 		li{
+			font-size:1.0em;
 			pointer-events: auto;
 			border: 0.01em;
 	 		@include border-style(null null solid);
@@ -20,39 +20,35 @@ nav{
 			text-align:center;
 			@include margin(1em null 1em null);
 			@include padding(0.4em null 0.4em null);
-			// transform: skewX(-10deg);
 
 				@include respondTo(phones){
 					display: inline;
-					@include padding(0.8em);
+					@include padding(0.3em);
 					@include margin(0);
 					@include span-columns(4);
-
 
 				}
 
 			a{
 
-				@include padding(null 35% null 35%);
-				// background:red;
+				@include padding(null 25% null 35%);
+	
 				content:"";
 				font-size:1em;
-				// @include padding(25px);
+
 				font-family: $customFont;
-				// @include margin(15px);
+
 				color: $menu-color;
 				text-decoration: none;
-				//@include perspective-origin(20% 20%);
+
 				@include respondTo(phones){
 					color:$small-color;
 				}
 			}
 
 			a:hover{
-				// @include padding(25px);
 				color: $link-hover;
-				// padding:15px 15px 15px 15px;
-				@include transition(all 0.4s ease-in-out);
+
 
 			}
 			a:focus{
@@ -67,20 +63,15 @@ nav{
 
 				@include border-style(solid solid solid);
 				@include transition(all 0.4s ease-in-out);
-				// background-color:rgb(58, 0, 0);
-				// opacity:0.6;
-				//@include transform(translateX(-30px));
-				// background-color:#959595;
 			}
 
 
 	}
 	@include respondTo(phones){
 		@include position(relative, 0 0 null 0);
-
 		font-size:0.8em;
 		@include span-columns(12);
-		background-color:#000000;
+		background-color:#ffffff;
 		z-index:3;
 	}
 }

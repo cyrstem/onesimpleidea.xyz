@@ -136,29 +136,6 @@ b{
   background-color:$menu-color;
   color:$link-hover2;
 }
-
-
-@keyframes bounceIn {
-  0% {
-    transform: scale(0.1);
-    opacity: 0;
-    background:#8F7E92;
-   @include triangle(12px, gray, up);
-   
-  }
-  60% {
-    transform: scale(1.2);
-    opacity: 0;
-     background:$info-color;
-    @include triangle(10px 6px, gray, up);
-
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
 @mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 80%)) {
   ::-webkit-scrollbar {
       width:  $size;
