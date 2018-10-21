@@ -1,13 +1,14 @@
 @import "neat-helpers";
-@import "nav";
+//@import "nav";
+@import "whoami";
 @import "content";
 @import "logo_ani";
 
 * { box-sizing: border-box; }
 html, body, {
+	//@include linear-gradient(#000000, #fc0008);
 	-webkit-font-smoothing: antialiased;
-	@include linear-gradient(#FFFEFF, #FFFFFF);
-	// background-color:red;
+	background-color:red;
 	@include margin(0 0 0 0);
 	@include padding(0 0 0 0);
 	width: 100%;
@@ -17,9 +18,10 @@ html, body, {
 
 	@include respondTo(phones){
 		z-index:-1;
-		@include linear-gradient( #29323c, #517363);
 	}
 }
+
+
 canvas{z-index:0;}
 
 

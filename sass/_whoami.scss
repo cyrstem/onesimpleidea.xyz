@@ -1,0 +1,23 @@
+@import "base";
+@import "screen";
+//esto va pasar a ser nuevo sitio solo textos
+
+.Titles{
+	
+	@include position(absolute, 20% 0 null 5px);
+	@include span-columns(5);
+	font-family:$customFont;
+	font-size:44px;
+	text-align:left;
+	
+		@include respondTo(phones){
+		@include outer-container;
+		@include position(relative, 0 0 0 0);
+		@include margin(null null null null);
+		text-align:center;
+		font-size:2em;
+		@include span-columns(12);
+		// z-index:3;
+	}
+}
+
