@@ -1,0 +1,24 @@
+///here goes works
+.work{
+  font-family: $customFont;
+	width:70%;
+	height: 80%;
+	z-index:999;
+  padding:3px;
+  background-color:black;
+	@include outer-container;
+	@include position(absolute, 5% 0% null null);
+	@include respondTo(phones){
+		display: inline;
+		@include position(relative, 0.5em null null 0);
+		@include margin(5px 5px 5px null);
+		@include span-columns(12);
+		height: 100%;
+	}
+  iframe{
+    width:100%;
+  }
+  img{
+    width:50%;
+  }
+}
