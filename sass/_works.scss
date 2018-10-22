@@ -1,12 +1,14 @@
 ///here goes works
 .work{
   font-family: $customFont;
-	width:70%;
-	height: 80%;
+@include outer-container;	
+	// width:70%;
+	// height: 80%;
 	z-index:999;
   padding:3px;
+
   background-color:black;
-	@include outer-container;
+	// @include outer-container;
 	@include position(absolute, 5% 0% null null);
 	@include respondTo(phones){
 		display: inline;
