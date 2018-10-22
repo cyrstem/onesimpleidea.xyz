@@ -1,12 +1,10 @@
 @import "neat-helpers";
-//@import "nav";
+// @import "nav";
 @import "whoami";
-@import "works";
 // @import "content";
+@import "logo_ani";
 
 * { box-sizing: border-box; }
-
-
 html, body, {
 	//@include linear-gradient(#000000, #fc0008);
 	-webkit-font-smoothing: antialiased;
@@ -20,35 +18,8 @@ html, body, {
 
 	@include respondTo(phones){
 		z-index:-1;
+		//@include linear-gradient( #29323c, #517363);
 	}
 }
-
-
-// canvas{z-index:0;}
-
-
-/* ---- .grid-item ---- */
-
-/* clear fix */
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.grid-sizer,
-.grid-item {
-  width: 50%;
-}
-
-.grid-item {
-  float: left;
-}
-
-.grid-item img {
-  display: block;
-  width: 100%;
-}
-
  .text{background-color:black;color:white;font-size:1.5em; z-index:9999;}
  .dud{color:white;}

@@ -1,7 +1,6 @@
 //Colors
 //$menu-color: #FFFFFF;
 $menu-color: #000000;
-
 $link-hover2: #FFFFFF;
 //$link-hover: #D1FF9A;
 $link-hover: #41323D;
@@ -12,24 +11,16 @@ $small-color-hover:#000000;
 
 
 //Fonts
-@import url('https://fonts.googleapis.com/css?family=Oxygen+Mono');
-$customFont: 'Oxygen Mono', sans-serif;
+// @import url('https://fonts.googleapis.com/css?family=Oxygen+Mono');
+// $customFont: 'Oxygen Mono', sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Chakra+Petch:400,600');
 
+$customFont:'Chakra Petch', sans-serif;
 h1,h2,h3,a,p{
 	font-family: $customFont;
+	font-weight:600;
 }
 h1{
 	font-size:0.9em;
 }
-// p{
-// 	font-size:1.2em;
 
-
-// }
-.Titles{
-	@include position(absolute, 20% 0 null 5px);
-	@include span-columns(5);
-	font-family:$customFont;
-	font-size:34px;
-	text-align:left;
-}
