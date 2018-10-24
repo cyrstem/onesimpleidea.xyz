@@ -21,23 +21,17 @@ var gulp = require('gulp');
 gulp.task('build', function(){
 	gulp.src([
 		'third-party/three.js/build/*.js',
-		'third-party/jquery/dist/jquery.min.js',
-		'third-party/masonry/dist/masonry.pkgd.min.js'
-		//'third-party/imagesloaded/imagesloaded.pkgd.min.js'
+		'third-party/jquery/dist/jquery.min.js'
 		])
 	.pipe(plumber())
 	// .pipe(concat('app.js'))
 	.pipe(gulp.dest('./app/third-party'));
-
-	// return gulp.src('third-party/bootstrap/dist/css/bootstrap.min.css')
-	// .pipe(gulp.dest('./app/css'));
-
 });
 //------------------------------------
 // Gulp min end JS
 //------------------------------------
 gulp.task('end',function(){
-	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js','./app/third-party/masonry.pkgd.min.js','./app/third-party/imagesloaded.pkgd.min.js' ])
+	gulp.src(['./app/third-party/jquery.min.js', 'js/works.js', 'js/text.js' ])
     .pipe(concat('all.js'))
 
     //.pipe(uglify())

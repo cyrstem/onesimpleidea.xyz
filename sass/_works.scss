@@ -1,26 +1,29 @@
 ///here goes works
 .work{
   font-family: $customFont;
-@include outer-container;	
-	// width:70%;
-	// height: 80%;
+	@include outer-container;	
+	@include span-columns(7);
+	height:80%;	
 	z-index:999;
-  padding:3px;
+  	padding:3px;
+  	background-color:white;
+	@include position(absolute, 15% 0% null null);
 
-  background-color:black;
-	// @include outer-container;
-	@include position(absolute, 5% 0% null null);
+
+
 	@include respondTo(phones){
-		display: inline;
-		@include position(relative, 0.5em null null 0);
-		@include margin(5px 5px 5px null);
-		@include span-columns(12);
-		height: 100%;
+		display: none;
+		// @include position(relative, 0.5em null null 0);
+		// @include margin(5px 5px 5px null);
+		// @include span-columns(12);
+		// height: 100%;
+
 	}
-  iframe{
-    width:100%;
-  }
-  img{
-    width:50%;
-  }
+}
+
+.main{
+
+  background-color: #f87f73;
+  background-image: -webkit-linear-gradient( -28deg, #f87f73 0%, #f87f73 60%, #292423 60%, #292423 60%);
+  background-image: linear-gradient( -28deg, #f87f73 0%, #f87f73 60%, #292423 60%, #292423 60%);
 }

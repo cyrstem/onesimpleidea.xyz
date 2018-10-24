@@ -14,8 +14,8 @@
     <meta property="og:image" content="http://onesimpleidea.xyz/int.png" />
     <meta property="og:title" content="onesimpleidea"/>
     <meta property="og:description" content="cyrstem,quito, onesimpleidea UIO,onesimpleidea.xyz, creative coding, Quito, Ec, Ecuador " />
-	<title>o n e  s i m p l e  i d e a</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	   <title>o n e  s i m p l e  i d e a</title>
+	   <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="css/main.css" rel="stylesheet">
 </head>
@@ -24,134 +24,23 @@
 
 <div class="logo"><div class="text"></div></div>
 
-<article class="Titles">  
-  <p>Creative Coder / Front-End Developer Designer</p>
-  <p>You Can find me on this networks:</p>
-  <ul>
-    <a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="35"></a>
-    <a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="35"></a>
-    <a href="https://www.instagram.com/cyrstem/"target="_blank"><img src="assets/insta.png"width ="35"></a>
-  </ul>
-</article>
+    <article class="Titles">  
+      <p>Creative Coder / Front-End Developer Designer</p>
+      <p>You Can find me on this networks:</p>
+      <ul>
+        <a href="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="assets/in.png" width="35"></a>
+        <a href="https://github.com/cyrstem/"target="_blank"><img src="assets/git.png" width="35"></a>
+        <a href="https://www.instagram.com/cyrstem/"target="_blank"><img src="assets/insta.png"width ="35"></a>
+      </ul>
+    </article>
 
 
 <div class="main">
   <section class="work">
-    <p>hellooooo</p>
-   <!--  <article>
-      <div class="info">
-        <div class="overlay"></div>
-        <div class="project-info">
-           <h1>Audio-Visual->></h1>
-            <p>Projects Build on C++ </p>
-        </div>
-      </div>
-    </article> -->
+    <h1>::Projects</h1>
   </section>
 </div>
-
-</div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/87/three.min.js"></script>
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js">
-        </script>
-        <script src="https://cdn.rawgit.com/robin-dela/hover-effect/master/js/hover.min.js">
-        </script>
-<!-- <script src="js/all.js"></script>
-<script src="js/main.min.js"></script> -->
-<script src="js/works.min.js"></script>
-<script type="text/javascript">
-  // ——————————————————————————————————————————————————
-// TextScramble
-// ——————————————————————————————————————————————————
-
-class TextScramble {
-  constructor(el) {
-    this.el = el
-    this.chars = '!<>-_\\/[]{}—=+*^?#________~|'
-    this.update = this.update.bind(this)
-  }
-  setText(newText) {
-    const oldText = this.el.innerText
-    const length = Math.max(oldText.length, newText.length)
-    const promise = new Promise((resolve) => this.resolve = resolve)
-    this.queue = []
-    for (let i = 0; i < length; i++) {
-      const from = oldText[i] || ''
-      const to = newText[i] || ''
-      const start = Math.floor(Math.random() * 40)
-      const end = start + Math.floor(Math.random() * 40)
-      this.queue.push({ from, to, start, end })
-    }
-    cancelAnimationFrame(this.frameRequest)
-    this.frame = 0
-    this.update()
-    return promise
-  }
-  update() {
-    let output = ''
-    let complete = 0
-    for (let i = 0, n = this.queue.length; i < n; i++) {
-      let { from, to, start, end, char } = this.queue[i]
-      if (this.frame >= end) {
-        complete++
-        output += to
-      } else if (this.frame >= start) {
-        if (!char || Math.random() < 0.28) {
-          char = this.randomChar()
-          this.queue[i].char = char
-        }
-        output += `<span class="dud">${char}</span>`
-      } else {
-        output += from
-      }
-    }
-    this.el.innerHTML = output
-    if (complete === this.queue.length) {
-      this.resolve()
-    } else {
-      this.frameRequest = requestAnimationFrame(this.update)
-      this.frame++
-    }
-  }
-  randomChar() {
-    return this.chars[Math.floor(Math.random() * this.chars.length)]
-  }
-}
-
-// ——————————————————————————————————————————————————
-// Example
-// ——————————————————————————————————————————————————
-
-const phrases = [
-  'hello, ....',
-  '...',
-  'Here is some of my Work',
-  'o n e s i m p l e i d e a',
-  ' not really my name',
-  ' but any way...',
-  'here you can see what i do',
-  'you can find most of the code ',
-  'for some of this proyects',
-  'on git     '
-]
-
-const el = document.querySelector('.text')
-
-const fx = new TextScramble(el)
-
-let counter = 0
-const next = () => {
-  fx.setText(phrases[counter]).then(() => {
-    setTimeout(next, 900)
-  })
-  counter = (counter + 1) % phrases.length
-}
-
-next();
-</script>
-
+<!-- this part permite la carga de todo en bundle con gulp  -->
+<script src="js/all.js"></script>
 </body>
 </html>
