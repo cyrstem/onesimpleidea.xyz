@@ -58,10 +58,7 @@ h1 {
   display: block;
   margin-right: 2.35765%;
   width: 57.35098%;
-  height: 80%;
-  z-index: 999;
   padding: 3px;
-  background-color: white;
   position: absolute;
   top: 15%;
   right: 0%; }
@@ -75,10 +72,27 @@ h1 {
     .work {
       display: none; } }
 
+.portafolio {
+  position: absolute;
+  top: 15%;
+  right: 0%;
+  float: left;
+  display: block;
+  margin-right: 2.35765%;
+  width: 31.76157%;
+  background: black; }
+  .portafolio:last-child {
+    margin-right: 0; }
+  .portafolio p {
+    font-size: 24px; }
+    .portafolio p a:-webkit-any-link {
+      text-decoration: none;
+      color: black; }
+    .portafolio p a:hover {
+      color: blue; }
+
 .main {
-  background-color: #f87f73;
-  background-image: -webkit-linear-gradient(-28deg, #f87f73 0%, #f87f73 60%, #292423 60%, #292423 60%);
-  background-image: linear-gradient(-28deg, #f87f73 0%, #f87f73 60%, #292423 60%, #292423 60%); }
+  background-color: black; }
 
 .logo {
   display: flex;
@@ -112,7 +126,7 @@ h1 {
 
 html, body {
   -webkit-font-smoothing: antialiased;
-  background-color: red;
+  background-color: #ffffff;
   margin: 0;
   padding: 0;
   width: 100%;
