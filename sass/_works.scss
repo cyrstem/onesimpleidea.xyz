@@ -1,15 +1,18 @@
 ///here goes works
 .work{
+	h1{
+		font-size: 2em;
+	}
   font-family: $customFont;
 	@include outer-container;	
 	@include span-columns(7);
   	padding:1px;
-  	background-color:black;
+  	//background-color:black;
 	@include position(absolute, 10% 0% 0px null);
 	overflow-y:scroll; 
 	
 	.gallery  a img{
-		width: 35%;
+		width: 32%;
 	}
 	a:hover img{
 		-webkit-transform: scale(1.05);

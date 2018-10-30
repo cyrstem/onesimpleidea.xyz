@@ -59,12 +59,13 @@ h1 {
   margin-right: 2.35765%;
   width: 57.35098%;
   padding: 1px;
-  background-color: black;
   position: absolute;
   top: 10%;
   right: 0%;
   bottom: 0px;
   overflow-y: scroll; }
+  .work h1 {
+    font-size: 2em; }
   .work::after {
     clear: both;
     content: "";
@@ -72,7 +73,7 @@ h1 {
   .work:last-child {
     margin-right: 0; }
   .work .gallery a img {
-    width: 35%; }
+    width: 32%; }
   .work a:hover img {
     -webkit-transform: scale(1.05);
     -moz-transform: scale(1.05);
