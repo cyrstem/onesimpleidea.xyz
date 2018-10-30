@@ -22,7 +22,7 @@ gulp.task('build', function(){
 	gulp.src([
 		'third-party/three.js/build/*.js',
 		'third-party/jquery/dist/jquery.min.js',
-		'third-party/lightgallery.js/dist/js/lightgallery.min.js'
+		'third-party/simplelightbox/dist/simple-lightbox.min.js'
 		])
 	.pipe(plumber())
 	// .pipe(concat('app.js'))
@@ -32,7 +32,7 @@ gulp.task('build', function(){
 // Gulp min end JS
 //------------------------------------
 gulp.task('end',function(){
-	gulp.src(['./app/third-party/jquery.min.js','./app/third-party/lightgallery.min.js', 'js/works.js', 'js/text.js' ])
+	gulp.src(['./app/third-party/jquery.min.js','./app/third-party/simple-lightbox.min.js', 'js/works.js', 'js/text.js' ])
     .pipe(concat('all.js'))
 
     //.pipe(uglify())

@@ -40,5 +40,9 @@
     "node-neat": "^1.7.2",
     "node-refills": "^1.0.1",
     "main-bower-files": "^2.11.0"
+  },
+  "dependencies": {
+    "baguettebox.js": "^1.11.0",
+    "simplelightbox": "^1.15.0"
   }
 }

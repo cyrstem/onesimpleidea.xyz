@@ -3,46 +3,20 @@
   font-family: $customFont;
 	@include outer-container;	
 	@include span-columns(7);
-  	padding:3px;
-  	// background-color:black;
-	@include position(absolute, 15% 0% null null);
+  	padding:1px;
+  	background-color:black;
+	@include position(absolute, 10% 0% 0px null);
+	overflow-y:scroll; 
 	
-
-
-	@include respondTo(phones){
-		display: none;
-		// @include position(relative, 0.5em null null 0);
-		// @include margin(5px 5px 5px null);
-		// @include span-columns(12);
-		// height: 100%;
-	}	
-}
-
-.portafolio{
-		//@include grid-column(1);
-		@include position(absolute, 15% 0% null null);
-		@include span-columns(4);
-		background: black;
-			p{
-				font-size: 24px;
-				a:-webkit-any-link{
-				text-decoration: none;
-				color:black;
-			}
-			a:hover{
-				color:blue;
-			}
-
+	.gallery  a img{
+		width: 35%;
 	}
-	
-}
-
-
-
-.main{
-	//@include outer-container;	
-	background-color: black;
-	//@include span-columns(2);
-	//@include grid-container;
-
+	a:hover img{
+		-webkit-transform: scale(1.05);
+  		-moz-transform: scale(1.05);
+  		-o-transform: scale(1.05);
+  		-ms-transform: scale(1.05);
+  		transform: scale(1.05);
+  		z-index: 5;
+	}
 }

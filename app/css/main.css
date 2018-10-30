@@ -58,41 +58,28 @@ h1 {
   display: block;
   margin-right: 2.35765%;
   width: 57.35098%;
-  padding: 3px;
+  padding: 1px;
+  background-color: black;
   position: absolute;
-  top: 15%;
-  right: 0%; }
+  top: 10%;
+  right: 0%;
+  bottom: 0px;
+  overflow-y: scroll; }
   .work::after {
     clear: both;
     content: "";
     display: table; }
   .work:last-child {
     margin-right: 0; }
-  @media (max-width: 767px) {
-    .work {
-      display: none; } }
-
-.portafolio {
-  position: absolute;
-  top: 15%;
-  right: 0%;
-  float: left;
-  display: block;
-  margin-right: 2.35765%;
-  width: 31.76157%;
-  background: black; }
-  .portafolio:last-child {
-    margin-right: 0; }
-  .portafolio p {
-    font-size: 24px; }
-    .portafolio p a:-webkit-any-link {
-      text-decoration: none;
-      color: black; }
-    .portafolio p a:hover {
-      color: blue; }
-
-.main {
-  background-color: black; }
+  .work .gallery a img {
+    width: 35%; }
+  .work a:hover img {
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    -o-transform: scale(1.05);
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    z-index: 5; }
 
 .logo {
   display: flex;
