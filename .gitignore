@@ -17,6 +17,6 @@ app/third-party/*
 
 # Files staff #
 ##################
-*.jpg
+*.png
 *.sublime-project
 *.sublime-workspace
