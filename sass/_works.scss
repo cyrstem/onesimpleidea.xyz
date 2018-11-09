@@ -22,4 +22,11 @@
   		transform: scale(1.05);
   		z-index: 5;
 	}
+	@include respondTo(phones){
+		@include span-columns(12);
+		@include position(relative, 4% 0% 0px null);
+		.gallery  a img{
+		width: 100%;
+		}
+	}		
 }
