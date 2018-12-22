@@ -7,9 +7,10 @@
 
 * { box-sizing: border-box; }
 html, body, {
-	//@include linear-gradient(#000000, #fc0008);
+	//@include linear-gradient(#21ffca, #e2e2e2);
 	-webkit-font-smoothing: antialiased;
-	background-color:#ffffff;
+	background-color:#fb0007;
+	//mix-blend-mode: multiply;
 	@include margin(0 0 0 0);
 	@include padding(0 0 0 0);
 	width: 100%;
