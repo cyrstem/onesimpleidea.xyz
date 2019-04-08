@@ -7,7 +7,7 @@ buildSystem(GULP, BOWER, );
 test  to id
 test master control 
 
-cyrstem@gmail.com
+
 //===================================================
 //END OF_LINE
 //===================================================
