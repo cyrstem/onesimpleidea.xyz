@@ -5,10 +5,7 @@
 portafolio.build(BOURBON, SASS, JQUERY);
 buildSystem(GULP, BOWER, );
 test  to id
-test master control 
 
-
-test git from ma
 //===================================================
 //END OF_LINE
 //===================================================
