@@ -6,8 +6,6 @@ portafolio.build(BOURBON, SASS, JQUERY);
 buildSystem(GULP, BOWER, );
 test  to id
 test master control 
-3043204230403042034032042034023040234020340230403240
-ererwerwerewre
 
 
 test git from ma
