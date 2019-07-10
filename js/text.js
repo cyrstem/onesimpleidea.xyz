@@ -68,13 +68,12 @@ class TextScramble {
 const phrases = [
   'hello, ....',
   '...',
-  'Here is some of my Work',
-  'o n e s i m p l e i d e a',
-  ' not really my name',
+  'Im currently updating this.....',
+  '  moving to some new JS framework......',
+  ' Yes another one ...... ',
   ' but any way...',
-  'here you can see what i do',
   'you can find most of the code ',
-  'for some of this proyects',
+  'for some proyects  ',
   'on git     '
 ]
 
