@@ -9,7 +9,7 @@
 html, body, {
 	//@include linear-gradient(#21ffca, #e2e2e2);
 	-webkit-font-smoothing: antialiased;
-	background-color:#fb0007;
+	background-color:#FFFFFF;
 	//mix-blend-mode: multiply;
 	@include margin(0 0 0 0);
 	@include padding(0 0 0 0);
@@ -21,8 +21,21 @@ html, body, {
 	@include respondTo(phones){
 		z-index:-1;
 		//@include linear-gradient( #29323c, #517363);
-		overflow-y:scroll; 
+		//overflow-y:scroll; 
 	}
 }
- .text{background-color:black;color:white;font-size:1.5em; z-index:9999;}
+ .text{
+ 	background-color:black;
+ 	@include position(relative, 25% 0 0 0);
+ 	color:white;
+ 	font-size:20.5em;
+ 	 z-index:9999;
+
+
+ 	 @include respondTo(phones){
+		font-size:5em;
+		@include position(relative, 25% 0 0 0);
+ 	}
+ }
+
  .dud{color:white;}

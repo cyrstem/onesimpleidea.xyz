@@ -14,16 +14,15 @@ h1 {
 
 .Titles {
   position: absolute;
-  top: 20%;
-  right: 0;
-  left: 5px;
+  top: 80%;
+  left: 45%;
   float: left;
   display: block;
   margin-right: 2.35765%;
   width: 40.29137%;
-  font-family: "Chakra Petch", sans-serif;
-  font-size: 44px;
-  text-align: left; }
+  font-family: 'Orbitron', sans-serif;
+  font-size: 19px;
+  text-align: center; }
   .Titles:last-child {
     margin-right: 0; }
   @media (max-width: 767px) {
@@ -112,23 +111,20 @@ h1 {
   justify-content: center;
   float: left;
   position: absolute;
-  top: 0.7em;
-  left: 0.5em;
+  top: 40%;
   font-family: 'Orbitron', sans-serif;
-  font-size: 2em;
+  font-size: 5px;
   font-weight: bold; }
   @media (max-width: 767px) {
     .logo {
       font-size: 0.9em;
       position: absolute;
       top: 0;
-      background-color: #FFFFFF;
-      background-image: -webkit-linear-gradient(#FFFFFF, #1b1b1b);
-      background-image: linear-gradient(#FFFFFF, #1b1b1b); } }
+      right: 45%; } }
 
 .text {
   font-weight: 100;
-  font-size: 28px;
+  font-size: 48px;
   color: #1B1B1B; }
 
 .dud {
@@ -139,7 +135,7 @@ h1 {
 
 html, body {
   -webkit-font-smoothing: antialiased;
-  background-color: #fb0007;
+  background-color: #FFFFFF;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -148,14 +144,26 @@ html, body {
   text-align: center; }
   @media (max-width: 767px) {
     html, body {
-      z-index: -1;
-      overflow-y: scroll; } }
+      z-index: -1; } }
 
 .text {
   background-color: black;
+  position: relative;
+  top: 25%;
+  right: 0;
+  bottom: 0;
+  left: 0;
   color: white;
-  font-size: 1.5em;
+  font-size: 20.5em;
   z-index: 9999; }
+  @media (max-width: 767px) {
+    .text {
+      font-size: 5em;
+      position: relative;
+      top: 25%;
+      right: 0;
+      bottom: 0;
+      left: 0; } }
 
 .dud {
   color: white; }

@@ -4,11 +4,11 @@
 
 .Titles{
 	
-	@include position(absolute, 20% 0 null 5px);
+	@include position(absolute, 80% null null 45%);
 	@include span-columns(5);
-	font-family:$customFont;
-	font-size:44px;
-	text-align:left;
+	font-family: 'Orbitron', sans-serif;
+	font-size:19px;
+	text-align:center;
 	
 		@include respondTo(phones){
 			@include outer-container;

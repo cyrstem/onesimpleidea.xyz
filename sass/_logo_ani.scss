@@ -48,30 +48,31 @@
 .logo {
   display :flex;
   justify-content: center;
-
   float:left;
-  @include position(absolute, 0.7em null null 0.5em);
+  @include position(absolute, 40% null null null);
   //color: #FFFFFF;
 	//color: #62C85B;
 	font-family: 'Orbitron', sans-serif;
-	font-size: 2em;
+	font-size: 5px;
 	font-weight: bold;
 
   // //@include textGlitch("glitch", 17, #61F5A1, black, red, blue, 1084, 115);
   //  @include textGlitch("glitch", 37, transparent, black, red, blue, 1084, 115);
   @include respondTo(phones){
     font-size:0.9em;
-    @include position(absolute, 0 12 null null);
-    @include linear-gradient(#FFFFFF, #1b1b1b);
+    @include position(absolute, 0 45% null null);
+    //@include linear-gradient(#FFFFFF, #1b1b1b);
 
   }
 }
 
 .text{
+
   font-weight :100;
-  font-size: 28px;
+  font-size: 48px;
   color: #1B1B1B;
 }
+
 .dud{
   color: #757575;
 }
