@@ -4,8 +4,8 @@
   "description": "``` 00 portafolio.build(BOURBON, SASS, JQUERY); buildSystem(GULP, BOWER, ); test  to id ``` //=================================================== //END OF_LINE //===================================================",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --watch --mode development ",
-    "build": "webpack --mode production "
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,11 @@
     "@babel/preset-env": "^7.5.5",
     "babel-loader": "^8.0.6",
     "webpack": "^4.39.2",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.7",
+    "webpack-dev-server": "^3.7.2",
+    "html-webpack-plugin": "^3.2.0"
+  },
+  "dependencies": {
+    "p5": "^0.9.0"
   }
 }
