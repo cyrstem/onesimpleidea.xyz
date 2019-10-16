@@ -1,15 +1,7 @@
-const webpack = require('webpack');
-const path = require('path');
-
-
-const config={
-	entry:'/src/index.js',
-	output:{path: path.resolve(__dirname,'dist')
-		    filename:'bundle.js'
-		},
-		module:{
-			rules:[{test:/\.(js)$/,exclude:/node_modules/, use:'babel-loader'}]
-		},
+import React from "react";
+import ReactDOM from "react-dom";
+class App extends React.Component {
+  render() {
+  console.log("hello");
+  }
 }
-
-module.exports= config;
