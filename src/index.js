@@ -1,7 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom";
-class App extends React.Component {
-  render() {
-  console.log("hello");
-  }
-}
+import './style/main.scss'
+console.log("hello u biatch");
+console.log("testing ");
