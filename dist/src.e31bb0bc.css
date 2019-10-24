@@ -22,7 +22,7 @@ nav ul li {
   text-decoration: none;
 }
 
-.about {
+#about {
   text-align: center;
 }
 
@@ -45,6 +45,7 @@ nav ul li {
 }
 
 html, body {
+  z-index: 100;
   background-color: white;
   margin: 0;
   padding: 0;
@@ -54,6 +55,10 @@ html, body {
   font-family: "Nanum Gothic";
   color: black;
   -webkit-font-smoothing: antialiased;
+}
+
+canvas {
+  z-index: 0;
 }
 
 /*# sourceMappingURL=/src.e31bb0bc.css.map */
