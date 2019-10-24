@@ -1,17 +1,32 @@
 // here goes interface buttons and canvas plus  positions
 
-.menu{
+nav{
+	@include grid-container;
+	@include position(absolute,30% 0 null 0);
 
-}
+	@include clearfix;
+	ul{
+		li{ 
+			list-style: none;
+			text-decoration: none;
 
-.showWorks{
-
-}
-.contact{
-	position: bottom;
-	bottom: 10px;
-	background-color: white;
-	.img{
+		}
+	}
 		
+}
+//nav end---------------------------------
+.about{
+	text-align: center;
+}
+
+
+
+.contact{
+	@include grid-container;
+	@include position(absolute, 90vh null null 67vh);
+	img{
+		@include padding(15px 5px 5px 15px);
+		@include grid-column(3);
+		width: 35px;
 	}
 }

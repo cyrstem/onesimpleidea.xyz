@@ -1,0 +1,59 @@
+/* stylelint-disable order/properties-alphabetical-order */
+/* stylelint-enable */
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap");
+nav {
+  position: absolute;
+  top: 30%;
+  right: 0;
+  left: 0;
+}
+nav::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+nav::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+nav ul li {
+  list-style: none;
+  text-decoration: none;
+}
+
+.about {
+  text-align: center;
+}
+
+.contact {
+  position: absolute;
+  top: 90vh;
+  left: 67vh;
+}
+.contact::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+.contact img {
+  padding: 15px 5px 5px 15px;
+  width: calc(25% - 25px);
+  float: left;
+  margin-left: 20px;
+  width: 35px;
+}
+
+html, body {
+  background-color: white;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Nanum Gothic";
+  color: black;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*# sourceMappingURL=/src.e31bb0bc.css.map */
