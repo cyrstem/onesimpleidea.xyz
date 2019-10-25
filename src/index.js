@@ -16,6 +16,4 @@ intro.appendChild(text);
 
 var selection = document.getElementById("about");
 document.body.insertBefore(intro, selection);
-
-// document.body.appendChild(renderer.documentElement);
 };
