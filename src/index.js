@@ -14,6 +14,9 @@ var intro = document.createElement("div");
 var text = document.createTextNode("biatch");
 intro.appendChild(text);
 
-var selection = document.getElementById("about");
+var selection = document.getElementById("app");
 document.body.insertBefore(intro, selection);
+
+
+
 };

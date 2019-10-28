@@ -15,7 +15,7 @@ $tnormalcolor:black;
 //base  for all the site 
 
 html, body{
-	z-index: 100;
+	z-index:0;
   	background-color: $bg;
   	@include margin(0 0 0 0);
   	@include padding(0 0 0 0);
@@ -27,6 +27,12 @@ html, body{
 		-webkit-font-smoothing:antialiased;
 
 }
+
+#app{
+	z-index:200;
+	position: absolute;
+}
+
 canvas{
 	display: block;
 	z-index: 0;

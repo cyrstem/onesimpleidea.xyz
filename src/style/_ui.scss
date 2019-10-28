@@ -16,7 +16,12 @@ nav{
 }
 //nav end---------------------------------
 #about{
-	text-align: center;
+	@include grid-container;
+	@include grid-column(5);
+	color:red;
+	text-align: left;
+	@include position(absolute,3% 0 null 0);
+	z-index: 200;
 }
 
 

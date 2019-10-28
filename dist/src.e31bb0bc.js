@@ -45257,13 +45257,16 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-console.log("threejs");
+console.log("threejs"); //basic scene setup 
+//colors setup 
+
+var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor("#e5e5e5");
+renderer.setClearColor(0xffffff);
 document.body.appendChild(renderer.domElement); // event resize
 
 window.addEventListener('resize', function () {
@@ -45276,25 +45279,28 @@ var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2(); //element
 
 var geometry = new THREE.BoxGeometry(1, 1, 1);
-var material = new THREE.MeshLambertMaterial({
-  color: 0xFFCC00
+var material = new THREE.MeshPhongMaterial({
+  color: colors[2]
 });
-var meshS = -10;
+var meshS = -100;
 
-for (var i = 0; i < 20; i++) {
+for (var i = 0; i < 250; i++) {
   var mesh = new THREE.Mesh(geometry, material);
   mesh.position.x = (Math.random() - 0.5) * 10;
   mesh.position.y = (Math.random() - 0.5) * 10;
   mesh.position.z = (Math.random() - 0.5) * 10;
   scene.add(mesh);
-  meshS += 1;
+  meshS += 12;
 } // mesh.position.x = 2;
 //lights
 
 
-var light = new THREE.PointLight(0xFFFFFF, 1, 500);
-light.position.set(10, 0, 25);
+var light = new THREE.PointLight(0xFFFFFF, 0.5, 100);
+light.position.set(200, -100, -25);
 scene.add(light);
+var light1 = new THREE.PointLight(0xFFFFFF, 0.9, 1000);
+light1.position.set(0, 0, 0);
+scene.add(light1);
 
 var render = function render() {
   requestAnimationFrame(render);
@@ -45350,7 +45356,7 @@ function addElements() {
   var intro = document.createElement("div");
   var text = document.createTextNode("biatch");
   intro.appendChild(text);
-  var selection = document.getElementById("about");
+  var selection = document.getElementById("app");
   document.body.insertBefore(intro, selection);
 }
 
@@ -45383,7 +45389,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36159" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44165" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
