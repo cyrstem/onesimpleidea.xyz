@@ -18,7 +18,8 @@ nav{
 #about{
 	@include grid-container;
 	@include grid-column(5);
-	color:red;
+	color: white;
+	//color:black;
 	text-align: left;
 	@include position(absolute,3% 0 null 0);
 	z-index: 200;

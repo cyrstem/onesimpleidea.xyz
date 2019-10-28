@@ -45286,7 +45286,7 @@ var meshS = -100;
 
 for (var i = 0; i < 250; i++) {
   var mesh = new THREE.Mesh(geometry, material);
-  mesh.position.x = (Math.random() - 0.5) * 10;
+  mesh.position.x = (Math.random() - 0.5) * 20;
   mesh.position.y = (Math.random() - 0.5) * 10;
   mesh.position.z = (Math.random() - 0.5) * 10;
   scene.add(mesh);
@@ -45323,7 +45323,7 @@ function onMouseMove(event) {
       x: 2,
       ease: Expo.easeOut
     });
-    this.tl.to(intersects[i].object.scale, .5, {
+    this.tl.to(intersects[i].object.scale, .8, {
       x: .5,
       ease: Expo.easeOut
     });
@@ -45336,6 +45336,14 @@ function onMouseMove(event) {
       ease: Expo.easeOut
     }, "=-1.5");
   }
+
+  var text = document.getElementById("about");
+  tl.to(text, 1, {
+    color: "#000000",
+    ease: Bounce.easeOut,
+    yoyo: true,
+    repeatDeleay: 0.5
+  });
 }
 
 window.addEventListener('mousemove', onMouseMove);
@@ -45389,7 +45397,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44165" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33023" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

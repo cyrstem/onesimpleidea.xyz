@@ -40,7 +40,7 @@ const material = new THREE.MeshPhongMaterial({color : colors[2]} );
 
  	for(var i = 0; i< 250 ;i++){
  		const mesh = new THREE.Mesh(geometry,material);
- 		mesh.position.x = (Math.random()- 0.5)*10;
+ 		mesh.position.x = (Math.random()- 0.5)*20;
  		mesh.position.y = (Math.random()- 0.5)*10;
  		mesh.position.z = (Math.random()- 0.5)*10;
  		scene.add(mesh);
@@ -86,12 +86,13 @@ const render = function(){
             for (var i = 0; i < intersects.length; i++) {
                 this.tl = new TimelineMax();
                 this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut})
-                this.tl.to(intersects[i].object.scale, .5, {x: .5, ease: Expo.easeOut})
+                this.tl.to(intersects[i].object.scale, .8, {x: .5, ease: Expo.easeOut})
                 this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut})
                 this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5")
             }
 
-
+			let text = document.getElementById("about");
+			tl.to(text,1,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.5});
 
         }
 
