@@ -45279,7 +45279,13 @@ var mouse = new THREE.Vector2(); //element
 
 var geometry = new THREE.BoxGeometry(1, 1, 1);
 var material = new THREE.MeshPhongMaterial({
-  color: colors[2]
+  color: 0x0,
+  aoMapIntensity: 0.8,
+  emissive: colors[0],
+  emissiveIntensity: 0.4,
+  reflectivity: 0.4,
+  shininess: 15,
+  wireframe: false
 });
 var meshS = -100;
 
@@ -45294,16 +45300,23 @@ for (var i = 0; i < 250; i++) {
 //lights
 
 
-var light = new THREE.PointLight(0xFFFFFF, 0.5, 100);
-light.position.set(200, -100, -25);
+var hemi = new THREE.HemisphereLight(0xffffbb, 0x080820, 2);
+scene.add(hemi);
+var light = new THREE.PointLight(0xff0000, 0.8, 100);
+light.position.set(0, -10, -25);
 scene.add(light);
-var light1 = new THREE.PointLight(0xFFFFFF, 0.9, 1000);
-light1.position.set(0, 0, 0);
+var light1 = new THREE.PointLight(0xFFFFFF, 0.7, 1000, 2); //light1.position.set(0,0,0);
+
 scene.add(light1);
 
 var render = function render() {
   requestAnimationFrame(render);
   renderer.render(scene, camera);
+  var time = Date.now();
+  0.005;
+  light1.position.x = Math.sin(time * 0.7) * 300;
+  light1.position.y = Math.cos(time * 0.5) * 40;
+  light1.position.z = Math.cos(time * 0.3) * 30;
 }; // render();
 // var tl = new TimelineMax().delay(.3);
 // 	tl.to(mesh.scale,1,{x:7, ease: Expo.easeOut})
@@ -45337,7 +45350,7 @@ function onMouseMove(event) {
   }
 
   var text = document.getElementById("about");
-  tl.to(text, 1, {
+  tl.to(text, 0.5, {
     color: "#000000",
     ease: Bounce.easeOut,
     yoyo: true,
@@ -45396,7 +45409,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43471" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46743" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

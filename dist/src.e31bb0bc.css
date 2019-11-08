@@ -23,6 +23,7 @@ nav ul li {
 }
 
 #about {
+  background-color: white;
   width: calc(41.6666666667% - 28.3333333333px);
   float: left;
   margin-left: 20px;

@@ -6,11 +6,13 @@ import TweenMax from 'gsap/TweenMax';
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
 
 const scene = new THREE.Scene();
+
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 5;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0xffffff);
+
 document.body.appendChild(renderer.domElement);
 
 
@@ -30,7 +32,7 @@ window.addEventListener('resize',() =>{
 
 //element
 const geometry = new THREE.BoxGeometry( 1,1,1 );
-const material = new THREE.MeshPhongMaterial({color : colors[2]} );
+const material = new THREE.MeshPhongMaterial({color :0x0,aoMapIntensity: 0.8,emissive:colors[0],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
 
 
 
@@ -53,13 +55,17 @@ const material = new THREE.MeshPhongMaterial({color : colors[2]} );
 
 // mesh.position.x = 2;
 //lights
-const light = new THREE.PointLight( 0xFFFFFF, 0.5, 100 );
-light.position.set(200,-100,-25);
+
+var hemi = new THREE.HemisphereLight( 0xffffbb, 0x080820, 2 );
+scene.add( hemi );
+
+let light = new THREE.PointLight( 0xff0000, 0.8, 100 );
+light.position.set(0,-10,-25);
 scene.add(light);
 
 
-const light1 = new THREE.PointLight( 0xFFFFFF, 0.9, 1000 );
-light1.position.set(0,0,0);
+let light1 = new THREE.PointLight( 0xFFFFFF, 0.7, 1000,2 );
+//light1.position.set(0,0,0);
 scene.add(light1);
 
 
@@ -67,6 +73,12 @@ scene.add(light1);
 const render = function(){
 	requestAnimationFrame(render);
 	renderer.render(scene,camera);
+
+
+	let time =Date.now(); 0.005;
+	light1.position.x = Math.sin( time * 0.7 ) * 300;
+	light1.position.y = Math.cos( time * 0.5 ) * 40;
+	light1.position.z = Math.cos( time * 0.3 ) * 30;
 }
 
 
@@ -91,7 +103,7 @@ const render = function(){
             }
 
 			let text = document.getElementById("about");
-			tl.to(text,1,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
+			tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
 
         }
 
