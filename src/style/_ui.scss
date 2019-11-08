@@ -19,19 +19,28 @@ nav{
 	@include grid-container;
 	@include grid-column(5);
 	color: white;
-	//color:black;
 	text-align: left;
+	 // @include border-top-radius(4px);
 	@include position(absolute,3% 0 null 0);
+	border-color:#303030;
+	@include border-width(0.25em 0.2em 1em 1.5em);
+	border-style:outset;
+	transform-style: preserve-3d;
+	perspective: 250px;
+	perspective-origin: right;
 	z-index: 200;
+	h1{
+		padding-left: 23px;
+	}
 }
 
 
 
 .contact{
 	@include grid-container;
-	@include position(absolute, 90vh null null 67vh);
+	@include position(relative, null null null 25vh);
 	img{
-		@include padding(15px 5px 5px 15px);
+		@include padding(10px 5px 5px 10px);
 		@include grid-column(3);
 		width: 35px;
 	}

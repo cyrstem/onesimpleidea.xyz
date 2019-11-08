@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
 
-console.log("threejs");
 //basic scene setup 
 //colors setup 
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
@@ -92,7 +91,7 @@ const render = function(){
             }
 
 			let text = document.getElementById("about");
-			tl.to(text,1,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.5});
+			tl.to(text,1,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
 
         }
 

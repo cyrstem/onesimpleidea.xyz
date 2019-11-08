@@ -2,8 +2,10 @@
 @import'_ui';
 //fonts and main colors  must be type here 
 
-@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap');
-$custom-font:'Nanum Gothic'; 
+// @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+// $custom-font:'Nanum Gothic'; 
+$custom-font:'Inconsolata', monospace;
 //variables to complete
 $bg:white;
 $tnormalcolor:black;
