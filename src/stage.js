@@ -32,7 +32,7 @@ window.addEventListener('resize',() =>{
 
 //element
 const geometry = new THREE.BoxGeometry( 1,1,1 );
-const material = new THREE.MeshPhongMaterial({color :0x0,aoMapIntensity: 0.8,emissive:colors[0],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
+const material = new THREE.MeshPhongMaterial({color :0x040000,aoMapIntensity: 0.8,emissive:colors[0],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
 
 
 
@@ -56,7 +56,7 @@ const material = new THREE.MeshPhongMaterial({color :0x0,aoMapIntensity: 0.8,emi
 // mesh.position.x = 2;
 //lights
 
-var hemi = new THREE.HemisphereLight( 0xffffbb, 0x080820, 2 );
+var hemi = new THREE.HemisphereLight( 0xffffbb, 0x080820, 3 );
 scene.add( hemi );
 
 let light = new THREE.PointLight( 0xff0000, 0.8, 100 );
@@ -64,7 +64,7 @@ light.position.set(0,-10,-25);
 scene.add(light);
 
 
-let light1 = new THREE.PointLight( 0xFFFFFF, 0.7, 1000,2 );
+let light1 = new THREE.PointLight( 0xFFFFFF, 0.7, 5000,2 );
 //light1.position.set(0,0,0);
 scene.add(light1);
 
@@ -103,7 +103,7 @@ const render = function(){
             }
 
 			let text = document.getElementById("about");
-			tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
+			//tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
 
         }
 

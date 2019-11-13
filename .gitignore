@@ -12,6 +12,7 @@ Thumbs.db
 #################
 node_modules/*
 .cache/*
+.cache
 
 
 # Files staff #
