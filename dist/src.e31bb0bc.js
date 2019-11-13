@@ -45279,7 +45279,7 @@ var mouse = new THREE.Vector2(); //element
 
 var geometry = new THREE.BoxGeometry(1, 1, 1);
 var material = new THREE.MeshPhongMaterial({
-  color: 0x0,
+  color: 0x040000,
   aoMapIntensity: 0.8,
   emissive: colors[0],
   emissiveIntensity: 0.4,
@@ -45300,12 +45300,12 @@ for (var i = 0; i < 250; i++) {
 //lights
 
 
-var hemi = new THREE.HemisphereLight(0xffffbb, 0x080820, 2);
+var hemi = new THREE.HemisphereLight(0xffffbb, 0x080820, 3);
 scene.add(hemi);
 var light = new THREE.PointLight(0xff0000, 0.8, 100);
 light.position.set(0, -10, -25);
 scene.add(light);
-var light1 = new THREE.PointLight(0xFFFFFF, 0.7, 1000, 2); //light1.position.set(0,0,0);
+var light1 = new THREE.PointLight(0xFFFFFF, 0.7, 5000, 2); //light1.position.set(0,0,0);
 
 scene.add(light1);
 
@@ -45349,13 +45349,7 @@ function onMouseMove(event) {
     }, "=-1.5");
   }
 
-  var text = document.getElementById("about");
-  tl.to(text, 0.5, {
-    color: "#000000",
-    ease: Bounce.easeOut,
-    yoyo: true,
-    repeatDeleay: 0.1
-  });
+  var text = document.getElementById("about"); //tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
 }
 
 window.addEventListener('mousemove', onMouseMove);
@@ -45409,7 +45403,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45269" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41205" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
