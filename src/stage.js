@@ -32,7 +32,7 @@ window.addEventListener('resize',() =>{
 
 //element
 const geometry = new THREE.BoxGeometry( 1,1,1 );
-const material = new THREE.MeshPhongMaterial({color :0x040000,aoMapIntensity: 0.8,emissive:colors[0],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
+const material = new THREE.MeshPhongMaterial({color :colors[0],aoMapIntensity: 0.9,emissive:colors[7],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
 
 
 
