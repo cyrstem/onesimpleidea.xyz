@@ -8,7 +8,7 @@ import TweenMax from 'gsap/TweenMax';
 const scene = new THREE.Scene();
 scene.fog = new THREE.Fog( 0x3f7b9d,0,60);
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 15);
 camera.position.z = 10;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -38,8 +38,9 @@ texture.wrapT = THREE.RepeatWrapping;
 texture.repeat.set(2,2);
 
 const geometry = new THREE.BoxGeometry( 1,1,1 );
+const material1 = new THREE.MeshPhysicalMaterial({color:0x0,roughness:0.52,metalness:0.5,reflectivity:0.5,fog:true, clearcoatRoughness:1,depthWrite:true});
 //const material2 = new THREE.LineDashedMaterial({color:0x2d2727,linewidth:0.2,scale:0.4,dashSize:2,gapSize:0.3});
-const material3 = new  THREE.MeshMatcapMaterial({color:0x160000,transparent:false,opacity:0.9,depthTest:true,depthWrite:true});
+const material3 = new  THREE.MeshMatcapMaterial({color:0x160000,transparent:false,opacity:0.9,depthTest:true,depthWrite:true,alphaMap:texture,displacementMap:texture});
 //const material = new THREE.MeshPhongMaterial({color :colors[0],aoMapIntensity: 0.9,emissive:colors[7],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
 
 
@@ -48,7 +49,7 @@ const material3 = new  THREE.MeshMatcapMaterial({color:0x160000,transparent:fals
  let meshS = -100;
 
  	for(var i = 0; i< 250 ;i++){
- 		const mesh = new THREE.Mesh(geometry,material3);
+ 		const mesh = new THREE.Mesh(geometry,material1);
  		mesh.position.x = (Math.random()- 0.5)*20;
  		mesh.position.y = (Math.random()- 0.5)*10;
  		mesh.position.z = (Math.random()- 0.5)*10;
@@ -67,16 +68,16 @@ const material3 = new  THREE.MeshMatcapMaterial({color:0x160000,transparent:fals
 // var hemi = new THREE.HemisphereLight( 0xffffbb, 0x080820, 3 );
 // scene.add( hemi );
 
-// let light = new THREE.PointLight( 0xff0000, 0.8, 100 );
-// light.position.set(0,-10,-25);
-// scene.add(light);
+let light = new THREE.PointLight( 0xFFFFFF, 0.9, 100 );
+light.position.set(0,20,-25);
+scene.add(light);
 
 
 // let light1 = new THREE.PointLight( 0xFFFFFF, 0.7, 5000,2 );
 // //light1.position.set(0,0,0);
 // scene.add(light1);
 
-let ambient =new THREE.AmbientLight( 0x0 );
+let ambient =new THREE.AmbientLight( 0xFFFFFF );
 scene.add(ambient);
 
 const render = function(){
@@ -107,8 +108,8 @@ const render = function(){
                 this.tl = new TimelineMax();
                 this.tl.to(intersects[i].object.scale, 1, {x: 2, ease: Expo.easeOut})
                 this.tl.to(intersects[i].object.scale, .8, {x: .5, ease: Expo.easeOut})
-                this.tl.to(intersects[i].object.position, .5, {x: 2, ease: Expo.easeOut})
-                this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-1.5")
+                this.tl.to(intersects[i].object.position, 1.5, {x: 2, ease: Expo.easeOut})
+                this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-4.5")
             }
 
 			let text = document.getElementById("about");
