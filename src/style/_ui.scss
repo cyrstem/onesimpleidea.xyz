@@ -23,7 +23,7 @@ nav{
 	color: black;
 	text-align: left;
 	 // @include border-top-radius(4px);
-	@include position(absolute,3% 0 null 0);
+	@include position(absolute,40% 0 null 30%);
 	border-color:#303030;
 	@include border-width(0.25em 0.2em 1em 1.5em);
 	border-style:outset;
