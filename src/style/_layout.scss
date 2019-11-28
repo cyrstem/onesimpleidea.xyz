@@ -1,0 +1,41 @@
+//Basic body pluss call ui 
+@import'_ui';
+//fonts and main colors  must be type here 
+
+// @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+// $custom-font:'Nanum Gothic'; 
+$custom-font:'Inconsolata', monospace;
+//variables to complete
+$bg:white;
+$tnormalcolor:black;
+
+
+
+
+
+//base  for all the site 
+
+html, body{
+	z-index:0;
+  	background-color: $bg;
+  	@include margin(0 0 0 0);
+  	@include padding(0 0 0 0);
+  	width: 100%;
+  	height: 100%;
+  	overflow: hidden;
+  	font-family: $custom-font;
+	color:$tnormalcolor;
+		-webkit-font-smoothing:antialiased;
+
+}
+
+#app{
+	z-index:200;
+	position: absolute;
+}
+
+canvas{
+	display: block;
+	z-index: 0;
+}

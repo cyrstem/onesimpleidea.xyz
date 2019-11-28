@@ -10,11 +10,9 @@ Thumbs.db
 
 # Folder staff #
 #################
-third-party/*
-./app/third-party/*
 node_modules/*
-app/third-party/*
-app/assets/
+.cache/*
+.cache
 
 
 # Files staff #
