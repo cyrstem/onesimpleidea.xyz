@@ -2,6 +2,7 @@ import './style/main.scss'
 
 import {init} from './stage'
 
+
 //document.querySelector('h1').textContent = bro ('whats upp');
 // console.clear();
 console.log("well if you got into here ")
