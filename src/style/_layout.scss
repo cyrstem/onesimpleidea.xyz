@@ -10,19 +10,21 @@ $custom-font:'Inconsolata', monospace;
 $bg:white;
 $tnormalcolor:black;
 
-
+canvas{
+	width: 100%;
+	height: 100%;
+	display: block;
+	z-index: 0;
+}
 
 
 
 //base  for all the site 
 
 html, body{
-	z-index:0;
   	background-color: $bg;
-  	@include margin(0 0 0 0);
-  	@include padding(0 0 0 0);
-  	width: 100%;
-  	height: 100%;
+  	margin: 0px;
+  	padding: 0px;
   	overflow: hidden;
   	font-family: $custom-font;
 	color:$tnormalcolor;
@@ -30,12 +32,38 @@ html, body{
 
 }
 
-#app{
-	z-index:200;
-	position: absolute;
+.container{
+	display: flex;
+	justify-content: center;
+	align-intems: center;
+
 }
 
-canvas{
-	display: block;
-	z-index: 0;
+button{
+	background: white;
+	width: 150px;
+	border-color:#303030;
+	padding: 10px;
+	@include border-width(0.1em 0.1em 0.1em 0.1em);
+	border-style:outset;
+	font-weight: bold;
+	font-size: 15px;
+	-ms-transform: rotate(-90deg); /* IE 9 */
+	  -ms-transform-origin: 20% 40%; /* IE 9 */
+	  -webkit-transform: rotate(-90deg); /* Safari 3-8 */
+	  -webkit-transform-origin: 20% 40%; /* Safari 3-8 */
+	  transform: rotate(-90deg);
+	  transform-origin: 20% 40%;
+}
+
+
+button:active{
+	background: white;
+}
+
+
+
+button:hover{
+	background-color: black;
+	color:white;
 }

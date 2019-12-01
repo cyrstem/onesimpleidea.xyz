@@ -1,5 +1,5 @@
-$mobile: 768px;
-$tablet: 1024px;
+$mobile: 767px;
+$tablet: 992px;
 $desktop: 1200px;
 
 @mixin respondTo($media){
@@ -7,6 +7,9 @@ $desktop: 1200px;
 		@media(max-width: $mobile){@content;}
 	}
 	@else if $media == tablet{
+		@media(max-width: $tablet){@content;}
+	}
+	@else if $media == desktop{
 		@media(max-width: $tablet){@content;}
 	}
 }

@@ -1,91 +1,23 @@
 // here goes interface buttons and canvas plus  positions
 @import '_responsive';
 
-//nav end---------------------------------
-
-button{
-	background: white;
-	width: 150px;
-	//@include grid-container;
-	border-color:#303030;
-	padding: 10px;
-	@include border-width(0.1em 0.1em 0.1em 0.1em);
-	border-style:outset;
-	font-weight: bold;
-	font-size: 15px;
-	-ms-transform: rotate(-90deg); /* IE 9 */
-	  -ms-transform-origin: 20% 40%; /* IE 9 */
-	  -webkit-transform: rotate(-90deg); /* Safari 3-8 */
-	  -webkit-transform-origin: 20% 40%; /* Safari 3-8 */
-	  transform: rotate(-90deg);
-	  transform-origin: 20% 40%;
-	  // @include respondTo(phones){
-			
-			// @include position(absolute,55vh 0 null 15vh);	
-			// ms-transform: rotate(0deg); /* IE 9 */
-		 //  -ms-transform-origin: 20% 40%; /* IE 9 */
-		 //  -webkit-transform: rotate(0deg); /* Safari 3-8 */
-		 //  -webkit-transform-origin: 20% 40%; /* Safari 3-8 */
-		 //  transform: rotate(0deg);
-		 //  transform-origin: 20% 40%;
-
-			// 	}
 
 
-	// @include respondTo(tablet){
-		
-	// 		@include position(absolute,48vh 0 null 15vh);
-	// 		ms-transform: rotate(0deg); /* IE 9 */
-	// 		  -ms-transform-origin: 20% 40%; /* IE 9 */
-	// 		  -webkit-transform: rotate(0deg); /* Safari 3-8 */
-	// 		  -webkit-transform-origin: 20% 40%; /* Safari 3-8 */
-	// 		  transform: rotate(0deg);
-	// 		  transform-origin: 20% 40%;
-				
-	// 			}
-
-
-
-
-}
-
-
-button:active{
-	background: white;
-}
-
-
-
-button:hover{
-	background-color: black;
-	color:white;
-}
-
-
-//buttons  end---------------------------------
-#latest{
-	float:left;
-	z-index:2;
-	@include position(absolute,45% 0 null 0px);
-}
-
-
-#about{
+.container > div{
+	position: absolute;
+	top:40%;
 	background-color: white;
+	text-align: center;
 	opacity: 0.9555;
-	@include grid-container;
-	@include grid-column(5);
 	color: black;
-	text-align: left;
-	 // @include border-top-radius(4px);
-	@include position(absolute,40% 0 null 30%);
+	width: 600px;
 	border-color:#303030;
 	@include border-width(0.25em 0.2em 1em 1.5em);
 	border-style:outset;
 	transform-style: preserve-3d;
 	perspective: 250px;
 	perspective-origin: right;
-	z-index: 200;
+	// z-index: 400;
 	h1{
 		padding-left: 23px;
 	}
@@ -93,46 +25,31 @@ button:hover{
 		padding-left: 23px;
 		font-size: 16px;
 	}
-
-
-	@include respondTo(phones){
-			@include grid-column(11);
-			@include position(absolute,30% 0 null 0);
-					p{
-						padding-left: 12px;
-						font-size: 14px;
-					}
-
-				}
-
-
-	@include respondTo(tablet){
-			@include grid-column(11);
-			@include position(absolute,30% 0 null 0);
-					p{
-						//padding-left: 12px;
-						text-align: center;
-						font-size: 18px;
-					}
-
-				}
 }
 
+#contact{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-
-.contact{
-	@include grid-container;
-	@include position(relative, null null null 20vh);
 	img{
-		@include padding(10px 5px 5px 10px);
-		@include grid-column(3);
+		align-content: center;
 		width: 35px;
+
+	}	
+}
+
+#latest{
+	position:absolute;
+	top: 55%;
+	@include  respondTo(phones){
+		 @include hide-visually;
 	}
 
 
-
-
-	@include respondTo(phones){
-		@include position(relative, null null null -1%);
-		}
+	@include respondTo(tablet){
+		 @include hide-visually;
+	}
 }
+
+

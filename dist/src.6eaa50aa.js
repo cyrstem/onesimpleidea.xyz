@@ -30,4 +30,4 @@ var t=arguments[3];function e(t){return(e="function"==typeof Symbol&&"symbol"==t
 },{"three":"dKqR","gsap/TweenMax":"Kcu3"}],"Focm":[function(require,module,exports) {
 "use strict";require("./style/main.scss");var e=require("./stage");function o(){var e=document.createElement("div"),o=document.createTextNode("biatch");e.appendChild(o);var t=document.getElementById("app");document.body.insertBefore(e,t)}console.log("well if you got into here "),console.log("this was made with JS incase you were wondering "),document.body.onload=o;
 },{"./style/main.scss":"IrIc","./stage":"CQgr"}]},{},["Focm"], null)
-//# sourceMappingURL=/src.660f1bd8.js.map
+//# sourceMappingURL=/src.6eaa50aa.js.map
