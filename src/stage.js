@@ -112,7 +112,7 @@ const render = function(){
                 this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-4.5")
             }
 
-			let text = document.getElementById("about");
+			//let text = document.getElementById("about");
 			//tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
 
         }
@@ -120,4 +120,15 @@ const render = function(){
         
 
         window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('touchend', onDocumentTouchEnd, false);
+
+        function onDocumentTouchEnd(event) {
+            event.preventDefault();
+
+            mouse.x = (event.changedTouches[0].clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(yourObject3D);
+        }
         render();
