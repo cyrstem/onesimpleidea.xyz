@@ -45381,24 +45381,34 @@ function onDocumentTouchEnd(event) {
 }
 
 render();
-},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js"}],"index.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js"}],"mylog.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mylogsetup = void 0;
+
+var mylogsetup = function mylogsetup() {
+  console.log("show log for my staff");
+  var datamenu = document.querySelector('container'); //datamenu.style.display = 'none';
+  //document.getElementsByClassName('container').style.display = 'none';
+};
+
+exports.mylogsetup = mylogsetup;
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 require("./style/main.scss");
 
 var _stage = require("./stage");
 
+var _mylog = require("./mylog");
+
 console.log("hello  here is my portafolio .....");
-console.log("this was made with JS incase you were wondering "); // //contactLinks();
-// document.body.onload= addElements;
-// function addElements(){
-// var intro = document.createElement("div");
-// var text = document.createTextNode("biatch");
-// intro.appendChild(text);
-// var selection = document.getElementById("app");
-// document.body.insertBefore(intro, selection);
-//};
-},{"./style/main.scss":"style/main.scss","./stage":"stage.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+console.log("this was made with JS incase you were wondering ");
+document.getElementById("log").addEventListener("click", _mylog.mylogsetup);
+},{"./style/main.scss":"style/main.scss","./stage":"stage.js","./mylog":"mylog.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -45426,7 +45436,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42317" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33831" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
