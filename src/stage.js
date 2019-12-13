@@ -40,7 +40,7 @@ texture.repeat.set(2,2);
 const geometry = new THREE.BoxGeometry( 1,1,1 );
 const material1 = new THREE.MeshPhysicalMaterial({color:0x0,roughness:0.52,metalness:0.5,reflectivity:0.5,fog:true, clearcoatRoughness:1,depthWrite:true});
 //const material2 = new THREE.LineDashedMaterial({color:0x2d2727,linewidth:0.2,scale:0.4,dashSize:2,gapSize:0.3});
-const material3 = new  THREE.MeshMatcapMaterial({color:0x160000,transparent:false,opacity:0.9,depthTest:true,depthWrite:true,alphaMap:texture,displacementMap:texture});
+const material3 = new  THREE.MeshMatcapMaterial({color:0x160000,transparent:false,opacity:0.91,depthTest:true,depthWrite:true,alphaMap:texture,displacementMap:texture});
 //const material = new THREE.MeshPhongMaterial({color :colors[0],aoMapIntensity: 0.9,emissive:colors[7],emissiveIntensity :0.4,reflectivity:0.4,shininess:15,wireframe:false} );
 
 
@@ -110,6 +110,7 @@ const render = function(){
                 this.tl.to(intersects[i].object.scale, .8, {x: .5, ease: Expo.easeOut})
                 this.tl.to(intersects[i].object.position, 1.5, {x: 2, ease: Expo.easeOut})
                 this.tl.to(intersects[i].object.rotation, .5, {y: Math.PI*.5, ease: Expo.easeOut}, "=-4.5")
+         
             }
 
 			//let text = document.getElementById("about");
