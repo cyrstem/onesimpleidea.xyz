@@ -3,53 +3,51 @@
 
 
 
-.container > div{
-	position: absolute;
-	top:40%;
-	background-color: white;
-	text-align: center;
-	opacity: 0.9555;
-	color: black;
-	width: 500px;
-	border-color:#303030;
-	@include border-width(0.25em 0.2em 1em 1.5em);
-	border-style:outset;
-	transform-style: preserve-3d;
-	perspective: 250px;
-	perspective-origin: right;
-	// z-index: 400;
-	h1{
-		padding-left: 23px;
-	}
-	p{
-		padding-left: 23px;
-		font-size: 16px;
-	}
-}
-
 #contact{
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	text-align: center;
+	text-justify:inter-word;
+	padding:5px;
+	margin-left: -40px;
 
-	img{
-		align-content: center;
-		width: 35px;
+}
+a{
+	border-color:black;
+	padding: 7px;
+	margin: 4px;
+	text-decoration: none;
+	color:black;
 
-	}	
+}
+a:hover{
+	background: #E5E5E5;
+	color:black;
+}
+.blur {
+	-webkit-filter: blur(8px);
+	-moz-filter: blur(8px);
+	-o-filter: blur(8px);
+	-ms-filter: blur(8px);
+	filter: blur(8px);
 }
 
-#latest{
-	position:absolute;
-	top: 55%;
-	@include  respondTo(phones){
-		 @include hide-visually;
-	}
 
-
-	@include respondTo(tablet){
-		 @include hide-visually;
-	}
+button{
+	background: none;
+	border-color: black;
+	font-size: 16px;
+	padding: 5px;
 }
+button :active{
+	background: white;
+	color:#303030;
+	opacity: 0.7;
 
-
+}
+button:hover{
+	background: black;
+	color:white;
+	border-color:#303030;
+}
+button:link{
+	border-color:none;
+}
