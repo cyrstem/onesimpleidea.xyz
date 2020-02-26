@@ -12,26 +12,26 @@ function App() {
   return (
     <div class="wrapper">
       <Bio />
-      <Gallery />
+      
     </div>
   );
 }
  
 render(<App />, document.body);
 
-document.getElementById("latest").onclick = Card;
-document.getElementById("gallery").style.visibility = "hidden";
+// document.getElementById("latest").onclick = Card;
+// document.getElementById("gallery").style.visibility = "hidden";
 
 
 
-function Card() {
-	console.log("loading gallery");
-	document.getElementById("gallery").style.visibility = "visible";
+// // function Card() {
+// // 	console.log("loading gallery");
+// // 	document.getElementById("gallery").style.visibility = "visible";
 	
 
-	//mylogsetup();
+// // 	//mylogsetup();
 
-	      document.getElementById("gallery").onclick = function(){
-	      	document.getElementById("gallery").style.visibility = "hidden";
-	      }
-}
+// // 	      document.getElementById("gallery").onclick = function(){
+// // 	      	document.getElementById("gallery").style.visibility = "hidden";
+// // 	      }
+// }

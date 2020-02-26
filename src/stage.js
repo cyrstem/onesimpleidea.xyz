@@ -1,12 +1,6 @@
 import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
 
-
-
-
-import vert from './assets/posteffects.vert';
-import frag from './assets/posteffects.frag';
-
 //check online
 console.log("here comes johnny")
 
@@ -27,7 +21,7 @@ scene.background = new THREE.Color().setHSL(1,0,0);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 20;
-//scene.fog = new THREE.FogExp2( 0x231D59, 0.0025 );
+
 scene.fog = new THREE.Fog( scene.background, 1, 47);
 
 
@@ -37,10 +31,6 @@ const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.debug.checkShaderErrors = true;
-
-
-//orbit
- //const control = new THREE.OrbitControls(camera,renderer.documentElement);
 
 // event resize---------------------------------------------
 
@@ -55,9 +45,9 @@ window.addEventListener('resize',() =>{
 //elements and  lights -----------------------------------------
 //lights
 
-               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.45 );
+               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.35 );
                 hemiLight.color.setHSL( 0, 0, 100 );
-                hemiLight.groundColor.setHSL( 0.025, 0, 0.075 );
+                hemiLight.groundColor.setHSL( 0.005, 0, 0.075 );
 
                 hemiLight.position.set( 0.005, 0.60, 100 );
                 scene.add( hemiLight );
@@ -70,7 +60,52 @@ window.addEventListener('resize',() =>{
                       //ambient.position(0,0,0);
                 scene.add(ambient);
 
+//Shader staff
 
+ let uniforms = {
+        colorB: {type: 'vec3', value: new THREE.Color(0xFFFFFF)},
+        colorA: {type: 'vec3', value: new THREE.Color(0xD6F9FB)},
+        iTime:{value:0}
+        //uMouse:{type: 'float',value:mousemove}
+    }
+
+function vertexShader() {
+  return `
+    varying vec3 vUv; 
+
+    void main() {
+      vUv = position; 
+
+      vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+      gl_Position = projectionMatrix * modelViewPosition; 
+    }
+  `
+}
+
+function fragmentShader(){
+ return `
+      uniform vec3 colorA; 
+      uniform vec3 colorB; 
+      varying vec3 vUv;
+      
+
+      float random (vec2 st) {
+        return fract(sin(dot(st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+        }
+
+      void main() {
+        gl_FragColor = vec4(mix(colorA, colorB, vUv.z), 0.8989);
+      }
+  `
+}
+
+let materialshader =  new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    fragmentShader: fragmentShader(),
+    vertexShader: vertexShader(),
+  })
 
 //mouse staff
  let raycaster = new THREE.Raycaster();
@@ -86,7 +121,7 @@ window.addEventListener('resize',() =>{
  let meshS = -100;
 
     for(var i = 0; i< 250 ;i++){
-        const mesh = new THREE.Mesh(geometry,mat);
+        const mesh = new THREE.Mesh(geometry,materialshader);
         mesh.position.x = (Math.random()- 0.5)*90*Math.random();
         mesh.position.y = (Math.random()- 0.5)*90*Math.random();
         mesh.position.z = (Math.random()- 0.5)*100*Math.random();
@@ -94,38 +129,6 @@ window.addEventListener('resize',() =>{
         scene.add(mesh);
         meshS+=15;
     }
-
-
-
-
-const planeBase = new THREE.PlaneGeometry(2,2);
-    const geoPlane = new THREE.BufferGeometry().fromGeometry(planeBase);
-        //geoPlane.fromGeometry(geoPlane);
-        const material = new THREE.ShaderMaterial({
-            uniforms: {
-        time: {
-          type: 'f',
-          value: 0,
-        },
-        resolution: {
-          type: 'v2',
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight)
-        },
-        acceleration: {
-          type: 'f',
-          value: 0
-        },
-        texture: {
-          type: 't',
-          value: renderer,
-        },
-      },
-      vertexShader:vert,
-      fragmentShader:frag,
-    });
-        const screen = new THREE.Mesh(geoPlane,material);
-        //scene.add(screen);
-
  
 //end==========================================
 //Rnder Function
@@ -159,7 +162,6 @@ function onMouseMove(event) {
             for (var i = 0; i < intersects.length; i++) {
                 this.tl = new TimelineMax();
                 this.tl.to(intersects[i].object.position, 9.5, {x: 9, ease: Expo.easeOut})
-                //this.tl.to(intersects[i].object.color = '')
                 
             }
 

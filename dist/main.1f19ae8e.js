@@ -45347,20 +45347,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var TweenMax = _TweenMaxBase.default;
 exports.default = exports.TweenMax = TweenMax;
 TweenMax._autoActivated = [_TimelineLite.default, _TimelineMax.default, _CSSPlugin.default, _AttrPlugin.default, _BezierPlugin.default, _RoundPropsPlugin.default, _DirectionalRotationPlugin.default, _EasePack.Back, _EasePack.Elastic, _EasePack.Bounce, _EasePack.RoughEase, _EasePack.SlowMo, _EasePack.SteppedEase, _EasePack.Circ, _EasePack.Expo, _EasePack.Sine, _EasePack.ExpoScaleEase];
-},{"./TweenLite.js":"../node_modules/gsap/TweenLite.js","./TweenMaxBase.js":"../node_modules/gsap/TweenMaxBase.js","./CSSPlugin.js":"../node_modules/gsap/CSSPlugin.js","./AttrPlugin.js":"../node_modules/gsap/AttrPlugin.js","./RoundPropsPlugin.js":"../node_modules/gsap/RoundPropsPlugin.js","./DirectionalRotationPlugin.js":"../node_modules/gsap/DirectionalRotationPlugin.js","./TimelineLite.js":"../node_modules/gsap/TimelineLite.js","./TimelineMax.js":"../node_modules/gsap/TimelineMax.js","./BezierPlugin.js":"../node_modules/gsap/BezierPlugin.js","./EasePack.js":"../node_modules/gsap/EasePack.js"}],"assets/posteffects.vert":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nattribute vec3 position;\nattribute vec2 uv;\n\nvarying vec2 vUv;\n\nvoid main() {\n  vUv = uv;\n  gl_Position = vec4(position, 1.0);\n}";
-},{}],"assets/posteffects.frag":[function(require,module,exports) {
-module.exports = "//glsl frag\n\nprecision highp float;\n#define GLSLIFY 1\n\nuniform float time;\nuniform vec2 resolution;\nuniform sampler2D texture;\n\nvarying vec2 vUv;\n\nconst float duration = 8.0;\nconst float delay = 4.0;\n\nvoid main() {\n  \n}";
-},{}],"stage.js":[function(require,module,exports) {
+},{"./TweenLite.js":"../node_modules/gsap/TweenLite.js","./TweenMaxBase.js":"../node_modules/gsap/TweenMaxBase.js","./CSSPlugin.js":"../node_modules/gsap/CSSPlugin.js","./AttrPlugin.js":"../node_modules/gsap/AttrPlugin.js","./RoundPropsPlugin.js":"../node_modules/gsap/RoundPropsPlugin.js","./DirectionalRotationPlugin.js":"../node_modules/gsap/DirectionalRotationPlugin.js","./TimelineLite.js":"../node_modules/gsap/TimelineLite.js","./TimelineMax.js":"../node_modules/gsap/TimelineMax.js","./BezierPlugin.js":"../node_modules/gsap/BezierPlugin.js","./EasePack.js":"../node_modules/gsap/EasePack.js"}],"stage.js":[function(require,module,exports) {
 "use strict";
 
 var THREE = _interopRequireWildcard(require("three"));
 
 var _TweenMax = _interopRequireDefault(require("gsap/TweenMax"));
-
-var _posteffects = _interopRequireDefault(require("./assets/posteffects.vert"));
-
-var _posteffects2 = _interopRequireDefault(require("./assets/posteffects.frag"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45379,17 +45371,14 @@ var clock = new THREE.Clock(); //console.log(colors);
 var scene = new THREE.Scene();
 scene.background = new THREE.Color().setHSL(1, 0, 0);
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 20; //scene.fog = new THREE.FogExp2( 0x231D59, 0.0025 );
-
+camera.position.z = 20;
 scene.fog = new THREE.Fog(scene.background, 1, 47);
 var renderer = new THREE.WebGLRenderer({
   antialias: true
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.debug.checkShaderErrors = true; //orbit
-//const control = new THREE.OrbitControls(camera,renderer.documentElement);
-// event resize---------------------------------------------
+renderer.debug.checkShaderErrors = true; // event resize---------------------------------------------
 
 window.addEventListener('resize', function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -45399,16 +45388,45 @@ window.addEventListener('resize', function () {
 //elements and  lights -----------------------------------------
 //lights
 
-var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.45);
+var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.35);
 hemiLight.color.setHSL(0, 0, 100);
-hemiLight.groundColor.setHSL(0.025, 0, 0.075);
+hemiLight.groundColor.setHSL(0.005, 0, 0.075);
 hemiLight.position.set(0.005, 0.60, 100);
 scene.add(hemiLight); // const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, -100 );
 // scene.add( hemiLightHelper );
 
 var ambient = new THREE.AmbientLight(0xf9f9f9); //ambient.position(0,0,0);
 
-scene.add(ambient); //mouse staff
+scene.add(ambient); //Shader staff
+
+var uniforms = {
+  colorB: {
+    type: 'vec3',
+    value: new THREE.Color(0xFFFFFF)
+  },
+  colorA: {
+    type: 'vec3',
+    value: new THREE.Color(0xD6F9FB)
+  },
+  iTime: {
+    value: 0 //uMouse:{type: 'float',value:mousemove}
+
+  }
+};
+
+function vertexShader() {
+  return "\n    varying vec3 vUv; \n\n    void main() {\n      vUv = position; \n\n      vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n      gl_Position = projectionMatrix * modelViewPosition; \n    }\n  ";
+}
+
+function fragmentShader() {
+  return "\n      uniform vec3 colorA; \n      uniform vec3 colorB; \n      varying vec3 vUv;\n      \n\n      float random (vec2 st) {\n        return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))*\n        43758.5453123);\n        }\n\n      void main() {\n        gl_FragColor = vec4(mix(colorA, colorB, vUv.z), 0.8989);\n      }\n  ";
+}
+
+var materialshader = new THREE.ShaderMaterial({
+  uniforms: uniforms,
+  fragmentShader: fragmentShader(),
+  vertexShader: vertexShader()
+}); //mouse staff
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -45427,43 +45445,16 @@ var mat = new THREE.MeshPhongMaterial({
 var meshS = -100;
 
 for (var i = 0; i < 250; i++) {
-  var mesh = new THREE.Mesh(geometry, mat);
+  var mesh = new THREE.Mesh(geometry, materialshader);
   mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
   mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
   mesh.position.z = (Math.random() - 0.5) * 100 * Math.random(); // mesh.material.color= (Math.random() -colors)
 
   scene.add(mesh);
   meshS += 15;
-}
-
-var planeBase = new THREE.PlaneGeometry(2, 2);
-var geoPlane = new THREE.BufferGeometry().fromGeometry(planeBase); //geoPlane.fromGeometry(geoPlane);
-
-var material = new THREE.ShaderMaterial({
-  uniforms: {
-    time: {
-      type: 'f',
-      value: 0
-    },
-    resolution: {
-      type: 'v2',
-      value: new THREE.Vector2(window.innerWidth, window.innerHeight)
-    },
-    acceleration: {
-      type: 'f',
-      value: 0
-    },
-    texture: {
-      type: 't',
-      value: renderer
-    }
-  },
-  vertexShader: _posteffects.default,
-  fragmentShader: _posteffects2.default
-});
-var screen = new THREE.Mesh(geoPlane, material); //scene.add(screen);
-//end==========================================
+} //end==========================================
 //Rnder Function
+
 
 document.body.appendChild(renderer.domElement);
 
@@ -45489,7 +45480,7 @@ function onMouseMove(event) {
     this.tl.to(intersects[i].object.position, 9.5, {
       x: 9,
       ease: Expo.easeOut
-    }); //this.tl.to(intersects[i].object.color = '')
+    });
   } //let text = document.getElementById("about");
   //tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
 
@@ -45537,7 +45528,7 @@ function onMouseClick(event) {
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
 render();
-},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","./assets/posteffects.vert":"assets/posteffects.vert","./assets/posteffects.frag":"assets/posteffects.frag"}],"Bio.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js"}],"Bio.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -45555,7 +45546,7 @@ var Bio = function Bio() {
   console.log("“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer");
   return (0, _jsxNoReact.default)("div", {
     "class": "contents"
-  }, (0, _jsxNoReact.default)("h1", null, "hello..."), (0, _jsxNoReact.default)("p", null, "I'm a Creative Developer and Programmer from Quito - Ecuador. I specialize in working with emerging tech to build custom tools for digital or physical experiences."), (0, _jsxNoReact.default)("button", {
+  }, (0, _jsxNoReact.default)("h1", null, "hello..."), (0, _jsxNoReact.default)("small", null, "\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer"), (0, _jsxNoReact.default)("p", null, "I'm a Creative Developer and Programmer from Quito - Ecuador. I specialize in working with emerging tech to build custom tools for digital or physical experiences."), (0, _jsxNoReact.default)("button", {
     id: "latest"
   }, " Latest Work"), (0, _jsxNoReact.default)("div", {
     id: "contact"
@@ -45568,7 +45559,7 @@ var Bio = function Bio() {
   }, "linkedin"), (0, _jsxNoReact.default)("a", {
     href: "https://github.com/cyrstem/",
     target: "_blank"
-  }, "github"))), (0, _jsxNoReact.default)("small", null, "\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer"));
+  }, "github"))));
 };
 
 exports.Bio = Bio;
@@ -45619,21 +45610,19 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 function App() {
   return (0, _jsxNoReact.default)("div", {
     "class": "wrapper"
-  }, (0, _jsxNoReact.default)(_Bio.Bio, null), (0, _jsxNoReact.default)(_Gallery.Gallery, null));
+  }, (0, _jsxNoReact.default)(_Bio.Bio, null));
 }
 
-(0, _jsxNoReact.render)((0, _jsxNoReact.default)(App, null), document.body);
-document.getElementById("latest").onclick = Card;
-document.getElementById("gallery").style.visibility = "hidden";
-
-function Card() {
-  console.log("loading gallery");
-  document.getElementById("gallery").style.visibility = "visible"; //mylogsetup();
-
-  document.getElementById("gallery").onclick = function () {
-    document.getElementById("gallery").style.visibility = "hidden";
-  };
-}
+(0, _jsxNoReact.render)((0, _jsxNoReact.default)(App, null), document.body); // document.getElementById("latest").onclick = Card;
+// document.getElementById("gallery").style.visibility = "hidden";
+// // function Card() {
+// // 	console.log("loading gallery");
+// // 	document.getElementById("gallery").style.visibility = "visible";
+// // 	//mylogsetup();
+// // 	      document.getElementById("gallery").onclick = function(){
+// // 	      	document.getElementById("gallery").style.visibility = "hidden";
+// // 	      }
+// }
 },{"jsx-no-react":"../node_modules/jsx-no-react/lib/module.js","./style/main.scss":"style/main.scss","./stage":"stage.js","/Bio":"Bio.js","/Gallery":"Gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -45662,7 +45651,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43531" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45117" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
