@@ -16,7 +16,7 @@ $tnormalcolor:black;
 //base  for all the site 
 
 html, body{
-	position: absolute;
+	//position: absolute;
   	background-color: $bg;
   	margin: 0px;
   	padding: 0px;
@@ -35,29 +35,36 @@ canvas{
 
 
 .wrapper{
-	position: absolute;
+	// position: absolute;
 	font-family: $custom-font;
-	z-index: 5;
-	justify-content: center;
+	  display: flex;
+  align-items: center;
+  justify-content: center;
+	// z-index: 5;
 
-	
 	}
+.wrapper div{
+	width: 500px;
+	height: 300px;
+}
+
+
 
 .contents{
-	
-	margin-top: 30vh;
-	margin-left:50vh;
+	position: absolute;
+	top: 30%;
 	background-color: white;
 	text-align: center;
 	opacity: 0.9555;
 	color: black;
-	width: 500px;
+	// width: 500px;
 	border-color:#303030;
 	@include border-width(0.25em 0.2em 1em 0.5em);
 	border-style:outset;
 	transform-style: preserve-3d;
 	perspective: 270px;
 	perspective-origin: top;
+	z-index: 5;
 }
 
 #gallery{
@@ -74,4 +81,35 @@ canvas{
 #close{
 	margin-right: -80vh;
 	text-align: right;
+}
+
+@media screen and (max-width: 600px) {
+
+
+	.wrapper div{
+	width: auto;
+	height: auto;
+}
+  .contents {
+  	background: black;
+  	color: white;
+    flex-direction: column;
+	border-style:outset;
+		@include border-width(0.2em 0.2em 0.2em 0.2em);
+	border-color:white;
+    text-align:center;
+  }
+
+  a{
+	border-color:white;
+	padding: 7px;
+	margin: 4px;
+	text-decoration: none;
+	color:white;
+
+}
+a:hover{
+	background: #505050;
+	color:white;
+}
 }

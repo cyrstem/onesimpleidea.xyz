@@ -1,7 +1,7 @@
 import jsxElem, { render } from "jsx-no-react";
 
 const Bio =()=>{
-	console.log("“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer");
+	
 	return(
 
   		<div class="contents">
