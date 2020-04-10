@@ -8,8 +8,7 @@ console.log("here comes johnny")
 //global var 
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
  let jump = ['A','B','C','D'];
-
- const clock = new THREE.Clock();
+ let time =  new THREE.Clock();
 
 //console.log(colors);
 
@@ -45,12 +44,12 @@ window.addEventListener('resize',() =>{
 //elements and  lights -----------------------------------------
 //lights
 
-               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.35 );
+               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.215 );
                 hemiLight.color.setHSL( 0, 0, 100 );
-                hemiLight.groundColor.setHSL( 0.005, 0, 0.075 );
+                hemiLight.groundColor.setHSL( 0.000, 0, 0.015 );
 
                 hemiLight.position.set( 0.005, 0.60, 100 );
-                scene.add( hemiLight );
+                //scene.add( hemiLight );
 
                 // const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, -100 );
                 // scene.add( hemiLightHelper );
@@ -58,15 +57,15 @@ window.addEventListener('resize',() =>{
 
                 const ambient = new THREE.AmbientLight( 0xf9f9f9 );
                       //ambient.position(0,0,0);
-                scene.add(ambient);
+               // scene.add(ambient);
 
 //Shader staff
 
  let uniforms = {
         colorB: {type: 'vec3', value: new THREE.Color(0xFFFFFF)},
         colorA: {type: 'vec3', value: new THREE.Color(0xD6F9FB)},
-        iTime:{value:0}
-        //uMouse:{type: 'float',value:mousemove}
+        u_time: {type: 'float', value: 0.0}
+
     }
 
 function vertexShader() {
@@ -87,17 +86,19 @@ function fragmentShader(){
       uniform vec3 colorA; 
       uniform vec3 colorB; 
       varying vec3 vUv;
+
       
-
-      float random (vec2 st) {
-        return fract(sin(dot(st.xy,
-                         vec2(12.9898,78.233)))*
-        43758.5453123);
-        }
-
       void main() {
-        gl_FragColor = vec4(mix(colorA, colorB, vUv.z), 0.8989);
+
+
+        vec2 st= gl_FragColor.xy/vUv.xy;
+
+        vec3 color = mix(colorA,colorB,vUv.y);
+
+        gl_FragColor = vec4(vec3(color),0.81989);
       }
+
+
   `
 }
 
@@ -135,9 +136,15 @@ let materialshader =  new THREE.ShaderMaterial({
 
 
 document.body.appendChild(renderer.domElement);
+
+
+//Render--------
 const render = function(){
+
     requestAnimationFrame(render);
     renderer.render(scene,camera);
+    //uniforms.u_time.value =time;
+
 }
 //interaction  function----------------------------------------------
 
@@ -229,4 +236,7 @@ switch (ans) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
+// const time = new Three.clock;
+// uniform.iTime.value = time;
+// time *=0.001;
 render();
