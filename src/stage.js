@@ -19,7 +19,7 @@ console.log("wintermute..")
 //setup three 
 
 const scene =  new THREE.Scene();
-scene.background = new THREE.Color().setHSL(1,0,0);
+//scene.background = new THREE.Color().setHSL(100,1,0);
 
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 20;
@@ -29,7 +29,7 @@ scene.fog = new THREE.Fog( scene.background, 1, 47);
 
 
 
-const renderer = new THREE.WebGLRenderer({antialias:true});
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.debug.checkShaderErrors = true;
@@ -185,8 +185,6 @@ function onMouseMove(event) {
                 
             }
 
-            //let text = document.getElementById("about");
-            //tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
            
         }
 
@@ -211,18 +209,18 @@ function onMouseClick(event) {
 
 switch (ans) {
     case 'A':
-             camera.rotation.x +=120;
+             camera.rotation.x +=20;
         break;
 
     case 'B':
-             camera.rotation.y +=180;
+             camera.rotation.y +=80;
         break;
 
   case 'C':
              camera.rotation.z +=10;
         break;
   case 'D':
-             camera.rotation.z +=150;
+             camera.rotation.z +=15;
         break;
 }
 

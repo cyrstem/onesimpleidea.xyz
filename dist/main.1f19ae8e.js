@@ -46171,13 +46171,14 @@ var time = new THREE.Clock();
 var target = new THREE.Vector2(); //console.log(colors);
 //setup three 
 
-var scene = new THREE.Scene();
-scene.background = new THREE.Color().setHSL(1, 0, 0);
+var scene = new THREE.Scene(); //scene.background = new THREE.Color().setHSL(100,1,0);
+
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 20;
 scene.fog = new THREE.Fog(scene.background, 1, 47);
 var renderer = new THREE.WebGLRenderer({
-  antialias: true
+  antialias: true,
+  alpha: true
 });
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -46289,9 +46290,7 @@ function onMouseMove(event) {
       x: 9,
       ease: Expo.easeOut
     });
-  } //let text = document.getElementById("about");
-  //tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
-
+  }
 }
 
 function postionCam(jump) {
@@ -46305,11 +46304,11 @@ function onMouseClick(event) {
 
   switch (ans) {
     case 'A':
-      camera.rotation.x += 120;
+      camera.rotation.x += 20;
       break;
 
     case 'B':
-      camera.rotation.y += 180;
+      camera.rotation.y += 80;
       break;
 
     case 'C':
@@ -46317,7 +46316,7 @@ function onMouseClick(event) {
       break;
 
     case 'D':
-      camera.rotation.z += 150;
+      camera.rotation.z += 15;
       break;
   } //console.log("click");
 
@@ -46352,7 +46351,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var Bio = function Bio() {
   return (0, _jsxNoReact.default)("div", {
     "class": "contents"
-  }, (0, _jsxNoReact.default)("h1", null, "hello.. My name is Jacobo"), (0, _jsxNoReact.default)("p", null, "I'm a Creative Developer and Programmer from Quito - Ecuador. I specialize in working with emerging tech to build custom tools for digital or physical experiences."), (0, _jsxNoReact.default)("div", {
+  }, (0, _jsxNoReact.default)("h1", null, "hello.."), (0, _jsxNoReact.default)("p", null, "I'm a Creative Developer and Programmer from Quito - Ecuador. I specialize in working with emerging tech to build custom tools for digital or physical experiences."), (0, _jsxNoReact.default)("div", {
     id: "contact"
   }, (0, _jsxNoReact.default)("ul", null, (0, _jsxNoReact.default)("a", {
     href: "https://www.instagram.com/cyrstem/",
@@ -46448,7 +46447,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43489" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44735" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
