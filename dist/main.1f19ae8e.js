@@ -45360,12 +45360,14 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; if (obj != null) { var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+//import OrbitControls from 'js/controls/OrbitControls';
 //check online
 console.log("here comes johnny"); //global var 
 
 var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
 var jump = ['A', 'B', 'C', 'D'];
-var time = new THREE.Clock(); //console.log(colors);
+var time = new THREE.Clock(); //let controls = new OrbitControls (camera,renderer.domElement);
+//console.log(colors);
 //setup three 
 
 var scene = new THREE.Scene();
@@ -45548,7 +45550,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var Bio = function Bio() {
   return (0, _jsxNoReact.default)("div", {
     "class": "contents"
-  }, (0, _jsxNoReact.default)("h1", null, "hello... My name is Jacobo"), (0, _jsxNoReact.default)("p", null, "I'm a Creative Developer and Programmer from Quito - Ecuador. I specialize in working with emerging tech to build custom tools for digital or physical experiences."), (0, _jsxNoReact.default)("button", {
+  }, (0, _jsxNoReact.default)("h1", null, "hello.. My name is Jacobo"), (0, _jsxNoReact.default)("p", null, "I'm a Creative Developer and Programmer from Quito - Ecuador. I specialize in working with emerging tech to build custom tools for digital or physical experiences."), (0, _jsxNoReact.default)("button", {
     id: "latest"
   }, " Latest Work"), (0, _jsxNoReact.default)("div", {
     id: "contact"
@@ -45655,7 +45657,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37049" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37701" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

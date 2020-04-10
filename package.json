@@ -31,6 +31,8 @@
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "bourbon": "^6.0.0",
+    "controls": "^0.7.5",
+    "js": "^0.1.0",
     "jsx-no-react": "^0.3.0",
     "three.js": "^0.77.1"
   }

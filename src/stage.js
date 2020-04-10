@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
+//import OrbitControls from 'js/controls/OrbitControls';
 
 //check online
 console.log("here comes johnny")
@@ -9,7 +10,7 @@ console.log("here comes johnny")
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
  let jump = ['A','B','C','D'];
  let time =  new THREE.Clock();
-
+ //let controls = new OrbitControls (camera,renderer.domElement);
 //console.log(colors);
 
 
