@@ -8,7 +8,6 @@ const Bio =()=>{
   			<h1>hello.. My name is Jacobo</h1>
             <p>I'm a Creative Developer and Programmer from Quito - Ecuador. 
             I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>
-            <button id="latest"> Latest Work</button>
              <div id="contact">
                 <ul>
                 	 <a href ="https://www.instagram.com/cyrstem/"target="_blank">instagram</a>

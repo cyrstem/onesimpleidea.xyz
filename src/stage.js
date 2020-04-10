@@ -1,16 +1,18 @@
 import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
-//import OrbitControls from 'js/controls/OrbitControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 
 //check online
-console.log("here comes johnny")
+console.log("wintermute..")
 
 
 //global var 
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
  let jump = ['A','B','C','D'];
  let time =  new THREE.Clock();
- //let controls = new OrbitControls (camera,renderer.domElement);
+ let target = new THREE.Vector2();
+
 //console.log(colors);
 
 
@@ -32,6 +34,10 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.debug.checkShaderErrors = true;
 
+
+
+
+ 
 // event resize---------------------------------------------
 
 window.addEventListener('resize',() =>{
@@ -137,14 +143,20 @@ let materialshader =  new THREE.ShaderMaterial({
 
 
 document.body.appendChild(renderer.domElement);
-
+let controls = new OrbitControls (camera,renderer.domElement);
 
 //Render--------
 const render = function(){
-
+    target.x = ( 1 - mouse.x ) * 0.02;
+  target.y = ( 1 - mouse.y ) * 0.02;
+  
+  camera.rotation.x += 0.05 * ( target.y - camera.rotation.x );
+  camera.rotation.y += 0.05 * ( target.x - camera.rotation.y );
     requestAnimationFrame(render);
     renderer.render(scene,camera);
     //uniforms.u_time.value =time;
+
+
 
 }
 //interaction  function----------------------------------------------
@@ -175,7 +187,7 @@ function onMouseMove(event) {
 
             //let text = document.getElementById("about");
             //tl.to(text,0.5,{color:"#000000",ease:Bounce.easeOut,yoyo:true,repeatDeleay:0.1});
-
+           
         }
 
 function postionCam(jump){
@@ -191,9 +203,9 @@ function onMouseClick(event) {
 
 
     postionCam(jump);
-const ans = postionCam(jump);
-const change = colorRand(colors);
-    console.log(change);
+    const ans = postionCam(jump);
+    const change = colorRand(colors);
+    //console.log(change);
 
 
 
@@ -214,7 +226,7 @@ switch (ans) {
         break;
 }
 
-
+   
 
 
 //console.log("click");
@@ -237,7 +249,4 @@ switch (ans) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
-// const time = new Three.clock;
-// uniform.iTime.value = time;
-// time *=0.001;
 render();
