@@ -19,11 +19,10 @@ console.log("wintermute..")
 //setup three 
 
 const scene =  new THREE.Scene();
-//scene.background = new THREE.Color().setHSL(100,1,0);
-
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 20;
-
+camera.minDistance =0;
+camera.maxDistance = 50;
 scene.fog = new THREE.Fog( scene.background, 1, 47);
 
 
@@ -40,11 +39,11 @@ renderer.debug.checkShaderErrors = true;
  
 // event resize---------------------------------------------
 
-window.addEventListener('resize',() =>{
-     renderer.setSize(window.innerWidth, window.innerHeight);
-     camera.aspect = window.innerWidth/window.innerHeight;
-     
-     camera.updateProjectionMatrix();
+    window.addEventListener('resize',() =>{
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth/window.innerHeight; 
+    camera.updateProjectionMatrix();
+
 })
 
 //end ---------------------------------------------------------
@@ -56,15 +55,7 @@ window.addEventListener('resize',() =>{
                 hemiLight.groundColor.setHSL( 0.000, 0, 0.015 );
 
                 hemiLight.position.set( 0.005, 0.60, 100 );
-                //scene.add( hemiLight );
-
-                // const hemiLightHelper = new THREE.HemisphereLightHelper( hemiLight, -100 );
-                // scene.add( hemiLightHelper );
-
-
-                const ambient = new THREE.AmbientLight( 0xf9f9f9 );
-                      //ambient.position(0,0,0);
-               // scene.add(ambient);
+                scene.add( hemiLight );
 
 //Shader staff
 
@@ -148,7 +139,7 @@ let controls = new OrbitControls (camera,renderer.domElement);
 //Render--------
 const render = function(){
     target.x = ( 1 - mouse.x ) * 0.02;
-  target.y = ( 1 - mouse.y ) * 0.02;
+    target.y = ( 1 - mouse.y ) * 0.02;
   
   camera.rotation.x += 0.05 * ( target.y - camera.rotation.x );
   camera.rotation.y += 0.05 * ( target.x - camera.rotation.y );
@@ -222,14 +213,7 @@ switch (ans) {
   case 'D':
              camera.rotation.z +=15;
         break;
-}
-
-   
-
-
-//console.log("click");
-
-
+    }
 }
         //window.addEventListener('touchend', onDocumentTouchEnd, false);
 

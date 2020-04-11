@@ -8,7 +8,7 @@
 	text-justify:inter-word;
 	padding:5px;
 	margin-left: -40px;
-
+	height: 60px;
 }
 a{
 	border-color:black;
@@ -22,21 +22,15 @@ a:hover{
 	background: #E5E5E5;
 	color:black;
 }
-.blur {
-	-webkit-filter: blur(8px);
-	-moz-filter: blur(8px);
-	-o-filter: blur(8px);
-	-ms-filter: blur(8px);
-	filter: blur(8px);
-}
-
 
 button{
 	background: none;
 	border-color: black;
 	font-size: 16px;
 	padding: 5px;
+	margin-right: 5px;
 }
+
 button :active{
 	background: white;
 	color:#303030;

@@ -1,10 +1,8 @@
 //Basic body pluss call ui 
 @import'_ui';
-//fonts and main colors  must be type here 
 
-// @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&display=swap');
+//fonts and main colors
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
-//@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
 
 $custom-font:'Inconsolata', monospace;
 
@@ -18,8 +16,6 @@ $tnormalcolor:black;
 //base  for all the site 
 
 html, body{
-	//position: absolute;
-  	//background-color: $bg;
   	margin: 0px;
   	padding: 0px;
   	overflow: hidden;
@@ -53,7 +49,7 @@ canvas{
 	}
 .wrapper div{
 	width: 500px;
-	height: 300px;
+	height: 200px;
 }
 
 
@@ -73,27 +69,10 @@ canvas{
 	perspective-origin: top;
 	z-index: 5;
 }
-
-#gallery{
-	margin-top:-50vh;
-	margin-left: 30vh;
-	background-color: white;
-	text-align: center;
-	opacity: 0.7555;
-	color: black;
-	width: 900px;
-	height: 900px;
-	border-color:#303030;
-}
-#close{
-	margin-right: -80vh;
-	text-align: right;
-}
-
 @media screen and (max-width: 600px) {
 
 
-	.wrapper div{
+.wrapper div{
 	width: auto;
 	height: auto;
 }
@@ -121,4 +100,12 @@ a:hover{
 	background: #505050;
 	color:white;
 }
+
+#contact{
+	text-align: center;
+	text-justify:inter-word;
+	padding:5px;
+	margin-left: -40px;
+}
+
 }
