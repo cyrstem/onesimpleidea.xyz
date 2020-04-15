@@ -1,20 +1,24 @@
 import jsxElem, { render }  from "jsx-no-react";
 
-const Works = ()=>{
-	function clean(){
-		console.log("Load component1");
-		let w = document.getElementsByClassName("contents")[0];
-		
-		console.log(w);
-		w.remove();
 
-	}
-
+function Works() {
+	console.log("W");
 	return(
-		
-		<div>
-			<h1>hello..</h1>
+		<div id="r">
+			<h1>Portafolio</h1>
+			<div>
+				<p>project 1</p>
+				<p>project 2</p>
+				<p>project 3</p>
+			</div>
 		</div>
-	)
-}
+	) 
+  }
+
 export {Works}
+
+
+
+
+	
+	

@@ -1,38 +1,57 @@
 import jsxElem, { render } from "jsx-no-react";
+import {Buttons} from '/Nav'
 import {Works} from '/Work'
+import {Intro} from '/Intro'
+import { Contact } from "./Contact";
+
+
+
+let h = true;
+let a = false;
+let w = false;
 
 const Home =()=>{
-	function projects(){
-		console.log("feche");
-		<Works />
-	};
-	function test(){
-		console.log("testclick");
-	};
-	return(
+			//setup change  load  projects
+			function projects(){
 
-  		<div class="contents" id="h">
-  			<h1>hello..</h1>
-            <p>I'm Jacob a Creative Developer and Programmer from Quito - Ecuador. 
-            I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>
-			<div>
-				<button onclick ={projects}> projects</button>
-				<button onclick ={test}>about me</button>
-			</div>
-             <div id="contact">
-                <ul>
-                	 <a href ="https://www.instagram.com/cyrstem/"target="_blank">instagram</a>
-               		 <a href ="http://ec.linkedin.com/in/jacobohz" target="_blank">linkedin</a>
-					 <a href ="https://github.com/cyrstem/" target="_blank">github</a>
-            	</ul>
-				
-            </div>
-			
-           <small id="q">“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer</small>
-  		</div>
+			};
+			function Works(){
 
-  	) 
+			};
 
+		//setup chnage  bio app data 
+			function test(){
+				console.log("testclick");
+			};
+		//begin stages 
+		//show home
+				if (h ===true) {
+					return(
+						<div class="contents" id="h">
+							<Intro />
+							<Contact />
+							<small id="q">“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer</small>
+						</div>
+					) 
+				//show about
+				}if (a ===true) {
+					return(
+						<div class="contents" id="h">
+					
+							<Works />
+							<Contact /> 
+							<small id="q">“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer</small>
+						</div>
+					) 
+				//show works
+				}if (w ===true)
+				return(
+					<div class="contents" id="h">
+						<Works />
+						<Contact /> 
+						<small id="q">“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer</small>
+					</div>
+				) 
 }
 
 export {Home}

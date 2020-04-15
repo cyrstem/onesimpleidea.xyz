@@ -12,5 +12,7 @@ function App() {
       <Home />
     </div>
   );
+
+
 }
 render(<App />, document.body);

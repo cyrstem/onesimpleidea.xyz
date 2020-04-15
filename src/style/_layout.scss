@@ -75,15 +75,19 @@ canvas{
 .wrapper div{
 	width: auto;
 	height: auto;
+	nav{
+		padding: 0;
+		width: auto;
+	}
 }
   .contents {
   	top: 25%;
-  	background: black;
-  	color: white;
+  	background: white;
+  	color: rgb(26, 0, 0);
     flex-direction: column;
 	border-style:outset;
-		@include border-width(0.2em 0.2em 0.2em 0.2em);
-	border-color:white;
+		@include border-width(0.1em 0.1em 0.1em 0.1em);
+	border-color:rgb(7, 7, 7);
 	text-align:center;
 	padding:5px;
   }
@@ -93,7 +97,7 @@ canvas{
 	padding: 7px;
 	margin: 4px;
 	text-decoration: none;
-	color:white;
+	color:black;
 
 }
 a:hover{
