@@ -1,50 +1,58 @@
 import jsxElem, { render } from "jsx-no-react";
-import {Buttons} from '/Nav'
+// import {Buttons} from '/Nav'
 import {Works} from '/Work'
 import {Intro} from '/Intro'
-import { Contact } from "./Contact";
+import { Contact } from './Contact';
+// import { home,trab,about } from './Stado';
 
+ const initConfig ={
+	home: true,
+	work: false,
+	about:false
+ }; 
 
+const Projects= function(e){
+	console.log("show Projects");
+	initConfig.home = true;
+	initConfig.work ==true;
+};
 
-let h = true;
-let a = false;
-let w = false;
+const About= function(e){
+	console.log("show About me");
+   
+};
+
 
 const Home =()=>{
-			//setup change  load  projects
-			function projects(){
-
-			};
-			function Works(){
-
-			};
-
-		//setup chnage  bio app data 
-			function test(){
-				console.log("testclick");
-			};
-		//begin stages 
+	
 		//show home
-				if (h ===true) {
+				if (initConfig.home ===true) {
 					return(
 						<div class="contents" id="h">
 							<Intro />
+							<nav>
+
+							<button onclick ={Projects}> projects</button>
+
+							<button onclick ={About}>about me</button>
+							</nav>
 							<Contact />
+
+
 							<small id="q">“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer</small>
 						</div>
 					) 
 				//show about
-				}if (a ===true) {
+				}if (initConfig.work ==true) {
 					return(
 						<div class="contents" id="h">
-					
 							<Works />
 							<Contact /> 
 							<small id="q">“Wintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.”--William Gibson – Neuromancer</small>
 						</div>
 					) 
 				//show works
-				}if (w ===true)
+				}if (initConfig.about==true)
 				return(
 					<div class="contents" id="h">
 						<Works />

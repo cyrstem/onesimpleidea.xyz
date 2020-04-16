@@ -1,16 +1,18 @@
 import jsxElem,{ render } from "jsx-no-react";
-import { Works } from "./Work";
-
+import {home,work,about} from './Stado';
 
    
     const Projects= function(e){
         console.log("show Projects");
-        
-        
+        home.h = false;
+        console.log(home.h);
+       // work.w = true;
+       // console.log(work.w);
     };
 
     const About= function(e){
         console.log("show About me");
+       
     };
     
 

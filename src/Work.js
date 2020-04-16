@@ -2,7 +2,6 @@ import jsxElem, { render }  from "jsx-no-react";
 
 
 function Works() {
-	console.log("W");
 	return(
 		<div id="r">
 			<h1>Portafolio</h1>
