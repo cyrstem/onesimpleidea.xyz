@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
 //check online
-console.log("wintermute..")
+console.log("wintermute loaded");
 
 
 //global var 

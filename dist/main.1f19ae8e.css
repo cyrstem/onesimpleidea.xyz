@@ -78,21 +78,18 @@ canvas {
   z-index: 0;
 }
 
-.wrapper {
-  font-family: "Inconsolata", monospace;
+#wrapper {
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 1px;
+  padding: 5px;
 }
 
-.wrapper div {
-  width: 500px;
-  height: 200px;
-}
-
-.contents {
+main {
   position: absolute;
-  top: 30%;
+  top: 25%;
   background-color: white;
   text-align: center;
   opacity: 0.7555;
@@ -104,49 +101,8 @@ canvas {
   perspective: 270px;
   perspective-origin: top;
   z-index: 5;
-}
-
-@media screen and (max-width: 600px) {
-  .wrapper div {
-    width: auto;
-    height: auto;
-  }
-  .wrapper div nav {
-    padding: 0;
-    width: auto;
-  }
-
-  .contents {
-    top: 25%;
-    background: white;
-    color: #1a0000;
-    flex-direction: column;
-    border-style: outset;
-    border-width: 0.1em;
-    border-color: #070707;
-    text-align: center;
-    padding: 5px;
-  }
-
-  a {
-    border-color: white;
-    padding: 7px;
-    margin: 4px;
-    text-decoration: none;
-    color: black;
-  }
-
-  a:hover {
-    background: #505050;
-    color: white;
-  }
-
-  #contact {
-    text-align: center;
-    text-justify: inter-word;
-    padding: 5px;
-    margin-left: -40px;
-  }
+  width: 700px;
+  height: 300px;
 }
 
 /*# sourceMappingURL=/main.1f19ae8e.css.map */
