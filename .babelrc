@@ -1,8 +1,11 @@
 {
-	"presets": ["env"],
 	"plugins": [
-		["transform-react-jsx", {
-				"pragma": "jsxElem"
-		}]
-	]	
+		[
+			"@babel/plugin-transform-runtime",
+			{
+				"corejs": 2,
+				"regenerator": true
+			}
+		]
+	]
 }
