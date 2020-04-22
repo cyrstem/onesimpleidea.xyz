@@ -46220,7 +46220,7 @@ function onMouseClick(event) {
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
 render();
-},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js"}],"js/Nav.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js"}],"js/UI/Nav.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46228,14 +46228,14 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var Nav = function Nav() {
-  var template = "\n        <nav>\n            <button>Home </button>\n            <button>Projects</button>\n            <button>About me</button>\n        </nav>\n    ";
+var Navbar = function Navbar() {
+  var template = "\n        <nav>\n            <button id=\"home\">Home </button>\n            <button id=\"project\">Projects</button>\n            <button id=\"about\">About me</button>\n        </nav>\n       \n    ";
   return template;
 };
 
-var _default = Nav;
+var _default = Navbar;
 exports.default = _default;
-},{}],"js/Content.js":[function(require,module,exports) {
+},{}],"js/UI/Contact.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46243,18 +46243,57 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var Nav = function Nav() {
-  var Menu = "\n        <nav>\n            <button>Home</button>\n            <button>Projects</button>\n            <button>About me</button>\n        </nav>\n     ";
-  return Menu;
-};
-
-var Content = function Content() {
-  var template = "\n        <main>\n        <h1>hello..</h1>\n        <p>I'm Jacob a Creative Developer and Programmer from Quito - Ecuador. \n        I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n        </main>\n    "; //document.getElementById('wrapper').appendChild(Nav);
-
+var Contact = function Contact() {
+  var template = "\n\n        <ul>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\">instagram</a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\">linkedin</a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\">github</a>\n        </ul>\n            <small>\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer</small>\n       \n    ";
   return template;
 };
 
-var _default = Content;
+var _default = Contact;
+exports.default = _default;
+},{}],"js/Home.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var Home = function Home() {
+  var template = "\n        <main>\n        <h1>hello..</h1>\n        <p>I'm Jacob a Creative Developer and Programmer from Quito - Ecuador.</p> \n        <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n        </main>\n    ";
+  return template;
+};
+
+var _default = Home;
+exports.default = _default;
+},{}],"js/Portafolio.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var Portafolio = function Portafolio() {
+  var template = "\n        <main>\n        <p>Portafolio</p>\n        <img src =\"src/assets/git.png\" height=\"42 width=\"42\">\n        </main>\n    ";
+  return template;
+};
+
+var _default = Portafolio;
+exports.default = _default;
+},{}],"js/About.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var About = function About() {
+  var template = "\n        <main>\n        <p>more info about me </p>\n        </main>\n    ";
+  return template;
+};
+
+var _default = About;
 exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
@@ -46263,19 +46302,41 @@ require("./style/main.scss");
 
 var _stage = require("./js/stage");
 
-var _Nav = _interopRequireDefault(require("./js/Nav"));
+var _Nav = _interopRequireDefault(require("./js/UI/Nav"));
 
-var _Content = _interopRequireDefault(require("./js/Content"));
+var _Contact = _interopRequireDefault(require("./js/UI/Contact"));
+
+var _Home = _interopRequireDefault(require("./js/Home"));
+
+var _Portafolio = _interopRequireDefault(require("./js/Portafolio"));
+
+var _About = _interopRequireDefault(require("./js/About"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
+document.addEventListener('click', function (event) {
+  if (event.target.id !== 'home') return;
+  console.log("log");
+  document.getElementById('container').innerHTML = (0, _Home.default)();
+}, false);
+document.addEventListener('click', function (event) {
+  if (event.target.id !== 'project') return;
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
+}, false);
+document.addEventListener('click', function (event) {
+  if (event.target.id !== 'about') return;
+  document.getElementById('container').innerHTML = (0, _About.default)();
+}, false);
+
 var app = function app() {
-  document.getElementById('wrapper').innerHTML = (0, _Content.default)(); //document.getElementById('ui').innerHTML =  Nav();
+  document.getElementById('ui').innerHTML = (0, _Nav.default)();
+  document.getElementById('container').innerHTML = (0, _Home.default)();
+  document.getElementById('contact').innerHTML = (0, _Contact.default)();
 };
 
 app();
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/Nav":"js/Nav.js","./js/Content":"js/Content.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/About":"js/About.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46303,7 +46364,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45977" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42089" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

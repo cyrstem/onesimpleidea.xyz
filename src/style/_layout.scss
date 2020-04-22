@@ -1,28 +1,20 @@
 //Basic body pluss call ui 
 @import'_ui';
-
 //fonts and main colors
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
-
 $custom-font:'Inconsolata', monospace;
 
 //variables to complete
 $bg:white;
 $tnormalcolor:black;
-
-
-
-
 //base  for all the site 
-
-html, body{
-  	margin: 0px;
-  	padding: 0px;
-  	overflow: hidden;
-	color:$tnormalcolor;
-	width: 100%;
-	height: 100%;
+html,
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	font-family: $custom-font;
+	overflow: hidden;
 	background: #11e8bb; /* Old browsers */
   	background: -moz-linear-gradient(top,  #f5f7fa 0%, #c3cfe2 100%); /* FF3.6-15 */
   	background: -webkit-linear-gradient(top,  #f5f7fa  0%,#c3cfe2 100%); /* Chrome10-25,Safari5.1-6 */
@@ -30,23 +22,24 @@ html, body{
   	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f7fa', endColorstr='#c3cfe2',GradientType=0 ); /* IE6-9 */
 
 }
+
 canvas{
 	display: block;
 	z-index:0;
 }
 
+#container{
+	position: absolute;
+	z-index: 1000;
 
-#wrapper{
-	z-index: 1;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 1px;
-	padding: 5px;
 }
 main{
-	position: absolute;
-	top: 25%;
+
+	width: 50vh;
+	height: 18vh;
+	padding: 5px;
+	margin: 3px;
+	color:$tnormalcolor;
 	background-color: white;
 	text-align: center;
 	opacity: 0.7555;
@@ -57,13 +50,56 @@ main{
 	transform-style: preserve-3d;
 	perspective: 270px;
 	perspective-origin: top;
-	z-index: 5;
-	width: 700px;
-	height: 300px;
 }
-nav{
+
+#ui{
+	z-index: 1000;
+	bottom: 35vh;
+	position: absolute;
+}
+
+
+//footer and quote
+
+#contact {
+	z-index: 1000;
+	position: absolute;
+	text-align: center;
+	bottom: 2vh;
+	width:50vh
+}
+
+small{
+   background-color: black;
+   color:white;
+   padding: 3px;
+}
+
+
+
+
+//responsive------------------------------------------------------------
+@media screen and(max-width:600px){
+	main{
+		width: auto;
+		height: auto;
+		padding: 2px;
+		margin: 2;
+	}
 	
-}
-footer{
+	#ui{
+		bottom: 25vh;
+	}
+	
+	
+	//footer and quote
+	
+	#contact {
+		z-index: 1000;
+		position: absolute;
+		text-align: center;
+		width: 50vh;
+		bottom: 1vh;
+	}
 
 }

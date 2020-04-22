@@ -1,15 +1,45 @@
-$mobile: 767px;
-$tablet: 992px;
-$desktop: 1200px;
 
-@mixin respondTo($media){
-	@if $media == phones{
-		@media(max-width: $mobile){@content;}
+@media screen and (max-width: 600px) {
+
+
+	.wrapper div{
+		width: auto;
+		height: auto;
+		nav{
+			padding: 0;
+			width: auto;
+		}
 	}
-	@else if $media == tablet{
-		@media(max-width: $tablet){@content;}
+	  .contents {
+		  top: 25%;
+		  background: white;
+		  color: rgb(26, 0, 0);
+		flex-direction: column;
+		border-style:outset;
+			@include border-width(0.1em 0.1em 0.1em 0.1em);
+		border-color:rgb(7, 7, 7);
+		text-align:center;
+		padding:5px;
+	  }
+	
+	  a{
+		border-color:white;
+		padding: 7px;
+		margin: 4px;
+		text-decoration: none;
+		color:black;
+	
 	}
-	@else if $media == desktop{
-		@media(max-width: $tablet){@content;}
+	a:hover{
+		background: #505050;
+		color:white;
 	}
-}
+	
+	#contact{
+		text-align: center;
+		text-justify:inter-word;
+		padding:5px;
+		margin-left: -40px;
+	}
+	
+	}
