@@ -41,10 +41,10 @@ button:link {
 
 html,
 body {
+  font-family: "Inconsolata", monospace;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Inconsolata", monospace;
   overflow: hidden;
   background: #11e8bb;
   /* Old browsers */
@@ -86,6 +86,32 @@ main {
   perspective-origin: top;
 }
 
+#me {
+  width: auto;
+  height: auto;
+  padding: 5px;
+  margin: 3px;
+  color: black;
+  background-color: white;
+  text-align: left;
+  opacity: 0.7555;
+  color: black;
+  border-color: #303030;
+  border-width: 0.15em 0.1em 0.5em;
+  border-style: outset;
+}
+
+#portafolio {
+  display: inline-flex;
+  flex-direction: row;
+}
+#portafolio section {
+  margin: 5px;
+  background-color: red;
+  width: 300px;
+  height: 300px;
+}
+
 #ui {
   z-index: 1000;
   bottom: 35vh;
@@ -122,6 +148,7 @@ small {
     z-index: 1000;
     position: absolute;
     text-align: center;
+    text-justify: inter-word;
     width: 50vh;
     bottom: 1vh;
   }

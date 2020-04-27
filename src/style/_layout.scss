@@ -10,10 +10,10 @@ $tnormalcolor:black;
 //base  for all the site 
 html,
 body {
+	font-family: $custom-font;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	font-family: $custom-font;
 	overflow: hidden;
 	background: #11e8bb; /* Old browsers */
   	background: -moz-linear-gradient(top,  #f5f7fa 0%, #c3cfe2 100%); /* FF3.6-15 */
@@ -34,7 +34,6 @@ canvas{
 
 }
 main{
-
 	width: 50vh;
 	height: 18vh;
 	padding: 5px;
@@ -50,6 +49,35 @@ main{
 	transform-style: preserve-3d;
 	perspective: 270px;
 	perspective-origin: top;
+}
+
+
+#me{
+	width: auto;
+	height: auto;
+	padding: 5px;
+	margin: 3px;
+	color:$tnormalcolor;
+	background-color: white;
+	text-align: left;
+	opacity: 0.7555;
+	color: black;
+	border-color:#303030;
+	@include border-width(0.15em 0.1em 0.5em 0.1em);
+	border-style:outset;
+
+}
+
+
+#portafolio{
+	display: inline-flex;
+	flex-direction: row;
+	section{
+		margin: 5px;
+		background-color: red;
+		width: 300px;
+		height: 300px;
+	}
 }
 
 #ui{
@@ -98,6 +126,7 @@ small{
 		z-index: 1000;
 		position: absolute;
 		text-align: center;
+		text-justify:inter-word;
 		width: 50vh;
 		bottom: 1vh;
 	}

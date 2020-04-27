@@ -14,18 +14,20 @@ document.addEventListener('click',function(event){
         return;
        console.log("log");
        document.getElementById('container').innerHTML = Home();
+       document.getElementById('ui').style.bottom= "35vh";
 
 },false);
 document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
         return;
         document.getElementById('container').innerHTML = Portafolio();
-
+        document.getElementById('ui').style.bottom= "25vh";
 },false);
 document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
         return;
         document.getElementById('container').innerHTML = About();
+        document.getElementById('ui').style.bottom= "35vh";
 
 },false);
 

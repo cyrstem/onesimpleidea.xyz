@@ -1,9 +1,16 @@
 const Portafolio =()=>{
     const template = `
-        <main>
-        <p>Portafolio</p>
-        <img src ="src/assets/git.png" height="42 width="42">
-        </main>
+       <div id ="portafolio">
+        <section>
+            <img src="https://via.placeholder.com/300">
+        </section>
+        <section>
+            <img src="https://via.placeholder.com/300">
+        </section>
+        <section>
+            <img src="https://via.placeholder.com/300">
+        </section>
+       </div>
     `;
     
     return template;

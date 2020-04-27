@@ -46274,7 +46274,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n        <main>\n        <p>Portafolio</p>\n        <img src =\"src/assets/git.png\" height=\"42 width=\"42\">\n        </main>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n            <img src=\"https://via.placeholder.com/300\">\n        </section>\n        <section>\n            <img src=\"https://via.placeholder.com/300\">\n        </section>\n        <section>\n            <img src=\"https://via.placeholder.com/300\">\n        </section>\n       </div>\n    ";
   return template;
 };
 
@@ -46289,7 +46289,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var About = function About() {
-  var template = "\n        <main>\n        <p>more info about me </p>\n        </main>\n    ";
+  var template = "\n        <div id =\"me\">\n            <p>Hello again soo more info about me :</p>\n            <p>Im a self-taugh developer, fast learner and recently curious about Machine Learning</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private industry</p>\n            <p> if you want to get in touch at cyrstem[at]gmail.com</p>       \n        </div>\n    ";
   return template;
 };
 
@@ -46319,14 +46319,17 @@ document.addEventListener('click', function (event) {
   if (event.target.id !== 'home') return;
   console.log("log");
   document.getElementById('container').innerHTML = (0, _Home.default)();
+  document.getElementById('ui').style.bottom = "35vh";
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
   document.getElementById('container').innerHTML = (0, _Portafolio.default)();
+  document.getElementById('ui').style.bottom = "25vh";
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
   document.getElementById('container').innerHTML = (0, _About.default)();
+  document.getElementById('ui').style.bottom = "35vh";
 }, false);
 
 var app = function app() {
@@ -46364,7 +46367,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41433" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38673" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
