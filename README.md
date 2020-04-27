@@ -3,8 +3,8 @@
 
 Portafolio build with Parcel Node and sass and Threejs
 ```
- 	-To develop: npm run dev
-    -To build: npm run prod
-	-To launch  as a git page run build.sh
+-To develop: npm run dev
+-To build: npm run prod
+-To launch  as a git page run build.sh
 
 ```

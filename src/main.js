@@ -1,18 +1,46 @@
-import jsxElem, { render } from "jsx-no-react";
+//console.clear();
 import './style/main.scss'
-import {init} from './stage'
-import {Home} from '/Home'
-
-//Render shit 
-//------------------------------------------------ 
-function App() {
-
-  return (
-    <div class="wrapper">
-      <Home />
-    </div>
-  );
+import {init} from './js/stage'
+import Navbar from './js/UI/Nav'
+import Contact from './js/UI/Contact'
+import Home from './js/Home'
+import Portafolio from './js/Portafolio'
+import About from './js/About'
 
 
+
+document.addEventListener('click',function(event){
+    if (event.target.id !== 'home')
+        return;
+       console.log("log");
+       document.getElementById('container').innerHTML = Home();
+       document.getElementById('ui').style.bottom= "35vh";
+
+},false);
+document.addEventListener('click',function(event){
+    if (event.target.id !== 'project')
+        return;
+        document.getElementById('container').innerHTML = Portafolio();
+        document.getElementById('ui').style.bottom= "25vh";
+},false);
+document.addEventListener('click',function(event){
+    if (event.target.id !== 'about')
+        return;
+        document.getElementById('container').innerHTML = About();
+        document.getElementById('ui').style.bottom= "35vh";
+
+},false);
+
+const app =()=>{
+    document.getElementById('ui').innerHTML = Navbar();
+    document.getElementById('container').innerHTML = Home();
+    document.getElementById('contact').innerHTML = Contact();
+        
 }
-render(<App />, document.body);
+
+
+
+
+
+
+app();

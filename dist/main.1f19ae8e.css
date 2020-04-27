@@ -1,14 +1,6 @@
 /* stylelint-disable order/properties-alphabetical-order */
 /* stylelint-enable */
 @import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
-#contact {
-  text-align: center;
-  text-justify: inter-word;
-  padding: 5px;
-  margin-left: -40px;
-  height: 60px;
-}
-
 a {
   border-color: black;
   padding: 7px;
@@ -47,20 +39,13 @@ button:link {
   border-color: none;
 }
 
-#q {
-  background-color: black;
-  color: white;
-  padding: 3px;
-}
-
-html, body {
-  margin: 0px;
-  padding: 0px;
-  overflow: hidden;
-  color: black;
-  width: 100%;
-  height: 100%;
+html,
+body {
   font-family: "Inconsolata", monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   background: #11e8bb;
   /* Old browsers */
   background: -moz-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
@@ -78,21 +63,17 @@ canvas {
   z-index: 0;
 }
 
-.wrapper {
-  font-family: "Inconsolata", monospace;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wrapper div {
-  width: 500px;
-  height: 200px;
-}
-
-.contents {
+#container {
   position: absolute;
-  top: 30%;
+  z-index: 1000;
+}
+
+main {
+  width: 50vh;
+  height: 18vh;
+  padding: 5px;
+  margin: 3px;
+  color: black;
   background-color: white;
   text-align: center;
   opacity: 0.7555;
@@ -103,49 +84,73 @@ canvas {
   transform-style: preserve-3d;
   perspective: 270px;
   perspective-origin: top;
-  z-index: 5;
+}
+
+#me {
+  width: auto;
+  height: auto;
+  padding: 5px;
+  margin: 3px;
+  color: black;
+  background-color: white;
+  text-align: left;
+  opacity: 0.7555;
+  color: black;
+  border-color: #303030;
+  border-width: 0.15em 0.1em 0.5em;
+  border-style: outset;
+}
+
+#portafolio {
+  display: inline-flex;
+  flex-direction: row;
+}
+#portafolio section {
+  margin: 5px;
+  background-color: red;
+  width: 300px;
+  height: 300px;
+}
+
+#ui {
+  z-index: 1000;
+  bottom: 35vh;
+  position: absolute;
+}
+
+#contact {
+  z-index: 1000;
+  position: absolute;
+  text-align: center;
+  bottom: 2vh;
+  width: 50vh;
+}
+
+small {
+  background-color: black;
+  color: white;
+  padding: 3px;
 }
 
 @media screen and (max-width: 600px) {
-  .wrapper div {
+  main {
     width: auto;
     height: auto;
-  }
-  .wrapper div nav {
-    padding: 0;
-    width: auto;
+    padding: 2px;
+    margin: 2;
   }
 
-  .contents {
-    top: 25%;
-    background: white;
-    color: #1a0000;
-    flex-direction: column;
-    border-style: outset;
-    border-width: 0.1em;
-    border-color: #070707;
-    text-align: center;
-    padding: 5px;
-  }
-
-  a {
-    border-color: white;
-    padding: 7px;
-    margin: 4px;
-    text-decoration: none;
-    color: black;
-  }
-
-  a:hover {
-    background: #505050;
-    color: white;
+  #ui {
+    bottom: 25vh;
   }
 
   #contact {
+    z-index: 1000;
+    position: absolute;
     text-align: center;
     text-justify: inter-word;
-    padding: 5px;
-    margin-left: -40px;
+    width: 50vh;
+    bottom: 1vh;
   }
 }
 

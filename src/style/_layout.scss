@@ -1,28 +1,20 @@
 //Basic body pluss call ui 
 @import'_ui';
-
 //fonts and main colors
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
-
 $custom-font:'Inconsolata', monospace;
 
 //variables to complete
 $bg:white;
 $tnormalcolor:black;
-
-
-
-
 //base  for all the site 
-
-html, body{
-  	margin: 0px;
-  	padding: 0px;
-  	overflow: hidden;
-	color:$tnormalcolor;
-	width: 100%;
-	height: 100%;
+html,
+body {
 	font-family: $custom-font;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
 	background: #11e8bb; /* Old browsers */
   	background: -moz-linear-gradient(top,  #f5f7fa 0%, #c3cfe2 100%); /* FF3.6-15 */
   	background: -webkit-linear-gradient(top,  #f5f7fa  0%,#c3cfe2 100%); /* Chrome10-25,Safari5.1-6 */
@@ -31,32 +23,22 @@ html, body{
 
 }
 
-
 canvas{
 	display: block;
 	z-index:0;
 }
 
-
-.wrapper{
-	// position: absolute;
-	font-family: $custom-font;
-	  display: flex;
-  align-items: center;
-  justify-content: center;
-	// z-index: 5;
-
-	}
-.wrapper div{
-	width: 500px;
-	height: 200px;
+#container{
+	position: absolute;
+	z-index: 1000;
 
 }
-
-
-.contents{
-	position: absolute;
-	top: 30%;
+main{
+	width: 50vh;
+	height: 18vh;
+	padding: 5px;
+	margin: 3px;
+	color:$tnormalcolor;
 	background-color: white;
 	text-align: center;
 	opacity: 0.7555;
@@ -67,49 +49,86 @@ canvas{
 	transform-style: preserve-3d;
 	perspective: 270px;
 	perspective-origin: top;
-	z-index: 5;
 }
-@media screen and (max-width: 600px) {
 
 
-.wrapper div{
+#me{
 	width: auto;
 	height: auto;
-	nav{
-		padding: 0;
-		width: auto;
+	padding: 5px;
+	margin: 3px;
+	color:$tnormalcolor;
+	background-color: white;
+	text-align: left;
+	opacity: 0.7555;
+	color: black;
+	border-color:#303030;
+	@include border-width(0.15em 0.1em 0.5em 0.1em);
+	border-style:outset;
+
+}
+
+
+#portafolio{
+	display: inline-flex;
+	flex-direction: row;
+	section{
+		margin: 5px;
+		background-color: red;
+		width: 300px;
+		height: 300px;
 	}
 }
-  .contents {
-  	top: 25%;
-  	background: white;
-  	color: rgb(26, 0, 0);
-    flex-direction: column;
-	border-style:outset;
-		@include border-width(0.1em 0.1em 0.1em 0.1em);
-	border-color:rgb(7, 7, 7);
-	text-align:center;
-	padding:5px;
-  }
 
-  a{
-	border-color:white;
-	padding: 7px;
-	margin: 4px;
-	text-decoration: none;
-	color:black;
-
-}
-a:hover{
-	background: #505050;
-	color:white;
+#ui{
+	z-index: 1000;
+	bottom: 35vh;
+	position: absolute;
 }
 
-#contact{
+
+//footer and quote
+
+#contact {
+	z-index: 1000;
+	position: absolute;
 	text-align: center;
-	text-justify:inter-word;
-	padding:5px;
-	margin-left: -40px;
+	bottom: 2vh;
+	width:50vh
 }
+
+small{
+   background-color: black;
+   color:white;
+   padding: 3px;
+}
+
+
+
+
+//responsive------------------------------------------------------------
+@media screen and(max-width:600px){
+	main{
+		width: auto;
+		height: auto;
+		padding: 2px;
+		margin: 2;
+	}
+	
+	#ui{
+		bottom: 25vh;
+	}
+	
+	
+	//footer and quote
+	
+	#contact {
+		z-index: 1000;
+		position: absolute;
+		text-align: center;
+		text-justify:inter-word;
+		width: 50vh;
+		bottom: 1vh;
+	}
 
 }
