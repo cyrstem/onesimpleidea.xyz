@@ -14,7 +14,7 @@ document.addEventListener('click',function(event){
         return;
        console.log("log");
        document.getElementById('container').innerHTML = Home();
-       document.getElementById('ui').style.bottom= "35vh";
+       document.getElementById('ui').style.bottom= "30vh";
 
 },false);
 document.addEventListener('click',function(event){
@@ -27,7 +27,7 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
         return;
         document.getElementById('container').innerHTML = About();
-        document.getElementById('ui').style.bottom= "35vh";
+        document.getElementById('ui').style.bottom= "30vh";
 
 },false);
 
