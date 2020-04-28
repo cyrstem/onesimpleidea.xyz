@@ -46289,7 +46289,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var About = function About() {
-  var template = "\n        <div id =\"me\">\n            <p>Hello again soo more info about me :</p>\n            <p>Im a self-taugh developer, fast learner and recently curious about Machine Learning</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private industry</p>\n            <p> if you want to get in touch at cyrstem[at]gmail.com</p>       \n        </div>\n    ";
+  var template = "\n        <div id =\"me\">\n            <p>Hello again soo more info about me :</p>\n            <p>Im a self-taugh developer, fast learner and recently curious about Machine Learning</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private industry</p>\n            <p> if you want to get in touch at cyrstem[at]gmail.com.</p>       \n        </div>\n    ";
   return template;
 };
 
@@ -46367,7 +46367,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33433" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45219" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
