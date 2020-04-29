@@ -1,7 +1,8 @@
 //Basic body pluss call ui 
-@import'_ui';
+
 //fonts and main colors
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+@import'_ui';
 $custom-font:'Inconsolata', monospace;
 
 //variables to complete
@@ -116,9 +117,24 @@ small{
 	}
 	
 	#ui{
-		bottom: 25vh;
+		top: 15vh;
 	}
+
+	// #me{
+	// 	width: 300px;
+	// 	height: auto;
+	// 	padding: 5px;
+	// 	margin: 3px;
+	// 	color:$tnormalcolor;
+	// 	background-color: white;
+	// 	text-align: left;
+	// 	opacity: 0.7555;
+	// 	color: black;
+	// 	border-color:#303030;
+	// 	@include border-width(0.15em 0.1em 0.5em 0.1em);
+	// 	border-style:outset;
 	
+	// }
 	
 	//footer and quote
 	
@@ -127,8 +143,11 @@ small{
 		position: absolute;
 		text-align: center;
 		text-justify:inter-word;
-		width: 50vh;
+		width: auto;
 		bottom: 1vh;
+	}
+	small{
+		display: none;
 	}
 
 }
