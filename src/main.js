@@ -21,7 +21,7 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
         return;
         document.getElementById('container').innerHTML = Portafolio();
-        document.getElementById('ui').style.bottom= "25vh";
+        document.getElementById('ui').style.bottom= "20vh";
 },false);
 document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
