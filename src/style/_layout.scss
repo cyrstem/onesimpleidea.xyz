@@ -116,10 +116,24 @@ small{
 		margin: 2px;
 	}
 	
-	#ui{
-		top: 15vh;
+	#ui{	
+		top: 2vh;
+		width: auto;
+		height: 100px;
 	}
 
+	#portafolio{
+		display: flex;
+		flex-direction: column;
+
+
+		section{
+			margin: 3px;
+			background-color: red;
+			width: 300px;
+			height: 300px;
+		}
+	}
 	// #me{
 	// 	width: 300px;
 	// 	height: auto;
