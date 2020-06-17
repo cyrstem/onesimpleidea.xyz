@@ -177,9 +177,9 @@ small {
 @media screen and (max-width: 600px) {
   main {
     width: auto;
-    height: auto;
-    padding: 2px;
-    margin: 2px;
+    height: 65vh;
+    font-size: 1em;
+    overflow-y: scroll;
   }
 
   #ui {
