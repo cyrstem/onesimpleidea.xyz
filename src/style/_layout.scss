@@ -37,33 +37,28 @@ canvas{
 main{
 	width: 66vh;
 	height: 35vh;
-	padding: 3px;
+	padding: 2px;
 	margin: 3px;
-	font-weight: 400;
-	//color:$tnormalcolor;
-	//background-color:whitesmoke;
-	//background-color: #303030;
 	text-align: left;
-	//opacity: 0.7555;
-	//color:white;
 	color:#303030;
 	border-color:#303030;
 	@include border-width(0.1em 0.0em 0.1em 0.0em);
 	border-style:outset;
-	// transform-style: preserve-3d;
-	// perspective: 270px;
-	// perspective-origin: top;
-	h1{
-		//background-color: #303030;
-		text-align: center;
-	}
-	p{
-		color: #303030;
-		padding: 1px;
-		//background: #303030;
-		font-size: 1em;
-	}
-
+	font-size: 1.0rem;
+	word-wrap:break-all;
+	overflow-wrap: break-word;
+	overflow-y:scroll ;
+		h1{
+			text-align: center;
+			font-size:1.3rem;
+		}
+	
+		p{
+			color: #303030;
+			padding: 1px;
+			
+		}
+	
 }
 
 
@@ -80,7 +75,6 @@ main{
 	border-color:#303030;
 	@include border-width(0.15em 0.1em 0.5em 0.0em);
 	border-style:outset;
-
 }
 
 
@@ -119,29 +113,6 @@ main{
 	}
 }
 
-/* width */
-::-webkit-scrollbar {
-	width: 4px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-	background: transparent; 
-	opacity: 0.1;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-	background: rgb(0, 0, 0); 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-	background: rgba($color: #000000, $alpha: 0.5);
-  }
-
-
-
 #ui{
 	z-index: 1000;
 	bottom: 20vh;
@@ -173,7 +144,7 @@ small{
 	main{
 		width: auto;
 		height: 65vh;
-		font-size: 1em;
+		font-size: 6vw;
 		overflow-y: scroll;
 	}
 	

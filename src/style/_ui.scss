@@ -37,3 +37,26 @@ button:hover{
 button:link{
 	border-color:none;
 }
+//scroll bar  settings on ly works on chrome 
+
+/* width */
+::-webkit-scrollbar {
+	width: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: transparent; 
+	opacity: 0.1;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: rgb(0, 0, 0); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: rgba($color: #000000, $alpha: 0.5);
+  }
+
