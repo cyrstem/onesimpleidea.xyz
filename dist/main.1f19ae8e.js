@@ -46229,7 +46229,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Navbar = function Navbar() {
-  var template = "\n        <nav>\n            <button id=\"home\">Home </button>\n            <button id=\"project\">Projects</button>\n            <button id=\"about\">About me</button>\n        </nav>\n       \n    ";
+  var template = "\n        <nav>\n            <button id=\"home\">About Me </button>\n            <button id=\"project\">Projects</button>\n            \n        </nav>\n       \n    ";
   return template;
 };
 
@@ -46259,7 +46259,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Home = function Home() {
-  var template = "\n        <main>\n        <h1>hello..</h1>\n        <p>I'm Jacob a Creative Developer and Programmer from Quito - Ecuador.</p> \n        <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n        </main>\n    ";
+  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer and Programmer from Quito - Ecuador.</b></p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a self-taugh developer, fast learner and recently curious</p>\n            <p>about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail.com</b>.</p>   \n        </main>\n    ";
   return template;
 };
 
@@ -46274,7 +46274,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a class=\"option\">project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n         </ul>\n        </section>\n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a src=\"\">project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n         </ul>\n        </section>\n       </div>\n    ";
   return template;
 };
 
@@ -46336,12 +46336,12 @@ document.addEventListener('click', function (event) {
   if (event.target.id !== 'home') return;
   console.log("log");
   document.getElementById('container').innerHTML = (0, _Home.default)();
-  document.getElementById('ui').style.bottom = "30vh";
+  document.getElementById('ui').style.bottom = "20vh";
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
   document.getElementById('container').innerHTML = (0, _Portafolio.default)();
-  document.getElementById('ui').style.bottom = "20vh";
+  document.getElementById('ui').style.bottom = "30vh";
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
@@ -46394,7 +46394,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37507" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35697" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

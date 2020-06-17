@@ -4,7 +4,7 @@ const Portafolio =()=>{
        <div id ="portafolio">
         <section>
          <ul>
-            <li><a class="option">project one </a></li>
+            <li><a src="">project one </a></li>
             <li><a>project two </a></li>
             <li><a>project one </a></li>
             <li><a>project two </a></li>
