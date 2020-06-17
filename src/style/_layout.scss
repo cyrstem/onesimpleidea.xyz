@@ -73,13 +73,57 @@ main{
 #portafolio{
 	display: inline-flex;
 	flex-direction: row;
+	border-color:#303030;
+	@include border-width(0.1em 0.0em 0.1em 0.0em);
+	border-style:outset;
+	
+	
 	section{
-		margin: 5px;
-		background-color: red;
-		width: 300px;
-		height: 300px;
+		margin: 10px;	
+		width: 600px;
+		height: 200px;
+		overflow-y:scroll;
+		font-size: 2em;
+		text-align: center;
+	}
+	ul{
+		list-style-type: none;
+	}
+	li{
+		padding: 10px;
+		
+	}
+	a{
+		transition: all .2s ease-in-out;
+	}
+	a:hover{
+		font-size: 2.3em;
+		transform: scale(1.1);
 	}
 }
+
+/* width */
+::-webkit-scrollbar {
+	width: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+	background: transparent; 
+	opacity: 0.1;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+	background: rgb(0, 0, 0); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+	background: rgba($color: #000000, $alpha: 0.5);
+  }
+
+
 
 #ui{
 	z-index: 1000;

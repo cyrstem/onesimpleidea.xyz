@@ -3,13 +3,18 @@ const Portafolio =()=>{
     const template = `
        <div id ="portafolio">
         <section>
-            <img src="https://via.placeholder.com/300">
-        </section>
-        <section>
-            <img src="https://via.placeholder.com/300">
-        </section>
-        <section>
-            <img src="https://via.placeholder.com/300">
+         <ul>
+            <li><a class="option">project one </a></li>
+            <li><a>project two </a></li>
+            <li><a>project one </a></li>
+            <li><a>project two </a></li>
+            <li><a>project one </a></li>
+            <li><a>project two </a></li>
+            <li><a>project one </a></li>
+            <li><a>project two </a></li>
+            <li><a>project one </a></li>
+            <li><a>project two </a></li>
+         </ul>
         </section>
        </div>
     `;
