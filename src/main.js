@@ -14,6 +14,7 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'home')
         return;
        console.log("log");
+     
        document.getElementById('container').innerHTML = Home();
        document.getElementById('ui').style.bottom= "20vh";
 
@@ -38,10 +39,17 @@ document.addEventListener('click',function(event){
 },false);
 
 const app =()=>{
+    //load UI and socials media  plus main content
     document.getElementById('ui').innerHTML = Navbar();
     document.getElementById('container').innerHTML = Home();
     document.getElementById('contact').innerHTML = Contact();
 
+
+
+
+
+
+    //responsive screens 
     var x = window.matchMedia("(max-width: 700px)");
     if(x.matches){
         console.log("responsive biatch");

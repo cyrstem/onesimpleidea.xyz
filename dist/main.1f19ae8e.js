@@ -46259,7 +46259,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Home = function Home() {
-  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer and Programmer from Quito - Ecuador.</b></p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a self-taugh developer, fast learner and recently curious about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail.com</b>.</p>   \n        </main>\n    ";
+  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer and Programmer from Quito - Ecuador.</b></p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a self-taugh developer, fast learner and recently curious about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b>.</p>   \n        </main>\n    ";
   return template;
 };
 
@@ -46274,7 +46274,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a src=\"\">noizu </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n            <li><a>project one </a></li>\n            <li><a>project two </a></li>\n         </ul>\n        </section>\n       </div>\n    ";
+  var myImage = new Image(100, 200);
+  myImage.src = '../assets/noizu1.png'; //document.body.appendChild(myImage);
+
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li class=\"test\"><a src=\"#\"> Noizu</a></li>\n            <li><a src=\"#\"> Glitch </a></li>\n            <li><a src=\"#\"> Vulcan View</a></li>\n         </ul>\n        </section>\n       </div>\n    ";
   return template;
 };
 
@@ -46304,7 +46307,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var About = function About() {
-  var template = "\n        <div id =\"me\">\n            <p><b>Hello again soo more info about me :</b></p>\n            <p>Im a self-taugh developer, fast learner and recently curious</p>\n            <p>about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail.com</b>.</p>       \n        </div>\n    ";
+  var template = "\n        <div id =\"me\">\n            <p><b>Hello again soo more info about me :</b></p>\n            <p>Im a self-taugh developer, fast learner and recently curious</p>\n            <p>about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b>.</p>       \n        </div>\n    ";
   return template;
 };
 
@@ -46350,9 +46353,11 @@ document.addEventListener('click', function (event) {
 }, false);
 
 var app = function app() {
+  //load UI and socials media  plus main content
   document.getElementById('ui').innerHTML = (0, _Nav.default)();
   document.getElementById('container').innerHTML = (0, _Home.default)();
-  document.getElementById('contact').innerHTML = (0, _Contact.default)();
+  document.getElementById('contact').innerHTML = (0, _Contact.default)(); //responsive screens 
+
   var x = window.matchMedia("(max-width: 700px)");
 
   if (x.matches) {
@@ -46394,7 +46399,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40401" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37313" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
