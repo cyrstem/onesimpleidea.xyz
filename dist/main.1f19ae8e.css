@@ -4,8 +4,7 @@
 @import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
 a {
   border-color: black;
-  padding: 7px;
-  margin: 4px;
+  padding: 5px;
   text-decoration: none;
   color: black;
 }
@@ -197,7 +196,6 @@ small {
   }
   #portafolio section {
     margin: 3px;
-    background-color: red;
     width: 300px;
     height: 300px;
   }

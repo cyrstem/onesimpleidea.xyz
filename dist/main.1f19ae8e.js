@@ -46274,10 +46274,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var myImage = new Image(100, 200);
-  myImage.src = '../assets/noizu1.png'; //document.body.appendChild(myImage);
-
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li class=\"test\"><a src=\"#\"> Noizu</a></li>\n            <li><a src=\"#\"> Glitch </a></li>\n            <li><a src=\"#\"> Vulcan View</a></li>\n         </ul>\n        </section>\n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a id=\"p1\" href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a id=\"p2\" href=\"#\"> Glitch </a></li>\n            <li><a id=\"p1\" href=\"#\"> Vulcan View</a></li>\n         </ul>\n        </section>\n       </div>\n    ";
   return template;
 };
 
@@ -46399,7 +46396,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37313" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35781" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

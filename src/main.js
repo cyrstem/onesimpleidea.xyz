@@ -44,11 +44,6 @@ const app =()=>{
     document.getElementById('container').innerHTML = Home();
     document.getElementById('contact').innerHTML = Contact();
 
-
-
-
-
-
     //responsive screens 
     var x = window.matchMedia("(max-width: 700px)");
     if(x.matches){
