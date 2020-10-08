@@ -25,7 +25,22 @@ document.addEventListener('click',function(event){
         return;
         document.getElementById('container').innerHTML = Portafolio();
         document.getElementById('ui').style.bottom= "30vh";
+        let p = document.getElementById('portafolio');
+        console.log(p);
+           
+
 },false);
+
+// let  test  = document.getElementById("postafolio");
+// document.addEventListener("mouseenter", function( event ) {   
+//    // highlight the mouseenter target
+//    event.target.style.color = "purple";
+ 
+//    // reset the color after a short delay
+//    setTimeout(function() {
+//      event.target.style.color = "";
+//    }, 500);
+//  }, false)
 
 
 

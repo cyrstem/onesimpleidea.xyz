@@ -46272,6 +46272,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var test = document.getElementById("postafolio"); // test.addEventListener("mouseenter", function( event ) {   
+//    // highlight the mouseenter target
+//    event.target.style.color = "purple";
+//    // reset the color after a short delay
+//    setTimeout(function() {
+//      event.target.style.color = "";
+//    }, 500);
+//  }, false)
 
 var Portafolio = function Portafolio() {
   var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a id=\"p1\" href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a id=\"p2\" href=\"#\"> Glitch </a></li>\n            <li><a id=\"p1\" href=\"#\"> Vulcan View</a></li>\n         </ul>\n        </section>\n       </div>\n    ";
@@ -46342,7 +46350,18 @@ document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
   document.getElementById('container').innerHTML = (0, _Portafolio.default)();
   document.getElementById('ui').style.bottom = "30vh";
-}, false);
+  var p = document.getElementById('portafolio');
+  console.log(p);
+}, false); // let  test  = document.getElementById("postafolio");
+// document.addEventListener("mouseenter", function( event ) {   
+//    // highlight the mouseenter target
+//    event.target.style.color = "purple";
+//    // reset the color after a short delay
+//    setTimeout(function() {
+//      event.target.style.color = "";
+//    }, 500);
+//  }, false)
+
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
   document.getElementById('container').innerHTML = (0, _About.default)();
@@ -46396,7 +46415,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35781" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39903" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
