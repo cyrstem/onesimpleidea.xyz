@@ -60,6 +60,15 @@ button:link {
   background: rgba(0, 0, 0, 0.5);
 }
 
+#floating {
+  z-index: 1000;
+  width: 200px;
+  height: auto;
+  background: red;
+  position: absolute;
+  left: 305px;
+}
+
 html,
 body {
   font-family: "Inconsolata", monospace;

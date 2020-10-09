@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "parcel src/index.html --open",
     "prod": "parcel build src/index.html",
-    "dep":"parcel build src/index.html --out-dir docs --public-url ./"
+    "dep": "parcel build src/index.html --out-dir docs --public-url ./"
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "bourbon": "^6.0.0",
-    "browserslist": "^4.11.1"
+    "browserslist": "^4.11.1",
+    "js": "^0.1.0"
   }
 }

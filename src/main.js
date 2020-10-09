@@ -7,18 +7,21 @@ import Home from './js/Home'
 import Portafolio from './js/Portafolio'
 import Not4u from './js/Not4u'
 import About from './js/About'
+import displaI from './js/gallery'
 
 
 
 document.addEventListener('click',function(event){
     if (event.target.id !== 'home')
         return;
-       console.log("log");
+       console.log("init");
      
        document.getElementById('container').innerHTML = Home();
        document.getElementById('ui').style.bottom= "20vh";
 
 },false);
+
+
 
 document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
@@ -26,24 +29,27 @@ document.addEventListener('click',function(event){
         document.getElementById('container').innerHTML = Portafolio();
         document.getElementById('ui').style.bottom= "30vh";
         let p = document.getElementById('portafolio');
-        console.log(p);
+        let g = document.getElementById('p1');
+        let g2 = document.getElementById('p2');
+        g.addEventListener("mouseover", mouseOver);
+        g.addEventListener("mouseout", mouseOut);
+        g2.addEventListener("mouseover",mouseOver);
+        g2.addEventListener("mouseout",mouseOut);
+
+        gallery(p);
            
 
 },false);
 
-// let  test  = document.getElementById("postafolio");
-// document.addEventListener("mouseenter", function( event ) {   
-//    // highlight the mouseenter target
-//    event.target.style.color = "purple";
- 
-//    // reset the color after a short delay
-//    setTimeout(function() {
-//      event.target.style.color = "";
-//    }, 500);
-//  }, false)
+function mouseOut(){
+    let d = document.getElementById("floating");
+    d.remove();
+}
+function mouseOver( ){
+console.log("image" );
+displaI();
 
-
-
+}
 
 document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
@@ -74,7 +80,9 @@ const app =()=>{
         
 }
 
-
+function gallery( data ){
+    console.log("here the divs" + data);
+}
 
 
 

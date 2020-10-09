@@ -60,6 +60,14 @@ button:link{
 	background: rgba($color: #000000, $alpha: 0.5);
   }
 
+  #floating{
+	z-index: 1000;
+	width: 200px;
+	height: auto;
+	background: red;
+	position: absolute;
+    left: 305px;
+  }
 // /* modal and shit  */
 // modal {
 // 	display: none; /* Hidden by default */

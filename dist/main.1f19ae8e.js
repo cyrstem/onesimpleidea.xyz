@@ -46041,6 +46041,11 @@ MapControls.prototype.constructor = MapControls;
 },{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"js/stage.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.change = void 0;
+
 var THREE = _interopRequireWildcard(require("three"));
 
 var _TweenMax = _interopRequireDefault(require("gsap/TweenMax"));
@@ -46054,13 +46059,19 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 //check online
-console.log("wintermute loaded"); //global var 
+console.log("wintermute loaded");
+var change = false; //global var 
 
+exports.change = change;
 var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
 var jump = ['A', 'B', 'C', 'D'];
 var time = new THREE.Clock();
 var target = new THREE.Vector2(); //console.log(colors);
-//setup three 
+
+if (!change) {
+  console.log("change " + change);
+} //setup three 
+
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -46206,15 +46217,7 @@ function onMouseClick(event) {
       camera.rotation.z += 15;
       break;
   }
-} //window.addEventListener('touchend', onDocumentTouchEnd, false);
-// function onDocumentTouchEnd(event) {
-//     event.preventDefault();
-//     mouse.x = (event.changedTouches[0].clientX / window.innerWidth) * 2 - 1;
-//     mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2 + 1;
-//     raycaster.setFromCamera(mouse, camera);
-//     const intersects = raycaster.intersectObjects(yourObject3D);
-// }
-//everything executes
+} //everything executes
 
 
 window.addEventListener('mousemove', onMouseMove);
@@ -46272,14 +46275,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var test = document.getElementById("postafolio"); // test.addEventListener("mouseenter", function( event ) {   
-//    // highlight the mouseenter target
-//    event.target.style.color = "purple";
-//    // reset the color after a short delay
-//    setTimeout(function() {
-//      event.target.style.color = "";
-//    }, 500);
-//  }, false)
 
 var Portafolio = function Portafolio() {
   var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a id=\"p1\" href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a id=\"p2\" href=\"#\"> Glitch </a></li>\n            <li><a id=\"p1\" href=\"#\"> Vulcan View</a></li>\n         </ul>\n        </section>\n       </div>\n    ";
@@ -46318,6 +46313,28 @@ var About = function About() {
 
 var _default = About;
 exports.default = _default;
+},{}],"js/gallery.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function displayI() {
+  var newDiv = document.createElement("div");
+  newDiv.setAttribute("id", "floating"); // and give it some content 
+
+  var newContent = document.createTextNode("testing 123"); // add the text node to the newly created div
+
+  newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
+
+  var currentDiv = document.getElementById("div1");
+  document.body.insertBefore(newDiv, currentDiv);
+}
+
+var _default = displayI;
+exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
@@ -46337,12 +46354,14 @@ var _Not4u = _interopRequireDefault(require("./js/Not4u"));
 
 var _About = _interopRequireDefault(require("./js/About"));
 
+var _gallery = _interopRequireDefault(require("./js/gallery"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'home') return;
-  console.log("log");
+  console.log("init");
   document.getElementById('container').innerHTML = (0, _Home.default)();
   document.getElementById('ui').style.bottom = "20vh";
 }, false);
@@ -46351,16 +46370,24 @@ document.addEventListener('click', function (event) {
   document.getElementById('container').innerHTML = (0, _Portafolio.default)();
   document.getElementById('ui').style.bottom = "30vh";
   var p = document.getElementById('portafolio');
-  console.log(p);
-}, false); // let  test  = document.getElementById("postafolio");
-// document.addEventListener("mouseenter", function( event ) {   
-//    // highlight the mouseenter target
-//    event.target.style.color = "purple";
-//    // reset the color after a short delay
-//    setTimeout(function() {
-//      event.target.style.color = "";
-//    }, 500);
-//  }, false)
+  var g = document.getElementById('p1');
+  var g2 = document.getElementById('p2');
+  g.addEventListener("mouseover", mouseOver);
+  g.addEventListener("mouseout", mouseOut);
+  g2.addEventListener("mouseover", mouseOver);
+  g2.addEventListener("mouseout", mouseOut);
+  gallery(p);
+}, false);
+
+function mouseOut() {
+  var d = document.getElementById("floating");
+  d.remove();
+}
+
+function mouseOver() {
+  console.log("image");
+  (0, _gallery.default)();
+}
 
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
@@ -46386,8 +46413,12 @@ var app = function app() {
   }
 };
 
+function gallery(data) {
+  console.log("here the divs" + data);
+}
+
 app();
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46415,7 +46446,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39903" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36365" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

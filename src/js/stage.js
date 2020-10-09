@@ -2,11 +2,12 @@ import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+import { Mapping } from 'three';
 
 //check online
 console.log("wintermute loaded");
 
-
+ export const change = false;
 //global var 
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
  let jump = ['A','B','C','D'];
@@ -14,7 +15,9 @@ console.log("wintermute loaded");
  let target = new THREE.Vector2();
 
 //console.log(colors);
-
+if(!change){
+  console.log("change " +change);
+}
 
 //setup three 
 
@@ -215,17 +218,6 @@ switch (ans) {
         break;
     }
 }
-        //window.addEventListener('touchend', onDocumentTouchEnd, false);
-
-        // function onDocumentTouchEnd(event) {
-        //     event.preventDefault();
-
-        //     mouse.x = (event.changedTouches[0].clientX / window.innerWidth) * 2 - 1;
-        //     mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2 + 1;
-
-        //     raycaster.setFromCamera(mouse, camera);
-        //     const intersects = raycaster.intersectObjects(yourObject3D);
-        // }
 
 //everything executes
 
