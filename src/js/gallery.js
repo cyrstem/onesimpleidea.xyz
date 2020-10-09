@@ -1,5 +1,5 @@
 function displayI () {
-    const newDiv = document.createElement("div"); 
+const newDiv = document.createElement("div"); 
 newDiv.setAttribute("id", "floating");
  // and give it some content 
  const newContent = document.createTextNode("testing 123"); 

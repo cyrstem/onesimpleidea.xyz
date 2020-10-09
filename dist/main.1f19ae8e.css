@@ -62,11 +62,12 @@ button:link {
 
 #floating {
   z-index: 1000;
-  width: 200px;
-  height: auto;
+  width: 50vh;
+  height: 300px;
   background: red;
   position: absolute;
-  left: 305px;
+  left: 30px;
+  top: 23px;
 }
 
 html,
