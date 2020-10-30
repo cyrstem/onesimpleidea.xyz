@@ -28,9 +28,15 @@ document.addEventListener('click',function(event){
         return;
         document.getElementById('container').innerHTML = Portafolio();
         document.getElementById('ui').style.bottom= "30vh";
+
+
         let p = document.getElementById('portafolio');
         let g = document.getElementById('p1');
         let g2 = document.getElementById('p2');
+
+
+
+
         g.addEventListener("mouseover", mouseOver);
         g.addEventListener("mouseout", mouseOut);
         g2.addEventListener("mouseover",mouseOver);
@@ -40,6 +46,8 @@ document.addEventListener('click',function(event){
            
 
 },false);
+
+
 
 function mouseOut(){
     let d = document.getElementById("floating");

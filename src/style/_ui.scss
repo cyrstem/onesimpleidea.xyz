@@ -7,6 +7,8 @@ a{
 	// margin: 4px;
 	text-decoration: none;
 	color:black;
+	
+	//cursor: -webkit-grab; cursor: grab;
 
 }
 a:hover{
@@ -21,6 +23,8 @@ button{
 	font-size: 16px;
 	padding: 5px;
 	margin-right: 5px;
+	cursor: -webkit-grab; cursor: grab;
+	
 }
 
 button :active{
@@ -60,55 +64,22 @@ button:link{
 	background: rgba($color: #000000, $alpha: 0.5);
   }
   $randomNumber: random(300);
+
   #floating{
 	z-index: 1000;
 	width: 50vh ;
 	height: 300px;
-	background: red;
+	//background: red;
 	position: absolute;
+	text-align: center;
+	font-family: $custom-font;
 	left: 30px;
 	top: 23px;
+		img{
+			width: 100%;
+		}
+	background: #000000;
+	color: white;	
   }
 
   
-
-
-
-// /* modal and shit  */
-// modal {
-// 	display: none; /* Hidden by default */
-// 	position: fixed; /* Stay in place */
-// 	z-index: 1; /* Sit on top */
-// 	padding-top: 100px; /* Location of the box */
-// 	left: 0;
-// 	top: 0;
-// 	width: 100%; /* Full width */
-// 	height: 100%; /* Full height */
-// 	overflow: auto; /* Enable scroll if needed */
-// 	background-color: rgb(0,0,0); /* Fallback color */
-// 	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-//   }
-  
-//   /* Modal Content */
-//   .modal-content {
-// 	background-color: #fefefe;
-// 	margin: auto;
-// 	padding: 20px;
-// 	border: 1px solid #888;
-// 	width: 80%;
-//   }
-  
-//   /* The Close Button */
-//   .close {
-// 	color: #aaaaaa;
-// 	float: right;
-// 	font-size: 28px;
-// 	font-weight: bold;
-//   }
-  
-//   .close:hover,
-//   .close:focus {
-// 	color: #000;
-// 	text-decoration: none;
-// 	cursor: pointer;
-//   }
