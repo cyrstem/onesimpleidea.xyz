@@ -46329,7 +46329,7 @@ function displayI() {
 
   newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
 
-  var currentDiv = document.getElementById("div1");
+  var currentDiv = document.getElementById("div");
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
@@ -46337,11 +46337,54 @@ function displayI() {
   document.getElementById('floating').appendChild(img);
 }
 
+function displayII() {
+  var newDiv = document.createElement("div");
+  newDiv.setAttribute("id", "floating2"); // and give it some content 
+
+  var newContent = document.createTextNode("image Manipulator Tool Prev"); // add the text node to the newly created div
+
+  newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
+
+  var currentDiv = document.getElementById("div1");
+  document.body.insertBefore(newDiv, currentDiv);
+  document.getElementById('floating2').style.left = getRandomInt(100) + 'vh';
+  var img = document.createElement('img');
+  img.src = 'http://localhost:1234/skull.png';
+  document.getElementById('floating2').appendChild(img);
+}
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 var _default = displayI;
+exports.default = _default;
+},{}],"js/G.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var G = {
+  // maybe add a array of the location of images so it can pass to the maker 
+  makeDivs: function makeDivs() {
+    console.log("gallery refactor");
+    var gDiv = document.createElement("div");
+    gDiv.setAttribute("id", "gallery");
+    var gContent = document.createTextNode("custom textBuilder");
+    console.log("hecho");
+    gDiv.appendChild(gContent);
+    var currentDiv = document.getElementById("div");
+    document.body.insertBefore(gDiv, currentDiv);
+    document.getElementById('gallery').style.top = this.changePos(100) + 'vh';
+  },
+  //this will be call to move the position of the div randomly  but to the top
+  changePos: function changePos(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+};
+var _default = G;
 exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
@@ -46364,6 +46407,8 @@ var _About = _interopRequireDefault(require("./js/About"));
 
 var _gallery = _interopRequireDefault(require("./js/gallery"));
 
+var _G = _interopRequireDefault(require("./js/G"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
@@ -46372,6 +46417,8 @@ document.addEventListener('click', function (event) {
   console.log("init");
   document.getElementById('container').innerHTML = (0, _Home.default)();
   document.getElementById('ui').style.bottom = "20vh";
+
+  _G.default.makeDivs();
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
@@ -46419,14 +46466,15 @@ var app = function app() {
       document.getElementById('ui').style.bottom = "20vh";
     }, false);
   }
-};
+}; //this is not  something useful
+
 
 function gallery(data) {
   console.log("here the divs" + data);
 }
 
 app();
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js","./js/G":"js/G.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46454,7 +46502,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34299" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44543" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

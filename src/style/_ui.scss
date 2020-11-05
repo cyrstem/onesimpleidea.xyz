@@ -7,9 +7,6 @@ a{
 	// margin: 4px;
 	text-decoration: none;
 	color:black;
-	
-	//cursor: -webkit-grab; cursor: grab;
-
 }
 a:hover{
 	background: #000000;
@@ -64,6 +61,19 @@ button:link{
 	background: rgba($color: #000000, $alpha: 0.5);
   }
   $randomNumber: random(300);
+  #gallery{
+	z-index: 1000;
+	width: auto ;
+	height: auto;
+	//background: red;
+	position: absolute;
+	text-align: center;
+	font-family: $custom-font;
+	left: 30px;
+	top: 23px;
+	background: #000000;
+	color: white;
+  }
 
   #floating{
 	z-index: 1000;

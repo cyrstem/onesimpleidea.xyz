@@ -8,6 +8,7 @@ import Portafolio from './js/Portafolio'
 import Not4u from './js/Not4u'
 import About from './js/About'
 import displaI from './js/gallery'
+import g from './js/G'
 
 
 
@@ -18,6 +19,7 @@ document.addEventListener('click',function(event){
      
        document.getElementById('container').innerHTML = Home();
        document.getElementById('ui').style.bottom= "20vh";
+       g.makeDivs();
 
 },false);
 
@@ -34,7 +36,7 @@ document.addEventListener('click',function(event){
         let g = document.getElementById('p1');
         let g2 = document.getElementById('p2');
 
-
+        
 
 
         g.addEventListener("mouseover", mouseOver);
@@ -64,6 +66,7 @@ document.addEventListener('click',function(event){
         return;
         document.getElementById('container').innerHTML = About();
         document.getElementById('ui').style.bottom= "30vh";
+       
 
 },false);
 
@@ -87,7 +90,7 @@ const app =()=>{
     }
         
 }
-
+//this is not  something useful
 function gallery( data ){
     console.log("here the divs" + data);
 }

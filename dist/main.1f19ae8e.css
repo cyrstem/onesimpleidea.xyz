@@ -62,6 +62,19 @@ button:link {
   background: rgba(0, 0, 0, 0.5);
 }
 
+#gallery {
+  z-index: 1000;
+  width: auto;
+  height: auto;
+  position: absolute;
+  text-align: center;
+  font-family: "Inconsolata", monospace;
+  left: 30px;
+  top: 23px;
+  background: #000000;
+  color: white;
+}
+
 #floating {
   z-index: 1000;
   width: 50vh;
