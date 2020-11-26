@@ -32,7 +32,7 @@ function displayII (){
   document.getElementById('floating2').style.left = getRandomInt(100) +'vh';
   var img = document.createElement('img'); 
   img.src =  
-  'http://localhost:1234/skull.png'; 
+  'http://onesimpleidea.xyz/skull.png'; 
   document.getElementById('floating2').appendChild(img); 
 
 }

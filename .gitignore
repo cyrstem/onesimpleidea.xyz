@@ -17,6 +17,5 @@ node_modules/*
 
 # Files staff #
 ##################
-*.png
 *.sublime-project
 *.sublime-workspace

@@ -46349,7 +46349,7 @@ function displayII() {
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating2').style.left = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
-  img.src = 'http://localhost:1234/skull.png';
+  img.src = 'http://onesimpleidea.xyz/skull.png';
   document.getElementById('floating2').appendChild(img);
 }
 
@@ -46502,7 +46502,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44543" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42143" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
