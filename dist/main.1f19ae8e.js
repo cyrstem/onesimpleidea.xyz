@@ -46236,7 +46236,7 @@ function onMouseClick(event) {
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
 render();
-},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fs.js":"assets/glsl/fs.js","/assets/glsl/vs.js":"assets/glsl/vs.js"}],"js/UI/Nav.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fs.js":"assets/glsl/fs.js","/assets/glsl/vs.js":"assets/glsl/vs.js"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46251,7 +46251,7 @@ var Navbar = function Navbar() {
 
 var _default = Navbar;
 exports.default = _default;
-},{}],"js/UI/Contact.js":[function(require,module,exports) {
+},{}],"js/interface/Contact.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46266,7 +46266,7 @@ var Contact = function Contact() {
 
 var _default = Contact;
 exports.default = _default;
-},{}],"js/Home.js":[function(require,module,exports) {
+},{}],"js/pages/Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46281,7 +46281,7 @@ var Home = function Home() {
 
 var _default = Home;
 exports.default = _default;
-},{}],"js/Portafolio.js":[function(require,module,exports) {
+},{}],"js/pages/Portafolio.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46296,7 +46296,7 @@ var Portafolio = function Portafolio() {
 
 var _default = Portafolio;
 exports.default = _default;
-},{}],"js/Not4u.js":[function(require,module,exports) {
+},{}],"js/pages/Not4u.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46310,21 +46310,6 @@ var Not4u = function Not4u() {
 };
 
 var _default = Not4u;
-exports.default = _default;
-},{}],"js/About.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var About = function About() {
-  var template = "\n        <div id =\"me\">\n            <p><b>Hello again soo more info about me :</b></p>\n            <p>Im a self-taugh developer, fast learner and recently curious</p>\n            <p>about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b>.</p>       \n        </div>\n    ";
-  return template;
-};
-
-var _default = About;
 exports.default = _default;
 },{}],"js/gallery.js":[function(require,module,exports) {
 "use strict";
@@ -46384,17 +46369,15 @@ require("./style/main.scss");
 
 var _stage = require("./js/stage");
 
-var _Nav = _interopRequireDefault(require("./js/UI/Nav"));
+var _Nav = _interopRequireDefault(require("./js/interface/Nav"));
 
-var _Contact = _interopRequireDefault(require("./js/UI/Contact"));
+var _Contact = _interopRequireDefault(require("./js/interface/Contact"));
 
-var _Home = _interopRequireDefault(require("./js/Home"));
+var _Home = _interopRequireDefault(require("./js/pages/Home"));
 
-var _Portafolio = _interopRequireDefault(require("./js/Portafolio"));
+var _Portafolio = _interopRequireDefault(require("./js/pages/Portafolio"));
 
-var _Not4u = _interopRequireDefault(require("./js/Not4u"));
-
-var _About = _interopRequireDefault(require("./js/About"));
+var _Not4u = _interopRequireDefault(require("./js/pages/Not4u"));
 
 var _gallery = _interopRequireDefault(require("./js/gallery"));
 
@@ -46436,14 +46419,14 @@ function mouseOver() {
 
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
-  document.getElementById('container').innerHTML = (0, _About.default)(); //document.getElementById('ui').style.bottom= "30vh";
+  document.getElementById('container').innerHTML = (0, _Home.default)(); //document.getElementById('ui').style.bottom= "30vh";
 }, false);
 
 var app = function app() {
   //load UI and socials media  plus main content
-  //document.getElementById('ui').innerHTML = Navbar();
-  document.getElementById('container').innerHTML = (0, _Home.default)();
-  document.getElementById('contact').innerHTML = (0, _Contact.default)(); //responsive screens 
+  document.getElementById('ui').innerHTML = (0, _Nav.default)();
+  document.getElementById('container').innerHTML = (0, _Home.default)(); //document.getElementById('contact').innerHTML = Contact();
+  //responsive screens 
 
   var x = window.matchMedia("(max-width: 700px)");
 
@@ -46465,7 +46448,7 @@ function gallery(data) {
 window.onload = function () {
   app();
 };
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js","./assets/imgs/insta.png":"assets/imgs/insta.png"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js","./assets/imgs/insta.png":"assets/imgs/insta.png"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46493,7 +46476,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36485" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35447" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
