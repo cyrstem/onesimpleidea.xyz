@@ -1,3 +1,8 @@
+var imgArray = new Array();
+
+imgArray[0] = new Image();
+imgArray[0] = './assets/imgs/noizuP.png';
+
 function displayI () {
     const newDiv = document.createElement("div"); 
     newDiv.setAttribute("id", "floating");
@@ -12,8 +17,7 @@ function displayI () {
         
     document.getElementById('floating').style.top = getRandomInt(100) +'vh';
     var img = document.createElement('img'); 
-    img.src =  
-    'http://localhost:1234/noizuT.png'; 
+    img.src = imgArray[0].src;
     document.getElementById('floating').appendChild(img); 
 }
 

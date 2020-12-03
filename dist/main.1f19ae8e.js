@@ -46333,6 +46333,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var imgArray = new Array();
+imgArray[0] = new Image();
+imgArray[0] = './assets/imgs/noizuP.png';
 
 function displayI() {
   var newDiv = document.createElement("div");
@@ -46346,7 +46349,7 @@ function displayI() {
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
-  img.src = 'http://localhost:1234/noizuT.png';
+  img.src = imgArray[0].src;
   document.getElementById('floating').appendChild(img);
 }
 
@@ -46488,7 +46491,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44641" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46255" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

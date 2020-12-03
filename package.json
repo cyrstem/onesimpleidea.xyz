@@ -29,7 +29,6 @@
     "three": "^0.109.0"
   },
   "dependencies": {
-    "bourbon": "^6.0.0",
     "browserslist": "^4.11.1",
     "js": "^0.1.0"
   }
