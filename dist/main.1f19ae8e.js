@@ -46260,7 +46260,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Contact = function Contact() {
-  var template = "\n\n        <ul>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\">instagram</a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\">linkedin</a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\">github</a>\n        </ul>\n            <small>\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer</small>\n       \n    ";
+  var template = "\n\n        <ul>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"30\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"30\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"30\"></a>\n        </ul>\n            <small>\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer</small>\n       \n    ";
   return template;
 };
 
@@ -46334,7 +46334,7 @@ function displayI() {
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
-  img.src = imgArray[0].src;
+  img.src = './noizuP.png';
   document.getElementById('floating').appendChild(img);
 }
 
@@ -46424,9 +46424,9 @@ document.addEventListener('click', function (event) {
 
 var app = function app() {
   //load UI and socials media  plus main content
-  document.getElementById('ui').innerHTML = (0, _Nav.default)();
-  document.getElementById('container').innerHTML = (0, _Home.default)(); //document.getElementById('contact').innerHTML = Contact();
-  //responsive screens 
+  //document.getElementById('ui').innerHTML = Navbar();
+  document.getElementById('container').innerHTML = (0, _Home.default)();
+  document.getElementById('contact').innerHTML = (0, _Contact.default)(); //responsive screens 
 
   var x = window.matchMedia("(max-width: 700px)");
 
@@ -46476,7 +46476,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35447" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33643" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

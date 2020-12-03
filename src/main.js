@@ -73,9 +73,9 @@ document.addEventListener('click',function(event){
 
 const app =()=>{
     //load UI and socials media  plus main content
-    document.getElementById('ui').innerHTML = Navbar();
+    //document.getElementById('ui').innerHTML = Navbar();
     document.getElementById('container').innerHTML = Home();
-    //document.getElementById('contact').innerHTML = Contact();
+    document.getElementById('contact').innerHTML = Contact();
 
     //responsive screens 
     var x = window.matchMedia("(max-width: 700px)");

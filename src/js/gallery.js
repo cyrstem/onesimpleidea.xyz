@@ -17,7 +17,7 @@ function displayI () {
         
     document.getElementById('floating').style.top = getRandomInt(100) +'vh';
     var img = document.createElement('img'); 
-    img.src = imgArray[0].src;
+    img.src = './noizuP.png';
     document.getElementById('floating').appendChild(img); 
 }
 
