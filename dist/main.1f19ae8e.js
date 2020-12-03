@@ -46038,7 +46038,28 @@ var MapControls = function (object, domElement) {
 exports.MapControls = MapControls;
 MapControls.prototype = Object.create(_threeModule.EventDispatcher.prototype);
 MapControls.prototype.constructor = MapControls;
-},{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"js/stage.js":[function(require,module,exports) {
+},{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"assets/glsl/fs.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+//glsl frag
+var fs = "\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\n\nvoid main() {\n\n\n  vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n\n  gl_FragColor = vec4(vec3(color),0.81989);\n}\n\n \n";
+var _default = fs;
+exports.default = _default;
+},{}],"assets/glsl/vs.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var vs = "\nvarying vec3 vUv; \n\nvoid main() {\n  vUv = position; \n\n  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n  gl_Position = projectionMatrix * modelViewPosition; \n}\n";
+var _default = vs;
+exports.default = _default;
+},{}],"js/stage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46052,12 +46073,17 @@ var _TweenMax = _interopRequireDefault(require("gsap/TweenMax"));
 
 var _OrbitControls = require("three/examples/jsm/controls/OrbitControls");
 
+var _fs = _interopRequireDefault(require("/assets/glsl/fs.js"));
+
+var _vs = _interopRequireDefault(require("/assets/glsl/vs.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+//shaders
 //check online
 console.log("wintermute loaded");
 var change = false; //global var 
@@ -46101,39 +46127,28 @@ hemiLight.groundColor.setHSL(0.000, 0, 0.015);
 hemiLight.position.set(0.005, 0.60, 100);
 scene.add(hemiLight); //Shader staff
 
-var uniforms = {
-  colorB: {
-    type: 'vec3',
-    value: new THREE.Color(0xFFFFFF)
-  },
-  colorA: {
-    type: 'vec3',
-    value: new THREE.Color(0xD6F9FB)
-  },
-  u_time: {
-    type: 'float',
-    value: 0.0
-  }
-};
-
-function vertexShader() {
-  return "\n    varying vec3 vUv; \n\n    void main() {\n      vUv = position; \n\n      vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n      gl_Position = projectionMatrix * modelViewPosition; \n    }\n  ";
-}
-
-function fragmentShader() {
-  return "\n      uniform vec3 colorA; \n      uniform vec3 colorB; \n      varying vec3 vUv;\n\n      \n      void main() {\n\n\n        vec2 st= gl_FragColor.xy/vUv.xy;\n\n        vec3 color = mix(colorA,colorB,vUv.y);\n\n        gl_FragColor = vec4(vec3(color),0.81989);\n      }\n\n\n  ";
-}
-
 var materialshader = new THREE.ShaderMaterial({
-  uniforms: uniforms,
-  fragmentShader: fragmentShader(),
-  vertexShader: vertexShader()
+  uniforms: {
+    colorB: {
+      type: 'vec3',
+      value: new THREE.Color(0xFFFFFF)
+    },
+    colorA: {
+      type: 'vec3',
+      value: new THREE.Color(0xD6F9FB)
+    },
+    u_time: {
+      type: 'f',
+      value: 0
+    }
+  },
+  vertexShader: _vs.default,
+  fragmentShader: _fs.default
 }); //mouse staff
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
-var geometry = new THREE.BoxGeometry(2, 2, 2); //const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
-
+var geometry = new THREE.BoxGeometry(2, 2, 2);
 var mat = new THREE.MeshPhongMaterial({
   color: 0x000000,
   specular: 0x095F4FF,
@@ -46141,17 +46156,15 @@ var mat = new THREE.MeshPhongMaterial({
   depthTest: true,
   depthWrite: true,
   emissive: 0x00000
-}); //const mesh = new THREE.Mesh(geometry,mat);
-//scene.add(mesh);
-
+});
 var meshS = -100;
 
 for (var i = 0; i < 250; i++) {
   var mesh = new THREE.Mesh(geometry, materialshader);
   mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
   mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-  mesh.position.z = (Math.random() - 0.5) * 100 * Math.random(); // mesh.material.color= (Math.random() -colors)
-
+  mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+  mesh.material.color = Math.random() - colors;
   scene.add(mesh);
   meshS += 15;
 } //end==========================================
@@ -46223,7 +46236,7 @@ function onMouseClick(event) {
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
 render();
-},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js"}],"js/UI/Nav.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fs.js":"assets/glsl/fs.js","/assets/glsl/vs.js":"assets/glsl/vs.js"}],"js/UI/Nav.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46475,7 +46488,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44111" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44641" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
 import { Mapping } from 'three';
+//shaders
+import fs from '/assets/glsl/fs.js';
+import vs from '/assets/glsl/vs.js';
 
 //check online
 console.log("wintermute loaded");
@@ -61,65 +63,26 @@ renderer.debug.checkShaderErrors = true;
                 scene.add( hemiLight );
 
 //Shader staff
-
- let uniforms = {
-        colorB: {type: 'vec3', value: new THREE.Color(0xFFFFFF)},
-        colorA: {type: 'vec3', value: new THREE.Color(0xD6F9FB)},
-        u_time: {type: 'float', value: 0.0}
-
-    }
-
-function vertexShader() {
-  return `
-    varying vec3 vUv; 
-
-    void main() {
-      vUv = position; 
-
-      vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
-      gl_Position = projectionMatrix * modelViewPosition; 
-    }
-  `
-}
-
-function fragmentShader(){
- return `
-      uniform vec3 colorA; 
-      uniform vec3 colorB; 
-      varying vec3 vUv;
-
-      
-      void main() {
+const materialshader = new THREE.ShaderMaterial({
+  uniforms:{
+    colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+    colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+    u_time:{type: 'f',value: 0},
+  },
+  vertexShader:vs,
+  fragmentShader:fs
+  
+});
 
 
-        vec2 st= gl_FragColor.xy/vUv.xy;
-
-        vec3 color = mix(colorA,colorB,vUv.y);
-
-        gl_FragColor = vec4(vec3(color),0.81989);
-      }
-
-
-  `
-}
-
-let materialshader =  new THREE.ShaderMaterial({
-    uniforms: uniforms,
-    fragmentShader: fragmentShader(),
-    vertexShader: vertexShader(),
-  })
 
 //mouse staff
  let raycaster = new THREE.Raycaster();
  let mouse = new THREE.Vector2();
 
 
- //const geometry = new THREE.BoxGeometry( 2,2,2 );
- const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
+ const geometry = new THREE.BoxGeometry( 2,2,2 );
  const mat = new THREE.MeshPhongMaterial( {color:0x000000,specular:0x095F4FF,shininess:80,depthTest:true,depthWrite:true,emissive:0x00000} );
- const mesh = new THREE.Mesh(geometry,mat);
- scene.add(mesh);
-
  let meshS = -100;
 
     for(var i = 0; i< 250 ;i++){
@@ -127,7 +90,7 @@ let materialshader =  new THREE.ShaderMaterial({
         mesh.position.x = (Math.random()- 0.5)*90*Math.random();
         mesh.position.y = (Math.random()- 0.5)*90*Math.random();
         mesh.position.z = (Math.random()- 0.5)*100*Math.random();
-       // mesh.material.color= (Math.random() -colors)
+       mesh.material.color= (Math.random() -colors)
         scene.add(mesh);
         meshS+=15;
     }
