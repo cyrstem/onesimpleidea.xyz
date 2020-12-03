@@ -1,7 +1,7 @@
 {
   "name": "onesimpleidea.xyz",
   "version": "2.0.0",
-  "description": "``` 00 portafolio.build(BOURBON, SASS, JQUERY); buildSystem(GULP, BOWER, ); test  to id ``` //=================================================== //END OF_LINE //===================================================",
+  "description": "``` 00 portafolio; buildSystem(parcel); test  to id ``` //=================================================== //END OF_LINE //===================================================",
   "main": "index.js",
   "scripts": {
     "dev": "parcel src/index.html --open",
@@ -27,9 +27,5 @@
     "parcel-bundler": "^1.12.4",
     "sass": "^1.26.3",
     "three": "^0.109.0"
-  },
-  "dependencies": {
-    "browserslist": "^4.11.1",
-    "js": "^0.1.0"
   }
 }

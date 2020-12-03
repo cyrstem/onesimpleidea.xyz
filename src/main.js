@@ -10,6 +10,7 @@ import About from './js/About'
 import displaI from './js/gallery'
 //import g from './js/G'
 
+import img from "./assets/imgs/insta.png";
 
 
 document.addEventListener('click',function(event){
@@ -18,7 +19,7 @@ document.addEventListener('click',function(event){
        console.log("init");
      
        document.getElementById('container').innerHTML = Home();
-       document.getElementById('ui').style.bottom= "20vh";
+       //document.getElementById('ui').style.bottom= "50vh";
        //g.makeDivs();
 
 },false);
@@ -29,7 +30,7 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
         return;
         document.getElementById('container').innerHTML = Portafolio();
-        document.getElementById('ui').style.bottom= "30vh";
+        //document.getElementById('ui').style.bottom= "30vh";
 
 
         let p = document.getElementById('portafolio');
@@ -65,14 +66,14 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
         return;
         document.getElementById('container').innerHTML = About();
-        document.getElementById('ui').style.bottom= "30vh";
+        //document.getElementById('ui').style.bottom= "30vh";
        
 
 },false);
 
 const app =()=>{
     //load UI and socials media  plus main content
-    document.getElementById('ui').innerHTML = Navbar();
+    //document.getElementById('ui').innerHTML = Navbar();
     document.getElementById('container').innerHTML = Home();
     document.getElementById('contact').innerHTML = Contact();
 
@@ -97,7 +98,6 @@ function gallery( data ){
 
 
 window.onload = function() {
-    console.log("hello world");
     app();
     
   };

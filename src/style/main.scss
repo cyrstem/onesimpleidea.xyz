@@ -1,4 +1,24 @@
-//fonts and main colors
 @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
 $custom-font:'Inconsolata', monospace;
+
+$mainColor:#303030;
+$secondColor:white;
+$mainSize:1.0rem;
+$borderColor: #303030;
+
 @import'_layout';
+
+html,
+body {
+	font-family: $custom-font;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	background: #11e8bb; /* Old browsers */
+  	background: -moz-linear-gradient(top,  #f5f7fa 0%, #c3cfe2 100%); /* FF3.6-15 */
+  	background: -webkit-linear-gradient(top,  #f5f7fa  0%,#c3cfe2 100%); /* Chrome10-25,Safari5.1-6 */
+  	background: linear-gradient(to bottom,  #f5f7fa  0%,#c3cfe2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f7fa', endColorstr='#c3cfe2',GradientType=0 ); /* IE6-9 */
+
+}
