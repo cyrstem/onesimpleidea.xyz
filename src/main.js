@@ -8,7 +8,7 @@ import Portafolio from './js/Portafolio'
 import Not4u from './js/Not4u'
 import About from './js/About'
 import displaI from './js/gallery'
-import g from './js/G'
+//import g from './js/G'
 
 
 
@@ -19,7 +19,7 @@ document.addEventListener('click',function(event){
      
        document.getElementById('container').innerHTML = Home();
        document.getElementById('ui').style.bottom= "20vh";
-       g.makeDivs();
+       //g.makeDivs();
 
 },false);
 
@@ -96,6 +96,10 @@ function gallery( data ){
 }
 
 
+window.onload = function() {
+    console.log("hello world");
+    app();
+    
+  };
 
 
-app();

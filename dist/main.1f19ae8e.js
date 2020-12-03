@@ -46076,9 +46076,9 @@ if (!change) {
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 20;
-camera.minDistance = 0;
+camera.minDistance = 0.8;
 camera.maxDistance = 50;
-scene.fog = new THREE.Fog(scene.background, 1, 47);
+scene.fog = new THREE.Fog(scene.background, 1, 57);
 var renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true
@@ -46095,8 +46095,8 @@ window.addEventListener('resize', function () {
 //elements and  lights -----------------------------------------
 //lights
 
-var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.215);
-hemiLight.color.setHSL(0, 0, 100);
+var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.915);
+hemiLight.color.setHSL(182, 100, 20);
 hemiLight.groundColor.setHSL(0.000, 0, 0.015);
 hemiLight.position.set(0.005, 0.60, 100);
 scene.add(hemiLight); //Shader staff
@@ -46135,9 +46135,9 @@ var mouse = new THREE.Vector2();
 var geometry = new THREE.BoxGeometry(2, 2, 2); //const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
 
 var mat = new THREE.MeshPhongMaterial({
-  color: 0xFFFFFF,
-  specular: 0x95F4FF,
-  shininess: 60,
+  color: 0x000000,
+  specular: 0x095F4FF,
+  shininess: 80,
   depthTest: true,
   depthWrite: true,
   emissive: 0x00000
@@ -46202,7 +46202,7 @@ function onMouseClick(event) {
 
   switch (ans) {
     case 'A':
-      camera.rotation.x += 20;
+      camera.rotation.x += 90;
       break;
 
     case 'B':
@@ -46359,33 +46359,6 @@ function getRandomInt(max) {
 
 var _default = displayI;
 exports.default = _default;
-},{}],"js/G.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var G = {
-  // maybe add a array of the location of images so it can pass to the maker 
-  makeDivs: function makeDivs() {
-    console.log("gallery refactor");
-    var gDiv = document.createElement("div");
-    gDiv.setAttribute("id", "gallery");
-    var gContent = document.createTextNode("custom textBuilder");
-    console.log("hecho");
-    gDiv.appendChild(gContent);
-    var currentDiv = document.getElementById("div");
-    document.body.insertBefore(gDiv, currentDiv);
-    document.getElementById('gallery').style.top = this.changePos(100) + 'vh';
-  },
-  //this will be call to move the position of the div randomly  but to the top
-  changePos: function changePos(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-};
-var _default = G;
-exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
@@ -46407,18 +46380,15 @@ var _About = _interopRequireDefault(require("./js/About"));
 
 var _gallery = _interopRequireDefault(require("./js/gallery"));
 
-var _G = _interopRequireDefault(require("./js/G"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
+//import g from './js/G'
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'home') return;
   console.log("init");
   document.getElementById('container').innerHTML = (0, _Home.default)();
-  document.getElementById('ui').style.bottom = "20vh";
-
-  _G.default.makeDivs();
+  document.getElementById('ui').style.bottom = "20vh"; //g.makeDivs();
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
@@ -46473,8 +46443,11 @@ function gallery(data) {
   console.log("here the divs" + data);
 }
 
-app();
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js","./js/G":"js/G.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+window.onload = function () {
+  console.log("hello world");
+  app();
+};
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46502,7 +46475,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41549" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44111" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

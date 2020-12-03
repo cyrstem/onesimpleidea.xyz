@@ -24,9 +24,9 @@ if(!change){
 const scene =  new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = 20;
-camera.minDistance =0;
+camera.minDistance =0.8;
 camera.maxDistance = 50;
-scene.fog = new THREE.Fog( scene.background, 1, 47);
+scene.fog = new THREE.Fog( scene.background, 1, 57);
 
 
 
@@ -53,8 +53,8 @@ renderer.debug.checkShaderErrors = true;
 //elements and  lights -----------------------------------------
 //lights
 
-               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.215 );
-                hemiLight.color.setHSL( 0, 0, 100 );
+               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.915 );
+                hemiLight.color.setHSL( 182, 100, 20 );
                 hemiLight.groundColor.setHSL( 0.000, 0, 0.015 );
 
                 hemiLight.position.set( 0.005, 0.60, 100 );
@@ -114,11 +114,11 @@ let materialshader =  new THREE.ShaderMaterial({
  let mouse = new THREE.Vector2();
 
 
- const geometry = new THREE.BoxGeometry( 2,2,2 );
- //const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
- const mat = new THREE.MeshPhongMaterial( {color:0xFFFFFF,specular:0x95F4FF,shininess:60,depthTest:true,depthWrite:true,emissive:0x00000} );
- //const mesh = new THREE.Mesh(geometry,mat);
- //scene.add(mesh);
+ //const geometry = new THREE.BoxGeometry( 2,2,2 );
+ const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
+ const mat = new THREE.MeshPhongMaterial( {color:0x000000,specular:0x095F4FF,shininess:80,depthTest:true,depthWrite:true,emissive:0x00000} );
+ const mesh = new THREE.Mesh(geometry,mat);
+ scene.add(mesh);
 
  let meshS = -100;
 
@@ -203,7 +203,7 @@ function onMouseClick(event) {
 
 switch (ans) {
     case 'A':
-             camera.rotation.x +=20;
+             camera.rotation.x +=90;
         break;
 
     case 'B':
