@@ -10,8 +10,6 @@ import Not4u from './js/pages/Not4u'
 import displaI from './js/gallery'
 //import g from './js/G'
 
-import img from "./assets/imgs/insta.png";
-
 
 document.addEventListener('click',function(event){
     if (event.target.id !== 'home')

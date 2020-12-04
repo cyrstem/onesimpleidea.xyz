@@ -46260,7 +46260,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Contact = function Contact() {
-  var template = "\n\n        <ul>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"30\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"30\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"30\"></a>\n        </ul>\n            <small>\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer</small>\n       \n    ";
+  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"30\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"30\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"30\"></a>\n        </ul>\n    ";
   return template;
 };
 
@@ -46318,9 +46318,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
-var imgArray = new Array();
-imgArray[0] = new Image();
-imgArray[0] = './assets/imgs/noizuP.png';
 
 function displayI() {
   var newDiv = document.createElement("div");
@@ -46360,8 +46357,6 @@ function getRandomInt(max) {
 
 var _default = displayI;
 exports.default = _default;
-},{}],"assets/imgs/insta.png":[function(require,module,exports) {
-module.exports = "/insta.5e5fd5de.png";
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
@@ -46380,8 +46375,6 @@ var _Portafolio = _interopRequireDefault(require("./js/pages/Portafolio"));
 var _Not4u = _interopRequireDefault(require("./js/pages/Not4u"));
 
 var _gallery = _interopRequireDefault(require("./js/gallery"));
-
-var _insta = _interopRequireDefault(require("./assets/imgs/insta.png"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46448,7 +46441,7 @@ function gallery(data) {
 window.onload = function () {
   app();
 };
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js","./assets/imgs/insta.png":"assets/imgs/insta.png"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46476,7 +46469,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33643" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36203" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

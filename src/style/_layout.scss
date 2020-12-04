@@ -90,7 +90,10 @@ main{
 	position: absolute;
 	text-align: center;
 	bottom: 2vh;
-	width:50vh
+	width:auto;
+	ul{
+		padding: 30px;
+	}
 }
 
 small{

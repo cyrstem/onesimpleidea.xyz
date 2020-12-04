@@ -1,7 +1,4 @@
-var imgArray = new Array();
 
-imgArray[0] = new Image();
-imgArray[0] = './assets/imgs/noizuP.png';
 
 function displayI () {
     const newDiv = document.createElement("div"); 
