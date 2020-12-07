@@ -46301,6 +46301,12 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+//let images = images['noizuP.png','skull.png'];
+// images.forEach(function (item,index,array){
+//   console.log(item,index)
+// })
+var imgs = new Image();
+imgs.src = 'noizuP.png'; //let images = images[imgs];
 
 function displayI() {
   var newDiv = document.createElement("div");
@@ -46314,7 +46320,7 @@ function displayI() {
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
-  img.src = './noizuP.png';
+  img.src = 'noizuP.png';
   document.getElementById('floating').appendChild(img);
 }
 
@@ -46330,7 +46336,7 @@ function displayII() {
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating2').style.left = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
-  img.src = 'http://onesimpleidea.xyz/skull.png';
+  img.src = images[1].src;
   document.getElementById('floating2').appendChild(img);
 }
 
@@ -46452,7 +46458,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33901" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40775" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
