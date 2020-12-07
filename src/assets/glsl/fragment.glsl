@@ -1,6 +1,4 @@
-//glsl frag
 
-const fs = `
 uniform vec3 colorA; 
 uniform vec3 colorB; 
 varying vec3 vUv;
@@ -15,8 +13,3 @@ void main() {
 
   gl_FragColor = vec4(vec3(color),0.81989);
 }
-
- 
-`
-
-export default  fs

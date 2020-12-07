@@ -3,8 +3,8 @@ import TweenMax from 'gsap/TweenMax';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Mapping } from 'three';
 //shaders
-import fs from '/assets/glsl/fs.js';
-import vs from '/assets/glsl/vs.js';
+import fs from '/assets/glsl/fragment.glsl';
+import vs from '/assets/glsl/vertex.glsl';
 
 //check online
 console.log("wintermute loaded");
