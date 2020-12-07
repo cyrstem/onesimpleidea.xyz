@@ -41,20 +41,19 @@ main{
 	}
 }
 
-#portafolio{
-	width: 66vh;
-	height: 30vh;
-	padding: 2px;
-	margin: 3px;
-	color:$mainColor;
-	border-color:$borderColor;
-	border-style:outset;
-	border-width: 0.1em;
-	border-left-style: none;
-	border-right-style: none;
-	font-size:$mainSize;
-	overflow-y:scroll ;
-	
+#portafolio{ 
+	 width: 66vh;
+	 height: 30vh;
+	 padding: 2px;
+	 margin: 3px;
+	 color:$mainColor;
+	 border-color:$borderColor;
+	 border-style:outset;
+	 border-width: 0.1em;
+	 border-left-style: none;
+	 border-right-style: none;
+	 font-size:$mainSize;
+	 overflow-y:scroll;
 	section{
 		// width: 66vh;
 		// height: 26vh;
