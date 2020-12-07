@@ -9,14 +9,14 @@ a{
 	color:black;
 }
 a:hover{
-	background: #000000;
-	color:white;
+	border-bottom-style: solid;
+	border-width: thin;
 }
 
 button{
 	background: none;
 	border-color: black;
-	border-width: 0.01em;
+	border-width: 0.1em;
 	font-size: 16px;
 	padding: 5px;
 	margin-right: 5px;

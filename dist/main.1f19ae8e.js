@@ -46039,7 +46039,7 @@ exports.MapControls = MapControls;
 MapControls.prototype = Object.create(_threeModule.EventDispatcher.prototype);
 MapControls.prototype.constructor = MapControls;
 },{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"assets/glsl/fragment.glsl":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nvoid main() {\n\n  vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n\n  gl_FragColor = vec4(vec3(color),0.81989);\n}";
+module.exports = " precision highp float;\n#define GLSLIFY 1\nuniform float u_time;\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nfloat random (in vec2 st) {\n    return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))\n                 * 43758.5453123);\n}\n\nvoid main() {\n\n  //float test = vUv.y +cos(u_time);\n\n  //vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n \n\n // gl_FragColor = vec4(vec3(color),0.81989);\n gl_FragColor =vec4(vec3(color),1);\n}";
 },{}],"assets/glsl/vertex.glsl":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec3 vUv; \n\nvoid main() {\n  vUv = position; \n\n  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n  gl_Position = projectionMatrix * modelViewPosition; \n}\n";
 },{}],"js/stage.js":[function(require,module,exports) {
@@ -46243,7 +46243,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Contact = function Contact() {
-  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"30\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"30\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"30\"></a>\n        </ul>\n    ";
+  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"20\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"20\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"20\"></a>\n        </ul>\n    ";
   return template;
 };
 
@@ -46400,7 +46400,7 @@ document.addEventListener('click', function (event) {
 
 var app = function app() {
   //load UI and socials media  plus main content
-  //document.getElementById('ui').innerHTML = Navbar();
+  document.getElementById('ui').innerHTML = (0, _Nav.default)();
   document.getElementById('container').innerHTML = (0, _Home.default)();
   document.getElementById('contact').innerHTML = (0, _Contact.default)(); //responsive screens 
 
@@ -46452,7 +46452,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44143" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33901" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

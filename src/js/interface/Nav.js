@@ -1,7 +1,4 @@
 const Navbar =()=>{
-  
-  
-
     const template = `
         <nav>
             <button id="home">About Me </button>

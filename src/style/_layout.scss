@@ -54,6 +54,7 @@ main{
 	 border-right-style: none;
 	 font-size:$mainSize;
 	 overflow-y:scroll;
+	 
 	section{
 		// width: 66vh;
 		// height: 26vh;
@@ -78,7 +79,7 @@ main{
 
 #ui{
 	z-index: 1000;
-	bottom: 5vh;
+	bottom: 10vh;
 	position: absolute;
 }
 
@@ -88,7 +89,7 @@ main{
 	z-index: 1000;
 	position: absolute;
 	text-align: center;
-	bottom: 2vh;
+	bottom: 0vh;
 	width:auto;
 	ul{
 		padding: 30px;
