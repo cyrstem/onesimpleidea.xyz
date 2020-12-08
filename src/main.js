@@ -8,7 +8,6 @@ import Portafolio from './js/pages/Portafolio'
 import Not4u from './js/pages/Not4u'
 
 import displaI from './js/gallery'
-//import g from './js/G'
 
 
 document.addEventListener('click',function(event){
@@ -17,9 +16,6 @@ document.addEventListener('click',function(event){
        console.log("init");
      
        document.getElementById('container').innerHTML = Home();
-       //document.getElementById('ui').style.bottom= "50vh";
-       //g.makeDivs();
-
 },false);
 
 
@@ -28,8 +24,6 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
         return;
         document.getElementById('container').innerHTML = Portafolio();
-        //document.getElementById('ui').style.bottom= "30vh";
-
 
         let p = document.getElementById('portafolio');
         let g = document.getElementById('p1');
@@ -43,12 +37,12 @@ document.addEventListener('click',function(event){
         g2.addEventListener("mouseover",mouseOver);
         g2.addEventListener("mouseout",mouseOut);
 
-        gallery(p);
+        //gallery(p);
            
 
 },false);
 
-
+//parts to remove  and  add imgages to much confucion
 
 function mouseOut(){
     let d = document.getElementById("floating");
@@ -64,9 +58,6 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
         return;
         document.getElementById('container').innerHTML = Home();
-        //document.getElementById('ui').style.bottom= "30vh";
-       
-
 },false);
 
 const app =()=>{
@@ -90,9 +81,9 @@ const app =()=>{
         
 }
 //this is not  something useful
-function gallery( data ){
-    console.log("here the divs" + data);
-}
+// function gallery( data ){
+//     console.log("here the divs" + data);
+// }
 
 
 window.onload = function() {
