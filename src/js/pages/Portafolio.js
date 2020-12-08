@@ -6,7 +6,7 @@ const Portafolio =()=>{
         
          <ul>
             <li id="tittle">//Experiments</li>
-            <li><a href="https://onesimpleidea.itch.io/noizu"> Noizu</a></li>
+            <li id="p"><a href="https://onesimpleidea.itch.io/noizu"> Noizu</a></li>
             <li><a href="#"> Glitch </a></li>
             <li><a href="#"> Vulcan View</a></li>
             <li><a href="#">Yaesta Pacman</a></li>

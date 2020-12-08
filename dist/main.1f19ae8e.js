@@ -46273,7 +46273,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n            \n            \n\n         </ul>\n        </section>\n        \n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n            \n            \n\n         </ul>\n        </section>\n        \n       </div>\n    ";
   return template;
 };
 
@@ -46385,14 +46385,14 @@ document.addEventListener('click', function (event) {
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
-  var p = document.getElementById('portafolio');
-  var g = document.getElementById('p1');
-  var g2 = document.getElementById('p2');
-  g.addEventListener("mouseover", mouseOver);
-  g.addEventListener("mouseout", mouseOut);
-  g2.addEventListener("mouseover", mouseOver);
-  g2.addEventListener("mouseout", mouseOut); //gallery(p);
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)(); // let p = document.getElementById('portafolio');
+  // let g = document.getElementById('p1');
+  // let g2 = document.getElementById('p2');
+  // g.addEventListener("mouseover", mouseOver);
+  // g.addEventListener("mouseout", mouseOut);
+  // g2.addEventListener("mouseover",mouseOver);
+  // g2.addEventListener("mouseout",mouseOut);
+  // gallery(p);
 }, false); //parts to remove  and  add imgages to much confucion
 
 function mouseOut() {
@@ -46463,7 +46463,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39687" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37311" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
