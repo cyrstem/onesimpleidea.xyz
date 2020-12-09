@@ -13,8 +13,7 @@ import displaI from './js/gallery'
 document.addEventListener('click',function(event){
     if (event.target.id !== 'home')
         return;
-       console.log("init");
-     
+       //console.log("init");
        document.getElementById('container').innerHTML = Home();
 },false);
 
@@ -80,15 +79,24 @@ const app =()=>{
     }
         
 }
+function preload(){
+    var x = document.getElementsByTagName("body")[0];
+    x.style.backgroundColor = "red";
+}
+
 //this is not  something useful
 // function gallery( data ){
 //     console.log("here the divs" + data);
 // }
-
-
-window.onload = function() {
+window.onload = (event) => {
+    //console.log('page is fully loaded');
     app();
-    
   };
+
+// window.onload = function() {
+
+   
+    
+//   };
 
 

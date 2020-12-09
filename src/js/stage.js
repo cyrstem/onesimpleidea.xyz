@@ -25,7 +25,7 @@ if(!change){
 
 const scene =  new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 20;
+camera.position.z = 200;
 camera.minDistance =0.8;
 camera.maxDistance = 50;
 scene.fog = new THREE.Fog( scene.background, 1, 57);
@@ -153,7 +153,6 @@ function postionCam(jump){
 
 
 
-
 function onMouseClick(event) {
 
 
@@ -186,4 +185,7 @@ switch (ans) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
+window.addEventListener('load',function (event){
+    camera.position.z = 20;
+});
 render();

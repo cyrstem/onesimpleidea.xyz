@@ -46084,7 +46084,7 @@ if (!change) {
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 20;
+camera.position.z = 200;
 camera.minDistance = 0.8;
 camera.maxDistance = 50;
 scene.fog = new THREE.Fog(scene.background, 1, 57);
@@ -46218,6 +46218,9 @@ function onMouseClick(event) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
+window.addEventListener('load', function (event) {
+  camera.position.z = 20;
+});
 render();
 },{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
@@ -46273,7 +46276,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n            \n            \n\n         </ul>\n        </section>\n        \n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n            \n         </ul>\n        </section>\n        \n       </div>\n    ";
   return template;
 };
 
@@ -46379,8 +46382,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //console.clear();
 document.addEventListener('click', function (event) {
-  if (event.target.id !== 'home') return;
-  console.log("init");
+  if (event.target.id !== 'home') return; //console.log("init");
+
   document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 document.addEventListener('click', function (event) {
@@ -46426,15 +46429,22 @@ var app = function app() {
       document.getElementById('ui').style.bottom = "20vh";
     }, false);
   }
-}; //this is not  something useful
+};
+
+function preload() {
+  var x = document.getElementsByTagName("body")[0];
+  x.style.backgroundColor = "red";
+} //this is not  something useful
 // function gallery( data ){
 //     console.log("here the divs" + data);
 // }
 
 
-window.onload = function () {
+window.onload = function (event) {
+  //console.log('page is fully loaded');
   app();
-};
+}; // window.onload = function() {
+//   };
 },{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -46463,7 +46473,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37311" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37895" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

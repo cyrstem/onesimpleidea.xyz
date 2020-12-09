@@ -89,7 +89,6 @@ button:link {
 }
 
 canvas {
-  display: block;
   z-index: 0;
 }
 

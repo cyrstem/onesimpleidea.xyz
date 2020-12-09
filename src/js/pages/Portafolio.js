@@ -16,8 +16,6 @@ const Portafolio =()=>{
             <li><a href="#">Smartco</a></li>
             <li><a href="#">Todo.legal</a></li>
             
-            
-
          </ul>
         </section>
         
