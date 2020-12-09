@@ -46160,6 +46160,14 @@ var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //
 var render = function render() {
   target.x = (1 - mouse.x) * 0.02;
   target.y = (1 - mouse.y) * 0.02;
+
+  if (camera.position.z == 200) {
+    camera.position.z -= 0.10;
+  } // if(camera.position.z ==20){
+  //     camera.position.z =20;
+  // }
+
+
   camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
   camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
   requestAnimationFrame(render);
@@ -46442,6 +46450,7 @@ function preload() {
 
 window.onload = function (event) {
   //console.log('page is fully loaded');
+  preload();
   app();
 }; // window.onload = function() {
 //   };
@@ -46473,7 +46482,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37895" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44243" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

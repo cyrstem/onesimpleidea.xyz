@@ -106,6 +106,12 @@ let controls = new OrbitControls (camera,renderer.domElement);
 const render = function(){
     target.x = ( 1 - mouse.x ) * 0.02;
     target.y = ( 1 - mouse.y ) * 0.02;
+    if(camera.position.z == 200){
+        camera.position.z -=0.10;
+    }
+    // if(camera.position.z ==20){
+    //     camera.position.z =20;
+    // }
   
   camera.rotation.x += 0.05 * ( target.y - camera.rotation.x );
   camera.rotation.y += 0.05 * ( target.x - camera.rotation.y );
@@ -186,6 +192,7 @@ switch (ans) {
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
 window.addEventListener('load',function (event){
+
     camera.position.z = 20;
 });
 render();

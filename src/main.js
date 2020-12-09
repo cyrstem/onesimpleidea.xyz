@@ -90,6 +90,7 @@ function preload(){
 // }
 window.onload = (event) => {
     //console.log('page is fully loaded');
+    preload();
     app();
   };
 
