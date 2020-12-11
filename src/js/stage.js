@@ -104,8 +104,8 @@ let controls = new OrbitControls (camera,renderer.domElement);
 
 //Render--------
 const render = function(){
-    target.x = ( 1 - mouse.x ) * 0.02;
-    target.y = ( 1 - mouse.y ) * 0.02;
+    target.x = ( 1 - mouse.x ) * 0.12;
+    target.y = ( 1 - mouse.y ) * 0.12;
     if(camera.position.z == 200){
         camera.position.z -=0.10;
     }
