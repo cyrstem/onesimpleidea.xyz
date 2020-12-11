@@ -132,7 +132,11 @@ small{
 		border-width: 0.1em;
 		border-left-style: none;
 		border-right-style: none;
-			ul{text-align: center;}
+			ul{
+				text-align: center;
+				margin: 0px;
+				padding: 25px;
+			}
 			#tittle{
 		
 				text-align: center;

@@ -198,6 +198,8 @@ small {
   }
   #portafolio ul {
     text-align: center;
+    margin: 0px;
+    padding: 25px;
   }
   #portafolio #tittle {
     text-align: center;
