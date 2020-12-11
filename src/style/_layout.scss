@@ -7,7 +7,7 @@ $tnormalcolor:black;
 
 
 canvas{
-	//display: block;
+	display: block;
 	z-index:0;
 }
 
@@ -17,6 +17,7 @@ canvas{
 
 }
 main{
+
 	width: 66vh;
 	height: 30vh;
 	padding: 2px;
@@ -123,15 +124,21 @@ small{
 	}
 
 	#portafolio{
-		display: flex;
-		flex-direction: column;
-
-
-		section{
-			margin: 3px;
-			width: 300px;
-			height: 300px;
-		}
+		width: auto;
+		height: 40vh;
+		text-align: center;
+		overflow-y: scroll;
+		border-color:$borderColor;
+		border-style:outset;
+		border-width: 0.1em;
+		border-left-style: none;
+		border-right-style: none;
+			ul{text-align: center;}
+			#tittle{
+		
+				text-align: center;
+				
+			}
 	}
 	
 	//footer and quote
@@ -147,5 +154,6 @@ small{
 	small{
 		display: none;
 	}
+	
 
 }

@@ -61,7 +61,7 @@ document.addEventListener('click',function(event){
 
 const app =()=>{
     //load UI and socials media  plus main content
-    document.getElementById('ui').innerHTML = Navbar();
+        document.getElementById('ui').innerHTML = Navbar();
     document.getElementById('container').innerHTML = Home();
     document.getElementById('contact').innerHTML = Contact();
 
@@ -80,7 +80,7 @@ const app =()=>{
         
 }
 function preload(){
-    var x = document.getElementsByTagName("body")[0];
+    var x = document.body;
     x.style.backgroundColor = "red";
 }
 

@@ -89,6 +89,7 @@ button:link {
 }
 
 canvas {
+  display: block;
   z-index: 0;
 }
 
@@ -185,13 +186,21 @@ small {
   }
 
   #portafolio {
-    display: flex;
-    flex-direction: column;
+    width: auto;
+    height: 40vh;
+    text-align: center;
+    overflow-y: scroll;
+    border-color: #303030;
+    border-style: outset;
+    border-width: 0.1em;
+    border-left-style: none;
+    border-right-style: none;
   }
-  #portafolio section {
-    margin: 3px;
-    width: 300px;
-    height: 300px;
+  #portafolio ul {
+    text-align: center;
+  }
+  #portafolio #tittle {
+    text-align: center;
   }
 
   #contact {
@@ -207,23 +216,19 @@ small {
     display: none;
   }
 }
-html,
 body {
   font-family: "Inconsolata", monospace;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background: #11e8bb;
-  /* Old browsers */
+  transition: width 2s;
   background: -moz-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
   /* FF3.6-15 */
   background: -webkit-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, #f5f7fa 0%, #c3cfe2 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f5f7fa", endColorstr="#c3cfe2",GradientType=0 );
-  /* IE6-9 */
 }
 
 /*# sourceMappingURL=/main.1f19ae8e.css.map */

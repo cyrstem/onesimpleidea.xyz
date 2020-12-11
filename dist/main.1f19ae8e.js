@@ -46299,7 +46299,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Not4u = function Not4u() {
-  var template = "\n       <div id =\"portafolio\">\n       <center>\n            <h1>Sorry the Projects wont display on a phone </h1>\n            <p>if you want to see project im currently working on</p>\n            <p>follow this link</p>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\">instagram</a>\n        </center>\n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n       <section>\n        <ul>\n            <li id=\"tittle\">Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n        </ul>\n      </section>\n       </div>\n    ";
   return template;
 };
 
@@ -46440,7 +46440,7 @@ var app = function app() {
 };
 
 function preload() {
-  var x = document.getElementsByTagName("body")[0];
+  var x = document.body;
   x.style.backgroundColor = "red";
 } //this is not  something useful
 // function gallery( data ){
@@ -46482,7 +46482,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44243" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33871" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
