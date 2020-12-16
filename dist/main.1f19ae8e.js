@@ -46038,7 +46038,11 @@ var MapControls = function (object, domElement) {
 exports.MapControls = MapControls;
 MapControls.prototype = Object.create(_threeModule.EventDispatcher.prototype);
 MapControls.prototype.constructor = MapControls;
-},{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"js/stage.js":[function(require,module,exports) {
+},{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"assets/glsl/fragment.glsl":[function(require,module,exports) {
+module.exports = " precision highp float;\n#define GLSLIFY 1\nuniform float u_time;\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nfloat random (in vec2 st) {\n    return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))\n                 * 43758.5453123);\n}\n\nvoid main() {\n\n  //float test = vUv.y +cos(u_time);\n\n  //vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n \n\n // gl_FragColor = vec4(vec3(color),0.81989);\n gl_FragColor =vec4(vec3(color),1);\n}";
+},{}],"assets/glsl/vertex.glsl":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\nvarying vec3 vUv; \n\nvoid main() {\n  vUv = position; \n\n  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n  gl_Position = projectionMatrix * modelViewPosition; \n}\n";
+},{}],"js/stage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46052,12 +46056,17 @@ var _TweenMax = _interopRequireDefault(require("gsap/TweenMax"));
 
 var _OrbitControls = require("three/examples/jsm/controls/OrbitControls");
 
+var _fragment = _interopRequireDefault(require("/assets/glsl/fragment.glsl"));
+
+var _vertex = _interopRequireDefault(require("/assets/glsl/vertex.glsl"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+//shaders
 //check online
 console.log("wintermute loaded");
 var change = false; //global var 
@@ -46075,10 +46084,10 @@ if (!change) {
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 20;
-camera.minDistance = 0;
+camera.position.z = 200;
+camera.minDistance = 0.8;
 camera.maxDistance = 50;
-scene.fog = new THREE.Fog(scene.background, 1, 47);
+scene.fog = new THREE.Fog(scene.background, 1, 57);
 var renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true
@@ -46095,63 +46104,50 @@ window.addEventListener('resize', function () {
 //elements and  lights -----------------------------------------
 //lights
 
-var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.215);
-hemiLight.color.setHSL(0, 0, 100);
+var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.915);
+hemiLight.color.setHSL(182, 100, 20);
 hemiLight.groundColor.setHSL(0.000, 0, 0.015);
 hemiLight.position.set(0.005, 0.60, 100);
 scene.add(hemiLight); //Shader staff
 
-var uniforms = {
-  colorB: {
-    type: 'vec3',
-    value: new THREE.Color(0xFFFFFF)
-  },
-  colorA: {
-    type: 'vec3',
-    value: new THREE.Color(0xD6F9FB)
-  },
-  u_time: {
-    type: 'float',
-    value: 0.0
-  }
-};
-
-function vertexShader() {
-  return "\n    varying vec3 vUv; \n\n    void main() {\n      vUv = position; \n\n      vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n      gl_Position = projectionMatrix * modelViewPosition; \n    }\n  ";
-}
-
-function fragmentShader() {
-  return "\n      uniform vec3 colorA; \n      uniform vec3 colorB; \n      varying vec3 vUv;\n\n      \n      void main() {\n\n\n        vec2 st= gl_FragColor.xy/vUv.xy;\n\n        vec3 color = mix(colorA,colorB,vUv.y);\n\n        gl_FragColor = vec4(vec3(color),0.81989);\n      }\n\n\n  ";
-}
-
 var materialshader = new THREE.ShaderMaterial({
-  uniforms: uniforms,
-  fragmentShader: fragmentShader(),
-  vertexShader: vertexShader()
+  uniforms: {
+    colorB: {
+      type: 'vec3',
+      value: new THREE.Color(0xFFFFFF)
+    },
+    colorA: {
+      type: 'vec3',
+      value: new THREE.Color(0xD6F9FB)
+    },
+    u_time: {
+      type: 'f',
+      value: 0
+    }
+  },
+  vertexShader: _vertex.default,
+  fragmentShader: _fragment.default
 }); //mouse staff
 
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
-var geometry = new THREE.BoxGeometry(2, 2, 2); //const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
-
+var geometry = new THREE.BoxGeometry(2, 2, 2);
 var mat = new THREE.MeshPhongMaterial({
-  color: 0xFFFFFF,
-  specular: 0x95F4FF,
-  shininess: 60,
+  color: 0x000000,
+  specular: 0x095F4FF,
+  shininess: 80,
   depthTest: true,
   depthWrite: true,
   emissive: 0x00000
-}); //const mesh = new THREE.Mesh(geometry,mat);
-//scene.add(mesh);
-
+});
 var meshS = -100;
 
 for (var i = 0; i < 250; i++) {
   var mesh = new THREE.Mesh(geometry, materialshader);
   mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
   mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-  mesh.position.z = (Math.random() - 0.5) * 100 * Math.random(); // mesh.material.color= (Math.random() -colors)
-
+  mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+  mesh.material.color = Math.random() - colors;
   scene.add(mesh);
   meshS += 15;
 } //end==========================================
@@ -46162,8 +46158,16 @@ document.body.appendChild(renderer.domElement);
 var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //Render--------
 
 var render = function render() {
-  target.x = (1 - mouse.x) * 0.02;
-  target.y = (1 - mouse.y) * 0.02;
+  target.x = (1 - mouse.x) * 0.12;
+  target.y = (1 - mouse.y) * 0.12;
+
+  if (camera.position.z == 200) {
+    camera.position.z -= 0.10;
+  } // if(camera.position.z ==20){
+  //     camera.position.z =20;
+  // }
+
+
   camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
   camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
   requestAnimationFrame(render);
@@ -46202,7 +46206,7 @@ function onMouseClick(event) {
 
   switch (ans) {
     case 'A':
-      camera.rotation.x += 20;
+      camera.rotation.x += 90;
       break;
 
     case 'B':
@@ -46222,8 +46226,11 @@ function onMouseClick(event) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
+window.addEventListener('load', function (event) {
+  camera.position.z = 20;
+});
 render();
-},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js"}],"js/UI/Nav.js":[function(require,module,exports) {
+},{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46238,7 +46245,7 @@ var Navbar = function Navbar() {
 
 var _default = Navbar;
 exports.default = _default;
-},{}],"js/UI/Contact.js":[function(require,module,exports) {
+},{}],"js/interface/Contact.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46247,13 +46254,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Contact = function Contact() {
-  var template = "\n\n        <ul>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\">instagram</a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\">linkedin</a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\">github</a>\n        </ul>\n            <small>\u201CWintermute was a simple cube of white light, that very simplicity suggesting extreme complexity.\u201D--William Gibson \u2013 Neuromancer</small>\n       \n    ";
+  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"20\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"20\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"20\"></a>\n        </ul>\n    ";
   return template;
 };
 
 var _default = Contact;
 exports.default = _default;
-},{}],"js/Home.js":[function(require,module,exports) {
+},{}],"js/pages/Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46268,7 +46275,7 @@ var Home = function Home() {
 
 var _default = Home;
 exports.default = _default;
-},{}],"js/Portafolio.js":[function(require,module,exports) {
+},{}],"js/pages/Portafolio.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46277,13 +46284,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n         <ul>\n            <li><a id=\"p1\" href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a id=\"p2\" href=\"#\"> Glitch </a></li>\n            <li><a id=\"p1\" href=\"#\"> Vulcan View</a></li>\n         </ul>\n        </section>\n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\">Yaesta Pacman</a></li>\n            <li><a href=\"https://lutestudio.com/proyectos/vitality\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"https://www.yaesta.com\"> YaEsta.com</a></li>\n            <li><a href=\"https://smartco.com.ec/\">Smartco</a></li>\n            <li><a href=\"http://todolegal.com/\">Todo.legal</a></li>\n            \n         </ul>\n        </section>\n        \n       </div>\n    ";
   return template;
 };
 
 var _default = Portafolio;
 exports.default = _default;
-},{}],"js/Not4u.js":[function(require,module,exports) {
+},{}],"js/pages/Not4u.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46292,26 +46299,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Not4u = function Not4u() {
-  var template = "\n       <div id =\"portafolio\">\n       <center>\n            <h1>Sorry the Projects wont display on a phone </h1>\n            <p>if you want to see project im currently working on</p>\n            <p>follow this link</p>\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\">instagram</a>\n        </center>\n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n       <section>\n        <ul>\n            <li id=\"tittle\">Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n        </ul>\n      </section>\n       </div>\n    ";
   return template;
 };
 
 var _default = Not4u;
-exports.default = _default;
-},{}],"js/About.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var About = function About() {
-  var template = "\n        <div id =\"me\">\n            <p><b>Hello again soo more info about me :</b></p>\n            <p>Im a self-taugh developer, fast learner and recently curious</p>\n            <p>about Machine Learning.</p>\n            <p>I have work as a Front-End developer for more than 5 years</p>\n            <p>on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b>.</p>       \n        </div>\n    ";
-  return template;
-};
-
-var _default = About;
 exports.default = _default;
 },{}],"js/gallery.js":[function(require,module,exports) {
 "use strict";
@@ -46320,12 +46312,29 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var imagesArray = new Array();
+imagesArray[0] = new Image();
+imagesArray[0].src = 'noizuP.png';
+imagesArray[1] = new Image();
+imagesArray[1].src = 'skull.png'; //console.log(imagesArray);
+
+function showImage(item, index) {
+  imagesArray.forEach(showImage);
+  var divTemp = document.createElement("div");
+  divTemp.setAttribute("id", "floating" + item);
+  var newContent = document.createTextNode("element data :" + index);
+  divTemp.appendChild(newContent); //add to DOM
+
+  var currentDiv = document.getElementById("div");
+  document.body.insertBefore(divTemp, currentDiv); //document.getElementById(divTemp).style.top =getRandomInt(100)+'vh';
+}
 
 function displayI() {
+  // showImage();
   var newDiv = document.createElement("div");
   newDiv.setAttribute("id", "floating"); // and give it some content 
 
-  var newContent = document.createTextNode("Custom build Audio Player"); // add the text node to the newly created div
+  var newContent = document.createTextNode("Simple audio player build in C++ and GLSL"); // add the text node to the newly created div
 
   newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
 
@@ -46333,58 +46342,30 @@ function displayI() {
   document.body.insertBefore(newDiv, currentDiv);
   document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
   var img = document.createElement('img');
-  img.src = 'http://localhost:1234/noizuT.png';
+  img.src = imagesArray[1].src;
   document.getElementById('floating').appendChild(img);
-}
+} // function displayII (){
+//   const newDiv = document.createElement("div"); 
+//   newDiv.setAttribute("id", "floating2");
+//   // and give it some content 
+//   const newContent = document.createTextNode("image Manipulator Tool Prev"); 
+//   // add the text node to the newly created div
+//   newDiv.appendChild(newContent);  
+//   // add the newly created element and its content into the DOM 
+//   const currentDiv = document.getElementById("div1"); 
+//   document.body.insertBefore(newDiv, currentDiv); 
+//   document.getElementById('floating2').style.left = getRandomInt(100) +'vh';
+//   var img = document.createElement('img'); 
+//   img.src = images[1].src;
+//   document.getElementById('floating2').appendChild(img); 
+// }
 
-function displayII() {
-  var newDiv = document.createElement("div");
-  newDiv.setAttribute("id", "floating2"); // and give it some content 
-
-  var newContent = document.createTextNode("image Manipulator Tool Prev"); // add the text node to the newly created div
-
-  newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
-
-  var currentDiv = document.getElementById("div1");
-  document.body.insertBefore(newDiv, currentDiv);
-  document.getElementById('floating2').style.left = getRandomInt(100) + 'vh';
-  var img = document.createElement('img');
-  img.src = 'http://onesimpleidea.xyz/skull.png';
-  document.getElementById('floating2').appendChild(img);
-}
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 var _default = displayI;
-exports.default = _default;
-},{}],"js/G.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var G = {
-  // maybe add a array of the location of images so it can pass to the maker 
-  makeDivs: function makeDivs() {
-    console.log("gallery refactor");
-    var gDiv = document.createElement("div");
-    gDiv.setAttribute("id", "gallery");
-    var gContent = document.createTextNode("custom textBuilder");
-    console.log("hecho");
-    gDiv.appendChild(gContent);
-    var currentDiv = document.getElementById("div");
-    document.body.insertBefore(gDiv, currentDiv);
-    document.getElementById('gallery').style.top = this.changePos(100) + 'vh';
-  },
-  //this will be call to move the position of the div randomly  but to the top
-  changePos: function changePos(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
-};
-var _default = G;
 exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
@@ -46393,46 +46374,37 @@ require("./style/main.scss");
 
 var _stage = require("./js/stage");
 
-var _Nav = _interopRequireDefault(require("./js/UI/Nav"));
+var _Nav = _interopRequireDefault(require("./js/interface/Nav"));
 
-var _Contact = _interopRequireDefault(require("./js/UI/Contact"));
+var _Contact = _interopRequireDefault(require("./js/interface/Contact"));
 
-var _Home = _interopRequireDefault(require("./js/Home"));
+var _Home = _interopRequireDefault(require("./js/pages/Home"));
 
-var _Portafolio = _interopRequireDefault(require("./js/Portafolio"));
+var _Portafolio = _interopRequireDefault(require("./js/pages/Portafolio"));
 
-var _Not4u = _interopRequireDefault(require("./js/Not4u"));
-
-var _About = _interopRequireDefault(require("./js/About"));
+var _Not4u = _interopRequireDefault(require("./js/pages/Not4u"));
 
 var _gallery = _interopRequireDefault(require("./js/gallery"));
-
-var _G = _interopRequireDefault(require("./js/G"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
 document.addEventListener('click', function (event) {
-  if (event.target.id !== 'home') return;
-  console.log("init");
-  document.getElementById('container').innerHTML = (0, _Home.default)();
-  document.getElementById('ui').style.bottom = "20vh";
+  if (event.target.id !== 'home') return; //console.log("init");
 
-  _G.default.makeDivs();
+  document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
-  document.getElementById('ui').style.bottom = "30vh";
-  var p = document.getElementById('portafolio');
-  var g = document.getElementById('p1');
-  var g2 = document.getElementById('p2');
-  g.addEventListener("mouseover", mouseOver);
-  g.addEventListener("mouseout", mouseOut);
-  g2.addEventListener("mouseover", mouseOver);
-  g2.addEventListener("mouseout", mouseOut);
-  gallery(p);
-}, false);
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)(); // let p = document.getElementById('portafolio');
+  // let g = document.getElementById('p1');
+  // let g2 = document.getElementById('p2');
+  // g.addEventListener("mouseover", mouseOver);
+  // g.addEventListener("mouseout", mouseOut);
+  // g2.addEventListener("mouseover",mouseOver);
+  // g2.addEventListener("mouseout",mouseOut);
+  // gallery(p);
+}, false); //parts to remove  and  add imgages to much confucion
 
 function mouseOut() {
   var d = document.getElementById("floating");
@@ -46446,8 +46418,7 @@ function mouseOver() {
 
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
-  document.getElementById('container').innerHTML = (0, _About.default)();
-  document.getElementById('ui').style.bottom = "30vh";
+  document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 
 var app = function app() {
@@ -46466,15 +46437,24 @@ var app = function app() {
       document.getElementById('ui').style.bottom = "20vh";
     }, false);
   }
-}; //this is not  something useful
+};
+
+function preload() {
+  var x = document.body;
+  x.style.backgroundColor = "red";
+} //this is not  something useful
+// function gallery( data ){
+//     console.log("here the divs" + data);
+// }
 
 
-function gallery(data) {
-  console.log("here the divs" + data);
-}
-
-app();
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/UI/Nav":"js/UI/Nav.js","./js/UI/Contact":"js/UI/Contact.js","./js/Home":"js/Home.js","./js/Portafolio":"js/Portafolio.js","./js/Not4u":"js/Not4u.js","./js/About":"js/About.js","./js/gallery":"js/gallery.js","./js/G":"js/G.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+window.onload = function (event) {
+  //console.log('page is fully loaded');
+  preload();
+  app();
+}; // window.onload = function() {
+//   };
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46502,7 +46482,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41549" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43349" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

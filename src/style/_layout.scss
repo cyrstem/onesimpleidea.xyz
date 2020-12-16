@@ -1,28 +1,10 @@
-//Basic body pluss call ui 
-
-//fonts and main colors
-@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
 @import'_ui';
-$custom-font:'Inconsolata', monospace;
+
 
 //variables to complete
-$bg:white;
 $tnormalcolor:black;
 //base  for all the site 
-html,
-body {
-	font-family: $custom-font;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	overflow: hidden;
-	background: #11e8bb; /* Old browsers */
-  	background: -moz-linear-gradient(top,  #f5f7fa 0%, #c3cfe2 100%); /* FF3.6-15 */
-  	background: -webkit-linear-gradient(top,  #f5f7fa  0%,#c3cfe2 100%); /* Chrome10-25,Safari5.1-6 */
-  	background: linear-gradient(to bottom,  #f5f7fa  0%,#c3cfe2 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f7fa', endColorstr='#c3cfe2',GradientType=0 ); /* IE6-9 */
 
-}
 
 canvas{
 	display: block;
@@ -35,84 +17,70 @@ canvas{
 
 }
 main{
+
 	width: 66vh;
-	height: 35vh;
+	height: 30vh;
 	padding: 2px;
 	margin: 3px;
 	text-align: left;
-	color:#303030;
-	border-color:#303030;
-	@include border-width(0.1em 0.0em 0.1em 0.0em);
+	color:$mainColor;
+	border-color:$borderColor;
 	border-style:outset;
-	font-size: 1.0rem;
+	border-width: 0.1em;
+	border-left-style: none;
+	border-right-style: none;
+	font-size:$mainSize;
 	word-wrap:break-all;
 	overflow-wrap: break-word;
 	overflow-y:scroll ;
-		h1{
-			text-align: center;
-			font-size:1.3rem;
-		}
-	
-		p{
-			color: #303030;
-			padding: 1px;
-			
-		}
-	
-}
-
-
-#me{
-	width: auto;
-	height: auto;
-	padding: 5px;
-	margin: 3px;
-	color:$tnormalcolor;
-	background-color: white;
-	text-align: left;
-	opacity: 0.7555;
-	color: black;
-	border-color:#303030;
-	@include border-width(0.15em 0.1em 0.5em 0.0em);
-	border-style:outset;
-}
-
-
-#portafolio{
-
-	display: inline-flex;
-	flex-direction: row;
-	border-color:#303030;
-	@include border-width(0.1em 0.0em 0.1em 0.0em);
-	border-style:outset;
-	
-	
-	section{
-		width: 66vh;
-		height: 26vh;
-		overflow-y:scroll;
-		font-size: 2em;
+	h1{
 		text-align: center;
+		font-size:1.3rem;
 	}
+	p{
+		color:$mainColor;
+	}
+}
+
+#portafolio{ 
+	 width: 120vh;
+	 height: 80vh;
+	 padding: 2px;
+	 margin: 3px;
+	 color:$mainColor;
+	 font-size:1.5rem;
+	 overflow-y:scroll;
+	 
 	ul{
+		
 		list-style-type: none;
+		text-align: right;
 	}
 	li{
-		padding: 10px;
-		
+		padding: 15px;
 	}
 	a{
 		transition: all .2s ease-in-out;
+		
 	}
-	a:hover{
+	a:hover {
 		font-size: 2.3em;
-		transform: scale(1.1);
+		transform: translateX(200px);
+
+	}
+
+	#tittle{
+		font-weight: bold;
+		
 	}
 }
 
+
+
+
 #ui{
 	z-index: 1000;
-	bottom: 20vh;
+	bottom: 10vh;
 	position: absolute;
 }
 
@@ -122,8 +90,8 @@ main{
 	z-index: 1000;
 	position: absolute;
 	text-align: center;
-	bottom: 2vh;
-	width:50vh
+	bottom: 0vh;
+	margin-right: 4vh;
 }
 
 small{
@@ -131,7 +99,10 @@ small{
    color:white;
    padding: 3px;
 }
-
+// #portafolio:hover{ 
+// 	width: 66vh;
+// 	height: 66vh;
+// }
 
 
 
@@ -139,8 +110,9 @@ small{
 @media screen and(max-width:600px){
 	main{
 		width: auto;
-		height: 65vh;
-		font-size: 6vw;
+		height: auto;
+		text-align: center;
+		font-size: 1.0rem;
 		overflow-y: scroll;
 	}
 	
@@ -151,16 +123,25 @@ small{
 	}
 
 	#portafolio{
-		display: flex;
-		flex-direction: column;
-
-
-		section{
-			margin: 3px;
-			//background-color: red;
-			width: 300px;
-			height: 300px;
-		}
+		width: auto;
+		height: 40vh;
+		text-align: center;
+		overflow-y: scroll;
+		border-color:$borderColor;
+		border-style:outset;
+		border-width: 0.1em;
+		border-left-style: none;
+		border-right-style: none;
+			ul{
+				text-align: center;
+				margin: 0px;
+				padding: 25px;
+			}
+			#tittle{
+		
+				text-align: center;
+				
+			}
 	}
 	
 	//footer and quote
@@ -176,5 +157,6 @@ small{
 	small{
 		display: none;
 	}
+	
 
 }

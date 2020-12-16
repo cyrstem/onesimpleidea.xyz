@@ -1,6 +1,3 @@
-/* stylelint-disable order/properties-alphabetical-order */
-/* stylelint-enable */
-@import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
 a {
   border-color: black;
@@ -10,14 +7,14 @@ a {
 }
 
 a:hover {
-  background: #000000;
-  color: white;
+  border-bottom-style: solid;
+  border-width: thin;
 }
 
 button {
   background: none;
   border-color: black;
-  border-width: 0.01em;
+  border-width: 0.1em;
   font-size: 16px;
   padding: 5px;
   margin-right: 5px;
@@ -91,25 +88,6 @@ button:link {
   width: 100%;
 }
 
-html,
-body {
-  font-family: "Inconsolata", monospace;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: #11e8bb;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
-  /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
-  /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, #f5f7fa 0%, #c3cfe2 100%);
-  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#f5f7fa", endColorstr="#c3cfe2",GradientType=0 );
-  /* IE6-9 */
-}
-
 canvas {
   display: block;
   z-index: 0;
@@ -122,14 +100,16 @@ canvas {
 
 main {
   width: 66vh;
-  height: 35vh;
+  height: 30vh;
   padding: 2px;
   margin: 3px;
   text-align: left;
   color: #303030;
   border-color: #303030;
-  border-width: 0.1em 0em;
   border-style: outset;
+  border-width: 0.1em;
+  border-left-style: none;
+  border-right-style: none;
   font-size: 1rem;
   word-wrap: break-all;
   overflow-wrap: break-word;
@@ -141,55 +121,38 @@ main h1 {
 }
 main p {
   color: #303030;
-  padding: 1px;
-}
-
-#me {
-  width: auto;
-  height: auto;
-  padding: 5px;
-  margin: 3px;
-  color: black;
-  background-color: white;
-  text-align: left;
-  opacity: 0.7555;
-  color: black;
-  border-color: #303030;
-  border-width: 0.15em 0.1em 0.5em 0em;
-  border-style: outset;
 }
 
 #portafolio {
-  display: inline-flex;
-  flex-direction: row;
-  border-color: #303030;
-  border-width: 0.1em 0em;
-  border-style: outset;
-}
-#portafolio section {
-  width: 66vh;
-  height: 26vh;
+  width: 120vh;
+  height: 80vh;
+  padding: 2px;
+  margin: 3px;
+  color: #303030;
+  font-size: 1.5rem;
   overflow-y: scroll;
-  font-size: 2em;
-  text-align: center;
 }
 #portafolio ul {
   list-style-type: none;
+  text-align: right;
 }
 #portafolio li {
-  padding: 10px;
+  padding: 15px;
 }
 #portafolio a {
   transition: all 0.2s ease-in-out;
 }
 #portafolio a:hover {
   font-size: 2.3em;
-  transform: scale(1.1);
+  transform: translateX(200px);
+}
+#portafolio #tittle {
+  font-weight: bold;
 }
 
 #ui {
   z-index: 1000;
-  bottom: 20vh;
+  bottom: 10vh;
   position: absolute;
 }
 
@@ -197,8 +160,8 @@ main p {
   z-index: 1000;
   position: absolute;
   text-align: center;
-  bottom: 2vh;
-  width: 50vh;
+  bottom: 0vh;
+  margin-right: 4vh;
 }
 
 small {
@@ -210,8 +173,9 @@ small {
 @media screen and (max-width: 600px) {
   main {
     width: auto;
-    height: 65vh;
-    font-size: 6vw;
+    height: auto;
+    text-align: center;
+    font-size: 1rem;
     overflow-y: scroll;
   }
 
@@ -222,13 +186,23 @@ small {
   }
 
   #portafolio {
-    display: flex;
-    flex-direction: column;
+    width: auto;
+    height: 40vh;
+    text-align: center;
+    overflow-y: scroll;
+    border-color: #303030;
+    border-style: outset;
+    border-width: 0.1em;
+    border-left-style: none;
+    border-right-style: none;
   }
-  #portafolio section {
-    margin: 3px;
-    width: 300px;
-    height: 300px;
+  #portafolio ul {
+    text-align: center;
+    margin: 0px;
+    padding: 25px;
+  }
+  #portafolio #tittle {
+    text-align: center;
   }
 
   #contact {
@@ -243,6 +217,20 @@ small {
   small {
     display: none;
   }
+}
+body {
+  font-family: "Inconsolata", monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: width 2s;
+  background: -moz-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #f5f7fa 0%, #c3cfe2 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #f5f7fa 0%, #c3cfe2 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 }
 
 /*# sourceMappingURL=/main.1f19ae8e.css.map */

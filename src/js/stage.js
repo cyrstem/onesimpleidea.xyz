@@ -1,8 +1,10 @@
 import * as THREE from 'three';
 import TweenMax from 'gsap/TweenMax';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
-
 import { Mapping } from 'three';
+//shaders
+import fs from '/assets/glsl/fragment.glsl';
+import vs from '/assets/glsl/vertex.glsl';
 
 //check online
 console.log("wintermute loaded");
@@ -23,10 +25,10 @@ if(!change){
 
 const scene =  new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 20;
-camera.minDistance =0;
+camera.position.z = 200;
+camera.minDistance =0.8;
 camera.maxDistance = 50;
-scene.fog = new THREE.Fog( scene.background, 1, 47);
+scene.fog = new THREE.Fog( scene.background, 1, 57);
 
 
 
@@ -53,61 +55,26 @@ renderer.debug.checkShaderErrors = true;
 //elements and  lights -----------------------------------------
 //lights
 
-               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.215 );
-                hemiLight.color.setHSL( 0, 0, 100 );
+               const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.915 );
+                hemiLight.color.setHSL( 182, 100, 20 );
                 hemiLight.groundColor.setHSL( 0.000, 0, 0.015 );
 
                 hemiLight.position.set( 0.005, 0.60, 100 );
                 scene.add( hemiLight );
 
 //Shader staff
-
- let uniforms = {
-        colorB: {type: 'vec3', value: new THREE.Color(0xFFFFFF)},
-        colorA: {type: 'vec3', value: new THREE.Color(0xD6F9FB)},
-        u_time: {type: 'float', value: 0.0}
-
-    }
-
-function vertexShader() {
-  return `
-    varying vec3 vUv; 
-
-    void main() {
-      vUv = position; 
-
-      vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
-      gl_Position = projectionMatrix * modelViewPosition; 
-    }
-  `
-}
-
-function fragmentShader(){
- return `
-      uniform vec3 colorA; 
-      uniform vec3 colorB; 
-      varying vec3 vUv;
-
-      
-      void main() {
+const materialshader = new THREE.ShaderMaterial({
+  uniforms:{
+    colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+    colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+    u_time:{type: 'f',value: 0},
+  },
+  vertexShader:vs,
+  fragmentShader:fs
+  
+});
 
 
-        vec2 st= gl_FragColor.xy/vUv.xy;
-
-        vec3 color = mix(colorA,colorB,vUv.y);
-
-        gl_FragColor = vec4(vec3(color),0.81989);
-      }
-
-
-  `
-}
-
-let materialshader =  new THREE.ShaderMaterial({
-    uniforms: uniforms,
-    fragmentShader: fragmentShader(),
-    vertexShader: vertexShader(),
-  })
 
 //mouse staff
  let raycaster = new THREE.Raycaster();
@@ -115,11 +82,7 @@ let materialshader =  new THREE.ShaderMaterial({
 
 
  const geometry = new THREE.BoxGeometry( 2,2,2 );
- //const material = new THREE.MeshBasicMaterial({color:0xFFFFFF});
- const mat = new THREE.MeshPhongMaterial( {color:0xFFFFFF,specular:0x95F4FF,shininess:60,depthTest:true,depthWrite:true,emissive:0x00000} );
- //const mesh = new THREE.Mesh(geometry,mat);
- //scene.add(mesh);
-
+ const mat = new THREE.MeshPhongMaterial( {color:0x000000,specular:0x095F4FF,shininess:80,depthTest:true,depthWrite:true,emissive:0x00000} );
  let meshS = -100;
 
     for(var i = 0; i< 250 ;i++){
@@ -127,7 +90,7 @@ let materialshader =  new THREE.ShaderMaterial({
         mesh.position.x = (Math.random()- 0.5)*90*Math.random();
         mesh.position.y = (Math.random()- 0.5)*90*Math.random();
         mesh.position.z = (Math.random()- 0.5)*100*Math.random();
-       // mesh.material.color= (Math.random() -colors)
+       mesh.material.color= (Math.random() -colors)
         scene.add(mesh);
         meshS+=15;
     }
@@ -141,8 +104,14 @@ let controls = new OrbitControls (camera,renderer.domElement);
 
 //Render--------
 const render = function(){
-    target.x = ( 1 - mouse.x ) * 0.02;
-    target.y = ( 1 - mouse.y ) * 0.02;
+    target.x = ( 1 - mouse.x ) * 0.12;
+    target.y = ( 1 - mouse.y ) * 0.12;
+    if(camera.position.z == 200){
+        camera.position.z -=0.10;
+    }
+    // if(camera.position.z ==20){
+    //     camera.position.z =20;
+    // }
   
   camera.rotation.x += 0.05 * ( target.y - camera.rotation.x );
   camera.rotation.y += 0.05 * ( target.x - camera.rotation.y );
@@ -190,7 +159,6 @@ function postionCam(jump){
 
 
 
-
 function onMouseClick(event) {
 
 
@@ -203,7 +171,7 @@ function onMouseClick(event) {
 
 switch (ans) {
     case 'A':
-             camera.rotation.x +=20;
+             camera.rotation.x +=90;
         break;
 
     case 'B':
@@ -223,4 +191,8 @@ switch (ans) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
+window.addEventListener('load',function (event){
+
+    camera.position.z = 20;
+});
 render();
