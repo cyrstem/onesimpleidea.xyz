@@ -46284,7 +46284,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n            \n         </ul>\n        </section>\n        \n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\">Yaesta Pacman</a></li>\n            <li><a href=\"https://lutestudio.com/proyectos/vitality\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"https://www.yaesta.com\"> YaEsta.com</a></li>\n            <li><a href=\"https://smartco.com.ec/\">Smartco</a></li>\n            <li><a href=\"http://todolegal.com/\">Todo.legal</a></li>\n            \n         </ul>\n        </section>\n        \n       </div>\n    ";
   return template;
 };
 
@@ -46482,7 +46482,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36985" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43349" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

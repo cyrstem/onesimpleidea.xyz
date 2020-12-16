@@ -9,12 +9,12 @@ const Portafolio =()=>{
             <li id="p"><a href="https://onesimpleidea.itch.io/noizu"> Noizu</a></li>
             <li><a href="#"> Glitch </a></li>
             <li><a href="#"> Vulcan View</a></li>
-            <li><a href="#">Yaesta Pacman</a></li>
-            <li><a href="#">Vitality Lut</a></li>
+            <li><a href="https://www.youtube.com/watch?v=YHZd0TxPMkY">Yaesta Pacman</a></li>
+            <li><a href="https://lutestudio.com/proyectos/vitality">Vitality Lut</a></li>
             <li id="tittle">//Frontend devs</li>
-            <li><a href="#"> YaEsta.com</a></li>
-            <li><a href="#">Smartco</a></li>
-            <li><a href="#">Todo.legal</a></li>
+            <li><a href="https://www.yaesta.com"> YaEsta.com</a></li>
+            <li><a href="https://smartco.com.ec/">Smartco</a></li>
+            <li><a href="http://todolegal.com/">Todo.legal</a></li>
             
          </ul>
         </section>
