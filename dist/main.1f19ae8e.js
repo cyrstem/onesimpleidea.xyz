@@ -45768,8 +45768,8 @@ var OrbitControls = function (object, domElement) {
 
   function handleTouchEnd()
   /*event*/
-  {} // no-op
-  //
+  {// no-op
+  } //
   // event handlers - FSM: listen for events and reset state
   //
 
@@ -46482,7 +46482,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43349" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40773" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
