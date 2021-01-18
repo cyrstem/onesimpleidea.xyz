@@ -46284,7 +46284,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\">Yaesta Pacman</a></li>\n            <li><a href=\"https://lutestudio.com/proyectos/vitality\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"https://www.yaesta.com\"> YaEsta.com</a></li>\n            <li><a href=\"https://smartco.com.ec/\">Smartco</a></li>\n            <li><a href=\"http://todolegal.com/\">Todo.legal</a></li>\n            \n         </ul>\n        </section>\n        \n       </div>\n    ";
+  var template = "\n       <div id =\"portafolio\">\n         \n         <section class=\"proj\">\n            <h3>Noizu</h3>\n            <a href=\"https://onesimpleidea.itch.io/noizu\"><img src= \"noizu.png\" width=\"500\"/></a>\n               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Glitch</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Small app that allows you to crete glitch art build with openframeworks</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Vulcan view</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta Pacman</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta.com</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Smartco </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Todo Legal </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n       </div>\n    ";
   return template;
 };
 
@@ -46396,7 +46396,11 @@ document.addEventListener('click', function (event) {
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)(); // let p = document.getElementById('portafolio');
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
+  var detect = document.getElementById("list");
+  document.querySelectorAll(li).forEach(function (box) {
+    box.style.display = "none";
+  }); // let p = document.getElementById('portafolio');
   // let g = document.getElementById('p1');
   // let g2 = document.getElementById('p2');
   // g.addEventListener("mouseover", mouseOver);
@@ -46440,8 +46444,7 @@ var app = function app() {
 };
 
 function preload() {
-  var x = document.body;
-  x.style.backgroundColor = "red";
+  var x = document.body; //x.style.backgroundColor = "red";
 } //this is not  something useful
 // function gallery( data ){
 //     console.log("here the divs" + data);
@@ -46482,7 +46485,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40773" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38439" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

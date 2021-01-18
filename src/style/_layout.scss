@@ -1,11 +1,7 @@
 @import'_ui';
-
-
 //variables to complete
 $tnormalcolor:black;
 //base  for all the site 
-
-
 canvas{
 	display: block;
 	z-index:0;
@@ -17,7 +13,6 @@ canvas{
 
 }
 main{
-
 	width: 66vh;
 	height: 30vh;
 	padding: 2px;
@@ -45,37 +40,25 @@ main{
 #portafolio{ 
 	 width: 120vh;
 	 height: 80vh;
-	 padding: 2px;
-	 margin: 3px;
+	 margin-bottom: 100px;
 	 color:$mainColor;
 	 font-size:1.5rem;
 	 overflow-y:scroll;
-	 
-	ul{
-		
-		list-style-type: none;
-		text-align: right;
-	}
-	li{
-		padding: 15px;
-	}
-	a{
-		transition: all .2s ease-in-out;
-		
-	}
-	a:hover {
-		font-size: 2.3em;
-		transform: translateX(200px);
-
-	}
-
-	#tittle{
-		font-weight: bold;
-		
-	}
+		display: grid;
+		grid-template-columns: auto auto;
+		//padding: 10px;
 }
 
-
+.proj {
+  width:50vh;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  p{
+	  background-color: black;
+	  color: white;
+  }
+}
 
 
 #ui{
@@ -92,18 +75,28 @@ main{
 	text-align: center;
 	bottom: 0vh;
 	margin-right: 4vh;
-}
+	
 
+}
+#links{
+	a{
+		border-color:black;
+		padding: 5px;
+		// margin: 4px;
+		text-decoration: none;
+		color:black;
+	}
+	a:hover{
+		border-bottom-style: solid;
+		border-width: thin;
+	
+	}
+}
 small{
    background-color: black;
    color:white;
    padding: 3px;
 }
-// #portafolio:hover{ 
-// 	width: 66vh;
-// 	height: 66vh;
-// }
-
 
 
 //responsive------------------------------------------------------------
@@ -123,8 +116,11 @@ small{
 	}
 
 	#portafolio{
+		display: grid;
+		grid-template-columns: auto;
+		padding: 10px;
 		width: auto;
-		height: 40vh;
+		height: 40vh;	
 		text-align: center;
 		overflow-y: scroll;
 		border-color:$borderColor;
@@ -132,15 +128,12 @@ small{
 		border-width: 0.1em;
 		border-left-style: none;
 		border-right-style: none;
+		
 			ul{
+				list-style-type: none;
 				text-align: center;
 				margin: 0px;
 				padding: 25px;
-			}
-			#tittle{
-		
-				text-align: center;
-				
 			}
 	}
 	

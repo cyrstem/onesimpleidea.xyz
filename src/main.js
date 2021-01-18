@@ -23,6 +23,11 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
         return;
         document.getElementById('container').innerHTML = Portafolio();
+        
+        let detect = document.getElementById("list");
+        document.querySelectorAll(li).forEach(box => { box.style.display = "none" })
+
+        
 
         // let p = document.getElementById('portafolio');
         // let g = document.getElementById('p1');
@@ -81,7 +86,7 @@ const app =()=>{
 }
 function preload(){
     var x = document.body;
-    x.style.backgroundColor = "red";
+    //x.style.backgroundColor = "red";
 }
 
 //this is not  something useful
