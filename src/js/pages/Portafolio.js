@@ -2,7 +2,6 @@
 const Portafolio =()=>{
     const template = `
        <div id ="portafolio">
-         
          <section class="proj">
             <h3>Noizu</h3>
             <a href="https://onesimpleidea.itch.io/noizu"><img src= "noizu.png" width="500"/></a>
@@ -16,19 +15,19 @@ const Portafolio =()=>{
          </section>
 
          <section class="proj">
-            <h3>Vulcan view</h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Web App</p>
+            <h3>Rutas</h3>
+            <a href="https://rutas-ec.herokuapp.com/"> <img src= "skull.png" width="500"/></a>
+               <p>Web App in developement </p>
          </section>
          <section class="proj">
             <h3>Yaesta Pacman</h3>
             <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Web App</p>
+               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>
          </section>
          <section class="proj">
             <h3>Yaesta.com</h3>
             <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Web App</p>
+               <p>Frontend Developer and Lead Designer (2016-2018)</p>
          </section>
          <section class="proj">
             <h3>Smartco </h3>
