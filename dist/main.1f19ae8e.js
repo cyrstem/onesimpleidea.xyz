@@ -46284,7 +46284,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n         <section class=\"proj\">\n            <h3>Noizu</h3>\n            <a href=\"https://onesimpleidea.itch.io/noizu\"><img src= \"noizu.png\" width=\"500\"/></a>\n               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Glitch</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Small app that allows you to crete glitch art build with openframeworks</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Rutas</h3>\n            <a href=\"https://rutas-ec.herokuapp.com/\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App in developement </p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta Pacman</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta.com</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Frontend Developer and Lead Designer (2016-2018)</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Smartco </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Todo Legal </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n       </div>\n    ";
+  var template = "\n    <div>\n       <div id =\"portafolio\">\n      \n         <section class=\"proj\">\n            <h3>Noizu</h3>\n            <a href=\"https://onesimpleidea.itch.io/noizu\"><img src= \"noizu.png\" width=\"500\"/></a>\n               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Glitch</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Small app that allows you to crete glitch art build with openframeworks</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Rutas</h3>\n            <a href=\"https://rutas-ec.herokuapp.com/\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App in developement </p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta Pacman</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta.com</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Frontend Developer and Lead Designer (2016-2018)</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Smartco </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Todo Legal </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n          \n       </div>\n       <h2 class=\"tittle\">Projects<h2>\n       </div>\n    ";
   return template;
 };
 
@@ -46390,8 +46390,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //console.clear();
 document.addEventListener('click', function (event) {
-  if (event.target.id !== 'home') return; //console.log("init");
-
+  if (event.target.id !== 'home') return;
   document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 document.addEventListener('click', function (event) {
@@ -46485,7 +46484,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43645" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40767" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

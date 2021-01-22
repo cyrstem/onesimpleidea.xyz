@@ -13,7 +13,6 @@ import displaI from './js/gallery'
 document.addEventListener('click',function(event){
     if (event.target.id !== 'home')
         return;
-       //console.log("init");
        document.getElementById('container').innerHTML = Home();
 },false);
 

@@ -1,7 +1,9 @@
 
 const Portafolio =()=>{
     const template = `
+    <div>
        <div id ="portafolio">
+      
          <section class="proj">
             <h3>Noizu</h3>
             <a href="https://onesimpleidea.itch.io/noizu"><img src= "noizu.png" width="500"/></a>
@@ -39,6 +41,9 @@ const Portafolio =()=>{
             <a href="#"> <img src= "skull.png" width="500"/></a>
                <p>Web App</p>
          </section>
+          
+       </div>
+       <h2 class="tittle">Projects<h2>
        </div>
     `;
     return template;

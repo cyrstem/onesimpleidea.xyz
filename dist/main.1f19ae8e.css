@@ -88,6 +88,12 @@ button:link {
   width: 100%;
 }
 
+.tittle {
+  float: left;
+  z-index: 100;
+  background-color: red;
+}
+
 canvas {
   display: block;
   z-index: 0;
