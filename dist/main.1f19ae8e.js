@@ -46284,88 +46284,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n    <div>\n       <div id =\"portafolio\">\n      \n         <section class=\"proj\">\n            <h3>Noizu</h3>\n            <a href=\"https://onesimpleidea.itch.io/noizu\"><img src= \"noizu.png\" width=\"500\"/></a>\n               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Glitch</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Small app that allows you to crete glitch art build with openframeworks</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Rutas</h3>\n            <a href=\"https://rutas-ec.herokuapp.com/\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App in developement </p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta Pacman</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta.com</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Frontend Developer and Lead Designer (2016-2018)</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Smartco </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Todo Legal </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n          \n       </div>\n       <h2 class=\"tittle\">Projects<h2>\n       </div>\n    ";
+  var template = "\n    <div>\n       <div id =\"portafolio\">\n         <section class=\"proj\">\n            <h3>Noizu</h3>\n            <a href=\"https://onesimpleidea.itch.io/noizu\"><img src= \"noizu.png\" width=\"500\"/></a>\n               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Glitch</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Small app that allows you to crete glitch art build with openframeworks</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Rutas</h3>\n            <a href=\"https://rutas-ec.herokuapp.com/\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App in developement </p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta Pacman</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta.com</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Frontend Developer and Lead Designer (2016-2018)</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Smartco </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Todo Legal </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n          \n       </div>\n       </div>\n    ";
   return template;
 };
 
 var _default = Portafolio;
-exports.default = _default;
-},{}],"js/pages/Not4u.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var Not4u = function Not4u() {
-  var template = "\n       <div id =\"portafolio\">\n       <section>\n        <ul>\n            <li id=\"tittle\">Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n        </ul>\n      </section>\n       </div>\n    ";
-  return template;
-};
-
-var _default = Not4u;
-exports.default = _default;
-},{}],"js/gallery.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var imagesArray = new Array();
-imagesArray[0] = new Image();
-imagesArray[0].src = 'noizuP.png';
-imagesArray[1] = new Image();
-imagesArray[1].src = 'skull.png'; //console.log(imagesArray);
-
-function showImage(item, index) {
-  imagesArray.forEach(showImage);
-  var divTemp = document.createElement("div");
-  divTemp.setAttribute("id", "floating" + item);
-  var newContent = document.createTextNode("element data :" + index);
-  divTemp.appendChild(newContent); //add to DOM
-
-  var currentDiv = document.getElementById("div");
-  document.body.insertBefore(divTemp, currentDiv); //document.getElementById(divTemp).style.top =getRandomInt(100)+'vh';
-}
-
-function displayI() {
-  // showImage();
-  var newDiv = document.createElement("div");
-  newDiv.setAttribute("id", "floating"); // and give it some content 
-
-  var newContent = document.createTextNode("Simple audio player build in C++ and GLSL"); // add the text node to the newly created div
-
-  newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
-
-  var currentDiv = document.getElementById("div");
-  document.body.insertBefore(newDiv, currentDiv);
-  document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
-  var img = document.createElement('img');
-  img.src = imagesArray[1].src;
-  document.getElementById('floating').appendChild(img);
-} // function displayII (){
-//   const newDiv = document.createElement("div"); 
-//   newDiv.setAttribute("id", "floating2");
-//   // and give it some content 
-//   const newContent = document.createTextNode("image Manipulator Tool Prev"); 
-//   // add the text node to the newly created div
-//   newDiv.appendChild(newContent);  
-//   // add the newly created element and its content into the DOM 
-//   const currentDiv = document.getElementById("div1"); 
-//   document.body.insertBefore(newDiv, currentDiv); 
-//   document.getElementById('floating2').style.left = getRandomInt(100) +'vh';
-//   var img = document.createElement('img'); 
-//   img.src = images[1].src;
-//   document.getElementById('floating2').appendChild(img); 
-// }
-
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
-var _default = displayI;
 exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
@@ -46382,45 +46305,45 @@ var _Home = _interopRequireDefault(require("./js/pages/Home"));
 
 var _Portafolio = _interopRequireDefault(require("./js/pages/Portafolio"));
 
-var _Not4u = _interopRequireDefault(require("./js/pages/Not4u"));
-
-var _gallery = _interopRequireDefault(require("./js/gallery"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
+// import Not4u from './js/pages/Not4u'
+// import displaI from './js/gallery'
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'home') return;
   document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
-  var detect = document.getElementById("list");
-  document.querySelectorAll(li).forEach(function (box) {
-    box.style.display = "none";
-  }); // let p = document.getElementById('portafolio');
-  // let g = document.getElementById('p1');
-  // let g2 = document.getElementById('p2');
-  // g.addEventListener("mouseover", mouseOver);
-  // g.addEventListener("mouseout", mouseOut);
-  // g2.addEventListener("mouseover",mouseOver);
-  // g2.addEventListener("mouseout",mouseOut);
-  // gallery(p);
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)(); // let detect = document.getElementById("list");
+  // document.querySelectorAll(li).forEach(box => { box.style.display = "none" })
+
+  projandplaces();
 }, false); //parts to remove  and  add imgages to much confucion
 
-function mouseOut() {
-  var d = document.getElementById("floating");
-  d.remove();
+function cleanDivs() {}
+
+function projandplaces() {
+  console.log("show what is what");
+  var gDiv = document.createElement("div");
+  gDiv.setAttribute("id", "gallery");
+  var gContent = document.createTextNode("Projects");
+  console.log("hecho");
+  gDiv.appendChild(gContent);
+  var currentDiv = document.getElementById("div");
+  document.body.insertBefore(gDiv, currentDiv);
+  document.getElementById('gallery').style.top = changePos(100) + 'vh';
 }
 
-function mouseOver() {
-  console.log("image");
-  (0, _gallery.default)();
+function changePos(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
+  var removeDiv = document.getElementById('gallery');
+  removeDiv.remove();
   document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 
@@ -46436,27 +46359,27 @@ var app = function app() {
     console.log("responsive biatch");
     document.addEventListener('click', function (event) {
       if (event.target.id !== 'project') return;
-      document.getElementById('container').innerHTML = (0, _Not4u.default)();
+      document.getElementById('container').innerHTML = Not4u();
       document.getElementById('ui').style.bottom = "20vh";
     }, false);
   }
 };
 
+document.addEventListener("scroll", function (event) {
+  var scroll_y = this.scroollY;
+  console.log("scroll" + scroll_y);
+});
+
 function preload() {
   var x = document.body; //x.style.backgroundColor = "red";
-} //this is not  something useful
-// function gallery( data ){
-//     console.log("here the divs" + data);
-// }
-
+}
 
 window.onload = function (event) {
   //console.log('page is fully loaded');
   preload();
   app();
-}; // window.onload = function() {
-//   };
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+};
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46484,7 +46407,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40767" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37991" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
