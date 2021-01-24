@@ -22,19 +22,10 @@ document.addEventListener('click',function(event){
     if (event.target.id !== 'project')
         return;
         document.getElementById('container').innerHTML = Portafolio();
-        
-        // let detect = document.getElementById("list");
-        // document.querySelectorAll(li).forEach(box => { box.style.display = "none" })
-
-        projandplaces();
 
 },false);
 
 //parts to remove  and  add imgages to much confucion
-
-function cleanDivs(){
-   
-}
 
  function projandplaces(){
     console.log("show what is what");
@@ -52,7 +43,7 @@ function cleanDivs(){
        
 }
 
-function changePos(max){
+    function changePos(max){
         return Math.floor(Math.random() * Math.floor(max));
     }
 

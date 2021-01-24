@@ -15,7 +15,9 @@ console.log("wintermute loaded");
  let jump = ['A','B','C','D'];
  let time =  new THREE.Clock();
  let target = new THREE.Vector2();
-
+let zpos = 20;
+let end =0;
+ let reached =false;
 //console.log(colors);
 if(!change){
   console.log("change " +change);
@@ -25,7 +27,7 @@ if(!change){
 
 const scene =  new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 200;
+camera.position.z = zpos;
 camera.minDistance =0.8;
 camera.maxDistance = 50;
 scene.fog = new THREE.Fog( scene.background, 1, 57);
@@ -106,21 +108,21 @@ let controls = new OrbitControls (camera,renderer.domElement);
 const render = function(){
     target.x = ( 1 - mouse.x ) * 0.12;
     target.y = ( 1 - mouse.y ) * 0.12;
-    if(camera.position.z == 200){
-        camera.position.z -=0.10;
-    }
-    // if(camera.position.z ==20){
-    //     camera.position.z =20;
+
+    // if(zpos <=50){
+    //     zpos-=0.05;
+    //     camera.position.z =zpos;
+    // if(zpos === end){
+    //     reached =true;
+    //     }
     // }
-  
+// console.log(reached)  
+
   camera.rotation.x += 0.05 * ( target.y - camera.rotation.x );
   camera.rotation.y += 0.05 * ( target.x - camera.rotation.y );
     requestAnimationFrame(render);
     renderer.render(scene,camera);
     //uniforms.u_time.value =time;
-
-
-
 }
 //interaction  function----------------------------------------------
 
@@ -161,7 +163,6 @@ function postionCam(jump){
 
 function onMouseClick(event) {
 
-
     postionCam(jump);
     const ans = postionCam(jump);
     const change = colorRand(colors);
@@ -172,17 +173,22 @@ function onMouseClick(event) {
 switch (ans) {
     case 'A':
              camera.rotation.x +=90;
+             
+             
         break;
 
     case 'B':
              camera.rotation.y +=80;
+            
         break;
 
   case 'C':
              camera.rotation.z +=10;
+            
         break;
   case 'D':
              camera.rotation.z +=15;
+            
         break;
     }
 }
@@ -191,8 +197,4 @@ switch (ans) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
-window.addEventListener('load',function (event){
-
-    camera.position.z = 20;
-});
 render();

@@ -46075,7 +46075,10 @@ exports.change = change;
 var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
 var jump = ['A', 'B', 'C', 'D'];
 var time = new THREE.Clock();
-var target = new THREE.Vector2(); //console.log(colors);
+var target = new THREE.Vector2();
+var zpos = 20;
+var end = 0;
+var reached = false; //console.log(colors);
 
 if (!change) {
   console.log("change " + change);
@@ -46084,7 +46087,7 @@ if (!change) {
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 200;
+camera.position.z = zpos;
 camera.minDistance = 0.8;
 camera.maxDistance = 50;
 scene.fog = new THREE.Fog(scene.background, 1, 57);
@@ -46159,14 +46162,14 @@ var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //
 
 var render = function render() {
   target.x = (1 - mouse.x) * 0.12;
-  target.y = (1 - mouse.y) * 0.12;
-
-  if (camera.position.z == 200) {
-    camera.position.z -= 0.10;
-  } // if(camera.position.z ==20){
-  //     camera.position.z =20;
+  target.y = (1 - mouse.y) * 0.12; // if(zpos <=50){
+  //     zpos-=0.05;
+  //     camera.position.z =zpos;
+  // if(zpos === end){
+  //     reached =true;
+  //     }
   // }
-
+  // console.log(reached)  
 
   camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
   camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
@@ -46226,9 +46229,6 @@ function onMouseClick(event) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
-window.addEventListener('load', function (event) {
-  camera.position.z = 20;
-});
 render();
 },{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
@@ -46316,13 +46316,8 @@ document.addEventListener('click', function (event) {
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)(); // let detect = document.getElementById("list");
-  // document.querySelectorAll(li).forEach(box => { box.style.display = "none" })
-
-  projandplaces();
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
 }, false); //parts to remove  and  add imgages to much confucion
-
-function cleanDivs() {}
 
 function projandplaces() {
   console.log("show what is what");
@@ -46407,7 +46402,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37991" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45845" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
