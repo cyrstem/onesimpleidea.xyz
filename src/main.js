@@ -5,7 +5,7 @@ import Navbar from './js/interface/Nav'
 import Contact from './js/interface/Contact'
 import Home from './js/pages/Home'    
 import Portafolio from './js/pages/Portafolio'
-// import Not4u from './js/pages/Not4u'
+ import Not4u from './js/pages/Not4u'
 
 // import displaI from './js/gallery'
 
@@ -91,6 +91,7 @@ function preload(){
 }
 
 window.onload = (event) => {
+
     //console.log('page is fully loaded');
     preload();
     app();

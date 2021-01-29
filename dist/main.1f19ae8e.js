@@ -46290,6 +46290,21 @@ var Portafolio = function Portafolio() {
 
 var _default = Portafolio;
 exports.default = _default;
+},{}],"js/pages/Not4u.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var Not4u = function Not4u() {
+  var template = "\n       <div id =\"portafolio\">\n       <section>\n        <ul>\n            <li id=\"tittle\">Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"#\">Yaesta Pacman</a></li>\n            <li><a href=\"#\">Vitality Lut</a></li>\n            <li id=\"tittle\">Frontend devs</li>\n            <li><a href=\"#\"> YaEsta.com</a></li>\n            <li><a href=\"#\">Smartco</a></li>\n            <li><a href=\"#\">Todo.legal</a></li>\n        </ul>\n      </section>\n       </div>\n    ";
+  return template;
+};
+
+var _default = Not4u;
+exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
@@ -46305,10 +46320,11 @@ var _Home = _interopRequireDefault(require("./js/pages/Home"));
 
 var _Portafolio = _interopRequireDefault(require("./js/pages/Portafolio"));
 
+var _Not4u = _interopRequireDefault(require("./js/pages/Not4u"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
-// import Not4u from './js/pages/Not4u'
 // import displaI from './js/gallery'
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'home') return;
@@ -46354,7 +46370,7 @@ var app = function app() {
     console.log("responsive biatch");
     document.addEventListener('click', function (event) {
       if (event.target.id !== 'project') return;
-      document.getElementById('container').innerHTML = Not4u();
+      document.getElementById('container').innerHTML = (0, _Not4u.default)();
       document.getElementById('ui').style.bottom = "20vh";
     }, false);
   }
@@ -46374,7 +46390,7 @@ window.onload = function (event) {
   preload();
   app();
 };
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46402,7 +46418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45845" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42309" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
