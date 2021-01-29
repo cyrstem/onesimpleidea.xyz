@@ -1,27 +1,49 @@
 
 const Portafolio =()=>{
     const template = `
+    <div>
        <div id ="portafolio">
-        <section>
-        
-         <ul>
-            <li id="tittle">//Experiments</li>
-            <li id="p"><a href="https://onesimpleidea.itch.io/noizu"> Noizu</a></li>
-            <li><a href="#"> Glitch </a></li>
-            <li><a href="#"> Vulcan View</a></li>
-            <li><a href="https://www.youtube.com/watch?v=YHZd0TxPMkY">Yaesta Pacman</a></li>
-            <li><a href="https://lutestudio.com/proyectos/vitality">Vitality Lut</a></li>
-            <li id="tittle">//Frontend devs</li>
-            <li><a href="https://www.yaesta.com"> YaEsta.com</a></li>
-            <li><a href="https://smartco.com.ec/">Smartco</a></li>
-            <li><a href="http://todolegal.com/">Todo.legal</a></li>
-            
-         </ul>
-        </section>
-        
+         <section class="proj">
+            <h3>Noizu</h3>
+            <a href="https://onesimpleidea.itch.io/noizu"><img src= "noizu.png" width="500"/></a>
+               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>
+         </section>
+
+         <section class="proj">
+            <h3>Glitch</h3>
+            <a href="#"> <img src= "skull.png" width="500"/></a>
+               <p>Small app that allows you to crete glitch art build with openframeworks</p>
+         </section>
+
+         <section class="proj">
+            <h3>Rutas</h3>
+            <a href="https://rutas-ec.herokuapp.com/"> <img src= "skull.png" width="500"/></a>
+               <p>Web App in developement </p>
+         </section>
+         <section class="proj">
+            <h3>Yaesta Pacman</h3>
+            <a href="#"> <img src= "skull.png" width="500"/></a>
+               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>
+         </section>
+         <section class="proj">
+            <h3>Yaesta.com</h3>
+            <a href="#"> <img src= "skull.png" width="500"/></a>
+               <p>Frontend Developer and Lead Designer (2016-2018)</p>
+         </section>
+         <section class="proj">
+            <h3>Smartco </h3>
+            <a href="#"> <img src= "skull.png" width="500"/></a>
+               <p>Web App</p>
+         </section>
+         <section class="proj">
+            <h3>Todo Legal </h3>
+            <a href="#"> <img src= "skull.png" width="500"/></a>
+               <p>Web App</p>
+         </section>
+          
+       </div>
        </div>
     `;
-    
     return template;
 }
 

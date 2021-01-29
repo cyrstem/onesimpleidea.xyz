@@ -46075,7 +46075,10 @@ exports.change = change;
 var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
 var jump = ['A', 'B', 'C', 'D'];
 var time = new THREE.Clock();
-var target = new THREE.Vector2(); //console.log(colors);
+var target = new THREE.Vector2();
+var zpos = 20;
+var end = 0;
+var reached = false; //console.log(colors);
 
 if (!change) {
   console.log("change " + change);
@@ -46084,7 +46087,7 @@ if (!change) {
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = 200;
+camera.position.z = zpos;
 camera.minDistance = 0.8;
 camera.maxDistance = 50;
 scene.fog = new THREE.Fog(scene.background, 1, 57);
@@ -46159,14 +46162,14 @@ var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //
 
 var render = function render() {
   target.x = (1 - mouse.x) * 0.12;
-  target.y = (1 - mouse.y) * 0.12;
-
-  if (camera.position.z == 200) {
-    camera.position.z -= 0.10;
-  } // if(camera.position.z ==20){
-  //     camera.position.z =20;
+  target.y = (1 - mouse.y) * 0.12; // if(zpos <=50){
+  //     zpos-=0.05;
+  //     camera.position.z =zpos;
+  // if(zpos === end){
+  //     reached =true;
+  //     }
   // }
-
+  // console.log(reached)  
 
   camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
   camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
@@ -46226,9 +46229,6 @@ function onMouseClick(event) {
 
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
-window.addEventListener('load', function (event) {
-  camera.position.z = 20;
-});
 render();
 },{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
@@ -46284,7 +46284,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n       <div id =\"portafolio\">\n        <section>\n        \n         <ul>\n            <li id=\"tittle\">//Experiments</li>\n            <li id=\"p\"><a href=\"https://onesimpleidea.itch.io/noizu\"> Noizu</a></li>\n            <li><a href=\"#\"> Glitch </a></li>\n            <li><a href=\"#\"> Vulcan View</a></li>\n            <li><a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\">Yaesta Pacman</a></li>\n            <li><a href=\"https://lutestudio.com/proyectos/vitality\">Vitality Lut</a></li>\n            <li id=\"tittle\">//Frontend devs</li>\n            <li><a href=\"https://www.yaesta.com\"> YaEsta.com</a></li>\n            <li><a href=\"https://smartco.com.ec/\">Smartco</a></li>\n            <li><a href=\"http://todolegal.com/\">Todo.legal</a></li>\n            \n         </ul>\n        </section>\n        \n       </div>\n    ";
+  var template = "\n    <div>\n       <div id =\"portafolio\">\n         <section class=\"proj\">\n            <h3>Noizu</h3>\n            <a href=\"https://onesimpleidea.itch.io/noizu\"><img src= \"noizu.png\" width=\"500\"/></a>\n               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Glitch</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Small app that allows you to crete glitch art build with openframeworks</p>\n         </section>\n\n         <section class=\"proj\">\n            <h3>Rutas</h3>\n            <a href=\"https://rutas-ec.herokuapp.com/\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App in developement </p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta Pacman</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Yaesta.com</h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Frontend Developer and Lead Designer (2016-2018)</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Smartco </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n         <section class=\"proj\">\n            <h3>Todo Legal </h3>\n            <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n               <p>Web App</p>\n         </section>\n          \n       </div>\n       </div>\n    ";
   return template;
 };
 
@@ -46305,68 +46305,6 @@ var Not4u = function Not4u() {
 
 var _default = Not4u;
 exports.default = _default;
-},{}],"js/gallery.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-var imagesArray = new Array();
-imagesArray[0] = new Image();
-imagesArray[0].src = 'noizuP.png';
-imagesArray[1] = new Image();
-imagesArray[1].src = 'skull.png'; //console.log(imagesArray);
-
-function showImage(item, index) {
-  imagesArray.forEach(showImage);
-  var divTemp = document.createElement("div");
-  divTemp.setAttribute("id", "floating" + item);
-  var newContent = document.createTextNode("element data :" + index);
-  divTemp.appendChild(newContent); //add to DOM
-
-  var currentDiv = document.getElementById("div");
-  document.body.insertBefore(divTemp, currentDiv); //document.getElementById(divTemp).style.top =getRandomInt(100)+'vh';
-}
-
-function displayI() {
-  // showImage();
-  var newDiv = document.createElement("div");
-  newDiv.setAttribute("id", "floating"); // and give it some content 
-
-  var newContent = document.createTextNode("Simple audio player build in C++ and GLSL"); // add the text node to the newly created div
-
-  newDiv.appendChild(newContent); // add the newly created element and its content into the DOM 
-
-  var currentDiv = document.getElementById("div");
-  document.body.insertBefore(newDiv, currentDiv);
-  document.getElementById('floating').style.top = getRandomInt(100) + 'vh';
-  var img = document.createElement('img');
-  img.src = imagesArray[1].src;
-  document.getElementById('floating').appendChild(img);
-} // function displayII (){
-//   const newDiv = document.createElement("div"); 
-//   newDiv.setAttribute("id", "floating2");
-//   // and give it some content 
-//   const newContent = document.createTextNode("image Manipulator Tool Prev"); 
-//   // add the text node to the newly created div
-//   newDiv.appendChild(newContent);  
-//   // add the newly created element and its content into the DOM 
-//   const currentDiv = document.getElementById("div1"); 
-//   document.body.insertBefore(newDiv, currentDiv); 
-//   document.getElementById('floating2').style.left = getRandomInt(100) +'vh';
-//   var img = document.createElement('img'); 
-//   img.src = images[1].src;
-//   document.getElementById('floating2').appendChild(img); 
-// }
-
-
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
-var _default = displayI;
-exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
@@ -46384,40 +46322,39 @@ var _Portafolio = _interopRequireDefault(require("./js/pages/Portafolio"));
 
 var _Not4u = _interopRequireDefault(require("./js/pages/Not4u"));
 
-var _gallery = _interopRequireDefault(require("./js/gallery"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
+// import displaI from './js/gallery'
 document.addEventListener('click', function (event) {
-  if (event.target.id !== 'home') return; //console.log("init");
-
+  if (event.target.id !== 'home') return;
   document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)(); // let p = document.getElementById('portafolio');
-  // let g = document.getElementById('p1');
-  // let g2 = document.getElementById('p2');
-  // g.addEventListener("mouseover", mouseOver);
-  // g.addEventListener("mouseout", mouseOut);
-  // g2.addEventListener("mouseover",mouseOver);
-  // g2.addEventListener("mouseout",mouseOut);
-  // gallery(p);
+  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
 }, false); //parts to remove  and  add imgages to much confucion
 
-function mouseOut() {
-  var d = document.getElementById("floating");
-  d.remove();
+function projandplaces() {
+  console.log("show what is what");
+  var gDiv = document.createElement("div");
+  gDiv.setAttribute("id", "gallery");
+  var gContent = document.createTextNode("Projects");
+  console.log("hecho");
+  gDiv.appendChild(gContent);
+  var currentDiv = document.getElementById("div");
+  document.body.insertBefore(gDiv, currentDiv);
+  document.getElementById('gallery').style.top = changePos(100) + 'vh';
 }
 
-function mouseOver() {
-  console.log("image");
-  (0, _gallery.default)();
+function changePos(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
 
 document.addEventListener('click', function (event) {
   if (event.target.id !== 'about') return;
+  var removeDiv = document.getElementById('gallery');
+  removeDiv.remove();
   document.getElementById('container').innerHTML = (0, _Home.default)();
 }, false);
 
@@ -46439,22 +46376,21 @@ var app = function app() {
   }
 };
 
-function preload() {
-  var x = document.body;
-  x.style.backgroundColor = "red";
-} //this is not  something useful
-// function gallery( data ){
-//     console.log("here the divs" + data);
-// }
+document.addEventListener("scroll", function (event) {
+  var scroll_y = this.scroollY;
+  console.log("scroll" + scroll_y);
+});
 
+function preload() {
+  var x = document.body; //x.style.backgroundColor = "red";
+}
 
 window.onload = function (event) {
   //console.log('page is fully loaded');
   preload();
   app();
-}; // window.onload = function() {
-//   };
-},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/gallery":"js/gallery.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+};
+},{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -46482,7 +46418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40773" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38439" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

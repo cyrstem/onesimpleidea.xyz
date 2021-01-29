@@ -7,14 +7,13 @@ a {
 }
 
 a:hover {
-  border-bottom-style: solid;
-  border-width: thin;
+  color: white;
 }
 
 button {
   background: none;
   border-color: black;
-  border-width: 0.1em;
+  border-width: 0.01em;
   font-size: 16px;
   padding: 5px;
   margin-right: 5px;
@@ -41,12 +40,13 @@ button:link {
 /* width */
 ::-webkit-scrollbar {
   width: 4px;
+  scrollbar-width: thin;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
   background: transparent;
-  opacity: 0.1;
+  opacity: 0;
 }
 
 /* Handle */
@@ -56,7 +56,7 @@ button:link {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0);
 }
 
 #gallery {
@@ -86,6 +86,12 @@ button:link {
 }
 #floating img {
   width: 100%;
+}
+
+.tittle {
+  float: left;
+  z-index: 100;
+  background-color: red;
 }
 
 canvas {
@@ -126,28 +132,23 @@ main p {
 #portafolio {
   width: 120vh;
   height: 80vh;
-  padding: 2px;
-  margin: 3px;
+  margin-bottom: 100px;
   color: #303030;
   font-size: 1.5rem;
   overflow-y: scroll;
+  display: grid;
+  grid-template-columns: auto auto;
 }
-#portafolio ul {
-  list-style-type: none;
-  text-align: right;
+
+.proj {
+  width: 50vh;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 15px;
 }
-#portafolio li {
-  padding: 15px;
-}
-#portafolio a {
-  transition: all 0.2s ease-in-out;
-}
-#portafolio a:hover {
-  font-size: 2.3em;
-  transform: translateX(200px);
-}
-#portafolio #tittle {
-  font-weight: bold;
+.proj p {
+  background-color: black;
+  color: white;
 }
 
 #ui {
@@ -162,6 +163,17 @@ main p {
   text-align: center;
   bottom: 0vh;
   margin-right: 4vh;
+}
+
+#links a {
+  border-color: black;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+#links a:hover {
+  border-bottom-style: solid;
+  border-width: thin;
 }
 
 small {
@@ -186,6 +198,9 @@ small {
   }
 
   #portafolio {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 10px;
     width: auto;
     height: 40vh;
     text-align: center;
@@ -197,12 +212,10 @@ small {
     border-right-style: none;
   }
   #portafolio ul {
+    list-style-type: none;
     text-align: center;
     margin: 0px;
     padding: 25px;
-  }
-  #portafolio #tittle {
-    text-align: center;
   }
 
   #contact {
@@ -231,6 +244,16 @@ body {
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, #f5f7fa 0%, #c3cfe2 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  animation: pulse 5s;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /*# sourceMappingURL=/main.1f19ae8e.css.map */

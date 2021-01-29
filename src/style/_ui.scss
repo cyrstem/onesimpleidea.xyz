@@ -9,15 +9,13 @@ a{
 	color:black;
 }
 a:hover{
-	border-bottom-style: solid;
-	border-width: thin;
-
+	color:white;
 }
 
 button{
 	background: none;
 	border-color: black;
-	border-width: 0.1em;
+	border-width: 0.01em;
 	font-size: 16px;
 	padding: 5px;
 	margin-right: 5px;
@@ -44,12 +42,13 @@ button:link{
 /* width */
 ::-webkit-scrollbar {
 	width: 4px;
+	scrollbar-width: thin;
   }
   
   /* Track */
   ::-webkit-scrollbar-track {
 	background: transparent; 
-	opacity: 0.1;
+	opacity: 0.0;
   }
    
   /* Handle */
@@ -59,12 +58,8 @@ button:link{
   
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-	background: rgba($color: #000000, $alpha: 0.5);
+	background: rgba($color: #000000, $alpha: 0.0);
   }
-
-
-
-
   $randomNumber: random(300);
   #gallery{
 	z-index: 1000;
@@ -97,4 +92,8 @@ button:link{
 	color: white;	
   }
 
-  
+  .tittle{
+	  float: left;
+	  z-index: 100;
+	  background-color: red;
+  }
