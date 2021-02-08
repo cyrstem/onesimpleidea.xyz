@@ -15,8 +15,8 @@ console.log("wintermute loaded");
  let jump = ['A','B','C','D'];
  let time =  new THREE.Clock();
  let target = new THREE.Vector2();
-let zpos = 20;
-let end =0;
+ let zpos = 20;
+ let end =0;
  let reached =false;
 //console.log(colors);
 if(!change){
