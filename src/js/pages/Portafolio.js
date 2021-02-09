@@ -11,14 +11,14 @@ const Portafolio =()=>{
 
          <section class="proj">
             <h3>Glitch</h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
+            <a href="#"> <img src= "glitch.png" width="500"/></a>
                <p>Small app that allows you to crete glitch art build with openframeworks</p>
          </section>
 
          <section class="proj">
             <h3>Rutas</h3>
-            <a href="https://rutas-ec.herokuapp.com/"> <img src= "skull.png" width="500"/></a>
-               <p>Web App in developement </p>
+            <a href="https://rutas-ec.herokuapp.com/"> <img src= "rutas.png" width="500"/></a>
+               <p>Web App currently in developement heres a preview </p>
          </section>
          <section class="proj">
             <h3>Yaesta Pacman</h3>
