@@ -109,14 +109,6 @@ const render = function(){
     target.x = ( 1 - mouse.x ) * 0.12;
     target.y = ( 1 - mouse.y ) * 0.12;
 
-    // if(zpos <=50){
-    //     zpos-=0.05;
-    //     camera.position.z =zpos;
-    // if(zpos === end){
-    //     reached =true;
-    //     }
-    // }
-// console.log(reached)  
 
   camera.rotation.x += 0.05 * ( target.y - camera.rotation.x );
   camera.rotation.y += 0.05 * ( target.x - camera.rotation.y );

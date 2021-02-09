@@ -5,10 +5,7 @@ import Navbar from './js/interface/Nav'
 import Contact from './js/interface/Contact'
 import Home from './js/pages/Home'    
 import Portafolio from './js/pages/Portafolio'
- import Not4u from './js/pages/Not4u'
-
-// import displaI from './js/gallery'
-
+import Not4u from './js/pages/Not4u'
 
 document.addEventListener('click',function(event){
     if (event.target.id !== 'home')
@@ -50,8 +47,6 @@ document.addEventListener('click',function(event){
 document.addEventListener('click',function(event){
     if (event.target.id !== 'about')
         return;
-        let removeDiv = document.getElementById('gallery');
-        removeDiv.remove();
         document.getElementById('container').innerHTML = Home();
        
 
@@ -85,16 +80,9 @@ document.addEventListener("scroll",function(event){
     console.log("scroll"+scroll_y);
 });
 
-function preload(){
-    var x = document.body;
-    //x.style.backgroundColor = "red";
-}
 
 window.onload = (event) => {
-
-    //console.log('page is fully loaded');
-    preload();
     app();
-  };
+};
 
 
