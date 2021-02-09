@@ -1,6 +1,7 @@
 // here goes interface buttons  and links 
 //buttons and access
 
+*:focus {outline:none}
 a{
 	border-color:black;
 	padding: 5px;
@@ -25,31 +26,48 @@ a:hover{
 	}
 }
 
-button:focus {outline:0; border-color: transparent;}
 
-button{
-	background: black;
-	color: white;
-	font-size: 16px;
-	padding: 5px;
-	margin-right: 5px;
-	border-color: white;
-	cursor: pointer;
-	box-sizing:inherit;
-	
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+button {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    background:black;
+    color: #ffffff;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
 
-button :active{
+button:hover,
+button:focus {
 	background: black;
-	color:white;
 	opacity: 0.7;
-
 }
-button:hover{
-	background: black;
-	color:white;
-	opacity: 0.6;
-	
+
+button:focus {
+	background: white;
+	color: black;
+	transition: background 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+button:active {
+    transform: scale(0.99);
 }
 
 //scroll bar  settings on ly works on chrome 

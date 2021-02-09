@@ -43,6 +43,7 @@ main{
 	 column-gap: 2px;
 	 row-gap: 40px;
 	 grid-template-columns: 1fr 1fr;
+	 overflow-x: hidden;
 	
 }
 
@@ -105,14 +106,13 @@ small{
 		border-width: 0.1em;
 		border-left-style: none;
 		border-right-style: none;
+		
 			ul{
 				list-style-type: none;
 				text-align: center;
 			}
 			a{color: white;}
 	}
-	
-	section{text-align: center;}
 	// //footer and quote
 	
 	// #contact {
