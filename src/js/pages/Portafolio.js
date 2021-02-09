@@ -5,7 +5,7 @@ const Portafolio =()=>{
        <div id ="portafolio">
          <section class="proj">
             <h3>Noizu</h3>
-            <a href="https://onesimpleidea.itch.io/noizu"><img src= "noizu.png" width="500"/></a>
+            <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src= "noizu.png" width="500"/></a>
                <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>
          </section>
 
@@ -17,7 +17,7 @@ const Portafolio =()=>{
 
          <section class="proj">
             <h3>Rutas</h3>
-            <a href="https://rutas-ec.herokuapp.com/"> <img src= "rutas.png" width="500"/></a>
+            <a href="https://rutas-ec.herokuapp.com/" target="_blank"> <img src= "rutas.png" width="500"/></a>
                <p>Web App currently in developement heres a preview </p>
          </section>
          <section class="proj">

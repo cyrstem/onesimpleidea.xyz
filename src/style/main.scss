@@ -9,15 +9,29 @@ $borderColor: #303030;
 @import'_layout';
 
 html, body {
+	margin: 0;
+	padding: 0;	
 	font-family: $custom-font;
+	color: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
 	transition: width 3s;
-	background-image: linear-gradient(to right top, #f5f7fa, #e8edf4, #dce3ee, #cfd9e8, #c3cfe2);
+	background-image: linear-gradient(to top, #10161f, #191e26, #22272e, #2c3035, #36393d);
 	animation: pulse 6s ;
 	  
+}
+
+h1,h3{
+	text-align: center;
+	font-size:1.3rem;
+	background: black;
+}
+p{
+	text-align: center;
+	background: black;
+
 }
 
 @keyframes pulse {

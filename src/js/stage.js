@@ -18,7 +18,7 @@ console.log("wintermute loaded");
 const scene =  new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.z = zpos;
-camera.minDistance =0.8;
+camera.minDistance = 0.8;
 camera.maxDistance = 50;
 scene.fog = new THREE.Fog( scene.background, 1, 57);
 
