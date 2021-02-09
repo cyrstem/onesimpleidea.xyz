@@ -13,13 +13,14 @@ canvas{
 }
 
 main{
+	background: black;
 	width: 66vh;
 	height: 30vh;
-	padding: 2px;
-	margin: 3px;
-	text-align: left;
-	color:$mainColor;
-	border-color:$borderColor;
+	padding: 5px;
+	margin: 5px;
+	text-align: justify;
+	color:white;
+	border-color:white;
 	border-style:outset;
 	border-width: 0.1em;
 	border-left-style: none;
@@ -28,37 +29,27 @@ main{
 	word-wrap:break-all;
 	overflow-wrap: break-word;
 	overflow-y:scroll ;
-	h1{
-		text-align: center;
-		font-size:1.3rem;
-	}
-	p{
-		color:$mainColor;
-	}
+	opacity: 0.7;
+	
 }
 
 #portafolio{ 
 	 width: 120vh;
 	 height: 80vh;
 	 margin-bottom: 2.5em;
-	 color:$mainColor;
 	 font-size:1.5rem;
 	 overflow-x:scroll;
 	 display: grid;
 	 column-gap: 2px;
 	 row-gap: 40px;
 	 grid-template-columns: 1fr 1fr;
+	
 }
 
 .proj {
   width:50vh;
-  //padding: 10px;
   font-size: 1rem;
-  //margin-bottom: 15px;
-  p{
-	  background-color: black;
-	  color: white;
-  }
+  
 }
 
 
@@ -90,11 +81,9 @@ small{
 //responsive------------------------------------------------------------
 @media screen and(max-width:600px){
 	main{
-		width: auto;
-		height: auto;
-		text-align: center;
-		font-size: 1.0rem;
-		overflow-y: scroll;
+		width: 52vh;
+		height: 52vh;
+		font-size: 1rem;
 	}
 	
 	#ui{	
@@ -104,11 +93,11 @@ small{
 	}
 
 	#portafolio{
-		display: grid;
-		grid-template-columns: auto;
-		padding: 10px;
-		width: auto;
-		height: 40vh;	
+		background-color: black;
+		width: 52vh;
+		height: 52vh;
+		font-size: 2rem;
+		opacity: 0.7;
 		text-align: center;
 		overflow-y: scroll;
 		border-color:$borderColor;
@@ -116,28 +105,27 @@ small{
 		border-width: 0.1em;
 		border-left-style: none;
 		border-right-style: none;
-		
 			ul{
 				list-style-type: none;
 				text-align: center;
-				margin: 0px;
-				padding: 25px;
 			}
+			a{color: white;}
 	}
 	
-	//footer and quote
+	section{text-align: center;}
+	// //footer and quote
 	
-	#contact {
-		z-index: 1000;
-		position: absolute;
-		text-align: center;
-		text-justify:inter-word;
-		width: auto;
-		bottom: 1vh;
-	}
-	small{
-		display: none;
-	}
+	// #contact {
+	// 	z-index: 1000;
+	// 	position: absolute;
+	// 	text-align: center;
+	// 	text-justify:inter-word;
+	// 	width: auto;
+	// 	bottom: 1vh;
+	// }
+	// small{
+	// 	display: none;
+	// }
 	
 
 }
