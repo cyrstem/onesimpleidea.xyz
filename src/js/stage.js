@@ -8,21 +8,11 @@ import vs from '/assets/glsl/vertex.glsl';
 
 //check online
 console.log("wintermute loaded");
-
- export const change = false;
-//global var 
  let colors =[0x141e30,0x243b55, 0xffffff,0x4F5B66,0x0CE5DB,0x00000];
  let jump = ['A','B','C','D'];
  let time =  new THREE.Clock();
  let target = new THREE.Vector2();
  let zpos = 20;
- let end =0;
- let reached =false;
-//console.log(colors);
-if(!change){
-  console.log("change " +change);
-}
-
 //setup three 
 
 const scene =  new THREE.Scene();

@@ -75,10 +75,10 @@ const app =()=>{
         
 }
 
-document.addEventListener("scroll",function(event){
-    let scroll_y = this.scroollY;
-    console.log("scroll"+scroll_y);
-});
+// document.addEventListener("scroll",function(event){
+//     let scroll_y = this.scroollY;
+//     console.log("scroll"+scroll_y);
+// });
 
 
 window.onload = (event) => {

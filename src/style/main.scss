@@ -8,7 +8,7 @@ $borderColor: #303030;
 
 @import'_layout';
 
-body {
+html, body {
 	font-family: $custom-font;
 	display: flex;
 	align-items: center;
@@ -16,7 +16,7 @@ body {
 	overflow: hidden;
 	transition: width 3s;
 	background-image: linear-gradient(to right top, #f5f7fa, #e8edf4, #dce3ee, #cfd9e8, #c3cfe2);
-	animation: pulse 5s ;
+	animation: pulse 6s ;
 	  
 }
 

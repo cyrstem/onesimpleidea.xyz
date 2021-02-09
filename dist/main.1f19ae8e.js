@@ -46045,11 +46045,6 @@ module.exports = "#define GLSLIFY 1\nvarying vec3 vUv; \n\nvoid main() {\n  vUv 
 },{}],"js/stage.js":[function(require,module,exports) {
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.change = void 0;
-
 var THREE = _interopRequireWildcard(require("three"));
 
 var _TweenMax = _interopRequireDefault(require("gsap/TweenMax"));
@@ -46069,21 +46064,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 //shaders
 //check online
 console.log("wintermute loaded");
-var change = false; //global var 
-
-exports.change = change;
 var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
 var jump = ['A', 'B', 'C', 'D'];
 var time = new THREE.Clock();
 var target = new THREE.Vector2();
-var zpos = 20;
-var end = 0;
-var reached = false; //console.log(colors);
-
-if (!change) {
-  console.log("change " + change);
-} //setup three 
-
+var zpos = 20; //setup three 
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
@@ -46363,12 +46348,11 @@ var app = function app() {
       document.getElementById('ui').style.bottom = "20vh";
     }, false);
   }
-};
+}; // document.addEventListener("scroll",function(event){
+//     let scroll_y = this.scroollY;
+//     console.log("scroll"+scroll_y);
+// });
 
-document.addEventListener("scroll", function (event) {
-  var scroll_y = this.scroollY;
-  console.log("scroll" + scroll_y);
-});
 
 window.onload = function (event) {
   app();
@@ -46401,7 +46385,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37143" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44093" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
