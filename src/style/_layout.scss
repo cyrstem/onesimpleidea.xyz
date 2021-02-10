@@ -72,6 +72,7 @@ main{
 	a{
 		color: white;
 		font-weight: bold;
+		border-bottom:1px solid white;
 	}
 	a:hover{
 		color: black;
@@ -83,15 +84,24 @@ ul{
 	padding: 10px;
 }
 li{
-
 	margin:15px;
-	border-bottom-style: solid;
-	border-width: thin;
+
 }
 
 li:hover{
 	background:white;
 	color:black
+}
+
+li::before{
+
+  position: absolute;
+  left    : 0;
+  bottom  : 0;
+  height  : 1px;
+  width   : 10%;  /* or 100px */
+  border-bottom:1px solid white;
+
 }
 #ui{
 	z-index: 1000;
