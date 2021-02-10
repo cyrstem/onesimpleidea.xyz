@@ -26,8 +26,6 @@ a:hover{
 	}
 }
 
-
-
 button,
 [type="button"],
 [type="reset"],
@@ -54,16 +52,16 @@ button {
 button:hover,
 button:focus {
 	background: black;
-	opacity: 0.7;
+	opacity: 0.8;
 }
 
 button:focus {
 	background: white;
 	color: black;
-	transition: background 250ms ease-in-out, 
-                transform 150ms ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+	// transition: background 250ms ease-in-out, 
+    //             transform 150ms ease;
+    // -webkit-appearance: none;
+    // -moz-appearance: none;
 }
 
 button:active {

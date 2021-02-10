@@ -14,8 +14,8 @@ canvas{
 
 main{
 	background: black;
-	width: 66vh;
-	height: 30vh;
+	width: 80vh;
+	height: 35vh;
 	padding: 5px;
 	margin: 5px;
 	text-align: justify;
@@ -53,7 +53,40 @@ main{
   
 }
 
+.Sites{
+	background: black;
+	width: 96vh;
+	height: 30vh;
+	padding: 5px;
+	margin: 5px;
+	color:white;
+	border-color:white;
+	border-style:outset;
+	border-width: 0.1em;
+	border-left-style: none;
+	border-right-style: none;
+	font-size:$mainSize;
+	overflow-y:scroll ;
+	opacity: 0.7;
+	
+	a{
+		color: white;
+		font-weight: bold;
+	}
+}
+ul{
+	list-style-type: none;
+	text-align: center;
+	padding: 10px;
+}
+li{
+	margin:10px;
+}
 
+li:hover{
+	border-bottom-style: solid;
+	border-width: thin;
+}
 #ui{
 	z-index: 1000;
 	bottom: 10vh;

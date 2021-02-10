@@ -6,12 +6,19 @@ import Contact from './js/interface/Contact'
 import Home from './js/pages/Home'    
 import Portafolio from './js/pages/Portafolio'
 import Not4u from './js/pages/Not4u'
+import Experiments from './js/pages/Experiments'
 
 
     document.addEventListener('click',function(event){
         if (event.target.id !== 'home')
             return;
            document.getElementById('container').innerHTML = Home();
+    },false);
+
+    document.addEventListener('click',function(event){
+        if (event.target.id !== 'experiment')
+            return;
+           document.getElementById('container').innerHTML = Experiments();
     },false);
     
     
