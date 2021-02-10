@@ -39,18 +39,25 @@ main{
 	 font-size:1.5rem;
 	 overflow-x:scroll;
 	 display: grid;
-	 column-gap: 2px;
-	 row-gap: 40px;
+	 column-gap: 1rem;
+	 row-gap: 2rem;
 	 grid-template-columns: 1fr 1fr;
 	 overflow-x: hidden;
+	 transition: width 1s;
+	 animation: pulse 2s ;
+	 
 	
 }
 
 .proj {
   width:50vh;
   font-size: 1rem;
-  
+  h3{ 
+	opacity: 0.7;
+  }
 }
+
+
 
 .Sites{
 	background: black;
@@ -67,6 +74,8 @@ main{
 	font-size:$mainSize;
 	overflow-y:scroll ;
 	opacity: 0.7;
+	transition: width 3s;
+	animation: pulseD 2s ;
 	
 	a{
 		color: white;
@@ -143,25 +152,16 @@ small{
 	}
 
 	#portafolio{
-		background-color: black;
+		//background-color: black;
 		width: 52vh;
 		height: 52vh;
 		font-size: 2rem;
-		opacity: 0.7;
 		text-align: center;
 		overflow-y: scroll;
-		border-color:$borderColor;
-		border-style:outset;
-		border-width: 0.1em;
-		border-left-style: none;
-		border-right-style: none;
-		
-			ul{
-				list-style-type: none;
-				text-align: center;
-			}
-			a{color: white;}
-	}
+		display: grid;
+		grid-template-columns: 1fr;
+		column-gap: 1.5rem;
+	 }
 
 	button {
 		padding: 5px;
@@ -176,4 +176,14 @@ small{
 			line-height: 25px;
 		}
 	}
+
+	.proj {
+		//width:50vh;
+		font-size: 1rem;
+		img{
+			width: 100%;
+		}
+	  }
+   
+	
 }

@@ -122,15 +122,20 @@ main {
   font-size: 1.5rem;
   overflow-x: scroll;
   display: grid;
-  column-gap: 2px;
-  row-gap: 40px;
+  column-gap: 1rem;
+  row-gap: 2rem;
   grid-template-columns: 1fr 1fr;
   overflow-x: hidden;
+  transition: width 1s;
+  animation: pulse 2s;
 }
 
 .proj {
   width: 50vh;
   font-size: 1rem;
+}
+.proj h3 {
+  opacity: 0.7;
 }
 
 .Sites {
@@ -148,6 +153,8 @@ main {
   font-size: 1rem;
   overflow-y: scroll;
   opacity: 0.7;
+  transition: width 3s;
+  animation: pulseD 2s;
 }
 .Sites a {
   color: white;
@@ -217,25 +224,14 @@ small {
   }
 
   #portafolio {
-    background-color: black;
     width: 52vh;
     height: 52vh;
     font-size: 2rem;
-    opacity: 0.7;
     text-align: center;
     overflow-y: scroll;
-    border-color: #303030;
-    border-style: outset;
-    border-width: 0.1em;
-    border-left-style: none;
-    border-right-style: none;
-  }
-  #portafolio ul {
-    list-style-type: none;
-    text-align: center;
-  }
-  #portafolio a {
-    color: white;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1.5rem;
   }
 
   button {
@@ -249,6 +245,13 @@ small {
   }
   .Sites a {
     line-height: 25px;
+  }
+
+  .proj {
+    font-size: 1rem;
+  }
+  .proj img {
+    width: 100%;
   }
 }
 html, body {
@@ -282,6 +285,14 @@ p {
   }
   100% {
     opacity: 1;
+  }
+}
+@keyframes pulseD {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
   }
 }
 

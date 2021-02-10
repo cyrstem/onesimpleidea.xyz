@@ -3,7 +3,7 @@ const Navbar =()=>{
         <nav>
             <button id="home">About Me </button>
             <button id="experiment">Experiments</button> 
-            <button id="project">Projects</button> 
+            <button id="project">Work</button> 
         </nav>
        
     `;
