@@ -32,7 +32,6 @@ main{
 	opacity: 0.7;
 	
 }
-
 #portafolio{ 
 	 width: 120vh;
 	 height: 80vh;
@@ -78,6 +77,7 @@ main{
 		color: black;
 	}
 }
+
 ul{
 	list-style-type: none;
 	text-align: center;
@@ -131,8 +131,8 @@ small{
 //responsive------------------------------------------------------------
 @media screen and(max-width:600px){
 	main{
-		width: 52vh;
-		height: 52vh;
+		width: 44vh;
+		height: 42vh;
 		font-size: 1rem;
 	}
 	
@@ -162,19 +162,18 @@ small{
 			}
 			a{color: white;}
 	}
-	// //footer and quote
-	
-	// #contact {
-	// 	z-index: 1000;
-	// 	position: absolute;
-	// 	text-align: center;
-	// 	text-justify:inter-word;
-	// 	width: auto;
-	// 	bottom: 1vh;
-	// }
-	// small{
-	// 	display: none;
-	// }
-	
 
+	button {
+		padding: 5px;
+		font-size: 1rem;
+	}
+
+
+	.Sites{
+		width: 50vh;
+		height: 50vh;
+		a{
+			line-height: 25px;
+		}
+	}
 }

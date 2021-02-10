@@ -44,7 +44,7 @@ function responsiviti(){
  if(x.matches){
      console.log("responsive biatch");
      document.addEventListener('click',function(event){
-         if (event.target.id !== 'project')
+         if (event.target.id !== 'experiment')
              return;
              document.getElementById('container').innerHTML = Not4u();
              document.getElementById('ui').style.bottom= "20vh";
