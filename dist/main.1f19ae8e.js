@@ -46039,7 +46039,7 @@ exports.MapControls = MapControls;
 MapControls.prototype = Object.create(_threeModule.EventDispatcher.prototype);
 MapControls.prototype.constructor = MapControls;
 },{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"assets/glsl/fragment.glsl":[function(require,module,exports) {
-module.exports = " precision highp float;\n#define GLSLIFY 1\nuniform float u_time;\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nfloat random (in vec2 st) {\n    return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))\n                 * 43758.5453123);\n}\n\nvoid main() {\n\n  //float test = vUv.y +cos(u_time);\n\n  //vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n \n\n // gl_FragColor = vec4(vec3(color),0.81989);\n gl_FragColor =vec4(vec3(color),1);\n}";
+module.exports = "precision highp float;\n#define GLSLIFY 1\n#define PI 3.1415926\n#define TWO_PI PI*2.\n\nuniform float u_time;\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nfloat random (in vec2 st) {\n    return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))\n                 * 43758.5453123);\n}\n\nvoid main() {\n\n  vec2 uv = vUv * 2 -1;\n  //float test = vUv.y +cos(u_time);\n\n  //vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n \n\n // gl_FragColor = vec4(vec3(color),0.81989);\n gl_FragColor =vec4(vec3(color),1);\n}";
 },{}],"assets/glsl/vertex.glsl":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec3 vUv; \n\nvoid main() {\n  vUv = position; \n\n  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n  gl_Position = projectionMatrix * modelViewPosition; \n}\n";
 },{}],"js/stage.js":[function(require,module,exports) {
@@ -46062,102 +46062,136 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 //shaders
-//check online
 console.log("wintermute loaded");
-var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
-var jump = ['A', 'B', 'C', 'D'];
-var time = new THREE.Clock();
+var renderer, scene, camera, cubes, particle;
 var target = new THREE.Vector2();
-var zpos = 20; //setup three 
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2(); //--------------------------------------------------------
 
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = zpos;
-camera.minDistance = 0.8;
-camera.maxDistance = 50;
-scene.fog = new THREE.Fog(scene.background, 1, 57);
-var renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  alpha: true
-});
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.debug.checkShaderErrors = true; // event resize---------------------------------------------
+function init() {
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+  });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.debug.checkShaderErrors = true;
+  document.body.appendChild(renderer.domElement);
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 20;
+  camera.minDistance = 0.8;
+  camera.maxDistance = 50;
+  scene.fog = new THREE.Fog(scene.background, 1, 57);
+  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement);
+  createParticle(); //createCubes();
+} //--------------------------------------------------------
+
+
+function createCubes() {
+  cubes = new THREE.Object3D();
+  var geometry = new THREE.BoxGeometry(2, 2, 2);
+  var material = new THREE.MeshPhongMaterial({
+    color: 0xfffff,
+    shading: THREE.FlatShading
+  }); //     const material = new THREE.ShaderMaterial({
+  //     uniforms:{
+  //       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+  //       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+  //       u_time:{type: 'f',value: 0},
+  //     },
+  //     vertexShader:`
+  //     varying vec2 vUv;
+  //     void main() {
+  // 			vUv = uv;
+  // 			gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+  //     }
+  //     `,
+  //     fragmentShader:`
+  //     #define PI 3.1415926
+  //     #define TWO_PI PI*2.
+  //     uniform vec3 color1;
+  //     uniform vec3 color2;
+  //     varying vec2 vUv;
+  //     void main() {
+  //       vec2 uv = vUv * 7. - 1.;
+  //       float a = atan(uv.x,uv.y)+PI;
+  //       float r = TWO_PI/2.;
+  //       float d = cos(floor(1.15+a/r)*r-a)*length(uv);
+  //       gl_FragColor = vec4(mix(color1, color2, d), 1.0);
+  //     }
+  //     `,
+  //   });
+
+  for (var i = 0; i < 250; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
+    mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
+    mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+    cubes.add(mesh);
+  }
+
+  scene.add(cubes);
+} //--------------------------------------------------------
+//--------------------------------------------------------
+
+
+function createParticle() {
+  particle = new THREE.Object3D();
+  var geometry = new THREE.TetrahedronGeometry(3, 1);
+  var material = new THREE.MeshPhongMaterial({
+    color: 0xfffff,
+    shading: THREE.FlatShading
+  });
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar(10 + Math.random() * 700);
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle.add(mesh);
+  }
+
+  scene.add(particle);
+} //--------------------------------------------------------
+//add Element 
+
+
+function addElements(item) {
+  console.log("add"); // item = particle;
+
+  if (item == particle) {
+    createParticle();
+  } else {
+    createParticle();
+  }
+} //--------------------------------------------------------
+//remove obj
+
+
+function removeElement(item) {
+  item = particle;
+  console.log("remove");
+  scene.remove(item);
+} //--------------------------------------------------------
+// event resize
+
 
 window.addEventListener('resize', function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-}); //end ---------------------------------------------------------
-//elements and  lights -----------------------------------------
-//lights
+}); //--------------------------------------------------------
 
-var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.915);
-hemiLight.color.setHSL(182, 100, 20);
-hemiLight.groundColor.setHSL(0.000, 0, 0.015);
-hemiLight.position.set(0.005, 0.60, 100);
-scene.add(hemiLight); //Shader staff
-
-var materialshader = new THREE.ShaderMaterial({
-  uniforms: {
-    colorB: {
-      type: 'vec3',
-      value: new THREE.Color(0xFFFFFF)
-    },
-    colorA: {
-      type: 'vec3',
-      value: new THREE.Color(0xD6F9FB)
-    },
-    u_time: {
-      type: 'f',
-      value: 0
-    }
-  },
-  vertexShader: _vertex.default,
-  fragmentShader: _fragment.default
-}); //mouse staff
-
-var raycaster = new THREE.Raycaster();
-var mouse = new THREE.Vector2();
-var geometry = new THREE.BoxGeometry(2, 2, 2);
-var mat = new THREE.MeshPhongMaterial({
-  color: 0x000000,
-  specular: 0x095F4FF,
-  shininess: 80,
-  depthTest: true,
-  depthWrite: true,
-  emissive: 0x00000
-});
-var meshS = -100;
-
-for (var i = 0; i < 250; i++) {
-  var mesh = new THREE.Mesh(geometry, materialshader);
-  mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
-  mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-  mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
-  mesh.material.color = Math.random() - colors;
-  scene.add(mesh);
-  meshS += 15;
-} //end==========================================
-//Rnder Function
-
-
-document.body.appendChild(renderer.domElement);
-var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //Render--------
-
-var render = function render() {
+function render() {
   target.x = (1 - mouse.x) * 0.12;
   target.y = (1 - mouse.y) * 0.12;
   camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
   camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
   requestAnimationFrame(render);
-  renderer.render(scene, camera); //uniforms.u_time.value =time;
-}; //interaction  function----------------------------------------------
+  renderer.render(scene, camera);
+} //--------------------------------------------------------
 
-
-function colorRand(colors) {
-  return colors[Math.floor(Math.random() * colors.length)];
-}
 
 function onMouseMove(event) {
   event.preventDefault();
@@ -46173,40 +46207,62 @@ function onMouseMove(event) {
       ease: Expo.easeOut
     });
   }
-}
+} //--------------------------------------------------------
+
 
 function postionCam(jump) {
   return jump[Math.floor(Math.random() * jump.length)];
 }
 
+var jump = ['A', 'B', 'C', 'D']; //--------------------------------------------------------
+
 function onMouseClick(event) {
   postionCam(jump);
   var ans = postionCam(jump);
-  var change = colorRand(colors); //console.log(change);
 
   switch (ans) {
     case 'A':
-      camera.rotation.x += 90;
+      camera.rotation.x += 90; // addElements(particle);
+      // removeElement(particle)
+
       break;
 
     case 'B':
-      camera.rotation.y += 80;
+      camera.rotation.y += 80; // addElements(cubes)
+      // removeElement(particle)
+
       break;
 
     case 'C':
-      camera.rotation.z += 10;
+      camera.rotation.z += 10; // removeElement(cubes)
+      // removeElement(particle)
+
       break;
 
     case 'D':
-      camera.rotation.z += 15;
+      camera.rotation.z += 15; // removeElement(cubes)
+      // removeElement(particle)
+
       break;
   }
-} //everything executes
+} //--------------------------------------------------------
 
 
-window.addEventListener('mousemove', onMouseMove);
-window.addEventListener('click', onMouseClick);
+init();
 render();
+window.addEventListener('mousemove', onMouseMove);
+window.addEventListener('click', onMouseClick); //--------------------------------------------------------
+//noise code
+//Shader staff
+// const materialshader = new THREE.ShaderMaterial({
+//     uniforms:{
+//       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+//       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+//       u_time:{type: 'f',value: 0},
+//     },
+//     vertexShader:vs,
+//     fragmentShader:fs
+//   });
 },{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
 
@@ -46302,7 +46358,7 @@ exports.default = _default;
 
 require("./style/main.scss");
 
-var _stage = require("./js/stage");
+var _stage = _interopRequireDefault(require("./js/stage"));
 
 var _Nav = _interopRequireDefault(require("./js/interface/Nav"));
 
@@ -46341,7 +46397,7 @@ function responsiviti() {
   var x = window.matchMedia("(max-width: 700px)");
 
   if (x.matches) {
-    console.log("responsive biatch");
+    //console.log("responsive biatch");
     document.addEventListener('click', function (event) {
       if (event.target.id !== 'experiment') return; //document.getElementById('container').innerHTML = Not4u();
 
@@ -46358,8 +46414,18 @@ var app = function app() {
   responsiviti();
 };
 
+var sayHello = function sayHello() {
+  if (window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+    var args = ['\n %c -created by cyrstem \n', 'border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;'];
+    window.console.log.apply(console, args);
+  } else if (window.console) {
+    window.console.log('-created by cyrstem  -');
+  }
+};
+
 window.onload = function (event) {
   app();
+  sayHello();
 };
 },{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/pages/Experiments":"js/pages/Experiments.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -46389,7 +46455,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34261" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41819" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

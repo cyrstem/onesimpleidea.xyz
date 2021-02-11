@@ -1,4 +1,7 @@
- precision highp float;
+precision highp float;
+#define PI 3.1415926
+#define TWO_PI PI*2.
+
 uniform float u_time;
 uniform vec3 colorA; 
 uniform vec3 colorB; 
@@ -15,6 +18,7 @@ float random (in vec2 st) {
 
 void main() {
 
+  vec2 uv = vUv * 2 -1;
   //float test = vUv.y +cos(u_time);
 
   //vec2 st= gl_FragColor.xy/vUv.xy;
