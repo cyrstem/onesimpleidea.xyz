@@ -33,8 +33,8 @@ function init (){
 
 
    
-    createParticle();
-    //createCubes();
+    //createParticle();
+    createCubes();
    
 }
 //--------------------------------------------------------
