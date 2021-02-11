@@ -46039,7 +46039,7 @@ exports.MapControls = MapControls;
 MapControls.prototype = Object.create(_threeModule.EventDispatcher.prototype);
 MapControls.prototype.constructor = MapControls;
 },{"../../../build/three.module.js":"../node_modules/three/build/three.module.js"}],"assets/glsl/fragment.glsl":[function(require,module,exports) {
-module.exports = " precision highp float;\n#define GLSLIFY 1\nuniform float u_time;\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nfloat random (in vec2 st) {\n    return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))\n                 * 43758.5453123);\n}\n\nvoid main() {\n\n  //float test = vUv.y +cos(u_time);\n\n  //vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n \n\n // gl_FragColor = vec4(vec3(color),0.81989);\n gl_FragColor =vec4(vec3(color),1);\n}";
+module.exports = "precision highp float;\n#define GLSLIFY 1\n#define PI 3.1415926\n#define TWO_PI PI*2.\n\nuniform float u_time;\nuniform vec3 colorA; \nuniform vec3 colorB; \nvarying vec3 vUv;\n\nfloat random (in vec2 st) {\n    return fract(sin(dot(st.xy,\n                         vec2(12.9898,78.233)))\n                 * 43758.5453123);\n}\n\nvoid main() {\n\n  vec2 uv = vUv * 2 -1;\n  //float test = vUv.y +cos(u_time);\n\n  //vec2 st= gl_FragColor.xy/vUv.xy;\n\n  vec3 color = mix(colorA,colorB,vUv.y);\n \n\n // gl_FragColor = vec4(vec3(color),0.81989);\n gl_FragColor =vec4(vec3(color),1);\n}";
 },{}],"assets/glsl/vertex.glsl":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\nvarying vec3 vUv; \n\nvoid main() {\n  vUv = position; \n\n  vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);\n  gl_Position = projectionMatrix * modelViewPosition; \n}\n";
 },{}],"js/stage.js":[function(require,module,exports) {
@@ -46094,7 +46094,34 @@ function createCubes() {
   var material = new THREE.MeshPhongMaterial({
     color: 0xfffff,
     shading: THREE.FlatShading
-  });
+  }); //     const material = new THREE.ShaderMaterial({
+  //     uniforms:{
+  //       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+  //       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+  //       u_time:{type: 'f',value: 0},
+  //     },
+  //     vertexShader:`
+  //     varying vec2 vUv;
+  //     void main() {
+  // 			vUv = uv;
+  // 			gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+  //     }
+  //     `,
+  //     fragmentShader:`
+  //     #define PI 3.1415926
+  //     #define TWO_PI PI*2.
+  //     uniform vec3 color1;
+  //     uniform vec3 color2;
+  //     varying vec2 vUv;
+  //     void main() {
+  //       vec2 uv = vUv * 7. - 1.;
+  //       float a = atan(uv.x,uv.y)+PI;
+  //       float r = TWO_PI/2.;
+  //       float d = cos(floor(1.15+a/r)*r-a)*length(uv);
+  //       gl_FragColor = vec4(mix(color1, color2, d), 1.0);
+  //     }
+  //     `,
+  //   });
 
   for (var i = 0; i < 250; i++) {
     var mesh = new THREE.Mesh(geometry, material);
@@ -46131,9 +46158,13 @@ function createParticle() {
 
 
 function addElements(item) {
-  console.log("add");
-  item = particle;
-  createParticle();
+  console.log("add"); // item = particle;
+
+  if (item == particle) {
+    createParticle();
+  } else {
+    createParticle();
+  }
 } //--------------------------------------------------------
 //remove obj
 
@@ -46191,21 +46222,27 @@ function onMouseClick(event) {
 
   switch (ans) {
     case 'A':
-      camera.rotation.x += 90;
-      createCubes();
+      camera.rotation.x += 90; // addElements(particle);
+      // removeElement(particle)
+
       break;
 
     case 'B':
-      camera.rotation.y += 80;
-      removeElement();
+      camera.rotation.y += 80; // addElements(cubes)
+      // removeElement(particle)
+
       break;
 
     case 'C':
-      camera.rotation.z += 10;
+      camera.rotation.z += 10; // removeElement(cubes)
+      // removeElement(particle)
+
       break;
 
     case 'D':
-      camera.rotation.z += 15;
+      camera.rotation.z += 15; // removeElement(cubes)
+      // removeElement(particle)
+
       break;
   }
 } //--------------------------------------------------------
@@ -46214,7 +46251,18 @@ function onMouseClick(event) {
 init();
 render();
 window.addEventListener('mousemove', onMouseMove);
-window.addEventListener('click', onMouseClick);
+window.addEventListener('click', onMouseClick); //--------------------------------------------------------
+//noise code
+//Shader staff
+// const materialshader = new THREE.ShaderMaterial({
+//     uniforms:{
+//       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+//       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+//       u_time:{type: 'f',value: 0},
+//     },
+//     vertexShader:vs,
+//     fragmentShader:fs
+//   });
 },{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
 
@@ -46349,7 +46397,7 @@ function responsiviti() {
   var x = window.matchMedia("(max-width: 700px)");
 
   if (x.matches) {
-    console.log("responsive biatch");
+    //console.log("responsive biatch");
     document.addEventListener('click', function (event) {
       if (event.target.id !== 'experiment') return; //document.getElementById('container').innerHTML = Not4u();
 
@@ -46366,8 +46414,18 @@ var app = function app() {
   responsiviti();
 };
 
+var sayHello = function sayHello() {
+  if (window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
+    var args = ['\n %c -created by cyrstem \n', 'border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;'];
+    window.console.log.apply(console, args);
+  } else if (window.console) {
+    window.console.log('-created by cyrstem  -');
+  }
+};
+
 window.onload = function (event) {
   app();
+  sayHello();
 };
 },{"./style/main.scss":"style/main.scss","./js/stage":"js/stage.js","./js/interface/Nav":"js/interface/Nav.js","./js/interface/Contact":"js/interface/Contact.js","./js/pages/Home":"js/pages/Home.js","./js/pages/Portafolio":"js/pages/Portafolio.js","./js/pages/Not4u":"js/pages/Not4u.js","./js/pages/Experiments":"js/pages/Experiments.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -46397,7 +46455,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42427" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41819" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

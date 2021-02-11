@@ -30,7 +30,9 @@ function init (){
     scene.fog = new THREE.Fog( scene.background, 1, 57);
     let controls = new OrbitControls (camera,renderer.domElement);
   
-    
+
+
+   
     createParticle();
     //createCubes();
    
@@ -44,6 +46,44 @@ function createCubes(){
         color:0xfffff,
         shading: THREE.FlatShading
     });
+
+//     const material = new THREE.ShaderMaterial({
+//     uniforms:{
+//       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+//       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+//       u_time:{type: 'f',value: 0},
+//     },
+//     vertexShader:`
+//     varying vec2 vUv;
+
+//     void main() {
+// 			vUv = uv;
+// 			gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+//     }
+//     `,
+//     fragmentShader:`
+//     #define PI 3.1415926
+//     #define TWO_PI PI*2.
+    	
+//     uniform vec3 color1;
+//     uniform vec3 color2;
+  
+//     varying vec2 vUv;
+    
+//     void main() {
+      
+//       vec2 uv = vUv * 7. - 1.;
+      
+//       float a = atan(uv.x,uv.y)+PI;
+//       float r = TWO_PI/2.;
+//       float d = cos(floor(1.15+a/r)*r-a)*length(uv);
+    
+      
+//       gl_FragColor = vec4(mix(color1, color2, d), 1.0);
+//     }
+//     `,
+    
+//   });
 
     for (var i = 0; i < 250; i++) {
         var mesh = new THREE.Mesh(geometry, material);
@@ -80,8 +120,13 @@ function createParticle(){
 //add Element 
 function addElements(item){
     console.log("add");
-    item = particle;
-    createParticle();
+    // item = particle;
+    if(item == particle){
+        createParticle();
+    }
+    else{
+        createParticle();
+    }
 }
 //--------------------------------------------------------
 //remove obj
@@ -137,31 +182,36 @@ function postionCam(jump){
     return jump[Math.floor(Math.random() * jump.length)];
    
 }
+
 let jump = ['A','B','C','D'];
 //--------------------------------------------------------
 function onMouseClick(event) {
-
     postionCam(jump);
     const ans = postionCam(jump);
         switch (ans) {
             case 'A':
                     camera.rotation.x +=90;
-                    createCubes();
-                    
+                    // addElements(particle);
+                    // removeElement(particle)
                 break;
 
             case 'B':
                     camera.rotation.y +=80;
-                    removeElement();
+                    // addElements(cubes)
+                    // removeElement(particle)
                     
                 break;
 
-        case 'C':
+            case 'C':
                     camera.rotation.z +=10;
+                    // removeElement(cubes)
+                    // removeElement(particle)
                     
                 break;
-        case 'D':
+            case 'D':
                     camera.rotation.z +=15;
+                    // removeElement(cubes)
+                    // removeElement(particle)
                     
                 break;
             }
@@ -173,4 +223,17 @@ function onMouseClick(event) {
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('click', onMouseClick);
 
-   
+   //--------------------------------------------------------
+   //noise code
+
+//Shader staff
+// const materialshader = new THREE.ShaderMaterial({
+//     uniforms:{
+//       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
+//       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
+//       u_time:{type: 'f',value: 0},
+//     },
+//     vertexShader:vs,
+//     fragmentShader:fs
+    
+//   });
