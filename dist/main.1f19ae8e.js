@@ -46062,102 +46062,105 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 //shaders
-//check online
 console.log("wintermute loaded");
-var colors = [0x141e30, 0x243b55, 0xffffff, 0x4F5B66, 0x0CE5DB, 0x00000];
-var jump = ['A', 'B', 'C', 'D'];
-var time = new THREE.Clock();
+var renderer, scene, camera, cubes, particle;
 var target = new THREE.Vector2();
-var zpos = 20; //setup three 
+var raycaster = new THREE.Raycaster();
+var mouse = new THREE.Vector2(); //--------------------------------------------------------
 
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-camera.position.z = zpos;
-camera.minDistance = 0.8;
-camera.maxDistance = 50;
-scene.fog = new THREE.Fog(scene.background, 1, 57);
-var renderer = new THREE.WebGLRenderer({
-  antialias: true,
-  alpha: true
-});
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.debug.checkShaderErrors = true; // event resize---------------------------------------------
+function init() {
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+  });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.debug.checkShaderErrors = true;
+  document.body.appendChild(renderer.domElement);
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.z = 20;
+  camera.minDistance = 0.8;
+  camera.maxDistance = 50;
+  scene.fog = new THREE.Fog(scene.background, 1, 57);
+  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement);
+  createParticle(); //createCubes();
+} //--------------------------------------------------------
+
+
+function createCubes() {
+  cubes = new THREE.Object3D();
+  var geometry = new THREE.BoxGeometry(2, 2, 2);
+  var material = new THREE.MeshPhongMaterial({
+    color: 0xfffff,
+    shading: THREE.FlatShading
+  });
+
+  for (var i = 0; i < 250; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
+    mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
+    mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+    cubes.add(mesh);
+  }
+
+  scene.add(cubes);
+} //--------------------------------------------------------
+//--------------------------------------------------------
+
+
+function createParticle() {
+  particle = new THREE.Object3D();
+  var geometry = new THREE.TetrahedronGeometry(3, 1);
+  var material = new THREE.MeshPhongMaterial({
+    color: 0xfffff,
+    shading: THREE.FlatShading
+  });
+
+  for (var i = 0; i < 1000; i++) {
+    var mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
+    mesh.position.multiplyScalar(10 + Math.random() * 700);
+    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
+    particle.add(mesh);
+  }
+
+  scene.add(particle);
+} //--------------------------------------------------------
+//add Element 
+
+
+function addElements(item) {
+  console.log("add");
+  item = particle;
+  createParticle();
+} //--------------------------------------------------------
+//remove obj
+
+
+function removeElement(item) {
+  item = particle;
+  console.log("remove");
+  scene.remove(item);
+} //--------------------------------------------------------
+// event resize
+
 
 window.addEventListener('resize', function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-}); //end ---------------------------------------------------------
-//elements and  lights -----------------------------------------
-//lights
+}); //--------------------------------------------------------
 
-var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.915);
-hemiLight.color.setHSL(182, 100, 20);
-hemiLight.groundColor.setHSL(0.000, 0, 0.015);
-hemiLight.position.set(0.005, 0.60, 100);
-scene.add(hemiLight); //Shader staff
-
-var materialshader = new THREE.ShaderMaterial({
-  uniforms: {
-    colorB: {
-      type: 'vec3',
-      value: new THREE.Color(0xFFFFFF)
-    },
-    colorA: {
-      type: 'vec3',
-      value: new THREE.Color(0xD6F9FB)
-    },
-    u_time: {
-      type: 'f',
-      value: 0
-    }
-  },
-  vertexShader: _vertex.default,
-  fragmentShader: _fragment.default
-}); //mouse staff
-
-var raycaster = new THREE.Raycaster();
-var mouse = new THREE.Vector2();
-var geometry = new THREE.BoxGeometry(2, 2, 2);
-var mat = new THREE.MeshPhongMaterial({
-  color: 0x000000,
-  specular: 0x095F4FF,
-  shininess: 80,
-  depthTest: true,
-  depthWrite: true,
-  emissive: 0x00000
-});
-var meshS = -100;
-
-for (var i = 0; i < 250; i++) {
-  var mesh = new THREE.Mesh(geometry, materialshader);
-  mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
-  mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-  mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
-  mesh.material.color = Math.random() - colors;
-  scene.add(mesh);
-  meshS += 15;
-} //end==========================================
-//Rnder Function
-
-
-document.body.appendChild(renderer.domElement);
-var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //Render--------
-
-var render = function render() {
+function render() {
   target.x = (1 - mouse.x) * 0.12;
   target.y = (1 - mouse.y) * 0.12;
   camera.rotation.x += 0.05 * (target.y - camera.rotation.x);
   camera.rotation.y += 0.05 * (target.x - camera.rotation.y);
   requestAnimationFrame(render);
-  renderer.render(scene, camera); //uniforms.u_time.value =time;
-}; //interaction  function----------------------------------------------
+  renderer.render(scene, camera);
+} //--------------------------------------------------------
 
-
-function colorRand(colors) {
-  return colors[Math.floor(Math.random() * colors.length)];
-}
 
 function onMouseMove(event) {
   event.preventDefault();
@@ -46173,24 +46176,28 @@ function onMouseMove(event) {
       ease: Expo.easeOut
     });
   }
-}
+} //--------------------------------------------------------
+
 
 function postionCam(jump) {
   return jump[Math.floor(Math.random() * jump.length)];
 }
 
+var jump = ['A', 'B', 'C', 'D']; //--------------------------------------------------------
+
 function onMouseClick(event) {
   postionCam(jump);
   var ans = postionCam(jump);
-  var change = colorRand(colors); //console.log(change);
 
   switch (ans) {
     case 'A':
       camera.rotation.x += 90;
+      createCubes();
       break;
 
     case 'B':
       camera.rotation.y += 80;
+      removeElement();
       break;
 
     case 'C':
@@ -46201,12 +46208,13 @@ function onMouseClick(event) {
       camera.rotation.z += 15;
       break;
   }
-} //everything executes
+} //--------------------------------------------------------
 
 
+init();
+render();
 window.addEventListener('mousemove', onMouseMove);
 window.addEventListener('click', onMouseClick);
-render();
 },{"three":"../node_modules/three/build/three.module.js","gsap/TweenMax":"../node_modules/gsap/TweenMax.js","three/examples/jsm/controls/OrbitControls":"../node_modules/three/examples/jsm/controls/OrbitControls.js","/assets/glsl/fragment.glsl":"assets/glsl/fragment.glsl","/assets/glsl/vertex.glsl":"assets/glsl/vertex.glsl"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
 
@@ -46302,7 +46310,7 @@ exports.default = _default;
 
 require("./style/main.scss");
 
-var _stage = require("./js/stage");
+var _stage = _interopRequireDefault(require("./js/stage"));
 
 var _Nav = _interopRequireDefault(require("./js/interface/Nav"));
 
@@ -46389,7 +46397,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34261" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42427" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
