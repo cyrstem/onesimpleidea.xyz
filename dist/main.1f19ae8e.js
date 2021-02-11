@@ -46083,8 +46083,9 @@ function init() {
   camera.minDistance = 0.8;
   camera.maxDistance = 50;
   scene.fog = new THREE.Fog(scene.background, 1, 57);
-  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement);
-  createParticle(); //createCubes();
+  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //createParticle();
+
+  createCubes();
 } //--------------------------------------------------------
 
 
@@ -46455,7 +46456,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46843" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35887" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
