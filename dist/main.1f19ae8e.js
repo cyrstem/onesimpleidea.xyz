@@ -46318,7 +46318,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n      <div class =\"Sites\">\n         <h1>I worked as Front-End developer and Lead Designer for the following companies:  </h1>\n         <ul>\n            <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a></li>\n            <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer(2020-2021)</a></li>\n            <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2018-2020)</a></li>\n            <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n         </ul>\n      </div>\n    ";
+  var template = "\n      <div class =\"Sites\">\n         <h1>I worked as Front-End developer and Lead Designer for the following companies:  </h1>\n         <ul>\n            <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website(2021)</a></li>\n            <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a></li>\n            <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer(2020-2021)</a></li>\n            <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2018-2020)</a></li>\n            <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n         </ul>\n      </div>\n    ";
   return template;
 };
 
@@ -46456,7 +46456,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39921" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42351" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
