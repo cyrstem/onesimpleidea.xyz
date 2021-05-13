@@ -46083,8 +46083,7 @@ function init() {
   camera.minDistance = 0.8;
   camera.maxDistance = 50;
   scene.fog = new THREE.Fog(scene.background, 1, 57);
-  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement); //createParticle();
-
+  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement);
   createCubes();
 } //--------------------------------------------------------
 
@@ -46155,7 +46154,7 @@ function createParticle() {
 
   scene.add(particle);
 } //--------------------------------------------------------
-//add Element 
+//add Element
 
 
 function addElements(item) {
@@ -46178,7 +46177,7 @@ function removeElement(item) {
 // event resize
 
 
-window.addEventListener('resize', function () {
+window.addEventListener("resize", function () {
   renderer.setSize(window.innerWidth, window.innerHeight);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -46215,32 +46214,32 @@ function postionCam(jump) {
   return jump[Math.floor(Math.random() * jump.length)];
 }
 
-var jump = ['A', 'B', 'C', 'D']; //--------------------------------------------------------
+var jump = ["A", "B", "C", "D"]; //--------------------------------------------------------
 
 function onMouseClick(event) {
   postionCam(jump);
   var ans = postionCam(jump);
 
   switch (ans) {
-    case 'A':
+    case "A":
       camera.rotation.x += 90; // addElements(particle);
       // removeElement(particle)
 
       break;
 
-    case 'B':
+    case "B":
       camera.rotation.y += 80; // addElements(cubes)
       // removeElement(particle)
 
       break;
 
-    case 'C':
+    case "C":
       camera.rotation.z += 10; // removeElement(cubes)
       // removeElement(particle)
 
       break;
 
-    case 'D':
+    case "D":
       camera.rotation.z += 15; // removeElement(cubes)
       // removeElement(particle)
 
@@ -46251,8 +46250,8 @@ function onMouseClick(event) {
 
 init();
 render();
-window.addEventListener('mousemove', onMouseMove);
-window.addEventListener('click', onMouseClick); //--------------------------------------------------------
+window.addEventListener("mousemove", onMouseMove);
+window.addEventListener("click", onMouseClick); //--------------------------------------------------------
 //noise code
 //Shader staff
 // const materialshader = new THREE.ShaderMaterial({
@@ -46348,7 +46347,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Experiments = function Experiments() {
-  var template = "\n    <div>\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <h3>Noizu</h3>\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n            <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n      </section>\n\n      <section class=\"proj\">\n         <h3>Glitch</h3>\n         <a href=\"#\"> <img src= \"glitch.png\" width=\"500\"/></a>\n            <p>Small app that allows you to crete glitch art build with openframeworks</p>\n      </section>\n\n      <section class=\"proj\">\n         <h3>Rutas</h3>\n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n            <p>Web App currently in developement heres a preview </p>\n      </section>\n      <section class=\"proj\">\n         <h3>Yaesta Pacman</h3>\n         <a href=\"#\"> <img src= \"skull.png\" width=\"500\"/></a>\n            <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n      </section>\n    </div>\n    </div>\n    ";
+  var template = "\n    <div>\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <h3>Noizu</h3>\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n            <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>\n      </section>\n\n      <section class=\"proj\">\n         <h3>Glitch</h3>\n         <a href=\"#\"> <img src= \"glitch.png\" width=\"500\"/></a>\n            <p>Small app that allows you to crete glitch art build with openframeworks</p>\n      </section>\n\n      <section class=\"proj\">\n         <h3>Rutas</h3>\n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n            <p>Web App currently in developement heres a preview </p>\n      </section>\n      <section class=\"proj\">\n         <h3>Yaesta Pacman</h3>\n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"skull.png\" width=\"500\"/></a>\n            <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>\n      </section>\n    </div>\n    </div>\n    ";
   return template;
 };
 
@@ -46456,7 +46455,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41983" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40497" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

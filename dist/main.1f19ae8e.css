@@ -103,9 +103,6 @@ main {
   margin: 5px;
   text-align: justify;
   color: white;
-  border-color: white;
-  border-style: outset;
-  border-width: 0.1em;
   border-left-style: none;
   border-right-style: none;
   font-size: 1rem;
@@ -122,16 +119,18 @@ main {
   font-size: 1.5rem;
   overflow-x: scroll;
   display: grid;
-  column-gap: 1rem;
+  column-gap: 2rem;
   row-gap: 2rem;
   grid-template-columns: 1fr 1fr;
   overflow-x: hidden;
   transition: width 1s;
   animation: pulse 2s;
+  justify-items: center;
+  align-items: center;
 }
 
 .proj {
-  width: 50vh;
+  width: 90%;
   font-size: 1rem;
 }
 .proj h3 {
@@ -145,9 +144,6 @@ main {
   padding: 5px;
   margin: 5px;
   color: white;
-  border-color: white;
-  border-style: outset;
-  border-width: 0.1em;
   border-left-style: none;
   border-right-style: none;
   font-size: 1rem;

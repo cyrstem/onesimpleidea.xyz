@@ -1,118 +1,112 @@
-@import'_ui';
+@import "_ui";
 //variables to complete
-$tnormalcolor:black;
-//base  for all the site 
-canvas{
+$tnormalcolor: black;
+//base  for all the site
+canvas {
 	display: block;
-	z-index:0;
+	z-index: 0;
 }
 
-#container{
+#container {
 	position: absolute;
 	z-index: 1000;
 }
 
-main{
+main {
 	background: black;
 	width: 80vh;
 	height: 35vh;
 	padding: 5px;
 	margin: 5px;
 	text-align: justify;
-	color:white;
-	border-color:white;
-	border-style:outset;
-	border-width: 0.1em;
+	color: white;
+	// border-color:white;
+	// border-style:outset;
+	// border-width: 0.1em;
 	border-left-style: none;
 	border-right-style: none;
-	font-size:$mainSize;
-	word-wrap:break-all;
+	font-size: $mainSize;
+	word-wrap: break-all;
 	overflow-wrap: break-word;
-	overflow-y:scroll ;
+	overflow-y: scroll;
 	opacity: 0.7;
-	
 }
-#portafolio{ 
-	 width: 120vh;
-	 height: 80vh;
-	 margin-bottom: 2.5em;
-	 font-size:1.5rem;
-	 overflow-x:scroll;
-	 display: grid;
-	 column-gap: 1rem;
-	 row-gap: 2rem;
-	 grid-template-columns: 1fr 1fr;
-	 overflow-x: hidden;
-	 transition: width 1s;
-	 animation: pulse 2s ;
-	 
-	
+#portafolio {
+	width: 120vh;
+	height: 80vh;
+	margin-bottom: 2.5em;
+	font-size: 1.5rem;
+	overflow-x: scroll;
+	display: grid;
+	column-gap: 2rem;
+	row-gap: 2rem;
+	grid-template-columns: 1fr 1fr;
+	overflow-x: hidden;
+	transition: width 1s;
+	animation: pulse 2s;
+	justify-items: center;
+	align-items: center;
 }
 
 .proj {
-  width:50vh;
-  font-size: 1rem;
-  h3{ 
-	opacity: 0.7;
-  }
+	width: 90%;
+	font-size: 1rem;
+	h3 {
+		opacity: 0.7;
+	}
 }
 
-
-
-.Sites{
+.Sites {
 	background: black;
 	width: 96vh;
 	height: 30vh;
 	padding: 5px;
 	margin: 5px;
-	color:white;
-	border-color:white;
-	border-style:outset;
-	border-width: 0.1em;
+	color: white;
+	// border-color: white;
+	// border-style: outset;
+	// border-width: 0.1em;
 	border-left-style: none;
 	border-right-style: none;
-	font-size:$mainSize;
-	overflow-y:scroll ;
+	font-size: $mainSize;
+	overflow-y: scroll;
 	opacity: 0.7;
 	transition: width 3s;
-	animation: pulseD 2s ;
-	
-	a{
+	animation: pulseD 2s;
+
+	a {
 		color: white;
 		font-weight: bold;
-		border-bottom:1px solid white;
+		border-bottom: 1px solid white;
 	}
-	a:hover{
+	a:hover {
 		color: black;
 	}
 }
 
-ul{
+ul {
 	list-style-type: none;
 	text-align: center;
 	padding: 10px;
 }
-li{
-	margin:15px;
-
+li {
+	margin: 15px;
 }
 
-li:hover{
-	background:white;
-	color:black
+li:hover {
+	background: white;
+	color: black;
 }
 
-li::before{
-
-  position: absolute;
-  left    : 0;
-  bottom  : 0;
-  height  : 1px;
-  width   : 10%;  /* or 100px */
-  border-bottom:1px solid white;
-
+li::before {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 1px;
+	width: 10%; /* or 100px */
+	border-bottom: 1px solid white;
 }
-#ui{
+#ui {
 	z-index: 1000;
 	bottom: 10vh;
 	position: absolute;
@@ -126,32 +120,29 @@ li::before{
 	text-align: center;
 	bottom: 0vh;
 	margin-right: 4vh;
-	
-
 }
 
-small{
-   background-color: black;
-   color:white;
-   padding: 3px;
+small {
+	background-color: black;
+	color: white;
+	padding: 3px;
 }
-
 
 //responsive------------------------------------------------------------
-@media screen and(max-width:600px){
-	main{
+@media screen and(max-width:600px) {
+	main {
 		width: 44vh;
 		height: 42vh;
 		font-size: 1rem;
 	}
-	
-	#ui{	
+
+	#ui {
 		top: 2vh;
 		width: auto;
 		height: 100px;
 	}
 
-	#portafolio{
+	#portafolio {
 		//background-color: black;
 		width: 52vh;
 		height: 52vh;
@@ -161,18 +152,17 @@ small{
 		display: grid;
 		grid-template-columns: 1fr;
 		column-gap: 1.5rem;
-	 }
+	}
 
 	button {
 		padding: 5px;
 		font-size: 1rem;
 	}
 
-
-	.Sites{
+	.Sites {
 		width: 50vh;
 		height: 50vh;
-		a{
+		a {
 			line-height: 25px;
 		}
 	}
@@ -180,10 +170,8 @@ small{
 	.proj {
 		//width:50vh;
 		font-size: 1rem;
-		img{
+		img {
 			width: 100%;
 		}
-	  }
-   
-	
+	}
 }
