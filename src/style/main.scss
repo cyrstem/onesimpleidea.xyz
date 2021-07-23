@@ -1,16 +1,17 @@
-@import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
-$custom-font:'Inconsolata', monospace;
+@import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
+$custom-font: "Inconsolata", monospace;
 
-$mainColor:#303030;
-$secondColor:white;
-$mainSize:1.0rem;
+$mainColor: #303030;
+$secondColor: white;
+$mainSize: 1rem;
 $borderColor: #303030;
 
-@import'_layout';
+@import "_layout";
 
-html, body {
+html,
+body {
 	margin: 0;
-	padding: 0;	
+	padding: 0;
 	font-family: $custom-font;
 	color: white;
 	display: flex;
@@ -18,32 +19,32 @@ html, body {
 	justify-content: center;
 	overflow: hidden;
 	transition: width 3s;
-	background-image: linear-gradient(to top, #10161f, #191e26, #22272e, #2c3035, #36393d);
-	animation: pulse 6s ;
-	  
+	// background-image: linear-gradient(to top, #10161f, #191e26, #22272e, #2c3035, #36393d);
+	background-color: rgb(241, 241, 241);
+	animation: pulse 6s;
 }
 
-h1,h3{
+h1,
+h3 {
 	text-align: center;
-	font-size:1.3rem;
+	font-size: 1.3rem;
 	background: black;
 }
-p{
+p {
 	text-align: center;
 	background: black;
-
 }
 
 @keyframes pulse {
 	0% {
-	 opacity: 0;
+		opacity: 0;
 	}
 	100% {
-	 opacity: 1;
+		opacity: 1;
 	}
-  }
+}
 
-  @keyframes pulseD {
+@keyframes pulseD {
 	0% {
 		//transform: scale(0.0);
 		opacity: 0;
@@ -52,4 +53,4 @@ p{
 		//transform: scale(1.0);
 		opacity: 0.7;
 	}
-  }
+}

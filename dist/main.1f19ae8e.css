@@ -250,7 +250,8 @@ small {
     width: 100%;
   }
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: "Inconsolata", monospace;
@@ -260,11 +261,12 @@ html, body {
   justify-content: center;
   overflow: hidden;
   transition: width 3s;
-  background-image: linear-gradient(to top, #10161f, #191e26, #22272e, #2c3035, #36393d);
+  background-color: #f1f1f1;
   animation: pulse 6s;
 }
 
-h1, h3 {
+h1,
+h3 {
   text-align: center;
   font-size: 1.3rem;
   background: black;
