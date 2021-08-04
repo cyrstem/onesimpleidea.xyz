@@ -13,23 +13,19 @@ canvas {
 }
 
 main {
-	background: black;
+	background: white;
 	width: 80vh;
-	height: 35vh;
+	height: 25vh;
 	padding: 5px;
 	margin: 5px;
 	text-align: justify;
-	color: white;
-	// border-color:white;
-	// border-style:outset;
-	// border-width: 0.1em;
+	color: black;
 	border-left-style: none;
 	border-right-style: none;
 	font-size: $mainSize;
 	word-wrap: break-all;
 	overflow-wrap: break-word;
 	overflow-y: scroll;
-	opacity: 0.7;
 }
 #portafolio {
 	width: 120vh;
@@ -57,45 +53,43 @@ main {
 }
 
 .Sites {
-	background: black;
-	width: 96vh;
+	background: white;
+	width: 66vh;
 	height: 30vh;
 	padding: 5px;
 	margin: 5px;
-	color: white;
-	// border-color: white;
-	// border-style: outset;
-	// border-width: 0.1em;
+	color: black;
 	border-left-style: none;
 	border-right-style: none;
 	font-size: $mainSize;
 	overflow-y: scroll;
-	opacity: 0.7;
+
 	transition: width 3s;
 	animation: pulseD 2s;
 
 	a {
-		color: white;
+		color: black;
 		font-weight: bold;
 		border-bottom: 1px solid white;
 	}
 	a:hover {
-		color: black;
+		color: white;
 	}
 }
 
 ul {
 	list-style-type: none;
 	text-align: center;
-	padding: 10px;
+	padding: 1px;
 }
 li {
+	padding: 5px;
 	margin: 15px;
 }
 
 li:hover {
-	background: white;
-	color: black;
+	background: black;
+	color: white;
 }
 
 li::before {
@@ -104,7 +98,7 @@ li::before {
 	bottom: 0;
 	height: 1px;
 	width: 10%; /* or 100px */
-	border-bottom: 1px solid white;
+	// border-bottom: 1px solid white;
 }
 #ui {
 	z-index: 1000;

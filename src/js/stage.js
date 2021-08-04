@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import TweenMax from "gsap/TweenMax";
+import { gsap } from "gsap";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Mapping } from "three";
 //shaders
@@ -165,12 +165,17 @@ function onMouseMove(event) {
 	raycaster.setFromCamera(mouse, camera);
 
 	var intersects = raycaster.intersectObjects(scene.children, true);
+
 	for (var i = 0; i < intersects.length; i++) {
-		this.tl = new TimelineMax();
-		this.tl.to(intersects[i].object.position, 9.5, {
+		gsap.to(intersects[i].object.position, {
+			duration: 9.5,
 			x: 9,
-			ease: Expo.easeOut,
+			ease: "elastic(1,0.3",
 		});
+		// tl.to(intersects[i].object.position, 9.5, {
+		// 	x: 9,
+		// 	ease: Expo.easeOut,
+		// });
 	}
 }
 //--------------------------------------------------------
@@ -186,27 +191,20 @@ function onMouseClick(event) {
 	switch (ans) {
 		case "A":
 			camera.rotation.x += 90;
-			// addElements(particle);
-			// removeElement(particle)
+
 			break;
 
 		case "B":
 			camera.rotation.y += 80;
-			// addElements(cubes)
-			// removeElement(particle)
 
 			break;
 
 		case "C":
 			camera.rotation.z += 10;
-			// removeElement(cubes)
-			// removeElement(particle)
 
 			break;
 		case "D":
 			camera.rotation.z += 15;
-			// removeElement(cubes)
-			// removeElement(particle)
 
 			break;
 	}

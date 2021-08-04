@@ -1,8 +1,9 @@
 const Portafolio = () => {
 	const template = `
       <div class ="Sites">
-         <h1>I worked as Front-End developer and Lead Designer for the following :  </h1>
+         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>
          <ul>
+            <li><a href="https://myuniguru.com/" target="_blank">myuniguru.com = FullStack Developer(2021)</a></li>
             <li><a href="http://161.97.94.209//" target="_blank">can-can.org = Made some games for a band website(2021)</a></li>
             <li><a href="https://www.yaesta.com" target="_blank">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a></li>
             <li><a href="https://todo.legal" target="_blank">Todo.legal = Frontend Developer and Web Developer(2020-2021)</a></li>
