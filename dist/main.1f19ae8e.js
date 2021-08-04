@@ -41014,14 +41014,10 @@ function onMouseMove(event) {
 
   for (var i = 0; i < intersects.length; i++) {
     _gsap.gsap.to(intersects[i].object.position, {
-      duration: 9.5,
+      duration: 6.5,
       x: 9,
-      ease: "elastic(1,0.3"
-    }); // tl.to(intersects[i].object.position, 9.5, {
-    // 	x: 9,
-    // 	ease: Expo.easeOut,
-    // });
-
+      ease: "elastic(3,0.6"
+    });
   }
 } //--------------------------------------------------------
 
@@ -41263,7 +41259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39503" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40863" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

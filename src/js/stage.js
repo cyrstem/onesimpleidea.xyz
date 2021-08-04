@@ -168,14 +168,10 @@ function onMouseMove(event) {
 
 	for (var i = 0; i < intersects.length; i++) {
 		gsap.to(intersects[i].object.position, {
-			duration: 9.5,
+			duration: 6.5,
 			x: 9,
-			ease: "elastic(1,0.3",
+			ease: "elastic(3,0.6",
 		});
-		// tl.to(intersects[i].object.position, 9.5, {
-		// 	x: 9,
-		// 	ease: Expo.easeOut,
-		// });
 	}
 }
 //--------------------------------------------------------
