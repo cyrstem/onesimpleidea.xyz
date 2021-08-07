@@ -10,18 +10,18 @@ canvas {
 #container {
 	position: absolute;
 	z-index: 1000;
+	display: grid;
 }
 
 main {
-	background: white;
+	background: black;
 	width: 80vh;
-	height: 25vh;
+	height: 27vh;
 	padding: 5px;
 	margin: 5px;
 	text-align: justify;
-	color: black;
-	border-left-style: none;
-	border-right-style: none;
+	color: white;
+	opacity: 0.7;
 	font-size: $mainSize;
 	word-wrap: break-all;
 	overflow-wrap: break-word;

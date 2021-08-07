@@ -41179,51 +41179,51 @@ var _Experiments = _interopRequireDefault(require("./js/pages/Experiments"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //console.clear();
-document.addEventListener('click', function (event) {
-  if (event.target.id !== 'home') return;
-  document.getElementById('container').innerHTML = (0, _Home.default)();
+document.addEventListener("click", function (event) {
+  if (event.target.id !== "home") return;
+  document.getElementById("container").innerHTML = (0, _Home.default)();
 }, false);
-document.addEventListener('click', function (event) {
-  if (event.target.id !== 'experiment') return;
-  document.getElementById('container').innerHTML = (0, _Experiments.default)();
+document.addEventListener("click", function (event) {
+  if (event.target.id !== "experiment") return;
+  document.getElementById("container").innerHTML = (0, _Experiments.default)();
 }, false);
-document.addEventListener('click', function (event) {
-  if (event.target.id !== 'project') return;
-  document.getElementById('container').innerHTML = (0, _Portafolio.default)();
+document.addEventListener("click", function (event) {
+  if (event.target.id !== "project") return;
+  document.getElementById("container").innerHTML = (0, _Portafolio.default)();
 }, false);
-document.addEventListener('click', function (event) {
-  if (event.target.id !== 'about') return;
-  document.getElementById('container').innerHTML = (0, _Home.default)();
+document.addEventListener("click", function (event) {
+  if (event.target.id !== "about") return;
+  document.getElementById("container").innerHTML = (0, _Home.default)();
 }, false);
 
 function responsiviti() {
-  //responsive screens 
+  //responsive screens
   var x = window.matchMedia("(max-width: 700px)");
 
   if (x.matches) {
     //console.log("responsive biatch");
-    document.addEventListener('click', function (event) {
-      if (event.target.id !== 'experiment') return; //document.getElementById('container').innerHTML = Not4u();
-
-      document.getElementById('ui').style.bottom = "20vh";
+    document.addEventListener("click", function (event) {
+      if (event.target.id !== "experiment") return;
+      document.getElementById("container").innerHTML = (0, _Not4u.default)();
+      document.getElementById("ui").style.bottom = "20vh";
     });
   }
 }
 
 var app = function app() {
   //load UI and socials media  plus main content
-  document.getElementById('ui').innerHTML = (0, _Nav.default)();
-  document.getElementById('container').innerHTML = (0, _Home.default)();
-  document.getElementById('contact').innerHTML = (0, _Contact.default)();
+  document.getElementById("ui").innerHTML = (0, _Nav.default)();
+  document.getElementById("container").innerHTML = (0, _Home.default)();
+  document.getElementById("contact").innerHTML = (0, _Contact.default)();
   responsiviti();
 };
 
 var sayHello = function sayHello() {
-  if (window.navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-    var args = ['\n %c -created by cyrstem \n', 'border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;'];
+  if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
+    var args = ["\n %c -created by cyrstem \n", "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"];
     window.console.log.apply(console, args);
   } else if (window.console) {
-    window.console.log('-created by cyrstem  -');
+    window.console.log("-created by cyrstem  -");
   }
 };
 
@@ -41259,7 +41259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41539" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33425" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
