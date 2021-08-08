@@ -10,28 +10,38 @@ canvas {
 #container {
 	position: absolute;
 	z-index: 1000;
+	display: grid;
+	align-items: center;
+	grid-gap: 10px;
+	// grid-template-columns: 2px 2px 200px;
 }
 
 main {
-	background: white;
+	background: black;
 	width: 80vh;
-	height: 25vh;
+	height: 27vh;
 	padding: 5px;
 	margin: 5px;
 	text-align: justify;
-	color: black;
-	border-left-style: none;
-	border-right-style: none;
+	color: white;
+	opacity: 0.7;
 	font-size: $mainSize;
 	word-wrap: break-all;
 	overflow-wrap: break-word;
 	overflow-y: scroll;
 }
+section {
+	width: 90%;
+	font-size: 1rem;
+	h3 {
+		opacity: 0.7;
+	}
+}
 #portafolio {
 	width: 120vh;
 	height: 80vh;
 	margin-bottom: 2.5em;
-	font-size: 1.5rem;
+
 	overflow-x: scroll;
 	display: grid;
 	column-gap: 2rem;
@@ -45,11 +55,9 @@ main {
 }
 
 .proj {
-	width: 90%;
-	font-size: 1rem;
-	h3 {
-		opacity: 0.7;
-	}
+	//
+	transition: width 1s;
+	animation: pulse 2s;
 }
 
 .Sites {
@@ -63,7 +71,6 @@ main {
 	border-right-style: none;
 	font-size: $mainSize;
 	overflow-y: scroll;
-
 	transition: width 3s;
 	animation: pulseD 2s;
 
