@@ -94,6 +94,8 @@ canvas {
   position: absolute;
   z-index: 1000;
   display: grid;
+  align-items: center;
+  grid-gap: 10px;
 }
 
 main {
@@ -111,11 +113,18 @@ main {
   overflow-y: scroll;
 }
 
+section {
+  width: 90%;
+  font-size: 1rem;
+}
+section h3 {
+  opacity: 0.7;
+}
+
 #portafolio {
   width: 120vh;
   height: 80vh;
   margin-bottom: 2.5em;
-  font-size: 1.5rem;
   overflow-x: scroll;
   display: grid;
   column-gap: 2rem;
@@ -129,11 +138,8 @@ main {
 }
 
 .proj {
-  width: 90%;
-  font-size: 1rem;
-}
-.proj h3 {
-  opacity: 0.7;
+  transition: width 1s;
+  animation: pulse 2s;
 }
 
 .Sites {

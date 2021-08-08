@@ -3,14 +3,18 @@ const Experiments = () => {
     <div>
     <div id ="portafolio">
       <section class="proj">
-       
+         <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src= "insta-0.jpg" width="500"/></a>
+      </section>
+      <section class="proj">
+         <a href="https://www.instagram.com/p/B7mSmESgpNr/"> <img src= "insta-2.jpg" width="500"/></a>
+      </section>
+      <section class="proj">
          <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src= "noizu.png" width="500"/></a>
-          
       </section>
 
       <section class="proj">
        
-         <a href="#"> <img src= "glitch.png" width="500"/></a>
+         <a href="https://www.instagram.com/p/CRXhMmMnwe2/"> <img src= "glitch.png" width="500"/></a>
            
       </section>
 
@@ -24,6 +28,7 @@ const Experiments = () => {
          <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src= "skull.png" width="500"/></a>
            
       </section>
+
     </div>
     </div>
     `;

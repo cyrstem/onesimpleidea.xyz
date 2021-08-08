@@ -41106,7 +41106,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Home = function Home() {
-  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Designer</b> from Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a self-taught developer, fast learner and recently curious about <b>Machine Learning.</b></p>\n            <p>I have worked as a <b>Front-End</b> developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
+  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Designer</b> from Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> and recently curious about <b>Machine Learning.</b></p>\n            <p>I have worked as a <b>Front-End</b> developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
   return template;
 };
 
@@ -41151,7 +41151,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Experiments = function Experiments() {
-  var template = "\n    <div>\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n       \n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n          \n      </section>\n\n      <section class=\"proj\">\n       \n         <a href=\"#\"> <img src= \"glitch.png\" width=\"500\"/></a>\n           \n      </section>\n\n      <section class=\"proj\">\n        \n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n          \n      </section>\n      <section class=\"proj\">\n        \n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"skull.png\" width=\"500\"/></a>\n           \n      </section>\n    </div>\n    </div>\n    ";
+  var template = "\n    <div>\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/B7mSmESgpNr/\"> <img src= \"insta-2.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n      </section>\n\n      <section class=\"proj\">\n       \n         <a href=\"https://www.instagram.com/p/CRXhMmMnwe2/\"> <img src= \"glitch.png\" width=\"500\"/></a>\n           \n      </section>\n\n      <section class=\"proj\">\n        \n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n          \n      </section>\n      <section class=\"proj\">\n        \n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"skull.png\" width=\"500\"/></a>\n           \n      </section>\n\n    </div>\n    </div>\n    ";
   return template;
 };
 
@@ -41259,7 +41259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33425" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44177" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
