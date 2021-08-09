@@ -1,0 +1,299 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata&display=swap");
+*:focus {
+  outline: none;
+}
+
+a {
+  border-color: black;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: white;
+}
+
+#links a {
+  border-color: white;
+  padding: 5px;
+  text-decoration: none;
+  color: black;
+}
+#links a:hover {
+  border-bottom-style: solid;
+  border-width: thin;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  padding: 1rem 2rem;
+  margin: 0;
+  text-decoration: none;
+  background: black;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 250ms ease-in-out, transform 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+  background: black;
+  opacity: 0.8;
+}
+
+button:focus {
+  background: white;
+  color: black;
+}
+
+button:active {
+  transform: scale(0.99);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  scrollbar-width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  opacity: 1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #030303;
+}
+
+canvas {
+  display: block;
+  z-index: 0;
+}
+
+#container {
+  position: absolute;
+  z-index: 1000;
+  display: grid;
+  align-items: center;
+  grid-gap: 10px;
+}
+
+main {
+  background: black;
+  width: 80vh;
+  height: 27vh;
+  padding: 5px;
+  margin: 5px;
+  text-align: justify;
+  color: white;
+  opacity: 0.7;
+  font-size: 1rem;
+  word-wrap: break-all;
+  overflow-wrap: break-word;
+  overflow-y: scroll;
+}
+
+section {
+  width: 90%;
+  font-size: 1rem;
+}
+section h3 {
+  opacity: 0.7;
+}
+
+#portafolio {
+  width: 120vh;
+  height: 80vh;
+  margin-bottom: 2.5em;
+  overflow-x: scroll;
+  display: grid;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+  overflow-x: hidden;
+  transition: width 1s;
+  animation: pulse 2s;
+  justify-items: center;
+  align-items: center;
+}
+
+.proj {
+  transition: width 1s;
+  animation: pulse 2s;
+}
+
+.Sites {
+  background: white;
+  width: 66vh;
+  height: 30vh;
+  padding: 5px;
+  margin: 5px;
+  color: black;
+  border-left-style: none;
+  border-right-style: none;
+  font-size: 1rem;
+  overflow-y: scroll;
+  transition: width 3s;
+  animation: pulseD 2s;
+}
+.Sites a {
+  color: black;
+  font-weight: bold;
+  border-bottom: 1px solid white;
+}
+.Sites a:hover {
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  text-align: center;
+  padding: 1px;
+}
+
+li {
+  padding: 5px;
+  margin: 15px;
+}
+
+li:hover {
+  background: black;
+  color: white;
+}
+
+li::before {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px;
+  width: 10%;
+  /* or 100px */
+}
+
+#ui {
+  z-index: 1000;
+  bottom: 10vh;
+  position: absolute;
+}
+
+#contact {
+  z-index: 1000;
+  position: absolute;
+  text-align: center;
+  bottom: 0vh;
+  margin-right: 4vh;
+}
+
+small {
+  background-color: black;
+  color: white;
+  padding: 3px;
+}
+
+@media screen and (max-width: 600px) {
+  main {
+    width: 44vh;
+    height: 42vh;
+    font-size: 1rem;
+  }
+
+  #ui {
+    top: 2vh;
+    width: auto;
+    height: 100px;
+  }
+
+  #portafolio {
+    width: 52vh;
+    height: 52vh;
+    font-size: 2rem;
+    text-align: center;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1.5rem;
+  }
+
+  button {
+    padding: 5px;
+    font-size: 1rem;
+  }
+
+  .Sites {
+    width: 50vh;
+    height: 50vh;
+  }
+  .Sites a {
+    line-height: 25px;
+  }
+
+  .proj {
+    font-size: 1rem;
+  }
+  .proj img {
+    width: 100%;
+  }
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inconsolata", monospace;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: width 3s;
+  background-color: #f1f1f1;
+  animation: pulse 6s;
+}
+
+h1,
+h3 {
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+p {
+  text-align: center;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pulseD {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/*# sourceMappingURL=/main.1f19ae8e.css.map */
