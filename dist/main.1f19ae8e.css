@@ -153,8 +153,6 @@ section h3 {
   border-right-style: none;
   font-size: 1rem;
   overflow-y: scroll;
-  transition: width 3s;
-  animation: pulseD 2s;
 }
 .Sites a {
   color: black;
@@ -191,6 +189,7 @@ li::before {
 }
 
 #ui {
+  top: 2vh;
   z-index: 1000;
   bottom: 10vh;
   position: absolute;
@@ -225,7 +224,7 @@ small {
 
   #portafolio {
     width: 52vh;
-    height: 52vh;
+    height: 85vh;
     font-size: 2rem;
     text-align: center;
     overflow-y: scroll;

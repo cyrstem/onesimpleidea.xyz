@@ -50,7 +50,7 @@ function responsiviti() {
 		//console.log("responsive biatch");
 		document.addEventListener("click", function (event) {
 			if (event.target.id !== "experiment") return;
-			document.getElementById("container").innerHTML = Not4u();
+			document.getElementById("container").innerHTML = Experiments();
 			document.getElementById("ui").style.bottom = "20vh";
 		});
 	}

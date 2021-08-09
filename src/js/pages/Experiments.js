@@ -1,6 +1,5 @@
 const Experiments = () => {
 	const template = `
-    <div>
     <div id ="portafolio">
       <section class="proj">
          <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src= "insta-0.jpg" width="500"/></a>
@@ -30,7 +29,7 @@ const Experiments = () => {
       </section>
 
     </div>
-    </div>
+   
     `;
 	return template;
 };

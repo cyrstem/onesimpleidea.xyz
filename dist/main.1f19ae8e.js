@@ -41121,7 +41121,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n      <div class =\"Sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n            <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a></li>\n            <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website(2021)</a></li>\n            <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a></li>\n            <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer(2020-2021)</a></li>\n            <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2018-2020)</a></li>\n            <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n         </ul>\n      </div>\n    ";
+  var template = "\n      <div class =\"Sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n            <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a></li>\n            <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website</a></li>\n            <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a></li>\n            <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer</a></li>\n            <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2019-2020)</a></li>\n            <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n         </ul>\n      </div>\n    ";
   return template;
 };
 
@@ -41151,7 +41151,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Experiments = function Experiments() {
-  var template = "\n    <div>\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/B7mSmESgpNr/\"> <img src= \"insta-2.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n      </section>\n\n      <section class=\"proj\">\n       \n         <a href=\"https://www.instagram.com/p/CRXhMmMnwe2/\"> <img src= \"glitch.png\" width=\"500\"/></a>\n           \n      </section>\n\n      <section class=\"proj\">\n        \n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n          \n      </section>\n      <section class=\"proj\">\n        \n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"skull.png\" width=\"500\"/></a>\n           \n      </section>\n\n    </div>\n    </div>\n    ";
+  var template = "\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/B7mSmESgpNr/\"> <img src= \"insta-2.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n      </section>\n\n      <section class=\"proj\">\n       \n         <a href=\"https://www.instagram.com/p/CRXhMmMnwe2/\"> <img src= \"glitch.png\" width=\"500\"/></a>\n           \n      </section>\n\n      <section class=\"proj\">\n        \n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n          \n      </section>\n      <section class=\"proj\">\n        \n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"skull.png\" width=\"500\"/></a>\n           \n      </section>\n\n    </div>\n   \n    ";
   return template;
 };
 
@@ -41204,7 +41204,7 @@ function responsiviti() {
     //console.log("responsive biatch");
     document.addEventListener("click", function (event) {
       if (event.target.id !== "experiment") return;
-      document.getElementById("container").innerHTML = (0, _Not4u.default)();
+      document.getElementById("container").innerHTML = (0, _Experiments.default)();
       document.getElementById("ui").style.bottom = "20vh";
     });
   }
@@ -41259,7 +41259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36213" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36095" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
