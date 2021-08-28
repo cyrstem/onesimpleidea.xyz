@@ -1,28 +1,31 @@
-// here goes interface buttons  and links 
+// here goes interface buttons  and links
 //buttons and access
 
-*:focus {outline:none}
-a{
-	border-color:black;
+*:focus {
+	outline: none;
+}
+a {
+	border-color: black;
 	padding: 5px;
 	text-decoration: none;
-	color:black;
+	color: black;
 }
-a:hover{
-	color:white;
+a:hover {
+	color: white;
 }
 
-#links{
-	a{
-		border-color:white;
+#links {
+	a {
+		border-color: black;
 		padding: 5px;
 		text-decoration: none;
-		color:black;
+		filter: grayscale(10);
 	}
-	a:hover{
+	a:hover {
 		border-bottom-style: solid;
 		border-width: thin;
-	
+		filter: brightness(0.25);
+		//background-color: white;
 	}
 }
 
@@ -30,23 +33,22 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button;
+	-webkit-appearance: button;
 }
 button {
-    display: inline-block;
-    border: none;
-    padding: 1rem 2rem;
-    margin: 0;
-    text-decoration: none;
-    background:black;
-    color: #ffffff;
-    font-size: 1rem;
-    cursor: pointer;
-    text-align: center;
-    transition: background 250ms ease-in-out, 
-                transform 150ms ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
+	display: inline-block;
+	border: none;
+	padding: 1rem 2rem;
+	margin: 0;
+	text-decoration: none;
+	background: black;
+	color: #ffffff;
+	font-size: 1rem;
+	cursor: pointer;
+	text-align: center;
+	transition: background 250ms ease-in-out, transform 150ms ease;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 }
 
 button:hover,
@@ -61,29 +63,29 @@ button:focus {
 }
 
 button:active {
-    transform: scale(0.99);
+	transform: scale(0.99);
 }
 
-//scroll bar  settings on ly works on chrome 
+//scroll bar  settings on ly works on chrome
 
 /* width */
 ::-webkit-scrollbar {
 	width: 5px;
 	scrollbar-width: 5px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-	background: transparent; 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
 	opacity: 1;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-	background: rgb(0, 0, 0); 
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-	background: rgba($color: #030303, $alpha: 1.0);
-  }
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: rgb(0, 0, 0);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgba($color: #030303, $alpha: 1);
+}

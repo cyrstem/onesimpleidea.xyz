@@ -55,7 +55,6 @@ section {
 }
 
 .proj {
-	//
 	transition: width 1s;
 	animation: pulse 2s;
 }
@@ -71,8 +70,6 @@ section {
 	border-right-style: none;
 	font-size: $mainSize;
 	overflow-y: scroll;
-	transition: width 3s;
-	animation: pulseD 2s;
 
 	a {
 		color: black;
@@ -108,6 +105,7 @@ li::before {
 	// border-bottom: 1px solid white;
 }
 #ui {
+	top: 2vh;
 	z-index: 1000;
 	bottom: 10vh;
 	position: absolute;
@@ -144,9 +142,8 @@ small {
 	}
 
 	#portafolio {
-		//background-color: black;
 		width: 52vh;
-		height: 52vh;
+		height: 85vh;
 		font-size: 2rem;
 		text-align: center;
 		overflow-y: scroll;
@@ -169,7 +166,6 @@ small {
 	}
 
 	.proj {
-		//width:50vh;
 		font-size: 1rem;
 		img {
 			width: 100%;
