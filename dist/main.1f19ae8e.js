@@ -41151,7 +41151,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Experiments = function Experiments() {
-  var template = "\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/B7mSmESgpNr/\"> <img src= \"insta-2.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n      </section>\n\n      <section class=\"proj\">\n       \n         <a href=\"https://www.instagram.com/p/CRXhMmMnwe2/\"> <img src= \"glitch.png\" width=\"500\"/></a>\n           \n      </section>\n\n      <section class=\"proj\">\n        \n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n          \n      </section>\n      <section class=\"proj\">\n        \n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"skull.png\" width=\"500\"/></a>\n           \n      </section>\n\n    </div>\n   \n    ";
+  var template = "\n    <div id =\"portafolio\">\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://www.instagram.com/p/B7mSmESgpNr/\"> <img src= \"insta-2.jpg\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n         <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n      </section>\n      <section class=\"proj\">\n        \n         <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"insta-3.jpg\" width=\"500\"/></a>\n           \n      </section>\n      <section class=\"proj\">\n       \n         <a href=\"https://www.instagram.com/p/CRXhMmMnwe2/\"> <img src= \"glitch.png\" width=\"500\"/></a>\n           \n      </section>\n\n      <section class=\"proj\">\n        \n         <a href=\"https://rutas-ec.herokuapp.com/\" target=\"_blank\"> <img src= \"rutas.png\" width=\"500\"/></a>\n          \n      </section>\n      \n\n    </div>\n    ";
   return template;
 };
 
@@ -41259,7 +41259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36095" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38027" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

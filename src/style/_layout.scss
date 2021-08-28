@@ -55,7 +55,6 @@ section {
 }
 
 .proj {
-	//
 	transition: width 1s;
 	animation: pulse 2s;
 }
@@ -71,8 +70,6 @@ section {
 	border-right-style: none;
 	font-size: $mainSize;
 	overflow-y: scroll;
-	// transition: width 3s;
-	// animation: pulseD 2s;
 
 	a {
 		color: black;

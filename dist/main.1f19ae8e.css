@@ -15,14 +15,15 @@ a:hover {
 }
 
 #links a {
-  border-color: white;
+  border-color: black;
   padding: 5px;
   text-decoration: none;
-  color: black;
+  filter: grayscale(10);
 }
 #links a:hover {
   border-bottom-style: solid;
   border-width: thin;
+  filter: brightness(0.25);
 }
 
 button,
