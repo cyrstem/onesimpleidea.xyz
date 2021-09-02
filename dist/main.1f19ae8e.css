@@ -3,17 +3,6 @@
   outline: none;
 }
 
-a {
-  border-color: black;
-  padding: 5px;
-  text-decoration: none;
-  color: black;
-}
-
-a:hover {
-  color: white;
-}
-
 #links a {
   border-color: black;
   padding: 5px;
@@ -143,56 +132,35 @@ section h3 {
   animation: pulse 2s;
 }
 
-.Sites {
+.sites {
   background: white;
   width: 66vh;
   height: 30vh;
-  padding: 5px;
-  margin: 5px;
   color: black;
-  border-left-style: none;
-  border-right-style: none;
   font-size: 1rem;
-  overflow-y: scroll;
 }
-.Sites a {
+.sites ul {
+  list-style-type: none;
+  text-align: center;
+}
+.sites li {
+  padding: 13px;
+}
+.sites a {
   color: black;
+  padding: auto;
   font-weight: bold;
   border-bottom: 1px solid white;
 }
-.Sites a:hover {
+.sites a:hover {
   color: white;
-}
-
-ul {
-  list-style-type: none;
-  text-align: center;
-  padding: 1px;
-}
-
-li {
-  padding: 5px;
-  margin: 15px;
-}
-
-li:hover {
-  background: black;
-  color: white;
-}
-
-li::before {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 1px;
-  width: 10%;
-  /* or 100px */
+  background-color: black;
+  padding: 12px;
 }
 
 #ui {
   top: 2vh;
   z-index: 1000;
-  bottom: 10vh;
   position: absolute;
 }
 

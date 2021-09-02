@@ -58,56 +58,38 @@ section {
 	transition: width 1s;
 	animation: pulse 2s;
 }
-
-.Sites {
+.sites {
 	background: white;
 	width: 66vh;
 	height: 30vh;
-	padding: 5px;
-	margin: 5px;
 	color: black;
-	border-left-style: none;
-	border-right-style: none;
 	font-size: $mainSize;
-	overflow-y: scroll;
+	ul {
+		list-style-type: none;
+		text-align: center;
+	}
+	li {
+		padding: 13px;
+	}
 
 	a {
 		color: black;
+		padding: auto;
 		font-weight: bold;
 		border-bottom: 1px solid white;
 	}
 	a:hover {
 		color: white;
+		background-color: black;
+		padding: 12px;
 	}
 }
 
-ul {
-	list-style-type: none;
-	text-align: center;
-	padding: 1px;
-}
-li {
-	padding: 5px;
-	margin: 15px;
-}
-
-li:hover {
-	background: black;
-	color: white;
-}
-
-li::before {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	height: 1px;
-	width: 10%; /* or 100px */
-	// border-bottom: 1px solid white;
-}
 #ui {
 	top: 2vh;
+
 	z-index: 1000;
-	bottom: 10vh;
+
 	position: absolute;
 }
 

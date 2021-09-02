@@ -41121,7 +41121,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n      <div class =\"Sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n            <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a></li>\n            <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website</a></li>\n            <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a></li>\n            <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer</a></li>\n            <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2019-2020)</a></li>\n            <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n         </ul>\n      </div>\n    ";
+  var template = "\n      <div class =\"sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n           <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a>\n           </li>\n           <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website</a>\n           </li>\n           <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a>\n           </li>\n           <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer</a>\n\n           </li>\n           <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2019-2020)</a>\n           </li>\n           <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n\n         </ul>\n      </div>\n    ";
   return template;
 };
 
@@ -41259,7 +41259,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38027" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37055" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
