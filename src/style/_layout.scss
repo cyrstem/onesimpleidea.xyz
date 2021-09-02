@@ -64,6 +64,7 @@ section {
 	height: 30vh;
 	color: black;
 	font-size: $mainSize;
+	overflow-y: scroll;
 	ul {
 		list-style-type: none;
 		text-align: center;

@@ -138,6 +138,7 @@ section h3 {
   height: 30vh;
   color: black;
   font-size: 1rem;
+  overflow-y: scroll;
 }
 .sites ul {
   list-style-type: none;
