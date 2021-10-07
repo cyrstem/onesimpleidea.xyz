@@ -40946,46 +40946,6 @@ function createCubes() {
   scene.add(cubes);
 } //--------------------------------------------------------
 //--------------------------------------------------------
-
-
-function createParticle() {
-  particle = new THREE.Object3D();
-  var geometry = new THREE.TetrahedronGeometry(3, 1);
-  var material = new THREE.MeshPhongMaterial({
-    color: 0xfffff,
-    shading: THREE.FlatShading
-  });
-
-  for (var i = 0; i < 1000; i++) {
-    var mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize();
-    mesh.position.multiplyScalar(10 + Math.random() * 700);
-    mesh.rotation.set(Math.random() * 2, Math.random() * 2, Math.random() * 2);
-    particle.add(mesh);
-  }
-
-  scene.add(particle);
-} //--------------------------------------------------------
-//add Element
-
-
-function addElements(item) {
-  console.log("add"); // item = particle;
-
-  if (item == particle) {
-    createParticle();
-  } else {
-    createParticle();
-  }
-} //--------------------------------------------------------
-//remove obj
-
-
-function removeElement(item) {
-  item = particle;
-  console.log("remove");
-  scene.remove(item);
-} //--------------------------------------------------------
 // event resize
 
 
@@ -41259,7 +41219,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33169" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41453" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
