@@ -41066,7 +41066,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Home = function Home() {
-  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Designer</b> from Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> and recently curious about <b>Machine Learning.</b></p>\n            <p>I have worked as a <b>Front-End</b> developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
+  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Designer</b> from Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p> Currently working as a webGL developer at <a  class=\"ad\"href=\"activetheory.net\" target =\"_blank\"> Active Theory</a></p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> and recently curious about <b>Machine Learning.</b></p>\n            <p>I have worked as a <b>Front-End</b> developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
   return template;
 };
 
@@ -41081,7 +41081,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n      <div class =\"sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n           <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a>\n           </li>\n           <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website</a>\n           </li>\n           <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a>\n           </li>\n           <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer</a>\n\n           </li>\n           <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2019-2020)</a>\n           </li>\n           <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n\n         </ul>\n      </div>\n    ";
+  var template = "\n      <div class =\"sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n         <li><a href=\"https://activetheory.net/\" target=\"_blank\">Active Theory = WebGL Developer(2021)</a>\n         </li>\n           <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a>\n           </li>\n           <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website</a>\n           </li>\n           <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a>\n           </li>\n           <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer</a>\n\n           </li>\n           <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2019-2020)</a>\n           </li>\n           <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n\n         </ul>\n      </div>\n    ";
   return template;
 };
 
@@ -41219,7 +41219,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41453" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34699" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -88,10 +88,17 @@ canvas {
   grid-gap: 10px;
 }
 
+.ad {
+  background-color: white;
+  color: black;
+  text-decoration: none;
+  padding: 2px;
+}
+
 main {
   background: black;
   width: 80vh;
-  height: 27vh;
+  height: 29vh;
   padding: 5px;
   margin: 5px;
   text-align: justify;
