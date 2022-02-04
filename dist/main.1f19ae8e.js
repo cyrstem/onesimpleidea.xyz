@@ -41066,7 +41066,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Home = function Home() {
-  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Designer</b> from Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p> Currently working as a webGL developer at <a  class=\"ad\"href=\"activetheory.net\" target =\"_blank\"> Active Theory</a></p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> and recently curious about <b>Machine Learning.</b></p>\n            <p>I have worked as a <b>Front-End</b> developer for more than 5 years on different companies from E-commerce sites to private Industry</p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
+  var template = "\n        <main>\n            <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>FrontEnd Developer</b> from Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> and recently curious about <b>Machine Learning.</b></p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
   return template;
 };
 
@@ -41219,7 +41219,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34699" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33939" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

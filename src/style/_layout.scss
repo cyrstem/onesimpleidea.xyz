@@ -13,7 +13,6 @@ canvas {
 	display: grid;
 	align-items: center;
 	grid-gap: 10px;
-	// grid-template-columns: 2px 2px 200px;
 }
 .ad{
 	background-color: white;
@@ -24,7 +23,7 @@ canvas {
 main {
 	background: black;
 	width: 80vh;
-	height: 29vh;
+	height: auto;
 	padding: 5px;
 	margin: 5px;
 	text-align: justify;
