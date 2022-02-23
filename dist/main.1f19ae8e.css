@@ -28,8 +28,7 @@ button {
   padding: 1rem 2rem;
   margin: 0;
   text-decoration: none;
-  background: black;
-  color: #ffffff;
+  color: black;
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
@@ -40,17 +39,18 @@ button {
 
 button:hover,
 button:focus {
-  background: black;
+  text-decoration: underline;
   opacity: 0.8;
 }
 
 button:focus {
-  background: white;
+  text-decoration: underline;
   color: black;
 }
 
 button:active {
   transform: scale(0.99);
+  text-decoration: underline;
 }
 
 /* width */
@@ -88,7 +88,8 @@ canvas {
 }
 
 main {
-  text-align: left;
+  padding: 2.5px;
+  margin: 4.2px;
   color: black;
   font-size: 1.4rem;
 }
@@ -99,22 +100,6 @@ section {
 }
 section h3 {
   opacity: 0.7;
-}
-
-#portafolio {
-  width: 120vh;
-  height: 80vh;
-  margin-bottom: 2.5em;
-  overflow-x: scroll;
-  display: grid;
-  column-gap: 2rem;
-  row-gap: 2rem;
-  grid-template-columns: 1fr 1fr;
-  overflow-x: hidden;
-  transition: width 1s;
-  animation: pulse 2s;
-  justify-items: center;
-  align-items: center;
 }
 
 .proj {
@@ -231,12 +216,7 @@ h1 {
 }
 
 h3 {
-  text-align: center;
   font-size: 1.6rem;
-}
-
-p {
-  text-align: center;
 }
 
 @keyframes pulse {

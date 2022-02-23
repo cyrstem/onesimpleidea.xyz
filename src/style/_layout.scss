@@ -21,9 +21,11 @@ canvas {
 	padding: 2px;
 }
 main {
+	padding: 2.5px;
+	margin: 4.2px;
 	//background: black;
 	// width: 80vh;
-	text-align: left;
+	// text-align: left;
 
 	// padding: 5px;
 	// margin: 5px;
@@ -42,20 +44,20 @@ section {
 	}
 }
 #portafolio {
-	width: 120vh;
-	height: 80vh;
-	margin-bottom: 2.5em;
+	// width: 120vh;
+	// height: 80vh;
+	// margin-bottom: 2.5em;
 
-	overflow-x: scroll;
-	display: grid;
-	column-gap: 2rem;
-	row-gap: 2rem;
-	grid-template-columns: 1fr 1fr;
-	overflow-x: hidden;
-	transition: width 1s;
-	animation: pulse 2s;
-	justify-items: center;
-	align-items: center;
+	// overflow-x: scroll;
+	// display: grid;
+	// column-gap: 2rem;
+	// row-gap: 2rem;
+	// grid-template-columns: 1fr 1fr;
+	// overflow-x: hidden;
+	// transition: width 1s;
+	// animation: pulse 2s;
+	// justify-items: center;
+	// align-items: center;
 }
 
 .proj {
@@ -94,7 +96,6 @@ section {
 	top: 2vh;
 	right: 0%;
 	z-index: 1000;
-
 	position: absolute;
 }
 

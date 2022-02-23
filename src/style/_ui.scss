@@ -32,8 +32,8 @@ button {
 	padding: 1rem 2rem;
 	margin: 0;
 	text-decoration: none;
-	background: black;
-	color: #ffffff;
+	//background: black;
+	color: black;
 	font-size: 1rem;
 	cursor: pointer;
 	text-align: center;
@@ -44,17 +44,20 @@ button {
 
 button:hover,
 button:focus {
-	background: black;
+	//background: black;
+	text-decoration: underline;
 	opacity: 0.8;
 }
 
 button:focus {
-	background: white;
+	//background: white;
+	text-decoration: underline;
 	color: black;
 }
 
 button:active {
 	transform: scale(0.99);
+	text-decoration: underline;
 }
 
 //scroll bar  settings on ly works on chrome
