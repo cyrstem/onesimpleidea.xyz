@@ -14,12 +14,12 @@ canvas {
 	// align-items: center;
 	// grid-gap: 10px;
 }
-.ad{
-	background-color: white;
-	color: black;
-	text-decoration: none;
-	padding: 2px;
-}
+// .ad{
+// 	background-color: white;
+// 	color: black;
+// 	text-decoration: none;
+// 	padding: 2px;
+// }
 main {
 	padding: 2.5px;
 	margin: 4.2px;
@@ -65,30 +65,41 @@ section {
 	animation: pulse 2s;
 }
 .sites {
-	background: white;
-	width: 66vh;
-	height: 30vh;
-	color: black;
-	font-size: $mainSize;
-	overflow-y: scroll;
+	position: absolute;
+	width: 600px;
+	padding: 5px;
+	grid-column: 1/8;
+	grid-row: 2;
+	align-self: flex-end;
+	
 	ul {
-		list-style-type: none;
-		text-align: center;
-	}
-	li {
-		padding: 13px;
-	}
+	 	list-style-type: none;}
 
+	a{
+		display: flex;
+		text-decoration: none;
+	}
+	span{
+		&first-child{
+			// margin: 3px;
+			// padding: 2px;
+		}
+		&:nth-child(2) {
+			padding-left: 24px;
+			flex-grow: 1;
+					}
+		&.number {
+
+		}
+	}
 	a {
+		text-decoration: none;
 		color: black;
-		padding: auto;
-		font-weight: bold;
-		border-bottom: 1px solid white;
 	}
 	a:hover {
-		color: white;
-		background-color: black;
-		padding: 12px;
+		// color: white;
+		// background-color: black;
+		text-decoration: underline;
 	}
 }
 

@@ -243,7 +243,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Portafolio = function Portafolio() {
-  var template = "\n      <div class =\"sites\">\n         <p>I worked as <b>Front-End</b> developer and <b>Lead Designer</b> for the following :  </p>\n         <ul>\n         <li><a href=\"https://activetheory.net/\" target=\"_blank\">Active Theory = WebGL Developer(2021)</a>\n         </li>\n           <li><a href=\"https://myuniguru.com/\" target=\"_blank\">myuniguru.com = FullStack Developer(2021)</a>\n           </li>\n           <li><a href=\"http://161.97.94.209//\" target=\"_blank\">can-can.org = Made some games for a band website</a>\n           </li>\n           <li><a href=\"https://www.yaesta.com\" target=\"_blank\">YaEsta.com = Frontend Developer and Lead Designer (2016-2018)</a>\n           </li>\n           <li><a href=\"https://todo.legal\" target=\"_blank\">Todo.legal = Frontend Developer and Web Developer</a>\n\n           </li>\n           <li><a href=\"https://smartco.com.ec\" target=\"_blank\">Smartco = Frontend Developer and Unity Developer (2019-2020)</a>\n           </li>\n           <li><a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">Pachamama Alliance = Front-end Developer and Lead Designer (2010\u20132013)</a></li>\n\n         </ul>\n      </div>\n    ";
+  var template = "\n      <div class =\"sites\"> \n         <ul>\n         <li>\n          <a href=\"https://activetheory.net/\" target=\"_blank\">\n            <span>Active Theory</span> \n            <span>WebGL Developer</span>\n            <span>2021</span>\n          </a>\n         </li>\n         <li>\n            <a href=\"https://myuniguru.com/\" target=\"_blank\">\n              <span>My Uniguru</span>\n              <span>FullStack Developer</span>\n              <span class=\"number\">2020 - 2021</span>\n            </a>\n          </li>\n         \n          <li>\n            <a href=\"https://www.yaesta.com\" target=\"_blank\">\n              <span> YaEsta </span>\n              <span> Front-end Developer & Designer</span> \n              <span class=\"number\">2016 - 2018</span>\n            </a>\n          </li>\n          <li>\n            <a href=\"https://todo.legal\" target=\"_blank\">\n              <span>Todo legal</span> \n              <span>Front-end Developer & Web Designer</span>\n              <span class=\"number\">2020 - 2020</span>\n            </a>\n          </li>\n          <li>\n            <a href=\"https://smartco.com.ec\" target=\"_blank\"> \n              <span>Smartco </span>\n              <span> Front-end Developer & Unity Developer</span>\n              <span class=\"number\">2019 - 2020</span>\n            </a>\n          </li>\n          <li>\n            <a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">\n              <span> Pachamama Alliance </span>\n              <span> Front-end Developer</span>\n              <span class=\"number\">2010 \u2013 2013</span>\n            </a>\n          </li>\n         </ul>\n      </div>\n    ";
   return template;
 };
 
@@ -380,7 +380,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44241" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43875" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
