@@ -45,44 +45,6 @@ function createCubes() {
 		color: 0xfffff,
 		shading: THREE.FlatShading,
 	});
-
-	//     const material = new THREE.ShaderMaterial({
-	//     uniforms:{
-	//       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
-	//       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
-	//       u_time:{type: 'f',value: 0},
-	//     },
-	//     vertexShader:`
-	//     varying vec2 vUv;
-
-	//     void main() {
-	// 			vUv = uv;
-	// 			gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-	//     }
-	//     `,
-	//     fragmentShader:`
-	//     #define PI 3.1415926
-	//     #define TWO_PI PI*2.
-
-	//     uniform vec3 color1;
-	//     uniform vec3 color2;
-
-	//     varying vec2 vUv;
-
-	//     void main() {
-
-	//       vec2 uv = vUv * 7. - 1.;
-
-	//       float a = atan(uv.x,uv.y)+PI;
-	//       float r = TWO_PI/2.;
-	//       float d = cos(floor(1.15+a/r)*r-a)*length(uv);
-
-	//       gl_FragColor = vec4(mix(color1, color2, d), 1.0);
-	//     }
-	//     `,
-
-	//   });
-
 	for (var i = 0; i < 250; i++) {
 		var mesh = new THREE.Mesh(geometry, material);
 		mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
@@ -172,18 +134,3 @@ init();
 render();
 window.addEventListener("mousemove", onMouseMove);
 window.addEventListener("click", onMouseClick);
-
-//--------------------------------------------------------
-//noise code
-
-//Shader staff
-// const materialshader = new THREE.ShaderMaterial({
-//     uniforms:{
-//       colorB: {type:'vec3',value: new THREE.Color(0xFFFFFF)},
-//       colorA: {type:'vec3',value: new THREE.Color(0xD6F9FB)},
-//       u_time:{type: 'f',value: 0},
-//     },
-//     vertexShader:vs,
-//     fragmentShader:fs
-
-//   });

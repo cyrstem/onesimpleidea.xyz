@@ -1,6 +1,6 @@
 //console.clear();
 import "./style/main.scss";
-import init from "./js/stage";
+// import init from "./js/stage";
 import Navbar from "./js/interface/Nav";
 import Contact from "./js/interface/Contact";
 import Home from "./js/pages/Home";

@@ -8,11 +8,11 @@ canvas {
 }
 
 #container {
-	position: absolute;
-	z-index: 1000;
-	display: grid;
-	align-items: center;
-	grid-gap: 10px;
+	// position: absolute;
+	// z-index: 1000;
+	// display: grid;
+	// align-items: center;
+	// grid-gap: 10px;
 }
 .ad{
 	background-color: white;
@@ -21,18 +21,18 @@ canvas {
 	padding: 2px;
 }
 main {
-	background: black;
-	width: 80vh;
-	height: auto;
-	padding: 5px;
-	margin: 5px;
-	text-align: justify;
-	color: white;
-	opacity: 0.7;
-	font-size: $mainSize;
-	word-wrap: break-all;
-	overflow-wrap: break-word;
-	overflow-y: scroll;
+	//background: black;
+	// width: 80vh;
+	text-align: left;
+
+	// padding: 5px;
+	// margin: 5px;
+	// text-align: justify;
+	color: black;
+	
+	font-size: 1.4rem;
+	// word-wrap: break-all;
+	// overflow-wrap: break-word;
 }
 section {
 	width: 90%;
@@ -92,7 +92,7 @@ section {
 
 #ui {
 	top: 2vh;
-
+	right: 0%;
 	z-index: 1000;
 
 	position: absolute;
