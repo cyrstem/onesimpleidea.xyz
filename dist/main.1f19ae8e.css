@@ -100,9 +100,11 @@ section h3 {
 }
 
 .sites {
+  font-size: 1.2rem;
   position: absolute;
+  bottom: 50px;
   width: 600px;
-  padding: 5px;
+  padding: 15px;
   grid-column: 1/8;
   grid-row: 2;
   align-self: flex-end;
@@ -123,7 +125,7 @@ section h3 {
   color: black;
 }
 .sites a:hover {
-  text-decoration: underline;
+  color: rgba(0, 0, 0, 0.5);
 }
 
 #ui {
@@ -205,10 +207,6 @@ body {
 
 h1 {
   font-size: 12rem;
-}
-
-h3 {
-  font-size: 1.6rem;
 }
 
 @keyframes pulse {

@@ -21,6 +21,7 @@ document.addEventListener(
 	"click",
 	function (event) {
 		if (event.target.id !== "experiment") return;
+		
 		document.getElementById("container").innerHTML = Experiments();
 	},
 	false

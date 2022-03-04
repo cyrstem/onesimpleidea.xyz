@@ -228,7 +228,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Home = function Home() {
-  var template = "\n    <h1>Hello..</h1>\n        <main>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>FrontEnd Developer</b> based in Quito - Ecuador.</p> \n            <p>I specialize in working with emerging tech to build custom tools for digital or physical experiences.</p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> and recently curious about <b>Machine Learning.</b></p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
+  var template = "\n    <h1>Hello..</h1>\n        <main>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador.</p> \n            <p>I specialize building custom digital or physical experiences.</p>\n            <p>Im a <b>self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL</b></p>\n            <p>and recently curious about <b>Machine Learning.</b></p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
   return template;
 };
 
@@ -380,7 +380,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43875" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "43093" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

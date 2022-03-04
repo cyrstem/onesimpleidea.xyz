@@ -65,9 +65,11 @@ section {
 	animation: pulse 2s;
 }
 .sites {
+	font-size: 1.2rem;
 	position: absolute;
+	bottom: 50px;
 	width: 600px;
-	padding: 5px;
+	padding: 15px;
 	grid-column: 1/8;
 	grid-row: 2;
 	align-self: flex-end;
@@ -99,7 +101,8 @@ section {
 	a:hover {
 		// color: white;
 		// background-color: black;
-		text-decoration: underline;
+		color:rgba($color: #000000, $alpha: .5);
+	
 	}
 }
 
