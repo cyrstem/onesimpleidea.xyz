@@ -1,24 +1,21 @@
 // here goes interface buttons  and links
 //buttons and access
 
-*:focus {
-	outline: none;
-}
 
-#links {
-	a {
-		border-color: black;
-		padding: 5px;
-		text-decoration: none;
-		filter: grayscale(10);
-	}
-	a:hover {
-		border-bottom-style: solid;
-		border-width: thin;
-		filter: brightness(0.25);
-	}
+h1{
+	font-size:12rem;
 }
+a {
+	border-color: black;
+	padding: 5px;
+	text-decoration: none;
 
+}
+a:hover {
+	border-bottom-style: solid;
+	border-width: thin;
+
+}
 button,
 [type="button"],
 [type="reset"],
@@ -29,23 +26,23 @@ button,
 button {
 	display: inline-block;
 	border: none;
-	padding: 1rem 2rem;
+	padding: 0.6rem 0.6rem;
 	margin: 0;
 	background-color: transparent;
 	text-decoration: none;
-	//background: black;
 	color: black;
 	font-size: 1rem;
 	cursor: pointer;
 	text-align: center;
-	///transition: background 250ms ease-in-out, transform 150ms ease;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 }
 
 button:hover,
 button:focus {
-	text-decoration: underline;
+	border-bottom-style: solid;
+	border-width: thin;
+	filter: brightness(0.25);
 	color: black;
 }
 
@@ -55,7 +52,7 @@ button:hover {
 }
 
 button:active {
-	transform: scale(0.99);
+	
 	text-decoration: underline;
 }
 
