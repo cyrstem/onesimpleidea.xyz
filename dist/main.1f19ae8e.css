@@ -27,12 +27,12 @@ button {
   border: none;
   padding: 1rem 2rem;
   margin: 0;
+  background-color: transparent;
   text-decoration: none;
   color: black;
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
-  transition: background 250ms ease-in-out, transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -40,11 +40,11 @@ button {
 button:hover,
 button:focus {
   text-decoration: underline;
+  color: black;
 }
 
-button:focus {
-  text-decoration: underline;
-  color: black;
+button:hover {
+  color: rgba(0, 0, 0, 0.6);
 }
 
 button:active {
@@ -79,6 +79,11 @@ canvas {
   z-index: 0;
 }
 
+#container {
+  z-index: 1;
+  position: absolute;
+}
+
 main {
   padding: 2.5px;
   margin: 4.2px;
@@ -94,6 +99,21 @@ section h3 {
   opacity: 0.7;
 }
 
+#portafolio {
+  position: relative;
+  width: 120vh;
+  height: 80vh;
+  margin-bottom: 2.5em;
+  overflow-x: scroll;
+  display: grid;
+  column-gap: 2rem;
+  row-gap: 2rem;
+  grid-template-columns: 2fr 1fr;
+  overflow-x: hidden;
+  transition: width 1s;
+  animation: pulse 2s;
+}
+
 .proj {
   transition: width 1s;
   animation: pulse 2s;
@@ -101,7 +121,7 @@ section h3 {
 
 .sites {
   font-size: 1.2rem;
-  position: absolute;
+  position: fixed;
   bottom: 50px;
   width: 600px;
   padding: 15px;
@@ -115,6 +135,10 @@ section h3 {
 .sites a {
   display: flex;
   text-decoration: none;
+}
+.sites spanfirst-child {
+  margin: 3px;
+  padding: 2px;
 }
 .sites span:nth-child(2) {
   padding-left: 24px;
@@ -143,17 +167,14 @@ section h3 {
   margin-right: 4vh;
 }
 
-small {
-  background-color: black;
-  color: white;
-  padding: 3px;
-}
-
 @media screen and (max-width: 600px) {
+  h1 {
+    font-size: 4rem;
+  }
+
   main {
     width: 44vh;
     height: 42vh;
-    font-size: 1rem;
   }
 
   #ui {
@@ -178,11 +199,11 @@ small {
     font-size: 1rem;
   }
 
-  .Sites {
+  .sites {
     width: 50vh;
     height: 50vh;
   }
-  .Sites a {
+  .sites a {
     line-height: 25px;
   }
 
@@ -201,7 +222,6 @@ body {
   color: white;
   overflow: hidden;
   transition: width 3s;
-  background-color: #f1f1f1;
   animation: pulse 6s;
 }
 

@@ -16,7 +16,6 @@
 		border-bottom-style: solid;
 		border-width: thin;
 		filter: brightness(0.25);
-		//background-color: white;
 	}
 }
 
@@ -26,33 +25,33 @@ button,
 [type="submit"] {
 	-webkit-appearance: button;
 }
+
 button {
 	display: inline-block;
 	border: none;
 	padding: 1rem 2rem;
 	margin: 0;
+	background-color: transparent;
 	text-decoration: none;
 	//background: black;
 	color: black;
 	font-size: 1rem;
 	cursor: pointer;
 	text-align: center;
-	transition: background 250ms ease-in-out, transform 150ms ease;
+	///transition: background 250ms ease-in-out, transform 150ms ease;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 }
 
 button:hover,
 button:focus {
-	//background: black;
-	text-decoration: underline;
-	// opacity: 0.8;
-}
-
-button:focus {
-	//background: white;
 	text-decoration: underline;
 	color: black;
+}
+
+button:hover {
+	color:rgba($color: #000000, $alpha: 0.6)
+	
 }
 
 button:active {

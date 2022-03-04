@@ -26,7 +26,7 @@ const Portafolio = () => {
           </li>
           <li>
             <a href="https://todo.legal" target="_blank">
-              <span>Todo legal</span> 
+              <span>Todo.legal</span> 
               <span>Front-end Developer & Web Designer</span>
               <span class="number">2020 - 2020</span>
             </a>
@@ -40,7 +40,7 @@ const Portafolio = () => {
           </li>
           <li>
             <a href="https://www.pachamama.org.ec/en/" target="_blank">
-              <span> Pachamama Alliance </span>
+              <span> Pachamama</span>
               <span> Front-end Developer</span>
               <span class="number">2010 – 2013</span>
             </a>

@@ -1,4 +1,5 @@
 @import "_ui";
+
 //variables to complete
 $tnormalcolor: black;
 //base  for all the site
@@ -8,33 +9,14 @@ canvas {
 }
 
 #container {
-	// position: absolute;
-	// z-index: 1000;
-	// display: grid;
-	// align-items: center;
-	// grid-gap: 10px;
+	z-index: 1;
+	position: absolute;
 }
-// .ad{
-// 	background-color: white;
-// 	color: black;
-// 	text-decoration: none;
-// 	padding: 2px;
-// }
 main {
 	padding: 2.5px;
 	margin: 4.2px;
-	//background: black;
-	// width: 80vh;
-	// text-align: left;
-
-	// padding: 5px;
-	// margin: 5px;
-	// text-align: justify;
 	color: black;
-	
 	font-size: 1.4rem;
-	// word-wrap: break-all;
-	// overflow-wrap: break-word;
 }
 section {
 	width: 90%;
@@ -44,20 +26,20 @@ section {
 	}
 }
 #portafolio {
-	// width: 120vh;
-	// height: 80vh;
-	// margin-bottom: 2.5em;
+	
+	position: relative;
+	width: 120vh;
+	height: 80vh;
+	margin-bottom: 2.5em;
+	overflow-x: scroll;
+	display: grid;
+	column-gap: 2rem;
+	row-gap: 2rem;
+	grid-template-columns: 2fr 1fr;
+	overflow-x: hidden;
+	transition: width 1s;
+	animation: pulse 2s;
 
-	// overflow-x: scroll;
-	// display: grid;
-	// column-gap: 2rem;
-	// row-gap: 2rem;
-	// grid-template-columns: 1fr 1fr;
-	// overflow-x: hidden;
-	// transition: width 1s;
-	// animation: pulse 2s;
-	// justify-items: center;
-	// align-items: center;
 }
 
 .proj {
@@ -66,14 +48,14 @@ section {
 }
 .sites {
 	font-size: 1.2rem;
-	position: absolute;
+	position: fixed;
+
 	bottom: 50px;
 	width: 600px;
 	padding: 15px;
 	grid-column: 1/8;
 	grid-row: 2;
 	align-self: flex-end;
-	
 	ul {
 	 	list-style-type: none;}
 
@@ -83,16 +65,13 @@ section {
 	}
 	span{
 		&first-child{
-			// margin: 3px;
-			// padding: 2px;
+			margin: 3px;
+			padding: 2px;
 		}
 		&:nth-child(2) {
 			padding-left: 24px;
 			flex-grow: 1;
 					}
-		&.number {
-
-		}
 	}
 	a {
 		text-decoration: none;
@@ -123,18 +102,18 @@ section {
 	margin-right: 4vh;
 }
 
-small {
-	background-color: black;
-	color: white;
-	padding: 3px;
-}
 
 //responsive------------------------------------------------------------
 @media screen and(max-width:600px) {
+
+	h1{
+		font-size:4rem;
+	}
+	
 	main {
 		width: 44vh;
 		height: 42vh;
-		font-size: 1rem;
+		
 	}
 
 	#ui {
@@ -159,7 +138,7 @@ small {
 		font-size: 1rem;
 	}
 
-	.Sites {
+	.sites {
 		width: 50vh;
 		height: 50vh;
 		a {
