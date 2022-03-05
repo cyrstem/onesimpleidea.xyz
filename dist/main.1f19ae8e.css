@@ -96,6 +96,9 @@ main {
   transition: width 1s;
   animation: pulse 2s;
 }
+#portafolio img {
+  width: 500px;
+}
 
 section {
   width: 70%;
@@ -170,7 +173,7 @@ section h3 {
   }
 
   h1 {
-    font-size: 5rem;
+    font-size: 3rem;
   }
 
   .sites {
@@ -189,7 +192,10 @@ section h3 {
     display: grid;
     grid-template-columns: 1fr;
     column-gap: 1.5rem;
-    padding: 12px;
+    padding: 25px;
+  }
+  #portafolio img {
+    width: 300px;
   }
 }
 html,
