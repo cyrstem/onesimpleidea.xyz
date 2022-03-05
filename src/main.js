@@ -1,6 +1,6 @@
 
 import "./style/main.scss";
-import  lines from "./js/follow";
+import lines from "./js/follow";
 import Navbar from "./js/interface/Nav";
 import Contact from "./js/interface/Contact";
 import Home from "./js/pages/Home";
@@ -8,54 +8,26 @@ import Portafolio from "./js/pages/Portafolio";
 import Not4u from "./js/pages/Not4u";
 import Experiments from "./js/pages/Experiments";
 
-document.addEventListener(
-	"click",
-	function (event) {
-		if (event.target.id !== "home") return;
-		document.getElementById("container").innerHTML = Home();
-		
-	},
-	false
-);
+const places = ['home', 'experiment', 'about', 'proyect'];
 
-document.addEventListener(
-	"click",
-	function (event) {
-		if (event.target.id !== "experiment") return;
-		
-		document.getElementById("container").innerHTML = Experiments();
-	},
-	false
-);
-
-document.addEventListener(
-	"click",
-	function (event) {
-		if (event.target.id !== "project") return;
-		document.getElementById("container").innerHTML = Portafolio();
-	},
-	false
-);
-
-document.addEventListener(
-	"click",
-	function (event) {
-		if (event.target.id !== "about") return;
-		document.getElementById("container").innerHTML = Home();
-	},
-	false
-);
-function responsive (){
-	var x = window.matchMedia("(max-width: 480px)");
-	if (x.matches){
-		var ui = document.getElementById('ui');
-		ui.remove()
-		document.getElementById("container").innerHTML = Not4u();
-
+document.addEventListener("click", (event) => {
+	let links = event.target.id;
+	switch (links) {
+		case 'home':
+			document.getElementById("container").innerHTML = Home();
+			break;
+		case 'experiment':
+			
+			document.getElementById("container").innerHTML = Experiments();
+			break;
+		case 'project':
+			document.getElementById("container").innerHTML = Portafolio();
+			break;
 	}
-}
+}, false);
 
-function responsiviti() {
+
+function responsive() {
 	//responsive screens
 	var x = window.matchMedia("(max-width: 700px)");
 	if (x.matches) {
@@ -63,7 +35,7 @@ function responsiviti() {
 		document.addEventListener("click", function (event) {
 			if (event.target.id !== "experiment") return;
 			document.getElementById("container").innerHTML = Experiments();
-			//document.getElementById("ui").style.bottom = "10vh";
+			document.getElementById("ui").style.bottom = "5vh";
 		});
 	}
 }
@@ -73,8 +45,7 @@ const app = () => {
 	document.getElementById("ui").innerHTML = Navbar();
 	document.getElementById("container").innerHTML = Home();
 	document.getElementById("contact").innerHTML = Contact();
-	responsiviti();
-	//responsive();
+	responsive();
 };
 
 const sayHello = () => {
@@ -93,5 +64,5 @@ window.onload = (event) => {
 	app();
 	sayHello();
 	lines();
-	
+
 };

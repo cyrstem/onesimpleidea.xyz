@@ -9812,34 +9812,26 @@ var _Experiments = _interopRequireDefault(require("./js/pages/Experiments"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var places = ['home', 'experiment', 'about', 'proyect'];
 document.addEventListener("click", function (event) {
-  if (event.target.id !== "home") return;
-  document.getElementById("container").innerHTML = (0, _Home.default)();
-}, false);
-document.addEventListener("click", function (event) {
-  if (event.target.id !== "experiment") return;
-  document.getElementById("container").innerHTML = (0, _Experiments.default)();
-}, false);
-document.addEventListener("click", function (event) {
-  if (event.target.id !== "project") return;
-  document.getElementById("container").innerHTML = (0, _Portafolio.default)();
-}, false);
-document.addEventListener("click", function (event) {
-  if (event.target.id !== "about") return;
-  document.getElementById("container").innerHTML = (0, _Home.default)();
+  var links = event.target.id;
+
+  switch (links) {
+    case 'home':
+      document.getElementById("container").innerHTML = (0, _Home.default)();
+      break;
+
+    case 'experiment':
+      document.getElementById("container").innerHTML = (0, _Experiments.default)();
+      break;
+
+    case 'project':
+      document.getElementById("container").innerHTML = (0, _Portafolio.default)();
+      break;
+  }
 }, false);
 
 function responsive() {
-  var x = window.matchMedia("(max-width: 480px)");
-
-  if (x.matches) {
-    var ui = document.getElementById('ui');
-    ui.remove();
-    document.getElementById("container").innerHTML = (0, _Not4u.default)();
-  }
-}
-
-function responsiviti() {
   //responsive screens
   var x = window.matchMedia("(max-width: 700px)");
 
@@ -9847,7 +9839,8 @@ function responsiviti() {
     //console.log("responsive biatch");
     document.addEventListener("click", function (event) {
       if (event.target.id !== "experiment") return;
-      document.getElementById("container").innerHTML = (0, _Experiments.default)(); //document.getElementById("ui").style.bottom = "10vh";
+      document.getElementById("container").innerHTML = (0, _Experiments.default)();
+      document.getElementById("ui").style.bottom = "5vh";
     });
   }
 }
@@ -9857,7 +9850,7 @@ var app = function app() {
   document.getElementById("ui").innerHTML = (0, _Nav.default)();
   document.getElementById("container").innerHTML = (0, _Home.default)();
   document.getElementById("contact").innerHTML = (0, _Contact.default)();
-  responsiviti(); //responsive();
+  responsive();
 };
 
 var sayHello = function sayHello() {
@@ -9902,7 +9895,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35769" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46615" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
