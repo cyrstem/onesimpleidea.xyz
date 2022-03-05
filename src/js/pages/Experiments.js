@@ -5,6 +5,7 @@ const Experiments = () => {
         <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
     </section>
     <section class="info">
+        <h2>Moving Photon</h2>
         <p>I Help develop and deploy the Virtual Experience for
             <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
             interactive installation/performance
@@ -14,6 +15,7 @@ const Experiments = () => {
                 href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
     </section>
     <section class="info">
+    <h2>Glitch MAchine</h2>
         <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/ target="_blank">Jenna Marsh</a>, it lets you play with a image applying different filters and export the resulting image for printing</p>
     </section>
     <section class="proj">
@@ -23,9 +25,11 @@ const Experiments = () => {
        <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src= "noizu.png" width="500"/></a>
     </section>
     <section class="info">
+    <h2>Noizu</h2>
         <p>Noizu</p>
      </section>
      <section class="info">
+     <h2>PACMan YaEsta.com</h2>
      <p>hello</p>
       </section>
     <section class="proj">

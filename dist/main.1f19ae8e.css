@@ -165,11 +165,31 @@ section h3 {
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  main {
+    font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 5rem;
+  }
+
   .sites {
     top: 33vh;
     width: 350px;
     font-size: 0.9rem;
     padding-left: 0;
+  }
+
+  #portafolio {
+    width: 52vh;
+    height: 81vh;
+    font-size: 2rem;
+    text-align: center;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1.5rem;
+    padding: 12px;
   }
 }
 html,
