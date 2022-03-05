@@ -1,6 +1,6 @@
-//console.clear();
+
 import "./style/main.scss";
-import init from "./js/stage";
+import  lines from "./js/follow";
 import Navbar from "./js/interface/Nav";
 import Contact from "./js/interface/Contact";
 import Home from "./js/pages/Home";
@@ -13,6 +13,7 @@ document.addEventListener(
 	function (event) {
 		if (event.target.id !== "home") return;
 		document.getElementById("container").innerHTML = Home();
+		
 	},
 	false
 );
@@ -21,6 +22,7 @@ document.addEventListener(
 	"click",
 	function (event) {
 		if (event.target.id !== "experiment") return;
+		
 		document.getElementById("container").innerHTML = Experiments();
 	},
 	false
@@ -79,4 +81,6 @@ const sayHello = () => {
 window.onload = (event) => {
 	app();
 	sayHello();
+	lines();
+	
 };
