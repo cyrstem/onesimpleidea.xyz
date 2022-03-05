@@ -9770,7 +9770,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Not4u = function Not4u() {
-  var template = "\n       <div >\n            <h1>i'm updating this..... </h1>\n       </div>\n    ";
+  var template = "\n       <div class=\"phones\" >\n       <h1>Hello..</h1>\n       <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador.</p> \n       <p>I specialize building custom digital or physical experiences,</p>\n       <p><b>self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL</b></p>\n       <p>and recently curious about <b>Machine Learning.</b></p>\n       <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n       <h1>Work</h1>\n       <div class =\"sitesA\"> \n       <ul>\n       <li>\n        <a href=\"https://activetheory.net/\" target=\"_blank\">\n          <span>Active Theory</span> \n          <span>WebGL Developer</span>\n          <span>2021</span>\n        </a>\n       </li>\n       <li>\n          <a href=\"https://myuniguru.com/\" target=\"_blank\">\n            <span>My Uniguru</span>\n            <span>FullStack Developer</span>\n            <span class=\"number\">2020</span>\n          </a>\n        </li>\n        <li>\n        <a href=\"https://smartco.com.ec\" target=\"_blank\"> \n          <span>Smartco </span>\n          <span>Unity Developer</span>\n          <span class=\"number\">2019 - 2020</span>\n        </a>\n      </li>\n        <li>\n          <a href=\"https://www.yaesta.com\" target=\"_blank\">\n            <span> YaEsta </span>\n            <span> Front-end  & Designer</span> \n            <span class=\"number\">2016 - 2018</span>\n          </a>\n        </li>\n        \n    \n        <li>\n          <a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">\n            <span> Pachamama</span>\n            <span> Front-end Developer</span>\n            <span class=\"number\">2010 \u2013 2013</span>\n          </a>\n        </li>\n       </ul>\n    </div>\n       </div>\n    ";
   return template;
 };
 
@@ -9829,17 +9829,26 @@ document.addEventListener("click", function (event) {
   document.getElementById("container").innerHTML = (0, _Home.default)();
 }, false);
 
+function responsive() {
+  var x = window.matchMedia("(max-width: 480px)");
+
+  if (x.matches) {
+    var ui = document.getElementById('ui');
+    ui.remove();
+    document.getElementById("container").innerHTML = (0, _Not4u.default)();
+  }
+}
+
 function responsiviti() {
   //responsive screens
   var x = window.matchMedia("(max-width: 700px)");
 
   if (x.matches) {
-    //console.log("responsive biatch");
-    document.addEventListener("click", function (event) {
-      if (event.target.id !== "experiment") return;
-      document.getElementById("container").innerHTML = (0, _Experiments.default)();
-      document.getElementById("ui").style.bottom = "20vh";
-    });
+    console.log("responsive biatch"); // document.addEventListener("click", function (event) {
+    // 	if (event.target.id !== "experiment") return;
+    // 	document.getElementById("container").innerHTML = Experiments();
+    // 	document.getElementById("ui").style.bottom = "20vh";
+    // });
   }
 }
 
@@ -9849,6 +9858,7 @@ var app = function app() {
   document.getElementById("container").innerHTML = (0, _Home.default)();
   document.getElementById("contact").innerHTML = (0, _Contact.default)();
   responsiviti();
+  responsive();
 };
 
 var sayHello = function sayHello() {
@@ -9893,7 +9903,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "36549" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35297" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

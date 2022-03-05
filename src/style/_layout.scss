@@ -83,6 +83,40 @@ section {
 	
 	}
 }
+.sitesA {
+	font-size: 0.9rem;
+	// padding: 15px;
+	grid-column: 1/8;
+	grid-row: 2;
+	align-self: flex-end;
+	ul {
+	 	list-style-type: none;}
+
+	a{
+		display: flex;
+		text-decoration: none;
+	}
+	span{
+		&first-child{
+			margin: 3px;
+			padding: 2px;
+		}
+		&:nth-child(2) {
+			padding-left: 12px;
+			flex-grow: 1;
+					}
+	}
+	a {
+		text-decoration: none;
+		color: black;
+	}
+	a:hover {
+
+		color:rgba($color: #000000, $alpha: .5);
+	
+	}
+}
+
 
 #ui {
 	top: 2vh;
@@ -101,7 +135,14 @@ section {
 	bottom: 0vh;
 	margin-right: 4vh;
 }
-
+.phones{
+	padding: 5px;
+	color: black;
+	overflow-x: scroll;
+	h1{
+		color:black;
+	}
+}
 
 //responsive------------------------------------------------------------
 

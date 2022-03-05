@@ -45,16 +45,26 @@ document.addEventListener(
 	},
 	false
 );
+function responsive (){
+	var x = window.matchMedia("(max-width: 480px)");
+	if (x.matches){
+		var ui = document.getElementById('ui');
+		ui.remove()
+		document.getElementById("container").innerHTML = Not4u();
+
+	}
+}
+
 function responsiviti() {
 	//responsive screens
 	var x = window.matchMedia("(max-width: 700px)");
 	if (x.matches) {
-		//console.log("responsive biatch");
-		document.addEventListener("click", function (event) {
-			if (event.target.id !== "experiment") return;
-			document.getElementById("container").innerHTML = Experiments();
-			document.getElementById("ui").style.bottom = "20vh";
-		});
+		console.log("responsive biatch");
+		// document.addEventListener("click", function (event) {
+		// 	if (event.target.id !== "experiment") return;
+		// 	document.getElementById("container").innerHTML = Experiments();
+		// 	document.getElementById("ui").style.bottom = "20vh";
+		// });
 	}
 }
 
@@ -64,6 +74,7 @@ const app = () => {
 	document.getElementById("container").innerHTML = Home();
 	document.getElementById("contact").innerHTML = Contact();
 	responsiviti();
+	responsive();
 };
 
 const sayHello = () => {

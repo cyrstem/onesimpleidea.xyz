@@ -152,6 +152,35 @@ section h3 {
   color: rgba(0, 0, 0, 0.5);
 }
 
+.sitesA {
+  font-size: 0.9rem;
+  grid-column: 1/8;
+  grid-row: 2;
+  align-self: flex-end;
+}
+.sitesA ul {
+  list-style-type: none;
+}
+.sitesA a {
+  display: flex;
+  text-decoration: none;
+}
+.sitesA spanfirst-child {
+  margin: 3px;
+  padding: 2px;
+}
+.sitesA span:nth-child(2) {
+  padding-left: 12px;
+  flex-grow: 1;
+}
+.sitesA a {
+  text-decoration: none;
+  color: black;
+}
+.sitesA a:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
 #ui {
   top: 2vh;
   right: 3%;
@@ -165,6 +194,15 @@ section h3 {
   text-align: center;
   bottom: 0vh;
   margin-right: 4vh;
+}
+
+.phones {
+  padding: 5px;
+  color: black;
+  overflow-x: scroll;
+}
+.phones h1 {
+  color: black;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
