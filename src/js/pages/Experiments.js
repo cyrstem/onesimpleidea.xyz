@@ -26,11 +26,11 @@ const Experiments = () => {
     </section>
     <section class="info">
     <h2>Noizu</h2>
-        <p>Noizu</p>
+        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
      </section>
      <section class="info">
      <h2>PACMan YaEsta.com</h2>
-     <p>hello</p>
+     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>
       </section>
     <section class="proj">
        <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src= "insta-3.jpg" width="500"/></a>  

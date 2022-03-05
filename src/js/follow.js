@@ -76,7 +76,7 @@ const lines = ()=>{
     // give the line some width.
 
     // We're going to make a number of different coloured lines for fun.
-    ['#e09f7d', '#ef5d60', '#ec4067', '#a01a7d', '#11071a'].forEach((color, i) => {
+    ['#e09f7d', '#ffffff', '#ec4067', '#a01a7d', '#11071a'].forEach((color, i) => {
         // Store a few values for each lines' spring movement
         const line = {
             spring: random(0.02, 0.1),
