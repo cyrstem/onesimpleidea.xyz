@@ -81,28 +81,28 @@ main {
   font-size: 1.4rem;
 }
 
-section {
-  width: 90%;
-  font-size: 1rem;
-}
-section h3 {
-  opacity: 0.7;
-}
-
 #portafolio {
   position: relative;
-  width: 100%;
+  width: 74%;
   height: 80vh;
   top: 12vh;
   padding-left: 15%;
   overflow-x: scroll;
   display: grid;
-  column-gap: 1.3rem;
-  row-gap: 2rem;
+  column-gap: 1rem;
+  row-gap: 1rem;
   grid-template-columns: 1fr 1fr;
   overflow-x: hidden;
   transition: width 1s;
   animation: pulse 2s;
+}
+
+section {
+  width: 70%;
+  font-size: 1rem;
+}
+section h3 {
+  opacity: 0.7;
 }
 
 .proj {
@@ -112,6 +112,8 @@ section h3 {
 
 .info {
   color: black;
+  text-align: justify;
+  padding: 2px;
 }
 
 .sites {
@@ -162,6 +164,14 @@ section h3 {
   margin-right: 4vh;
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  .sites {
+    top: 33vh;
+    width: 350px;
+    font-size: 0.9rem;
+    padding-left: 0;
+  }
+}
 html,
 body {
   margin: 0;
