@@ -9844,11 +9844,11 @@ function responsiviti() {
   var x = window.matchMedia("(max-width: 700px)");
 
   if (x.matches) {
-    console.log("responsive biatch"); // document.addEventListener("click", function (event) {
-    // 	if (event.target.id !== "experiment") return;
-    // 	document.getElementById("container").innerHTML = Experiments();
-    // 	document.getElementById("ui").style.bottom = "20vh";
-    // });
+    //console.log("responsive biatch");
+    document.addEventListener("click", function (event) {
+      if (event.target.id !== "experiment") return;
+      document.getElementById("container").innerHTML = (0, _Experiments.default)(); //document.getElementById("ui").style.bottom = "10vh";
+    });
   }
 }
 
@@ -9857,8 +9857,7 @@ var app = function app() {
   document.getElementById("ui").innerHTML = (0, _Nav.default)();
   document.getElementById("container").innerHTML = (0, _Home.default)();
   document.getElementById("contact").innerHTML = (0, _Contact.default)();
-  responsiviti();
-  responsive();
+  responsiviti(); //responsive();
 };
 
 var sayHello = function sayHello() {
@@ -9903,7 +9902,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35297" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35769" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

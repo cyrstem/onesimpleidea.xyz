@@ -83,39 +83,7 @@ section {
 	
 	}
 }
-.sitesA {
-	font-size: 0.9rem;
-	// padding: 15px;
-	grid-column: 1/8;
-	grid-row: 2;
-	align-self: flex-end;
-	ul {
-	 	list-style-type: none;}
 
-	a{
-		display: flex;
-		text-decoration: none;
-	}
-	span{
-		&first-child{
-			margin: 3px;
-			padding: 2px;
-		}
-		&:nth-child(2) {
-			padding-left: 12px;
-			flex-grow: 1;
-					}
-	}
-	a {
-		text-decoration: none;
-		color: black;
-	}
-	a:hover {
-
-		color:rgba($color: #000000, $alpha: .5);
-	
-	}
-}
 
 
 #ui {
@@ -144,12 +112,16 @@ section {
 	}
 }
 
-//responsive------------------------------------------------------------
+// //responsive------------------------------------------------------------
 
 @media only screen 
   and (min-device-width: 320px) 
   and (max-device-width: 480px)
   and (-webkit-min-device-pixel-ratio: 2) {
+
+	body { 
+		overflow-x: hidden;
+	}
 	main {
 		font-size: 1rem;
 	}
@@ -177,7 +149,7 @@ section {
 		}
 	}
 }
-@media screen and(max-width:600px) {
+// @media screen and(max-width:600px) {
 
 	
 	
@@ -219,4 +191,4 @@ section {
 	// 		width: 100%;
 	// 	}
 	// }
-}
+//}
