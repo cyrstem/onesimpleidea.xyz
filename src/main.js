@@ -5,40 +5,32 @@ import Navbar from "./js/interface/Nav";
 import Contact from "./js/interface/Contact";
 import Home from "./js/pages/Home";
 import Portafolio from "./js/pages/Portafolio";
-import Not4u from "./js/pages/Not4u";
 import Experiments from "./js/pages/Experiments";
+import sayHello from "./js/utils/sign";
+import responsive from "./js/utils/responsive";
+import GUI from "./js/app";
+import GUIView from "./js/app";
 
 const places = ['home', 'experiment', 'about', 'proyect'];
 
 document.addEventListener("click", (event) => {
 	let links = event.target.id;
+	// checkElement(links)
 	switch (links) {
 		case 'home':
 			document.getElementById("container").innerHTML = Home();
+			
 			break;
 		case 'experiment':
-			
 			document.getElementById("container").innerHTML = Experiments();
+		
 			break;
 		case 'project':
 			document.getElementById("container").innerHTML = Portafolio();
 			break;
 	}
+
 }, false);
-
-
-function responsive() {
-	//responsive screens
-	var x = window.matchMedia("(max-width: 700px)");
-	if (x.matches) {
-		//console.log("responsive biatch");
-		document.addEventListener("click", function (event) {
-			if (event.target.id !== "experiment") return;
-			document.getElementById("container").innerHTML = Experiments();
-			document.getElementById("ui").style.bottom = "5vh";
-		});
-	}
-}
 
 const app = () => {
 	//load UI and socials media  plus main content
@@ -48,21 +40,13 @@ const app = () => {
 	responsive();
 };
 
-const sayHello = () => {
-	if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
-		const args = [
-			"\n %c -created by cyrstem \n",
-			"border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;",
-		];
-		window.console.log.apply(console, args);
-	} else if (window.console) {
-		window.console.log("-created by cyrstem  -");
-	}
-};
-
+let  ui = new GUIView();
+ui.init();
 window.onload = (event) => {
+	
 	app();
 	sayHello();
 	lines();
+	
 
 };
