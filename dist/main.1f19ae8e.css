@@ -1,0 +1,256 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+h1 {
+  font-size: 10rem;
+}
+
+a {
+  border-color: black;
+  padding: 5px;
+  text-decoration: none;
+}
+
+a:hover {
+  border-bottom-style: solid;
+  border-width: thin;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+button {
+  display: inline-block;
+  border: none;
+  padding: 0.6rem 0.6rem;
+  margin: 0;
+  background-color: transparent;
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+  border-bottom-style: solid;
+  border-width: thin;
+  filter: brightness(0.25);
+  color: black;
+}
+
+button:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+button:active {
+  text-decoration: underline;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  scrollbar-width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  opacity: 1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #030303;
+}
+
+main {
+  padding: 2.5px;
+  margin: 20px;
+  color: black;
+  font-size: 1.4rem;
+}
+
+#portafolio {
+  position: relative;
+  width: 74%;
+  height: 80vh;
+  top: 12vh;
+  padding-left: 15%;
+  overflow-x: scroll;
+  display: grid;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+  overflow-x: hidden;
+  transition: width 1s;
+  animation: pulse 2s;
+}
+#portafolio img {
+  width: 500px;
+}
+
+section {
+  width: 70%;
+  font-size: 1rem;
+}
+section h3 {
+  opacity: 0.7;
+}
+
+.proj {
+  transition: width 1s;
+  animation: pulse 2s;
+}
+
+.info {
+  color: black;
+  text-align: justify;
+  padding: 2px;
+}
+
+.sites {
+  font-size: 1.2rem;
+  position: fixed;
+  bottom: 50px;
+  width: 600px;
+  padding: 15px;
+  grid-column: 1/8;
+  grid-row: 2;
+  align-self: flex-end;
+}
+.sites ul {
+  list-style-type: none;
+}
+.sites a {
+  display: flex;
+  text-decoration: none;
+}
+.sites spanfirst-child {
+  margin: 3px;
+  padding: 2px;
+}
+.sites span:nth-child(2) {
+  padding-left: 24px;
+  flex-grow: 1;
+}
+.sites a {
+  text-decoration: none;
+  color: black;
+}
+.sites a:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+#ui {
+  top: 2vh;
+  right: 3%;
+  z-index: 1000;
+  position: absolute;
+}
+
+#contact {
+  z-index: 1000;
+  position: absolute;
+  text-align: center;
+  bottom: 0vh;
+  margin-right: 4vh;
+}
+
+@media (min-width: 375px) and (max-width: 768px) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  main p {
+    font-size: 18px;
+  }
+
+  .sites {
+    font-size: 0.8rem;
+    position: fixed;
+    top: 150px;
+    width: 350px;
+    padding: 2px;
+    padding-top: 20px;
+    grid-column: 1/4;
+    grid-row: 1;
+    align-self: flex-end;
+  }
+
+  #portafolio {
+    position: relative;
+    width: 99.999%;
+    height: 80vh;
+    top: 12vh;
+    padding-left: 0%;
+    overflow-x: scroll;
+    display: grid;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    grid-template-columns: 2fr 2fr;
+    overflow-x: hidden;
+    transition: width 1s;
+    animation: pulse 2s;
+  }
+  #portafolio img {
+    width: 150px;
+  }
+
+  section {
+    width: 100%;
+    font-size: 0.8rem;
+  }
+  section h3 {
+    opacity: 0.7;
+  }
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  color: white;
+  overflow: hidden;
+  transition: width 3s;
+  animation: pulse 6s;
+}
+
+canvas {
+  display: block;
+  z-index: 0;
+}
+
+#container {
+  z-index: 1;
+  position: absolute;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pulseD {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/*# sourceMappingURL=/main.1f19ae8e.css.map */
