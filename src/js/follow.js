@@ -1,5 +1,5 @@
 
-  import { Renderer, Transform, Vec3, Color, Polyline } from 'ogl';
+  import { Renderer, Transform, Vec3, Color, Polyline, Post } from 'ogl';
 const lines = ()=>{
     const vertex = /* glsl */ `
     precision highp float;
@@ -29,7 +29,7 @@ const lines = ()=>{
         float dist = length(nextScreen - prevScreen);
         normal *= smoothstep(0.0, 0.06, dist);
         float pixelWidthRatio = 1.0 / (uResolution.y / uDPR);
-        float pixelWidth = current.w * pixelWidthRatio;
+        float pixelWidth = current.w* pixelWidthRatio;
         normal *= pixelWidth * uThickness;
         current.xy -= normal * side;
     

@@ -3,13 +3,12 @@
 
 
 h1{
-	font-size:12rem;
+	font-size:10rem;
 }
 a {
 	border-color: black;
 	padding: 5px;
 	text-decoration: none;
-
 }
 a:hover {
 	border-bottom-style: solid;
@@ -52,11 +51,10 @@ button:hover {
 }
 
 button:active {
-	
 	text-decoration: underline;
 }
 
-//scroll bar  settings on ly works on chrome
+// //scroll bar  settings on ly works on chrome
 
 /* width */
 ::-webkit-scrollbar {
