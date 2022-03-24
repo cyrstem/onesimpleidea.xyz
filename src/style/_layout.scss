@@ -130,13 +130,29 @@ section {
 		font-size: 0.8rem;
 		position: fixed;
 		top: 150px;
-		width: 350px;
-		padding: 2px;
+		width: 320px;
+		// padding: 2px;
 		padding-top: 20px;
 		grid-column: 1/4;
 		grid-row: 1;
 		align-self: flex-end;
-		
+		ul{
+			padding: 0px;
+		}
+		span{
+			&first-child{
+				margin: 1px;
+				padding: 12px;
+			}
+			&:nth-child(2) {
+				padding-left: 14px;
+				flex-grow: 1;
+						}
+			&:nth-child(3) {
+				padding-left: 2px;
+				flex-grow: 2;
+			}
+		}
 	}
 	#portafolio {
 		position: relative;
