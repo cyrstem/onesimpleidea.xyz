@@ -104,11 +104,14 @@ section {
 	margin-right: 4vh;
 }
 
+// @media all and (min-width: 480px) and (max-width: 768px) { }
+
+// @media all and (max-width: 480px) { }
 
 // //responsive------------------------------------------------------------
-@media (min-width: 375px) and (max-width: 768px) {
+@media (min-width: 480px) and (max-width: 768px) {
 	h1{
-		font-size: 3rem;
+		font-size: 1.5rem;
 	}
 	main{
 		p{font-size: 18px;}
