@@ -5,85 +5,98 @@ $tnormalcolor: black;
 //base  for all the site
 
 main {
-	padding: 0px 10px 0px;
+	padding-left: 35px;
+	padding-right: 35px;
+	// padding: 0px 10px 0px;
 	color: black;
-	h1{font-size: 10em;}
-	p{font-size: 1.4rem;}
+
+	h1 {
+		font-size: 10em;
+	}
+
+	p {
+		padding-left: 15px;
+		font-size: 1.4rem;
+	}
 }
 
 #portafolio {
 	position: relative;
-	width: 99%;
+	top: 10vh;
+	display: grid;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
 	height: 80vh;
-	top: 12vh;
-	padding: 5px 10px 5px;
+	padding-left: 25px;
+	padding-right: 25px;
 	overflow-x: scroll;
-	display: grid;
-	column-gap: 1rem;
-	row-gap: 1rem;
-	grid-template-columns: 1fr 1fr;
-	overflow-x: hidden;
+	column-gap: 0.5rem;
+	justify-items: center;
+	row-gap: 0.5rem;
+	grid-template-columns: 2fr 2fr;
 	transition: width 1s;
 	animation: pulse 2s;
+
+	section {
+		padding: 2rem;
+		color: black;
+		font-size: 1.3rem;
+		line-height: 2.5rem;
+		text-align: justify;
+		h2{
+			font-size: 3rem;
+		}
+
+	}
 	img{
-		width: 500px;
+		border-left: 1px solid black;
 	}
-}
-section {
-	width: 90%;
-	font-size: 1rem;
-	h3 {
-		opacity: 0.7;
-	}
-}
-.proj {
-	transition: width 1s;
-	animation: pulse 2s;
-}
-.info{
-	color: black;
-	text-align: justify;
-	padding: 2px;
-	display: grid;
 }
 
 
 .sites {
 	font-size: 1.2rem;
 	position: fixed;
-	bottom: 50px;
+	bottom: 40vh;
 	width: 600px;
 	padding: 15px;
 	grid-column: 1/8;
 	grid-row: 2;
 	align-self: flex-end;
-	ul {
-	 	list-style-type: none;}
 
-	a{
+	ul {
+		list-style-type: none;
+	}
+
+	a {
 		display: flex;
 		text-decoration: none;
 	}
-	span{
-		&first-child{
+
+	span {
+		&first-child {
 			margin: 3px;
 			padding: 2px;
 		}
+
 		&:nth-child(2) {
 			padding-left: 24px;
 			flex-grow: 1;
-					}
+		}
 	}
+
 	a {
 		text-decoration: none;
 		color: black;
 	}
+
 	a:hover {
 		text-decoration: none;
-		color:rgba($color: #000000, $alpha: .5);
-	
+		color: rgba($color: #000000, $alpha: .5);
+
 	}
-	a:active{
+
+	a:active {
 		text-decoration: none;
 	}
 }
@@ -104,28 +117,39 @@ section {
 	z-index: 1000;
 	position: absolute;
 	text-align: center;
-	bottom: 0vh;
+	bottom: 1vh;
 	margin-right: 4vh;
+
 	a {
 		border-color: black;
 		padding: 5px;
 		text-decoration: none;
 	}
+
 	a:hover {
 		border-bottom-style: solid;
 		border-width: thin;
-	
+
 	}
 }
 
 // @media all and (min-width: 480px) and (max-width: 768px) { }
 
-@media all and (max-width: 480px) { 
-	main{
-		h1{font-size: 5rem;}
-		p{font-size: 0.8rem;}
+@media all and (max-width: 480px) {
+	main {
+		h1 {
+			font-size: 5rem;
+		}
+
+		p {
+			font-size: 0.8rem;
+		}
 	}
-	#contact {bottom: -1px;}
+
+	#contact {
+		bottom: -1px;
+	}
+
 	.sites {
 		font-size: 0.8rem;
 		position: fixed;
@@ -136,24 +160,29 @@ section {
 		grid-column: 1/4;
 		grid-row: 1;
 		align-self: flex-end;
-		ul{
+
+		ul {
 			padding: 0px;
 		}
-		span{
-			&first-child{
+
+		span {
+			&first-child {
 				margin: 1px;
 				padding: 12px;
 			}
+
 			&:nth-child(2) {
 				padding-left: 14px;
 				flex-grow: 1;
-						}
+			}
+
 			&:nth-child(3) {
 				padding-left: 2px;
 				flex-grow: 2;
 			}
 		}
 	}
+
 	#portafolio {
 		position: relative;
 		width: 86.999%;
@@ -164,22 +193,26 @@ section {
 		display: grid;
 		column-gap: 0rem;
 		row-gap: 1rem;
-		grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 		overflow-x: hidden;
 		transition: width 1s;
 		animation: pulse 2s;
-		img{
+
+		img {
 			width: 100%;
 		}
 	}
-	.info{
+
+	.info {
 		color: black;
 		text-align: justify;
 		// padding: 2px;
 	}
+
 	section {
 		width: 83%;
 		font-size: 0.8rem;
+
 		h3 {
 			opacity: 0.7;
 		}
