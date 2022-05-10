@@ -1,4 +1,5 @@
 const Contact = () => {
+
 	const template = `
 
         <ul id="links">
@@ -8,5 +9,6 @@ const Contact = () => {
         </ul>
     `;
 	return template;
+    
 };
 export default Contact;
