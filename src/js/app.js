@@ -12,6 +12,7 @@ export default class GUIView{
         this.load();
         this.addListeners();
         this.simpleSign();
+        
         //this.responsive();
     }
     load(){
@@ -36,6 +37,8 @@ export default class GUIView{
                     break;
                 case 'project':
                     document.getElementById("container").innerHTML = Portafolio();
+                    
+                    
                     break;
             }
         
