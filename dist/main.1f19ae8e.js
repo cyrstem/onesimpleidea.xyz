@@ -9723,75 +9723,6 @@ var lines = function lines() {
 
 var _default = lines;
 exports.default = _default;
-},{"ogl":"../node_modules/ogl/src/index.mjs"}],"js/thingA.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _ogl = require("ogl");
-
-var thingA = function thingA() {
-  var vertex =
-  /* glsl */
-  "\n    attribute vec3 position;\n    attribute vec3 normal;\n    uniform mat4 modelViewMatrix;\n    uniform mat4 projectionMatrix;\n    uniform mat3 normalMatrix;\n    varying vec3 vNormal;\n    void main() {\n        vNormal = normalize(normalMatrix * normal);\n        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);\n    }\n";
-  var fragment =
-  /* glsl */
-  "\n    precision highp float;\n    varying vec3 vNormal;\n    void main() {\n        vec3 normal = normalize(vNormal);\n        float lighting = dot(normal, normalize(vec3(-0.3, 0.8, 0.6)));\n        gl_FragColor.rgb = vec3(0.2, 0.8, 1.0) + lighting * 0.1;\n        gl_FragColor.a = 1.0;\n    }\n";
-  {
-    var resize = function resize() {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.perspective({
-        aspect: gl.canvas.width / gl.canvas.height
-      });
-    };
-
-    var update = function update() {
-      requestAnimationFrame(update);
-      controls.update();
-      sphere.rotation.y -= 0.03;
-      renderer.render({
-        scene: scene,
-        camera: camera
-      });
-    };
-
-    var renderer = new _ogl.Renderer({
-      dpr: 2
-    });
-    var gl = renderer.gl;
-    document.body.appendChild(gl.canvas);
-    gl.clearColor(1, 1, 1, 1);
-    var camera = new _ogl.Camera(gl, {
-      fov: 35
-    });
-    camera.position.set(0, 1, 7);
-    camera.lookAt([0, 0, 0]);
-    var controls = new _ogl.Orbit(camera);
-    window.addEventListener('resize', resize, false);
-    resize();
-    var scene = new _ogl.Transform();
-    var sphereGeometry = new _ogl.Sphere(gl);
-    var program = new _ogl.Program(gl, {
-      vertex: vertex,
-      fragment: fragment,
-      // Don't cull faces so that plane is double sided - default is gl.BACK
-      cullFace: null
-    });
-    var sphere = new _ogl.Mesh(gl, {
-      geometry: sphereGeometry,
-      program: program
-    });
-    sphere.position.set(1.3, 0, 0);
-    sphere.setParent(scene);
-    requestAnimationFrame(update);
-  }
-};
-
-var _default = thingA;
-exports.default = _default;
 },{"ogl":"../node_modules/ogl/src/index.mjs"}],"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js":[function(require,module,exports) {
 function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
@@ -10111,7 +10042,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Experiments = function Experiments() {
-  var template = "\n   <div id=\"portafolio\">\n    <section class=\"proj\">\n        <a href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> <img src=\"poster4.jpg\" width=\"500\" /></a>\n    </section>\n    <section class=\"info\">\n        <h2>Moving Photon</h2>\n        <p>I Help develop and deploy the Virtual Experience for\n            <a href=\"https://friendred.studio/2021/10/07/moving-photon/\" target=\"_blank\">Moving Photon</a> an\n            interactive installation/performance\n            created by installation artist<a href=\"https://friendred.studio\" target=\"_blank\">Friendred Peng.</a>\n            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,\n            interactive installation, interactive performance,interactive performance with EEG and a <a\n                href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> remote performance.</a>\n    </section>\n    <section class=\"info\">\n    <h2>Glitch MAchine</h2>\n        <p>A custom Glitch App build for<a href=\"https://www.instagram.com/jenna___marsh/ target=\"_blank\">Jenna Marsh</a>, it lets you play with a image applying different filters and export the resulting image for printing</p>\n    </section>\n    <section class=\"proj\">\n        <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n     </section>\n     <section class=\"proj\">\n       <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n    </section>\n    <section class=\"info\">\n    <h2>Noizu</h2>\n        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>\n     </section>\n     <section class=\"info\">\n     <h2>PACMan YaEsta.com</h2>\n     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>\n      </section>\n    <section class=\"proj\">\n       <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"insta-3.jpg\" width=\"500\"/></a>  \n    </section>\n   \n</div>\n    ";
+  var template = "\n   <div id=\"portafolio\">\n    <section class=\"proj\">\n        <a href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> <img src=\"poster4.jpg\" width=\"500\" /></a>\n    </section>\n    <section class=\"info\">\n        <h2>Moving Photon</h2>\n        <p>I Help develop and deploy the Virtual Experience for\n            <a href=\"https://friendred.studio/2021/10/07/moving-photon/\" target=\"_blank\"> Moving Photon</a> an\n            interactive installation/performance\n            created by installation artist<a href=\"https://friendred.studio\" target=\"_blank\"> Friendred Peng.</a>\n            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,\n            interactive installation, interactive performance,interactive performance with EEG and a <a\n                href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> remote performance.</a>\n    </section>\n    <section class=\"info\">\n    <h2>Glitch MAchine</h2>\n        <p>A custom Glitch App build for<a href=\"https://www.instagram.com/jenna___marsh/ target=\"_blank\"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>\n    </section>\n    <section class=\"proj\">\n        <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n     </section>\n     <section class=\"proj\">\n       <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n    </section>\n    <section class=\"info\">\n    <h2>Noizu</h2>\n        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>\n     </section>\n     <section class=\"info\">\n     <h2>PACMan YaEsta.com</h2>\n     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>\n      </section>\n    <section class=\"proj\">\n       <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"insta-3.jpg\" width=\"500\"/></a>  \n    </section>\n   \n</div>\n    ";
   return template;
 };
 
@@ -10212,29 +10143,197 @@ var GUIView = /*#__PURE__*/function () {
 }();
 
 exports.default = GUIView;
-},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","./interface/Nav":"js/interface/Nav.js","./interface/Contact":"js/interface/Contact.js","./pages/Home":"js/pages/Home.js","./pages/Portafolio":"js/pages/Portafolio.js","./pages/Experiments":"js/pages/Experiments.js"}],"main.js":[function(require,module,exports) {
+},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","./interface/Nav":"js/interface/Nav.js","./interface/Contact":"js/interface/Contact.js","./pages/Home":"js/pages/Home.js","./pages/Portafolio":"js/pages/Portafolio.js","./pages/Experiments":"js/pages/Experiments.js"}],"shaders/frag.glsl":[function(require,module,exports) {
+module.exports = "precision highp float;\n#define GLSLIFY 1\n\n        uniform float uTime;\n        uniform vec3 uColor;\n        varying vec2 vUv;\n\n        float random (vec2 st) {\n            return fract(sin(dot(st.xy,\n                                 vec2(12.9898,78.233)))*\n                43758.5453123);\n        }\n\n        void main() {\n            vec2 st = gl_FragCoord.xy/vUv.xy;\n            st *= 10.0;\n            float rnd = random(st);\n            // gl_FragColor.rgb = 0.1 + 1.5 * rnd * sin(vUv.xyx + uTime) * uColor;\n            // gl_FragColor.a = 1.0;\n            gl_FragColor = vec4(vec3(1),1);\n        }";
+},{}],"shaders/vert.glsl":[function(require,module,exports) {
+module.exports = "#define GLSLIFY 1\n  attribute vec2 uv;\n        attribute vec2 position;\n        varying vec2 vUv;\n        void main() {\n            vUv = uv;\n            gl_Position = vec4(position, 0, 1);\n        }";
+},{}],"js/thingA.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+var _ogl = require("ogl");
+
+var _frag = _interopRequireDefault(require("../shaders/frag.glsl"));
+
+var _vert = _interopRequireDefault(require("../shaders/vert.glsl"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { Renderer, Camera, Transform, Program, Mesh, Sphere, Orbit } from "ogl";
+var vertex;
+var fragment;
+
+var Thing = /*#__PURE__*/function () {
+  function Thing() {// this.vertex = null;
+    // this.fragment= null
+
+    (0, _classCallCheck2.default)(this, Thing);
+  }
+
+  (0, _createClass2.default)(Thing, [{
+    key: "init",
+    value: function init() {
+      //this.load();
+      //this.addListeners();
+      this.loadShaders(); // this.loadMeshes();
+
+      this.addListeners();
+      this.draw();
+    }
+  }, {
+    key: "loadShaders",
+    value: function loadShaders() {}
+  }, {
+    key: "draw",
+    value: function draw() {
+      vertex = _vert.default;
+      fragment = _frag.default;
+      console.log("draw");
+      var renderer = new _ogl.Renderer();
+      var gl = renderer.gl;
+      document.body.appendChild(gl.canvas);
+      gl.clearColor(1, 1, 1, 1);
+
+      function resize() {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+
+      window.addEventListener('resize', resize, false);
+      resize(); // Rather than using a plane (two triangles) to cover the viewport here is a
+      // triangle that includes -1 to 1 range for 'position', and 0 to 1 range for 'uv'.
+      // Excess will be out of the viewport.
+      //         position                uv
+      //      (-1, 3)                  (0, 2)
+      //         |\                      |\
+      //         |__\(1, 1)              |__\(1, 1)
+      //         |__|_\                  |__|_\
+      //   (-1, -1)   (3, -1)        (0, 0)   (2, 0)
+
+      var geometry = new _ogl.Triangle(gl);
+      var program = new _ogl.Program(gl, {
+        vertex: vertex,
+        fragment: fragment,
+        uniforms: {
+          uTime: {
+            value: 0
+          },
+          uColor: {
+            value: new _ogl.Color(0.3, 0.8, 0.5)
+          }
+        }
+      });
+      var mesh = new _ogl.Mesh(gl, {
+        geometry: geometry,
+        program: program
+      });
+      requestAnimationFrame(update);
+
+      function update(t) {
+        requestAnimationFrame(update);
+        program.uniforms.uTime.value = t * 0.001; // Don't need a camera if camera uniforms aren't required
+
+        renderer.render({
+          scene: mesh
+        });
+      }
+    }
+  }]);
+  return Thing;
+}(); // const thingA = () => {
+//     const vertex = /* glsl */ `
+//     attribute vec3 position;
+//     attribute vec3 normal;
+//     uniform mat4 modelViewMatrix;
+//     uniform mat4 projectionMatrix;
+//     uniform mat3 normalMatrix;
+//     varying vec3 vNormal;
+//     void main() {
+//         vNormal = normalize(normalMatrix * normal);
+//         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+//     }
+// `;
+//     const fragment = /* glsl */ `
+//     precision highp float;
+//     varying vec3 vNormal;
+//     void main() {
+//         vec3 normal = normalize(vNormal);
+//         float lighting = dot(normal, normalize(vec3(-0.3, 0.8, 0.6)));
+//         gl_FragColor.rgb = vec3(0.2, 0.8, 1.0) + lighting * 0.1;
+//         gl_FragColor.a = 1.0;
+//     }
+// `;
+//     {
+//         const renderer = new Renderer({ dpr: 2 });
+//         const gl = renderer.gl;
+//         document.body.appendChild(gl.canvas);
+//         gl.clearColor(1, 1, 1, 1);
+//         const camera = new Camera(gl, { fov: 35 });
+//         camera.position.set(0, 1, 7);
+//         camera.lookAt([0, 0, 0]);
+//         const controls = new Orbit(camera);
+//         function resize() {
+//             renderer.setSize(window.innerWidth, window.innerHeight);
+//             camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+//         }
+//         window.addEventListener('resize', resize, false);
+//         resize();
+//         const scene = new Transform();
+//         const sphereGeometry = new Sphere(gl);
+//         const program = new Program(gl, {
+//             vertex,
+//             fragment,
+//             // Don't cull faces so that plane is double sided - default is gl.BACK
+//             cullFace: null,
+//         });
+//         const sphere = new Mesh(gl, { geometry: sphereGeometry, program });
+//         sphere.position.set(1.3, 0, 0);
+//         sphere.setParent(scene);
+//         requestAnimationFrame(update);
+//         function update() {
+//             requestAnimationFrame(update);
+//             controls.update();
+//             sphere.rotation.y -= 0.03;
+//             renderer.render({ scene, camera });
+//         }
+//     }
+// }
+// export default thingA;
+
+
+exports.default = Thing;
+},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","ogl":"../node_modules/ogl/src/index.mjs","../shaders/frag.glsl":"shaders/frag.glsl","../shaders/vert.glsl":"shaders/vert.glsl"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 require("./style/main.scss");
 
 var _follow = _interopRequireDefault(require("./js/follow"));
 
-var _thingA = _interopRequireDefault(require("./js/thingA"));
-
 var _app = _interopRequireDefault(require("./js/app"));
+
+var _thingA = _interopRequireDefault(require("./js/thingA"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = function app() {
   var ui = new _app.default();
   ui.init();
-  (0, _follow.default)(); //thingA();
+  var thing = new _thingA.default();
+  thing.draw();
+  (0, _follow.default)();
 };
 
 window.onload = function (event) {
   app();
 };
-},{"./style/main.scss":"style/main.scss","./js/follow":"js/follow.js","./js/thingA":"js/thingA.js","./js/app":"js/app.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/follow":"js/follow.js","./js/app":"js/app.js","./js/thingA":"js/thingA.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10262,7 +10361,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40207" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40719" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

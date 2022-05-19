@@ -102,6 +102,12 @@ main p {
 #portafolio img {
   border-left: 1px solid black;
 }
+#portafolio a {
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  padding: 1px;
+}
 
 .sites {
   font-size: 1.2rem;
@@ -151,17 +157,20 @@ main p {
   z-index: 1000;
   position: absolute;
   text-align: center;
-  bottom: 1vh;
-  margin-right: 4vh;
+  bottom: 16vh;
+  margin-left: 12vh;
 }
 #contact a {
+  padding: 1rem;
   border-color: black;
-  padding: 5px;
   text-decoration: none;
 }
 #contact a:hover {
-  border-bottom-style: solid;
+  padding: 1rem;
+  border-style: solid;
   border-width: thin;
+  transition: all 6.8s ease;
+  transform: scale(10);
 }
 
 @media all and (max-width: 480px) {
@@ -173,7 +182,7 @@ main p {
   }
 
   #contact {
-    bottom: -1px;
+    bottom: 5vh;
   }
 
   .sites {

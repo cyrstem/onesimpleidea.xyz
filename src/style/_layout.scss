@@ -51,6 +51,12 @@ main {
 	img{
 		border-left: 1px solid black;
 	}
+	a{
+		background-color: black;
+		color: white;
+		text-decoration: none;
+		padding: 1px;
+	}
 }
 
 
@@ -117,20 +123,25 @@ main {
 	z-index: 1000;
 	position: absolute;
 	text-align: center;
-	bottom: 1vh;
-	margin-right: 4vh;
+	bottom: 16vh;
+	margin-left: 12vh;
 
 	a {
+		padding: 1rem;
 		border-color: black;
-		padding: 5px;
+		
 		text-decoration: none;
 	}
 
 	a:hover {
-		border-bottom-style: solid;
+		padding: 1rem;
+		border-style: solid;
 		border-width: thin;
-
+		transition: all 6.8s ease;
+		transform: scale(10);
+		
 	}
+	
 }
 
 // @media all and (min-width: 480px) and (max-width: 768px) { }
@@ -147,7 +158,7 @@ main {
 	}
 
 	#contact {
-		bottom: -1px;
+		bottom: 5vh;
 	}
 
 	.sites {
