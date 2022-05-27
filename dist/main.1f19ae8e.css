@@ -157,20 +157,20 @@ main p {
   z-index: 1000;
   position: absolute;
   text-align: center;
-  bottom: 16vh;
-  margin-left: 12vh;
+  bottom: 20vh;
 }
 #contact a {
   padding: 1rem;
-  border-color: black;
   text-decoration: none;
 }
 #contact a:hover {
   padding: 1rem;
-  border-style: solid;
-  border-width: thin;
+  border-bottom: 1px solid black;
   transition: all 6.8s ease;
   transform: scale(10);
+}
+#contact img {
+  width: 11%;
 }
 
 @media all and (max-width: 480px) {

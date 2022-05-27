@@ -9997,7 +9997,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var Contact = function Contact() {
-  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\" width=\"20\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\" width=\"20\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\" width=\"20\"></a>\n        </ul>\n    ";
+  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\"></a>\n        </ul>\n    ";
   return template;
 };
 
@@ -10132,7 +10132,7 @@ var GUIView = /*#__PURE__*/function () {
     key: "simpleSign",
     value: function simpleSign() {
       if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
-        var args = ["\n %c -created by Cyrstem \n", "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"];
+        var args = ["\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n", "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"];
         window.console.log.apply(console, args);
       } else if (window.console) {
         window.console.log("-created by cyrstem  -");
@@ -10325,8 +10325,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = function app() {
   var ui = new _app.default();
   ui.init();
-  var thing = new _thingA.default();
-  thing.draw();
+  var thing = new _thingA.default(); //thing.draw()
+
   (0, _follow.default)();
 };
 
@@ -10361,7 +10361,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40719" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40803" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
