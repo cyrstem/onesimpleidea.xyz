@@ -10033,6 +10033,19 @@ var Portafolio = function Portafolio() {
 
 var _default = Portafolio;
 exports.default = _default;
+},{}],"data.json":[function(require,module,exports) {
+module.exports = {
+  "projects": [{
+    "title": "Moving Photon",
+    "description": "I Help develop and deploy the Virtual Experience for Moving Photon an interactive installation/performance created by installation artistFriendred Peng. Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance,interactive performance with EEG and a remote performance."
+  }, {
+    "title": "Glitch Machine",
+    "description": "   as"
+  }, {
+    "title": "Noizu",
+    "description": "   as"
+  }]
+};
 },{}],"js/pages/Experiments.js":[function(require,module,exports) {
 "use strict";
 
@@ -10041,6 +10054,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var _data = _interopRequireDefault(require("/data.json"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//console.log(data.projects[0])
 var Experiments = function Experiments() {
   var template = "\n   <div id=\"portafolio\">\n    <section class=\"proj\">\n        <a href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> <img src=\"poster4.jpg\" width=\"500\" /></a>\n    </section>\n    <section class=\"info\">\n        <h2>Moving Photon</h2>\n        <p>I Help develop and deploy the Virtual Experience for\n            <a href=\"https://friendred.studio/2021/10/07/moving-photon/\" target=\"_blank\"> Moving Photon</a> an\n            interactive installation/performance\n            created by installation artist<a href=\"https://friendred.studio\" target=\"_blank\"> Friendred Peng.</a>\n            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,\n            interactive installation, interactive performance,interactive performance with EEG and a <a\n                href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> remote performance.</a>\n    </section>\n    <section class=\"info\">\n    <h2>Glitch MAchine</h2>\n        <p>A custom Glitch App build for<a href=\"https://www.instagram.com/jenna___marsh/ target=\"_blank\"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>\n    </section>\n    <section class=\"proj\">\n        <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n     </section>\n     <section class=\"proj\">\n       <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n    </section>\n    <section class=\"info\">\n    <h2>Noizu</h2>\n        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>\n     </section>\n     <section class=\"info\">\n     <h2>PACMan YaEsta.com</h2>\n     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>\n      </section>\n    <section class=\"proj\">\n       <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"insta-3.jpg\" width=\"500\"/></a>  \n    </section>\n   \n</div>\n    ";
   return template;
@@ -10048,7 +10066,57 @@ var Experiments = function Experiments() {
 
 var _default = Experiments;
 exports.default = _default;
-},{}],"js/app.js":[function(require,module,exports) {
+},{"/data.json":"data.json"}],"js/Stage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Stage = /*#__PURE__*/function () {
+  function Stage(_ref) {
+    var _ref$scene = _ref.scene,
+        scene = _ref$scene === void 0 ? 'scene' : _ref$scene,
+        _ref$active = _ref.active,
+        active = _ref$active === void 0 ? false : _ref$active;
+    (0, _classCallCheck2.default)(this, Stage);
+    this.scene = scene;
+    this.active = true;
+    console.log(this.scene, "|", this.active);
+  }
+
+  (0, _createClass2.default)(Stage, [{
+    key: "init",
+    value: function init() {//something
+    }
+  }, {
+    key: "load",
+    value: function load() {//something
+    }
+  }, {
+    key: "remove",
+    value: function remove() {//something
+    }
+  }, {
+    key: "drar",
+    value: function drar() {//soemthign
+    }
+  }, {
+    key: "addEventListener",
+    value: function addEventListener(something) {}
+  }]);
+  return Stage;
+}();
+
+exports.default = Stage;
+},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js"}],"js/app.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -10070,7 +10138,11 @@ var _Portafolio = _interopRequireDefault(require("./pages/Portafolio"));
 
 var _Experiments = _interopRequireDefault(require("./pages/Experiments"));
 
+var _Stage = _interopRequireDefault(require("./Stage"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var stage = null;
 
 var GUIView = /*#__PURE__*/function () {
   function GUIView() {
@@ -10101,14 +10173,26 @@ var GUIView = /*#__PURE__*/function () {
         switch (links) {
           case 'home':
             document.getElementById("container").innerHTML = (0, _Home.default)();
+            stage = new _Stage.default({
+              scene: "sectionA",
+              active: true
+            });
             break;
 
           case 'experiment':
             document.getElementById("container").innerHTML = (0, _Experiments.default)();
+            stage = new _Stage.default({
+              scene: "sectionB",
+              active: false
+            });
             break;
 
           case 'project':
             document.getElementById("container").innerHTML = (0, _Portafolio.default)();
+            stage = new _Stage.default({
+              scene: "sectionC",
+              active: true
+            });
             break;
         }
       }, false);
@@ -10143,7 +10227,7 @@ var GUIView = /*#__PURE__*/function () {
 }();
 
 exports.default = GUIView;
-},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","./interface/Nav":"js/interface/Nav.js","./interface/Contact":"js/interface/Contact.js","./pages/Home":"js/pages/Home.js","./pages/Portafolio":"js/pages/Portafolio.js","./pages/Experiments":"js/pages/Experiments.js"}],"shaders/frag.glsl":[function(require,module,exports) {
+},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","./interface/Nav":"js/interface/Nav.js","./interface/Contact":"js/interface/Contact.js","./pages/Home":"js/pages/Home.js","./pages/Portafolio":"js/pages/Portafolio.js","./pages/Experiments":"js/pages/Experiments.js","./Stage":"js/Stage.js"}],"shaders/frag.glsl":[function(require,module,exports) {
 module.exports = "precision highp float;\n#define GLSLIFY 1\n\n        uniform float uTime;\n        uniform vec3 uColor;\n        varying vec2 vUv;\n\n        float random (vec2 st) {\n            return fract(sin(dot(st.xy,\n                                 vec2(12.9898,78.233)))*\n                43758.5453123);\n        }\n\n        void main() {\n            vec2 st = gl_FragCoord.xy/vUv.xy;\n            st *= 10.0;\n            float rnd = random(st);\n            // gl_FragColor.rgb = 0.1 + 1.5 * rnd * sin(vUv.xyx + uTime) * uColor;\n            // gl_FragColor.a = 1.0;\n            gl_FragColor = vec4(vec3(1),1);\n        }";
 },{}],"shaders/vert.glsl":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\n  attribute vec2 uv;\n        attribute vec2 position;\n        varying vec2 vUv;\n        void main() {\n            vUv = uv;\n            gl_Position = vec4(position, 0, 1);\n        }";
@@ -10172,10 +10256,16 @@ var vertex;
 var fragment;
 
 var Thing = /*#__PURE__*/function () {
-  function Thing() {// this.vertex = null;
-    // this.fragment= null
-
+  function Thing(_ref) {
+    var _ref$scene = _ref.scene,
+        scene = _ref$scene === void 0 ? 'something' : _ref$scene,
+        _ref$active = _ref.active,
+        active = _ref$active === void 0 ? false : _ref$active;
     (0, _classCallCheck2.default)(this, Thing);
+    this.scene = scene;
+    this.active = active;
+    console.log(this.scene, "|", this.active); // this.vertex = null;
+    // this.fragment= null
   }
 
   (0, _createClass2.default)(Thing, [{
@@ -10325,7 +10415,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var app = function app() {
   var ui = new _app.default();
   ui.init();
-  var thing = new _thingA.default(); //thing.draw()
+  var thing = new _thingA.default({
+    scene: 'stateA',
+    active: true
+  }); //		thing.draw()
 
   (0, _follow.default)();
 };
@@ -10361,7 +10454,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "40803" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42631" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

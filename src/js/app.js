@@ -3,8 +3,10 @@ import Contact from "./interface/Contact";
 import Home from "./pages/Home";
 import Portafolio from "./pages/Portafolio";
 import Experiments from "./pages/Experiments";
+import Stage  from "./Stage"
 
 
+let stage = null
 export default class GUIView{
     constructor(){}
 
@@ -16,7 +18,8 @@ export default class GUIView{
         //this.responsive();
     }
     load(){
-      
+        
+
         	//load UI and socials media  plus main content
         document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("container").innerHTML = Home();
@@ -26,19 +29,19 @@ export default class GUIView{
     addListeners(){
         window.addEventListener("click", (event) => {
             let links = event.target.id;
+           
             switch (links) {
                 case 'home':
                     document.getElementById("container").innerHTML = Home();
-                    
+                     stage = new Stage({scene:"sectionA",active:true})
                     break;
                 case 'experiment':
                     document.getElementById("container").innerHTML = Experiments();
-                
+                    stage = new Stage({scene:"sectionB",active:false})
                     break;
                 case 'project':
                     document.getElementById("container").innerHTML = Portafolio();
-                    
-                    
+                    stage = new Stage({scene:"sectionC",active:true})
                     break;
             }
         
@@ -57,6 +60,7 @@ export default class GUIView{
             });
         }
     }
+
     simpleSign(){
         if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
             const args = [

@@ -1,3 +1,10 @@
+
+import data from '/data.json';
+
+//console.log(data.projects[0])
+
+
+
 const Experiments = () => {
 	const template = `
    <div id="portafolio">
@@ -40,4 +47,5 @@ const Experiments = () => {
     `;
 	return template;
 };
+
 export default Experiments;

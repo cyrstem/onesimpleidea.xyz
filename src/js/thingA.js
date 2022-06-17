@@ -8,7 +8,11 @@ let vertex;
 let fragment;
 
 export default class Thing {
-    constructor() {
+    constructor({scene='something',active=false}) {
+        this.scene = scene
+        this.active = active
+
+        console.log(this.scene, "|",  this.active)
         // this.vertex = null;
         // this.fragment= null
     }

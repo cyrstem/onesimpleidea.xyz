@@ -157,7 +157,7 @@ main p {
   z-index: 1000;
   position: absolute;
   text-align: center;
-  bottom: 20vh;
+  bottom: 10vh;
 }
 #contact a {
   padding: 1rem;
@@ -220,7 +220,7 @@ main p {
     overflow-x: scroll;
     display: grid;
     column-gap: 0rem;
-    row-gap: 1rem;
+    row-gap: 0.5rem;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     overflow-x: hidden;
     transition: width 1s;
