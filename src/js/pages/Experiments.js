@@ -1,12 +1,13 @@
 
-import data from '/data.json';
+import data from '../../data.json';
 
-//console.log(data.projects[0])
+console.log(data.projects[0])
 
 
 
 const Experiments = () => {
 	const template = `
+    <main>
    <div id="portafolio">
     <section class="proj">
         <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
@@ -44,6 +45,7 @@ const Experiments = () => {
     </section>
    
 </div>
+</main>
     `;
 	return template;
 };

@@ -13,7 +13,7 @@ canvas {
 }
 
 main{
-	padding-left: 3%;
+	
 	padding-top: 0px;
 	width: 100vw;
 	height: 100vh;
@@ -25,6 +25,7 @@ main{
 	position: absolute;
 }
 #content{
+	padding-left: 3%;
 	position:absolute;
 	font-family: $main-font;
 	font-size: 1.5rem;
@@ -74,7 +75,15 @@ main{
 	}
 
 }
-
+#portafolio{
+	// padding-top: 4%;
+	height: 100vh;
+	
+	position: fixed;
+	overflow-y: scroll;
+	margin: 3px;
+	// background-color: red;
+}
 #ui{
 	z-index: 1000;
 	position: absolute;
