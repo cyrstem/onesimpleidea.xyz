@@ -1,27 +1,17 @@
 // here goes interface buttons  and links
 //buttons and access
-
-
-// h1{
-// 	font-size:10 rem;
-// }
-
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-	-webkit-appearance: button;
-}
+@import "_vars";
 
 button {
 	display: inline-block;
 	border: none;
-	padding: 0.6rem 0.6rem;
+	// padding: 0.6rem 0.6rem;
 	margin: 0;
+	font-family: $main-font;
 	background-color: transparent;
 	text-decoration: none;
 	color: black;
-	font-size: 1rem;
+	font-size: 1.2rem;
 	cursor: pointer;
 	text-align: center;
 	-webkit-appearance: none;
@@ -43,28 +33,4 @@ button:hover {
 
 button:active {
 	text-decoration: underline;
-}
-
-// //scroll bar  settings on ly works on chrome
-
-/* width */
-::-webkit-scrollbar {
-	width: 5px;
-	scrollbar-width: 5px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-	background: transparent;
-	opacity: 1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-	background: rgb(0, 0, 0);
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-	background: rgba($color: #030303, $alpha: 1);
 }

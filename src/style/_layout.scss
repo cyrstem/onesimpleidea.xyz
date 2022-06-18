@@ -1,75 +1,42 @@
 @import "_ui";
+@import "_vars";
 
-//variables to complete
-$tnormalcolor: black;
-//base  for all the site
-
-main {
-	padding-left: 35px;
-	padding-right: 35px;
-	// padding: 0px 10px 0px;
-	color: black;
-
-	h1 {
-		font-size: 10em;
-	}
-
-	p {
-		padding-left: 15px;
-		font-size: 1.4rem;
-	}
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }
 
-#portafolio {
-	position: relative;
-	top: 10vh;
-	display: grid;
-	border-top: 1px solid black;
-	border-bottom: 1px solid black;
-	height: 80vh;
-	padding-left: 25px;
-	padding-right: 25px;
-	overflow-x: scroll;
-	column-gap: 0.5rem;
-	justify-items: center;
-	row-gap: 0.5rem;
-	grid-template-columns: 2fr 2fr;
-	transition: width 1s;
-	animation: pulse 2s;
+canvas {
+	display: block;
+	z-index: 0;
+}
 
-	section {
-		padding: 2rem;
+main{
+	padding-left: 3%;
+	padding-top: 0px;
+	width: 100vw;
+	height: 100vh;
+
+}
+
+#container {
+	z-index: 1;
+	position: absolute;
+}
+#content{
+	position:absolute;
+	font-family: $main-font;
+	font-size: 1.5rem;
+	width: 45vh;
+	color: #3d3d3d;
+	b{
 		color: black;
-		font-size: 1.3rem;
-		line-height: 2.5rem;
-		text-align: justify;
-		h2{
-			font-size: 3rem;
-		}
-
-	}
-	img{
-		border-left: 1px solid black;
-	}
-	a{
-		background-color: black;
-		color: white;
-		text-decoration: none;
-		padding: 1px;
 	}
 }
 
-
-.sites {
-	font-size: 1.2rem;
-	position: fixed;
-	bottom: 40vh;
-	width: 600px;
-	padding: 15px;
-	grid-column: 1/8;
-	grid-row: 2;
-	align-self: flex-end;
-
+#sites{
+	text-align: left;
 	ul {
 		list-style-type: none;
 	}
@@ -105,125 +72,41 @@ main {
 	a:active {
 		text-decoration: none;
 	}
+
 }
 
-
-
-#ui {
-	top: 2vh;
-	right: 3%;
+#ui{
 	z-index: 1000;
 	position: absolute;
-
+	top:2vh;
+	right:3%;
 }
-
-//footer and quote
 
 #contact {
 	z-index: 1000;
 	position: absolute;
+	right: 0;
 	text-align: center;
-	bottom: 10vh;
+	// padding-left: 1px;
+	bottom: 1vh;
+	#links{
+		padding: 0px;
+		margin: 0px;
+	}
 	a {
-		padding: 1rem;
+		padding: 0.5rem;
 		text-decoration: none;
 	}
 
 	a:hover {
-		padding: 1rem;
+		//padding: 1rem;
 		border-bottom: 1px solid black;
 		transition: all 6.8s ease;
 		transform: scale(10);
 		
 	}
 	img{
-		width: 11%;
+		width: 10%;
 	}
 	
-}
-
-// @media all and (min-width: 480px) and (max-width: 768px) { }
-
-@media all and (max-width: 480px) {
-	main {
-		h1 {
-			font-size: 5rem;
-		}
-
-		p {
-			font-size: 0.8rem;
-		}
-	}
-
-	#contact {
-		bottom: 5vh;
-	}
-
-	.sites {
-		font-size: 0.8rem;
-		position: fixed;
-		top: 150px;
-		width: 320px;
-		// padding: 2px;
-		padding-top: 20px;
-		grid-column: 1/4;
-		grid-row: 1;
-		align-self: flex-end;
-
-		ul {
-			padding: 0px;
-		}
-
-		span {
-			&first-child {
-				margin: 1px;
-				padding: 12px;
-			}
-
-			&:nth-child(2) {
-				padding-left: 14px;
-				flex-grow: 1;
-			}
-
-			&:nth-child(3) {
-				padding-left: 2px;
-				flex-grow: 2;
-			}
-		}
-	}
-
-	#portafolio {
-		position: relative;
-		width: 86.999%;
-		height: 80vh;
-		top: 12vh;
-		padding: 5px 15px 5px;
-		overflow-x: scroll;
-		display: grid;
-		column-gap: 0rem;
-		row-gap: 0.5rem;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-		overflow-x: hidden;
-		transition: width 1s;
-		animation: pulse 2s;
-
-		img {
-			width: 100%;
-		}
-	}
-
-	.info {
-		color: black;
-		text-align: justify;
-		// padding: 2px;
-	}
-
-	section {
-		width: 83%;
-		font-size: 0.8rem;
-
-		h3 {
-			opacity: 0.7;
-		}
-	}
 }

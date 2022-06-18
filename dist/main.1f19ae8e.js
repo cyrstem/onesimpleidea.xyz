@@ -189,35 +189,542 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/ogl/src/math/functions/Vec3Func.js":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+module.exports = _classCallCheck, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{}],"../node_modules/core-js/library/modules/_global.js":[function(require,module,exports) {
+
+// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+var global = module.exports = typeof window != 'undefined' && window.Math == Math
+  ? window : typeof self != 'undefined' && self.Math == Math ? self
+  // eslint-disable-next-line no-new-func
+  : Function('return this')();
+if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
+
+},{}],"../node_modules/core-js/library/modules/_core.js":[function(require,module,exports) {
+var core = module.exports = { version: '2.6.12' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+
+},{}],"../node_modules/core-js/library/modules/_a-function.js":[function(require,module,exports) {
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+},{}],"../node_modules/core-js/library/modules/_ctx.js":[function(require,module,exports) {
+// optional / simple context binding
+var aFunction = require('./_a-function');
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+},{"./_a-function":"../node_modules/core-js/library/modules/_a-function.js"}],"../node_modules/core-js/library/modules/_is-object.js":[function(require,module,exports) {
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+},{}],"../node_modules/core-js/library/modules/_an-object.js":[function(require,module,exports) {
+var isObject = require('./_is-object');
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+},{"./_is-object":"../node_modules/core-js/library/modules/_is-object.js"}],"../node_modules/core-js/library/modules/_fails.js":[function(require,module,exports) {
+module.exports = function (exec) {
+  try {
+    return !!exec();
+  } catch (e) {
+    return true;
+  }
+};
+
+},{}],"../node_modules/core-js/library/modules/_descriptors.js":[function(require,module,exports) {
+// Thank's IE8 for his funny defineProperty
+module.exports = !require('./_fails')(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+},{"./_fails":"../node_modules/core-js/library/modules/_fails.js"}],"../node_modules/core-js/library/modules/_dom-create.js":[function(require,module,exports) {
+var isObject = require('./_is-object');
+var document = require('./_global').document;
+// typeof document.createElement is 'object' in old IE
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+
+},{"./_is-object":"../node_modules/core-js/library/modules/_is-object.js","./_global":"../node_modules/core-js/library/modules/_global.js"}],"../node_modules/core-js/library/modules/_ie8-dom-define.js":[function(require,module,exports) {
+module.exports = !require('./_descriptors') && !require('./_fails')(function () {
+  return Object.defineProperty(require('./_dom-create')('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+
+},{"./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js","./_fails":"../node_modules/core-js/library/modules/_fails.js","./_dom-create":"../node_modules/core-js/library/modules/_dom-create.js"}],"../node_modules/core-js/library/modules/_to-primitive.js":[function(require,module,exports) {
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = require('./_is-object');
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+},{"./_is-object":"../node_modules/core-js/library/modules/_is-object.js"}],"../node_modules/core-js/library/modules/_object-dp.js":[function(require,module,exports) {
+var anObject = require('./_an-object');
+var IE8_DOM_DEFINE = require('./_ie8-dom-define');
+var toPrimitive = require('./_to-primitive');
+var dP = Object.defineProperty;
+
+exports.f = require('./_descriptors') ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+},{"./_an-object":"../node_modules/core-js/library/modules/_an-object.js","./_ie8-dom-define":"../node_modules/core-js/library/modules/_ie8-dom-define.js","./_to-primitive":"../node_modules/core-js/library/modules/_to-primitive.js","./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js"}],"../node_modules/core-js/library/modules/_property-desc.js":[function(require,module,exports) {
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+},{}],"../node_modules/core-js/library/modules/_hide.js":[function(require,module,exports) {
+var dP = require('./_object-dp');
+var createDesc = require('./_property-desc');
+module.exports = require('./_descriptors') ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+},{"./_object-dp":"../node_modules/core-js/library/modules/_object-dp.js","./_property-desc":"../node_modules/core-js/library/modules/_property-desc.js","./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js"}],"../node_modules/core-js/library/modules/_has.js":[function(require,module,exports) {
+var hasOwnProperty = {}.hasOwnProperty;
+module.exports = function (it, key) {
+  return hasOwnProperty.call(it, key);
+};
+
+},{}],"../node_modules/core-js/library/modules/_export.js":[function(require,module,exports) {
+
+var global = require('./_global');
+var core = require('./_core');
+var ctx = require('./_ctx');
+var hide = require('./_hide');
+var has = require('./_has');
+var PROTOTYPE = 'prototype';
+
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var IS_WRAP = type & $export.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && has(exports, key)) continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library`
+module.exports = $export;
+
+},{"./_global":"../node_modules/core-js/library/modules/_global.js","./_core":"../node_modules/core-js/library/modules/_core.js","./_ctx":"../node_modules/core-js/library/modules/_ctx.js","./_hide":"../node_modules/core-js/library/modules/_hide.js","./_has":"../node_modules/core-js/library/modules/_has.js"}],"../node_modules/core-js/library/modules/es6.object.define-property.js":[function(require,module,exports) {
+var $export = require('./_export');
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !require('./_descriptors'), 'Object', { defineProperty: require('./_object-dp').f });
+
+},{"./_export":"../node_modules/core-js/library/modules/_export.js","./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js","./_object-dp":"../node_modules/core-js/library/modules/_object-dp.js"}],"../node_modules/core-js/library/fn/object/define-property.js":[function(require,module,exports) {
+require('../../modules/es6.object.define-property');
+var $Object = require('../../modules/_core').Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+
+},{"../../modules/es6.object.define-property":"../node_modules/core-js/library/modules/es6.object.define-property.js","../../modules/_core":"../node_modules/core-js/library/modules/_core.js"}],"../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js":[function(require,module,exports) {
+module.exports = require("core-js/library/fn/object/define-property");
+},{"core-js/library/fn/object/define-property":"../node_modules/core-js/library/fn/object/define-property.js"}],"../node_modules/@babel/runtime-corejs2/helpers/createClass.js":[function(require,module,exports) {
+var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+
+    _Object$defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+
+  _Object$defineProperty(Constructor, "prototype", {
+    writable: false
+  });
+
+  return Constructor;
+}
+
+module.exports = _createClass, module.exports.__esModule = true, module.exports["default"] = module.exports;
+},{"@babel/runtime-corejs2/core-js/object/define-property":"../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js"}],"js/interface/Nav.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.length = length;
-exports.copy = copy;
-exports.set = set;
+exports.default = void 0;
+
+var Navbar = function Navbar() {
+  var template = "\n        <nav>\n            <button id=\"home\">About Me </button>\n            <button id=\"experiment\">Experiments</button> \n        </nav>\n       \n    ";
+  return template;
+};
+
+var _default = Navbar;
+exports.default = _default;
+},{}],"js/interface/Contact.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var Contact = function Contact() {
+  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\"></a>\n        </ul>\n    ";
+  return template;
+};
+
+var _default = Contact;
+exports.default = _default;
+},{}],"js/pages/Home.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var Home = function Home() {
+  var template = "\n    <main>\n        <div id=\"content\">\n            <p>Hello...</p>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialize on building custom digital or physical experiences.</p> \n            <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>\n            <div id =\"sites\"> \n            <p> I have worked for:</p>\n            <ul>\n            <li>\n             <a href=\"https://activetheory.net/\" target=\"_blank\">\n               <span>Active Theory</span> \n               <span>WebGL Developer</span>\n               <span>2021</span>\n             </a>\n            </li>\n            <li>\n               <a href=\"https://myuniguru.com/\" target=\"_blank\">\n                 <span>My Uniguru</span>\n                 <span>FullStack Developer</span>\n                 <span class=\"number\">2020</span>\n               </a>\n             </li>\n             <li>\n             <a href=\"https://smartco.com.ec\" target=\"_blank\"> \n               <span>Smartco </span>\n               <span>Unity Developer</span>\n               <span class=\"number\">2019 - 2020</span>\n             </a>\n           </li>\n             <li>\n               <a href=\"https://www.yaesta.com\" target=\"_blank\">\n                 <span> YaEsta </span>\n                 <span> Front-end  & Designer</span> \n                 <span class=\"number\">2016 - 2018</span>\n               </a>\n             </li>\n            </ul>\n         </div>\n         <p>Contact me at <b>cyrstem[at]gmail[dot]com</b></p>  \n        </div>\n    </main>\n    ";
+  return template;
+};
+
+var _default = Home;
+exports.default = _default;
+},{}],"js/pages/Portafolio.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var Portafolio = function Portafolio() {
+  var template = "\n      <div class =\"sites\"> \n         <ul>\n         <li>\n          <a href=\"https://activetheory.net/\" target=\"_blank\">\n            <span>Active Theory</span> \n            <span>WebGL Developer</span>\n            <span>2021</span>\n          </a>\n         </li>\n         <li>\n            <a href=\"https://myuniguru.com/\" target=\"_blank\">\n              <span>My Uniguru</span>\n              <span>FullStack Developer</span>\n              <span class=\"number\">2020</span>\n            </a>\n          </li>\n          <li>\n          <a href=\"https://smartco.com.ec\" target=\"_blank\"> \n            <span>Smartco </span>\n            <span>Unity Developer</span>\n            <span class=\"number\">2019 - 2020</span>\n          </a>\n        </li>\n          <li>\n            <a href=\"https://www.yaesta.com\" target=\"_blank\">\n              <span> YaEsta </span>\n              <span> Front-end  & Designer</span> \n              <span class=\"number\">2016 - 2018</span>\n            </a>\n          </li>\n          \n      \n          <li>\n            <a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">\n              <span> Pachamama</span>\n              <span> Front-end Developer</span>\n              <span class=\"number\">2010 \u2013 2013</span>\n            </a>\n          </li>\n         </ul>\n      </div>\n    ";
+  return template;
+};
+
+var _default = Portafolio;
+exports.default = _default;
+},{}],"data.json":[function(require,module,exports) {
+module.exports = {
+  "projects": [{
+    "title": "Moving Photon",
+    "description": "I Help develop and deploy the Virtual Experience for Moving Photon an interactive installation/performance created by installation artistFriendred Peng. Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance,interactive performance with EEG and a remote performance."
+  }, {
+    "title": "Glitch Machine",
+    "description": "   as"
+  }, {
+    "title": "Noizu",
+    "description": "   as"
+  }]
+};
+},{}],"js/pages/Experiments.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _data = _interopRequireDefault(require("/data.json"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//console.log(data.projects[0])
+var Experiments = function Experiments() {
+  var template = "\n   <div id=\"portafolio\">\n    <section class=\"proj\">\n        <a href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> <img src=\"poster4.jpg\" width=\"500\" /></a>\n    </section>\n    <section class=\"info\">\n        <h2>Moving Photon</h2>\n        <p>I Help develop and deploy the Virtual Experience for\n            <a href=\"https://friendred.studio/2021/10/07/moving-photon/\" target=\"_blank\"> Moving Photon</a> an\n            interactive installation/performance\n            created by installation artist<a href=\"https://friendred.studio\" target=\"_blank\"> Friendred Peng.</a>\n            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,\n            interactive installation, interactive performance,interactive performance with EEG and a <a\n                href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> remote performance.</a>\n    </section>\n    <section class=\"info\">\n    <h2>Glitch MAchine</h2>\n        <p>A custom Glitch App build for<a href=\"https://www.instagram.com/jenna___marsh/ target=\"_blank\"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>\n    </section>\n    <section class=\"proj\">\n        <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n     </section>\n     <section class=\"proj\">\n       <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n    </section>\n    <section class=\"info\">\n    <h2>Noizu</h2>\n        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>\n     </section>\n     <section class=\"info\">\n     <h2>PACMan YaEsta.com</h2>\n     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>\n      </section>\n    <section class=\"proj\">\n       <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"insta-3.jpg\" width=\"500\"/></a>  \n    </section>\n   \n</div>\n    ";
+  return template;
+};
+
+var _default = Experiments;
+exports.default = _default;
+},{"/data.json":"data.json"}],"js/Stage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Stage = /*#__PURE__*/function () {
+  function Stage(_ref) {
+    var _ref$scene = _ref.scene,
+        scene = _ref$scene === void 0 ? 'scene' : _ref$scene,
+        _ref$active = _ref.active,
+        active = _ref$active === void 0 ? false : _ref$active;
+    (0, _classCallCheck2.default)(this, Stage);
+    this.scene = scene;
+    this.active = true;
+    console.log(this.scene, "|", this.active);
+  }
+
+  (0, _createClass2.default)(Stage, [{
+    key: "init",
+    value: function init() {//something
+    }
+  }, {
+    key: "load",
+    value: function load() {//something
+    }
+  }, {
+    key: "remove",
+    value: function remove() {//something
+    }
+  }, {
+    key: "drar",
+    value: function drar() {//soemthign
+    }
+  }, {
+    key: "addEventListener",
+    value: function addEventListener(something) {}
+  }]);
+  return Stage;
+}();
+
+exports.default = Stage;
+},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js"}],"js/app.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
+
+var _Nav = _interopRequireDefault(require("./interface/Nav"));
+
+var _Contact = _interopRequireDefault(require("./interface/Contact"));
+
+var _Home = _interopRequireDefault(require("./pages/Home"));
+
+var _Portafolio = _interopRequireDefault(require("./pages/Portafolio"));
+
+var _Experiments = _interopRequireDefault(require("./pages/Experiments"));
+
+var _Stage = _interopRequireDefault(require("./Stage"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var stage = null;
+
+var GUIView = /*#__PURE__*/function () {
+  function GUIView() {
+    (0, _classCallCheck2.default)(this, GUIView);
+  }
+
+  (0, _createClass2.default)(GUIView, [{
+    key: "init",
+    value: function init() {
+      this.load();
+      this.addListeners();
+      this.simpleSign(); //this.responsive();
+    }
+  }, {
+    key: "load",
+    value: function load() {
+      //load UI and socials media  plus main content
+      document.getElementById("ui").innerHTML = (0, _Nav.default)();
+      document.getElementById("container").innerHTML = (0, _Home.default)();
+      document.getElementById("contact").innerHTML = (0, _Contact.default)();
+    }
+  }, {
+    key: "addListeners",
+    value: function addListeners() {
+      window.addEventListener("click", function (event) {
+        var links = event.target.id;
+
+        switch (links) {
+          case 'home':
+            document.getElementById("container").innerHTML = (0, _Home.default)();
+            stage = new _Stage.default({
+              scene: "sectionA",
+              active: true
+            });
+            break;
+
+          case 'experiment':
+            document.getElementById("container").innerHTML = (0, _Experiments.default)();
+            stage = new _Stage.default({
+              scene: "sectionB",
+              active: false
+            });
+            break;
+
+          case 'project':
+            document.getElementById("container").innerHTML = (0, _Portafolio.default)();
+            stage = new _Stage.default({
+              scene: "sectionC",
+              active: true
+            });
+            break;
+        }
+      }, false);
+    }
+  }, {
+    key: "responsive",
+    value: function responsive() {
+      //responsive screens
+      var x = window.matchMedia("(max-width: 700px)");
+
+      if (x.matches) {
+        //console.log("responsive biatch");
+        document.addEventListener("click", function (event) {
+          if (event.target.id !== "experiment") return;
+          document.getElementById("container").innerHTML = (0, _Experiments.default)();
+          document.getElementById("ui").style.top = "10vh";
+        });
+      }
+    }
+  }, {
+    key: "simpleSign",
+    value: function simpleSign() {
+      if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
+        var args = ["\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n", "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"];
+        window.console.log.apply(console, args);
+      } else if (window.console) {
+        window.console.log("-created by cyrstem  -");
+      }
+    }
+  }]);
+  return GUIView;
+}();
+
+exports.default = GUIView;
+},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","./interface/Nav":"js/interface/Nav.js","./interface/Contact":"js/interface/Contact.js","./pages/Home":"js/pages/Home.js","./pages/Portafolio":"js/pages/Portafolio.js","./pages/Experiments":"js/pages/Experiments.js","./Stage":"js/Stage.js"}],"../node_modules/ogl/src/math/functions/Vec3Func.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.add = add;
-exports.subtract = subtract;
-exports.multiply = multiply;
-exports.divide = divide;
-exports.scale = scale;
+exports.angle = void 0;
+exports.copy = copy;
+exports.cross = cross;
 exports.distance = distance;
+exports.divide = divide;
+exports.dot = dot;
+exports.exactEquals = exactEquals;
+exports.inverse = inverse;
+exports.length = length;
+exports.lerp = lerp;
+exports.multiply = multiply;
+exports.negate = negate;
+exports.normalize = normalize;
+exports.scale = scale;
+exports.scaleRotateMat4 = scaleRotateMat4;
+exports.set = set;
 exports.squaredDistance = squaredDistance;
 exports.squaredLength = squaredLength;
-exports.negate = negate;
-exports.inverse = inverse;
-exports.normalize = normalize;
-exports.dot = dot;
-exports.cross = cross;
-exports.lerp = lerp;
-exports.transformMat4 = transformMat4;
-exports.scaleRotateMat4 = scaleRotateMat4;
+exports.subtract = subtract;
 exports.transformMat3 = transformMat3;
+exports.transformMat4 = transformMat4;
 exports.transformQuat = transformQuat;
-exports.exactEquals = exactEquals;
-exports.angle = void 0;
 const EPSILON = 0.000001;
 /**
  * Calculates the length of a vec3
@@ -758,11 +1265,6 @@ class Vec3 extends Array {
     return Vec3Func.exactEquals(this, v);
   }
 
-  applyMatrix3(mat3) {
-    Vec3Func.transformMat3(this, this, mat3);
-    return this;
-  }
-
   applyMatrix4(mat4) {
     Vec3Func.transformMat4(this, this, mat4);
     return this;
@@ -888,10 +1390,10 @@ class Geometry {
     attr.count = attr.count || (attr.stride ? attr.data.byteLength / attr.stride : attr.data.length / attr.size);
     attr.divisor = attr.instanced || 0;
     attr.needsUpdate = false;
-    attr.usage = attr.usage || this.gl.STATIC_DRAW;
 
     if (!attr.buffer) {
-      // Push data to buffer
+      attr.buffer = this.gl.createBuffer(); // Push data to buffer
+
       this.updateAttribute(attr);
     } // Update geometry counts. If indexed, ignore regular attributes
 
@@ -913,20 +1415,12 @@ class Geometry {
   }
 
   updateAttribute(attr) {
-    const isNewBuffer = !attr.buffer;
-    if (isNewBuffer) attr.buffer = this.gl.createBuffer();
-
     if (this.glState.boundBuffer !== attr.buffer) {
       this.gl.bindBuffer(attr.target, attr.buffer);
       this.glState.boundBuffer = attr.buffer;
     }
 
-    if (isNewBuffer) {
-      this.gl.bufferData(attr.target, attr.data, attr.usage);
-    } else {
-      this.gl.bufferSubData(attr.target, 0, attr.data);
-    }
-
+    this.gl.bufferData(attr.target, attr.data, this.gl.STATIC_DRAW);
     attr.needsUpdate = false;
   }
 
@@ -1808,14 +2302,14 @@ exports.Renderer = Renderer;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.copy = copy;
-exports.set = set;
 exports.add = add;
-exports.scale = scale;
-exports.length = length;
-exports.normalize = normalize;
+exports.copy = copy;
 exports.dot = dot;
+exports.length = length;
 exports.lerp = lerp;
+exports.normalize = normalize;
+exports.scale = scale;
+exports.set = set;
 const EPSILON = 0.000001;
 /**
  * Copy the values from one vec4 to another
@@ -1966,18 +2460,22 @@ function lerp(out, a, b, t) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.add = void 0;
+exports.conjugate = conjugate;
+exports.dot = exports.copy = void 0;
+exports.fromEuler = fromEuler;
+exports.fromMat3 = fromMat3;
 exports.identity = identity;
-exports.setAxisAngle = setAxisAngle;
+exports.invert = invert;
+exports.lerp = exports.length = void 0;
 exports.multiply = multiply;
+exports.normalize = void 0;
 exports.rotateX = rotateX;
 exports.rotateY = rotateY;
 exports.rotateZ = rotateZ;
+exports.set = exports.scale = void 0;
+exports.setAxisAngle = setAxisAngle;
 exports.slerp = slerp;
-exports.invert = invert;
-exports.conjugate = conjugate;
-exports.fromMat3 = fromMat3;
-exports.fromEuler = fromEuler;
-exports.normalize = exports.length = exports.lerp = exports.dot = exports.scale = exports.add = exports.set = exports.copy = void 0;
 
 var vec4 = _interopRequireWildcard(require("./Vec4Func.js"));
 
@@ -2578,28 +3076,28 @@ exports.Quat = Quat;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.copy = copy;
-exports.set = set;
-exports.identity = identity;
-exports.transpose = transpose;
-exports.invert = invert;
-exports.determinant = determinant;
-exports.multiply = multiply;
-exports.translate = translate;
-exports.scale = scale;
-exports.rotate = rotate;
-exports.getTranslation = getTranslation;
-exports.getScaling = getScaling;
-exports.getMaxScaleOnAxis = getMaxScaleOnAxis;
-exports.fromRotationTranslationScale = fromRotationTranslationScale;
-exports.fromQuat = fromQuat;
-exports.perspective = perspective;
-exports.ortho = ortho;
-exports.targetTo = targetTo;
 exports.add = add;
-exports.subtract = subtract;
-exports.multiplyScalar = multiplyScalar;
+exports.copy = copy;
+exports.determinant = determinant;
+exports.fromQuat = fromQuat;
+exports.fromRotationTranslationScale = fromRotationTranslationScale;
+exports.getMaxScaleOnAxis = getMaxScaleOnAxis;
 exports.getRotation = void 0;
+exports.getScaling = getScaling;
+exports.getTranslation = getTranslation;
+exports.identity = identity;
+exports.invert = invert;
+exports.multiply = multiply;
+exports.multiplyScalar = multiplyScalar;
+exports.ortho = ortho;
+exports.perspective = perspective;
+exports.rotate = rotate;
+exports.scale = scale;
+exports.set = set;
+exports.subtract = subtract;
+exports.targetTo = targetTo;
+exports.translate = translate;
+exports.transpose = transpose;
 const EPSILON = 0.000001;
 /**
  * Copy the values from one mat4 to another
@@ -4191,23 +4689,23 @@ exports.Camera = Camera;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.add = add;
+exports.copy = copy;
+exports.determinant = determinant;
 exports.fromMat4 = fromMat4;
 exports.fromQuat = fromQuat;
-exports.copy = copy;
-exports.set = set;
 exports.identity = identity;
-exports.transpose = transpose;
 exports.invert = invert;
-exports.determinant = determinant;
 exports.multiply = multiply;
-exports.translate = translate;
-exports.rotate = rotate;
-exports.scale = scale;
+exports.multiplyScalar = multiplyScalar;
 exports.normalFromMat4 = normalFromMat4;
 exports.projection = projection;
-exports.add = add;
+exports.rotate = rotate;
+exports.scale = scale;
+exports.set = set;
 exports.subtract = subtract;
-exports.multiplyScalar = multiplyScalar;
+exports.translate = translate;
+exports.transpose = transpose;
 const EPSILON = 0.000001;
 /**
  * Copies the upper-left 3x3 values into the given mat3.
@@ -5372,28 +5870,28 @@ exports.Color = Color;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.copy = copy;
-exports.set = set;
 exports.add = add;
-exports.subtract = subtract;
-exports.multiply = multiply;
-exports.divide = divide;
-exports.scale = scale;
-exports.distance = distance;
-exports.squaredDistance = squaredDistance;
-exports.length = length;
-exports.squaredLength = squaredLength;
-exports.negate = negate;
-exports.inverse = inverse;
-exports.normalize = normalize;
-exports.dot = dot;
+exports.copy = copy;
 exports.cross = cross;
+exports.distance = distance;
+exports.divide = divide;
+exports.dot = dot;
+exports.exactEquals = exactEquals;
+exports.inverse = inverse;
+exports.length = length;
 exports.lerp = lerp;
+exports.multiply = multiply;
+exports.negate = negate;
+exports.normalize = normalize;
+exports.scale = scale;
+exports.set = set;
+exports.squaredDistance = squaredDistance;
+exports.squaredLength = squaredLength;
+exports.subtract = subtract;
 exports.transformMat2 = transformMat2;
 exports.transformMat2d = transformMat2d;
 exports.transformMat3 = transformMat3;
 exports.transformMat4 = transformMat4;
-exports.exactEquals = exactEquals;
 const EPSILON = 0.000001;
 /**
  * Copy the values from one vec2 to another
@@ -5946,15 +6444,6 @@ class Vec4 extends Array {
   normalize() {
     Vec4Func.normalize(this, this);
     return this;
-  }
-
-  multiply(v) {
-    Vec4Func.scale(this, this, v);
-    return this;
-  }
-
-  dot(v) {
-    return Vec4Func.dot(this, v);
   }
 
   fromArray(a, o = 0) {
@@ -9085,7 +9574,130 @@ function decodeImage(src, flipY) {
     }
   });
 }
-},{"../core/Texture.js":"../node_modules/ogl/src/core/Texture.js","./KTXTexture.js":"../node_modules/ogl/src/extras/KTXTexture.js"}],"../node_modules/ogl/src/extras/GLTFSkin.js":[function(require,module,exports) {
+},{"../core/Texture.js":"../node_modules/ogl/src/core/Texture.js","./KTXTexture.js":"../node_modules/ogl/src/extras/KTXTexture.js"}],"../node_modules/ogl/src/extras/GLTFAnimation.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GLTFAnimation = void 0;
+
+var _Vec = require("../math/Vec3.js");
+
+var _Quat = require("../math/Quat.js");
+
+const tmpVec3A = new _Vec.Vec3();
+const tmpVec3B = new _Vec.Vec3();
+const tmpVec3C = new _Vec.Vec3();
+const tmpVec3D = new _Vec.Vec3();
+const tmpQuatA = new _Quat.Quat();
+const tmpQuatB = new _Quat.Quat();
+const tmpQuatC = new _Quat.Quat();
+const tmpQuatD = new _Quat.Quat();
+
+class GLTFAnimation {
+  constructor(data, weight = 1) {
+    this.data = data;
+    this.elapsed = 0;
+    this.weight = weight; // Set to false to not apply modulo to elapsed against duration
+
+    this.loop = true; // Find starting time as exports from blender (perhaps others too) don't always start from 0
+
+    this.startTime = data.reduce((a, {
+      times
+    }) => Math.min(a, times[0]), Infinity); // Get largest final time in all channels to calculate duration
+
+    this.endTime = data.reduce((a, {
+      times
+    }) => Math.max(a, times[times.length - 1]), 0);
+    this.duration = this.endTime - this.startTime;
+  }
+
+  update(totalWeight = 1, isSet) {
+    const weight = isSet ? 1 : this.weight / totalWeight;
+    const elapsed = !this.duration ? 0 : (this.loop ? this.elapsed % this.duration : Math.min(this.elapsed, this.duration - 0.001)) + this.startTime;
+    this.data.forEach(({
+      node,
+      transform,
+      interpolation,
+      times,
+      values
+    }) => {
+      if (!this.duration) {
+        let val = tmpVec3A;
+        let size = 3;
+
+        if (transform === 'quaternion') {
+          val = tmpQuatA;
+          size = 4;
+        }
+
+        val.fromArray(values, 0);
+        if (size === 4) node[transform].slerp(val, weight);else node[transform].lerp(val, weight);
+        return;
+      } // Get index of two time values elapsed is between
+
+
+      const prevIndex = Math.max(1, times.findIndex(t => t > elapsed)) - 1;
+      const nextIndex = prevIndex + 1; // Get linear blend/alpha between the two
+
+      let alpha = (elapsed - times[prevIndex]) / (times[nextIndex] - times[prevIndex]);
+      if (interpolation === 'STEP') alpha = 0;
+      let prevVal = tmpVec3A;
+      let prevTan = tmpVec3B;
+      let nextTan = tmpVec3C;
+      let nextVal = tmpVec3D;
+      let size = 3;
+
+      if (transform === 'quaternion') {
+        prevVal = tmpQuatA;
+        prevTan = tmpQuatB;
+        nextTan = tmpQuatC;
+        nextVal = tmpQuatD;
+        size = 4;
+      }
+
+      if (interpolation === 'CUBICSPLINE') {
+        // Get the prev and next values from the indices
+        prevVal.fromArray(values, prevIndex * size * 3 + size * 1);
+        prevTan.fromArray(values, prevIndex * size * 3 + size * 2);
+        nextTan.fromArray(values, nextIndex * size * 3 + size * 0);
+        nextVal.fromArray(values, nextIndex * size * 3 + size * 1); // interpolate for final value
+
+        prevVal = this.cubicSplineInterpolate(alpha, prevVal, prevTan, nextTan, nextVal);
+        if (size === 4) prevVal.normalize();
+      } else {
+        // Get the prev and next values from the indices
+        prevVal.fromArray(values, prevIndex * size);
+        nextVal.fromArray(values, nextIndex * size); // interpolate for final value
+
+        if (size === 4) prevVal.slerp(nextVal, alpha);else prevVal.lerp(nextVal, alpha);
+      } // interpolate between multiple possible animations
+
+
+      if (size === 4) node[transform].slerp(prevVal, weight);else node[transform].lerp(prevVal, weight);
+    });
+  }
+
+  cubicSplineInterpolate(t, prevVal, prevTan, nextTan, nextVal) {
+    const t2 = t * t;
+    const t3 = t2 * t;
+    const s2 = 3 * t2 - 2 * t3;
+    const s3 = t3 - t2;
+    const s0 = 1 - s2;
+    const s1 = s3 - t2 + t;
+
+    for (let i = 0; i < prevVal.length; i++) {
+      prevVal[i] = s0 * prevVal[i] + s1 * (1 - t) * prevTan[i] + s2 * nextVal[i] + s3 * t * nextTan[i];
+    }
+
+    return prevVal;
+  }
+
+}
+
+exports.GLTFAnimation = GLTFAnimation;
+},{"../math/Vec3.js":"../node_modules/ogl/src/math/Vec3.js","../math/Quat.js":"../node_modules/ogl/src/math/Quat.js"}],"../node_modules/ogl/src/extras/GLTFSkin.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9190,7 +9802,944 @@ class GLTFSkin extends _Mesh.Mesh {
 }
 
 exports.GLTFSkin = GLTFSkin;
-},{"../core/Mesh.js":"../node_modules/ogl/src/core/Mesh.js","../math/Mat4.js":"../node_modules/ogl/src/math/Mat4.js","../core/Texture.js":"../node_modules/ogl/src/core/Texture.js"}],"../node_modules/ogl/src/extras/BasisManager.js":[function(require,module,exports) {
+},{"../core/Mesh.js":"../node_modules/ogl/src/core/Mesh.js","../math/Mat4.js":"../node_modules/ogl/src/math/Mat4.js","../core/Texture.js":"../node_modules/ogl/src/core/Texture.js"}],"../node_modules/ogl/src/extras/GLTFLoader.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.GLTFLoader = void 0;
+
+var _Geometry = require("../core/Geometry.js");
+
+var _Transform = require("../core/Transform.js");
+
+var _Texture = require("../core/Texture.js");
+
+var _Mesh = require("../core/Mesh.js");
+
+var _GLTFAnimation = require("./GLTFAnimation.js");
+
+var _GLTFSkin = require("./GLTFSkin.js");
+
+var _Mat = require("../math/Mat4.js");
+
+var _Vec = require("../math/Vec3.js");
+
+var _NormalProgram = require("./NormalProgram.js");
+
+// Supports
+// [x] glb
+// [x] Geometry
+// [x] Nodes and Hierarchy
+// [x] Instancing
+// [x] Skins
+// [x] Textures
+// [x] Animation
+// [x] GLB support
+// [x] Basis/ktx2
+// [x] KHR_lights_punctual lights
+// [ ] Morph Targets
+// [ ] Materials
+// [ ] Cameras
+// TODO: Sparse accessor packing? For morph targets basically
+// TODO: init accessor missing bufferView with 0s
+// TODO: morph target animations
+// TODO: option to turn off GPU instancing
+const TYPE_ARRAY = {
+  5121: Uint8Array,
+  5122: Int16Array,
+  5123: Uint16Array,
+  5125: Uint32Array,
+  5126: Float32Array,
+  'image/jpeg': Uint8Array,
+  'image/png': Uint8Array
+};
+const TYPE_SIZE = {
+  SCALAR: 1,
+  VEC2: 2,
+  VEC3: 3,
+  VEC4: 4,
+  MAT2: 4,
+  MAT3: 9,
+  MAT4: 16
+};
+const ATTRIBUTES = {
+  POSITION: 'position',
+  NORMAL: 'normal',
+  TANGENT: 'tangent',
+  TEXCOORD_0: 'uv',
+  TEXCOORD_1: 'uv2',
+  COLOR_0: 'color',
+  WEIGHTS_0: 'skinWeight',
+  JOINTS_0: 'skinIndex'
+};
+const TRANSFORMS = {
+  translation: 'position',
+  rotation: 'quaternion',
+  scale: 'scale'
+};
+
+class GLTFLoader {
+  static setBasisManager(manager) {
+    this.basisManager = manager;
+  }
+
+  static async load(gl, src) {
+    const dir = src.split('/').slice(0, -1).join('/') + '/'; // load main description json
+
+    const desc = await this.parseDesc(src);
+    return await this.parse(gl, desc, dir);
+  }
+
+  static async parse(gl, desc, dir) {
+    if (desc.asset === undefined || desc.asset.version[0] < 2) console.warn('Only GLTF >=2.0 supported. Attempting to parse.');
+    if (desc.extensionsRequired?.includes('KHR_texture_basisu') && !this.basisManager) console.warn('KHR_texture_basisu extension required but no manager supplied. Use .setBasisManager()'); // Load buffers async
+
+    const buffers = await this.loadBuffers(desc, dir); // Unbind current VAO so that new buffers don't get added to active mesh
+
+    gl.renderer.bindVertexArray(null); // Create gl buffers from bufferViews
+
+    const bufferViews = this.parseBufferViews(gl, desc, buffers); // Create images from either bufferViews or separate image files
+
+    const images = await this.parseImages(gl, desc, dir, bufferViews);
+    const textures = this.parseTextures(gl, desc, images); // Just pass through material data for now
+
+    const materials = this.parseMaterials(gl, desc, textures); // Fetch the inverse bind matrices for skeleton joints
+
+    const skins = this.parseSkins(gl, desc, bufferViews); // Create geometries for each mesh primitive
+
+    const meshes = this.parseMeshes(gl, desc, bufferViews, materials, skins); // Create transforms, meshes and hierarchy
+
+    const nodes = this.parseNodes(gl, desc, meshes, skins, images); // Place nodes in skeletons
+
+    this.populateSkins(skins, nodes); // Create animation handlers
+
+    const animations = this.parseAnimations(gl, desc, nodes, bufferViews); // Get top level nodes for each scene
+
+    const scenes = this.parseScenes(desc, nodes);
+    const scene = scenes[desc.scene]; // Create uniforms for scene lights (TODO: light linking?)
+
+    const lights = this.parseLights(gl, desc, nodes, scenes); // Remove null nodes (instanced transforms)
+
+    for (let i = nodes.length; i >= 0; i--) if (!nodes[i]) nodes.splice(i, 1);
+
+    return {
+      json: desc,
+      buffers,
+      bufferViews,
+      images,
+      textures,
+      materials,
+      meshes,
+      nodes,
+      lights,
+      animations,
+      scenes,
+      scene
+    };
+  }
+
+  static async parseDesc(src) {
+    if (!src.match(/\.glb/)) {
+      return await fetch(src).then(res => res.json());
+    } else {
+      return await fetch(src).then(res => res.arrayBuffer()).then(glb => this.unpackGLB(glb));
+    }
+  } // From https://github.com/donmccurdy/glTF-Transform/blob/e4108cc/packages/core/src/io/io.ts#L32
+
+
+  static unpackGLB(glb) {
+    // Decode and verify GLB header.
+    const header = new Uint32Array(glb, 0, 3);
+
+    if (header[0] !== 0x46546c67) {
+      throw new Error('Invalid glTF asset.');
+    } else if (header[1] !== 2) {
+      throw new Error(`Unsupported glTF binary version, "${header[1]}".`);
+    } // Decode and verify chunk headers.
+
+
+    const jsonChunkHeader = new Uint32Array(glb, 12, 2);
+    const jsonByteOffset = 20;
+    const jsonByteLength = jsonChunkHeader[0];
+
+    if (jsonChunkHeader[1] !== 0x4e4f534a) {
+      throw new Error('Unexpected GLB layout.');
+    } // Decode JSON.
+
+
+    const jsonText = new TextDecoder().decode(glb.slice(jsonByteOffset, jsonByteOffset + jsonByteLength));
+    const json = JSON.parse(jsonText); // JSON only
+
+    if (jsonByteOffset + jsonByteLength === glb.byteLength) return json;
+    const binaryChunkHeader = new Uint32Array(glb, jsonByteOffset + jsonByteLength, 2);
+
+    if (binaryChunkHeader[1] !== 0x004e4942) {
+      throw new Error('Unexpected GLB layout.');
+    } // Decode content.
+
+
+    const binaryByteOffset = jsonByteOffset + jsonByteLength + 8;
+    const binaryByteLength = binaryChunkHeader[0];
+    const binary = glb.slice(binaryByteOffset, binaryByteOffset + binaryByteLength); // Attach binary to buffer
+
+    json.buffers[0].binary = binary;
+    return json;
+  } // Threejs GLTF Loader https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/GLTFLoader.js#L1085
+
+
+  static resolveURI(uri, dir) {
+    // Invalid URI
+    if (typeof uri !== 'string' || uri === '') return ''; // Host Relative URI
+
+    if (/^https?:\/\//i.test(dir) && /^\//.test(uri)) {
+      dir = dir.replace(/(^https?:\/\/[^\/]+).*/i, '$1');
+    } // Absolute URI http://, https://, //
+
+
+    if (/^(https?:)?\/\//i.test(uri)) return uri; // Data URI
+
+    if (/^data:.*,.*$/i.test(uri)) return uri; // Blob URI
+
+    if (/^blob:.*$/i.test(uri)) return uri; // Relative URI
+
+    return dir + uri;
+  }
+
+  static async loadBuffers(desc, dir) {
+    if (!desc.buffers) return null;
+    return await Promise.all(desc.buffers.map(buffer => {
+      // For GLB, binary buffer ready to go
+      if (buffer.binary) return buffer.binary;
+      const uri = this.resolveURI(buffer.uri, dir);
+      return fetch(uri).then(res => res.arrayBuffer());
+    }));
+  }
+
+  static parseBufferViews(gl, desc, buffers) {
+    if (!desc.bufferViews) return null; // Clone to leave description pure
+
+    const bufferViews = desc.bufferViews.map(o => Object.assign({}, o));
+    desc.meshes && desc.meshes.forEach(({
+      primitives
+    }) => {
+      primitives.forEach(({
+        attributes,
+        indices
+      }) => {
+        // Flag bufferView as an attribute, so it knows to create a gl buffer
+        for (let attr in attributes) bufferViews[desc.accessors[attributes[attr]].bufferView].isAttribute = true;
+
+        if (indices === undefined) return;
+        bufferViews[desc.accessors[indices].bufferView].isAttribute = true; // Make sure indices bufferView have a target property for gl buffer binding
+
+        bufferViews[desc.accessors[indices].bufferView].target = gl.ELEMENT_ARRAY_BUFFER;
+      });
+    }); // Get componentType of each bufferView from the accessors
+
+    desc.accessors.forEach(({
+      bufferView: i,
+      componentType
+    }) => {
+      bufferViews[i].componentType = componentType;
+    }); // Get mimetype of bufferView from images
+
+    desc.images && desc.images.forEach(({
+      uri,
+      bufferView: i,
+      mimeType
+    }) => {
+      if (i === undefined) return;
+      bufferViews[i].mimeType = mimeType;
+    }); // Push each bufferView to the GPU as a separate buffer
+
+    bufferViews.forEach(({
+      buffer: bufferIndex,
+      // required
+      byteOffset = 0,
+      // optional
+      byteLength,
+      // required
+      byteStride,
+      // optional
+      target = gl.ARRAY_BUFFER,
+      // optional, added above for elements
+      name,
+      // optional
+      extensions,
+      // optional
+      extras,
+      // optional
+      componentType,
+      // optional, added from accessor above
+      mimeType,
+      // optional, added from images above
+      isAttribute
+    }, i) => {
+      // For basis, just slice buffer
+      if (mimeType === 'image/ktx2') {
+        bufferViews[i].data = buffers[bufferIndex].slice(byteOffset, byteOffset + byteLength);
+        return;
+      }
+
+      const TypeArray = TYPE_ARRAY[componentType || mimeType];
+      const elementBytes = TypeArray.BYTES_PER_ELEMENT;
+      const data = new TypeArray(buffers[bufferIndex], byteOffset, byteLength / elementBytes);
+      bufferViews[i].data = data;
+      bufferViews[i].originalBuffer = buffers[bufferIndex];
+      if (!isAttribute) return; // Create gl buffers for the bufferView, pushing it to the GPU
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(target, buffer);
+      gl.renderer.state.boundBuffer = buffer;
+      gl.bufferData(target, data, gl.STATIC_DRAW);
+      bufferViews[i].buffer = buffer;
+    });
+    return bufferViews;
+  }
+
+  static async parseImages(gl, desc, dir, bufferViews) {
+    if (!desc.images) return null;
+    return await Promise.all(desc.images.map(async ({
+      uri,
+      bufferView: bufferViewIndex,
+      mimeType,
+      name
+    }) => {
+      if (mimeType === 'image/ktx2') {
+        const {
+          data
+        } = bufferViews[bufferViewIndex];
+        const image = await this.basisManager.parseTexture(data);
+        return image;
+      } // jpg / png
+
+
+      const image = new Image();
+      image.name = name;
+
+      if (uri) {
+        image.src = this.resolveURI(uri, dir);
+      } else if (bufferViewIndex !== undefined) {
+        const {
+          data
+        } = bufferViews[bufferViewIndex];
+        const blob = new Blob([data], {
+          type: mimeType
+        });
+        image.src = URL.createObjectURL(blob);
+      }
+
+      image.ready = new Promise(res => {
+        image.onload = () => res();
+      });
+      return image;
+    }));
+  }
+
+  static parseTextures(gl, desc, images) {
+    if (!desc.textures) return null;
+    return desc.textures.map(textureInfo => this.createTexture(gl, desc, images, textureInfo));
+  }
+
+  static createTexture(gl, desc, images, {
+    sampler: samplerIndex,
+    source: sourceIndex,
+    name,
+    extensions,
+    extras
+  }) {
+    if (sourceIndex === undefined && !!extensions) {
+      // Basis extension source index
+      if (extensions.KHR_texture_basisu) sourceIndex = extensions.KHR_texture_basisu.source;
+    }
+
+    const image = images[sourceIndex];
+    if (image.texture) return image.texture;
+    const options = {
+      flipY: false,
+      wrapS: gl.REPEAT,
+      // Repeat by default, opposed to OGL's clamp by default
+      wrapT: gl.REPEAT
+    };
+    const sampler = samplerIndex !== undefined ? desc.samplers[samplerIndex] : null;
+
+    if (sampler) {
+      ['magFilter', 'minFilter', 'wrapS', 'wrapT'].forEach(prop => {
+        if (sampler[prop]) options[prop] = sampler[prop];
+      });
+    } // For compressed textures
+
+
+    if (image.isBasis) {
+      options.image = image;
+      options.internalFormat = image.internalFormat;
+
+      if (image.isCompressedTexture) {
+        options.generateMipmaps = false;
+        if (image.length > 1) this.minFilter = gl.NEAREST_MIPMAP_LINEAR;
+      }
+
+      const texture = new _Texture.Texture(gl, options);
+      texture.name = name;
+      image.texture = texture;
+      return texture;
+    }
+
+    const texture = new _Texture.Texture(gl, options);
+    texture.name = name;
+    image.texture = texture;
+    image.ready.then(() => {
+      texture.image = image;
+    });
+    return texture;
+  }
+
+  static parseMaterials(gl, desc, textures) {
+    if (!desc.materials) return null;
+    return desc.materials.map(({
+      name,
+      extensions,
+      extras,
+      pbrMetallicRoughness = {},
+      normalTexture,
+      occlusionTexture,
+      emissiveTexture,
+      emissiveFactor = [0, 0, 0],
+      alphaMode = 'OPAQUE',
+      alphaCutoff = 0.5,
+      doubleSided = false
+    }) => {
+      const {
+        baseColorFactor = [1, 1, 1, 1],
+        baseColorTexture,
+        metallicFactor = 1,
+        roughnessFactor = 1,
+        metallicRoughnessTexture //   extensions,
+        //   extras,
+
+      } = pbrMetallicRoughness;
+
+      if (baseColorTexture) {
+        baseColorTexture.texture = textures[baseColorTexture.index]; // texCoord
+      }
+
+      if (normalTexture) {
+        normalTexture.texture = textures[normalTexture.index]; // scale: 1
+        // texCoord
+      }
+
+      if (metallicRoughnessTexture) {
+        metallicRoughnessTexture.texture = textures[metallicRoughnessTexture.index]; // texCoord
+      }
+
+      if (occlusionTexture) {
+        occlusionTexture.texture = textures[occlusionTexture.index]; // strength 1
+        // texCoord
+      }
+
+      if (emissiveTexture) {
+        emissiveTexture.texture = textures[emissiveTexture.index]; // texCoord
+      }
+
+      return {
+        name,
+        extensions,
+        extras,
+        baseColorFactor,
+        baseColorTexture,
+        metallicFactor,
+        roughnessFactor,
+        metallicRoughnessTexture,
+        normalTexture,
+        occlusionTexture,
+        emissiveTexture,
+        emissiveFactor,
+        alphaMode,
+        alphaCutoff,
+        doubleSided
+      };
+    });
+  }
+
+  static parseSkins(gl, desc, bufferViews) {
+    if (!desc.skins) return null;
+    return desc.skins.map(({
+      inverseBindMatrices,
+      // optional
+      skeleton,
+      // optional
+      joints // required
+      // name,
+      // extensions,
+      // extras,
+
+    }) => {
+      return {
+        inverseBindMatrices: this.parseAccessor(inverseBindMatrices, desc, bufferViews),
+        skeleton,
+        joints
+      };
+    });
+  }
+
+  static parseMeshes(gl, desc, bufferViews, materials, skins) {
+    if (!desc.meshes) return null;
+    return desc.meshes.map(({
+      primitives,
+      // required
+      weights,
+      // optional
+      name,
+      // optional
+      extensions,
+      // optional
+      extras // optional
+
+    }, meshIndex) => {
+      // TODO: weights stuff ?
+      // Parse through nodes to see how many instances there are
+      // and if there is a skin attached
+      let numInstances = 0;
+      let skinIndex = false;
+      let isLightmap = false;
+      desc.nodes && desc.nodes.forEach(({
+        mesh,
+        skin,
+        extras
+      }) => {
+        if (mesh === meshIndex) {
+          numInstances++;
+          if (skin !== undefined) skinIndex = skin;
+          if (extras && extras.lightmap_scale_offset) isLightmap = true;
+        }
+      });
+      primitives = this.parsePrimitives(gl, primitives, desc, bufferViews, materials, numInstances, isLightmap).map(({
+        geometry,
+        program,
+        mode
+      }) => {
+        // Create either skinned mesh or regular mesh
+        const mesh = typeof skinIndex === 'number' ? new _GLTFSkin.GLTFSkin(gl, {
+          skeleton: skins[skinIndex],
+          geometry,
+          program,
+          mode
+        }) : new _Mesh.Mesh(gl, {
+          geometry,
+          program,
+          mode
+        });
+        mesh.name = name;
+
+        if (mesh.geometry.isInstanced) {
+          // Tag mesh so that nodes can add their transforms to the instance attribute
+          mesh.numInstances = numInstances; // Avoid incorrect culling for instances
+
+          mesh.frustumCulled = false;
+        }
+
+        return mesh;
+      });
+      return {
+        primitives,
+        weights,
+        name
+      };
+    });
+  }
+
+  static parsePrimitives(gl, primitives, desc, bufferViews, materials, numInstances, isLightmap) {
+    return primitives.map(({
+      attributes,
+      // required
+      indices,
+      // optional
+      material: materialIndex,
+      // optional
+      mode = 4,
+      // optional
+      targets,
+      // optional
+      extensions,
+      // optional
+      extras // optional
+
+    }) => {
+      // TODO: materials
+      const program = new _NormalProgram.NormalProgram(gl);
+
+      if (materialIndex !== undefined) {
+        program.gltfMaterial = materials[materialIndex];
+      }
+
+      const geometry = new _Geometry.Geometry(gl); // Add each attribute found in primitive
+
+      for (let attr in attributes) {
+        geometry.addAttribute(ATTRIBUTES[attr], this.parseAccessor(attributes[attr], desc, bufferViews));
+      } // Add index attribute if found
+
+
+      if (indices !== undefined) {
+        geometry.addAttribute('index', this.parseAccessor(indices, desc, bufferViews));
+      } // Add instanced transform attribute if multiple instances
+
+
+      if (numInstances > 1) {
+        geometry.addAttribute('instanceMatrix', {
+          instanced: 1,
+          size: 16,
+          data: new Float32Array(numInstances * 16)
+        });
+
+        if (isLightmap) {
+          geometry.addAttribute('lightmapScaleOffset', {
+            instanced: 1,
+            size: 4,
+            data: new Float32Array(numInstances * 4)
+          });
+        }
+      }
+
+      return {
+        geometry,
+        program,
+        mode
+      };
+    });
+  }
+
+  static parseAccessor(index, desc, bufferViews) {
+    // TODO: init missing bufferView with 0s
+    // TODO: support sparse
+    const {
+      bufferView: bufferViewIndex,
+      // optional
+      byteOffset = 0,
+      // optional
+      componentType,
+      // required
+      normalized = false,
+      // optional
+      count,
+      // required
+      type,
+      // required
+      min,
+      // optional
+      max,
+      // optional
+      sparse // optional
+      // name, // optional
+      // extensions, // optional
+      // extras, // optional
+
+    } = desc.accessors[index];
+    const {
+      data,
+      // attached in parseBufferViews
+      originalBuffer,
+      // attached in parseBufferViews
+      buffer,
+      // replaced to be the actual GL buffer
+      byteOffset: bufferByteOffset = 0,
+      // byteLength, // applied in parseBufferViews
+      byteStride = 0,
+      target // name,
+      // extensions,
+      // extras,
+
+    } = bufferViews[bufferViewIndex];
+    const size = TYPE_SIZE[type]; // Parse data from joined buffers
+
+    const TypeArray = TYPE_ARRAY[componentType];
+    const elementBytes = data.BYTES_PER_ELEMENT;
+    const componentOffset = byteOffset / elementBytes;
+    const componentStride = byteStride / elementBytes;
+    const isInterleaved = !!byteStride && componentStride !== size; // TODO: interleaved
+
+    const newData = isInterleaved ? data : new TypeArray(originalBuffer, byteOffset + bufferByteOffset, count * size); // Return attribute data
+
+    return {
+      data: newData,
+      size,
+      type: componentType,
+      normalized,
+      buffer,
+      stride: byteStride,
+      offset: byteOffset,
+      count,
+      min,
+      max
+    };
+  }
+
+  static parseNodes(gl, desc, meshes, skins, images) {
+    if (!desc.nodes) return null;
+    const nodes = desc.nodes.map(({
+      camera,
+      // optional
+      children,
+      // optional
+      skin: skinIndex,
+      // optional
+      matrix,
+      // optional
+      mesh: meshIndex,
+      // optional
+      rotation,
+      // optional
+      scale,
+      // optional
+      translation,
+      // optional
+      weights,
+      // optional
+      name,
+      // optional
+      extensions,
+      // optional
+      extras // optional
+
+    }) => {
+      const node = new _Transform.Transform();
+      if (name) node.name = name;
+      node.extras = extras;
+      node.extensions = extensions; // Need to attach to node as may have same material but different lightmap
+
+      if (extras && extras.lightmapTexture !== undefined) {
+        extras.lightmapTexture.texture = this.createTexture(gl, desc, images, {
+          source: extras.lightmapTexture.index
+        });
+      } // Apply transformations
+
+
+      if (matrix) {
+        node.matrix.copy(matrix);
+        node.decompose();
+      } else {
+        if (rotation) node.quaternion.copy(rotation);
+        if (scale) node.scale.copy(scale);
+        if (translation) node.position.copy(translation);
+        node.updateMatrix();
+      } // Flags for avoiding duplicate transforms and removing unused instance nodes
+
+
+      let isInstanced = false;
+      let isFirstInstance = true; // add mesh if included
+
+      if (meshIndex !== undefined) {
+        meshes[meshIndex].primitives.forEach(mesh => {
+          mesh.extras = extras;
+
+          if (mesh.geometry.isInstanced) {
+            isInstanced = true;
+
+            if (!mesh.instanceCount) {
+              mesh.instanceCount = 0;
+            } else {
+              isFirstInstance = false;
+            }
+
+            node.matrix.toArray(mesh.geometry.attributes.instanceMatrix.data, mesh.instanceCount * 16);
+
+            if (mesh.geometry.attributes.lightmapScaleOffset && extras && extras.lightmap_scale_offset) {
+              mesh.geometry.attributes.lightmapScaleOffset.data.set(extras.lightmap_scale_offset, mesh.instanceCount * 4);
+            }
+
+            mesh.instanceCount++;
+
+            if (mesh.instanceCount === mesh.numInstances) {
+              // Remove properties once all instances added
+              delete mesh.numInstances;
+              delete mesh.instanceCount; // Flag attribute as dirty
+
+              mesh.geometry.attributes.instanceMatrix.needsUpdate = true;
+
+              if (mesh.geometry.attributes.lightmapScaleOffset) {
+                mesh.geometry.attributes.lightmapScaleOffset.needsUpdate = true;
+              }
+            }
+          } // For instances, only the first node will actually have the mesh
+
+
+          if (isInstanced) {
+            if (isFirstInstance) mesh.setParent(node);
+          } else {
+            mesh.setParent(node);
+          }
+        });
+      } // Reset node if instanced to not duplicate transforms
+
+
+      if (isInstanced) {
+        // Remove unused nodes just providing an instance transform
+        if (!isFirstInstance) return null; // Avoid duplicate transform for node containing the instanced mesh
+
+        node.matrix.identity();
+        node.decompose();
+      }
+
+      return node;
+    });
+    desc.nodes.forEach(({
+      children = []
+    }, i) => {
+      // Set hierarchy now all nodes created
+      children.forEach(childIndex => {
+        if (!nodes[childIndex]) return;
+        nodes[childIndex].setParent(nodes[i]);
+      });
+    });
+    return nodes;
+  }
+
+  static populateSkins(skins, nodes) {
+    if (!skins) return;
+    skins.forEach(skin => {
+      skin.joints = skin.joints.map((i, index) => {
+        const joint = nodes[i];
+        joint.bindInverse = new _Mat.Mat4(...skin.inverseBindMatrices.data.slice(index * 16, (index + 1) * 16));
+        return joint;
+      });
+      if (skin.skeleton) skin.skeleton = nodes[skin.skeleton];
+    });
+  }
+
+  static parseAnimations(gl, desc, nodes, bufferViews) {
+    if (!desc.animations) return null;
+    return desc.animations.map(({
+      channels,
+      // required
+      samplers,
+      // required
+      name // optional
+      // extensions, // optional
+      // extras,  // optional
+
+    }) => {
+      const data = channels.map(({
+        sampler: samplerIndex,
+        // required
+        target // required
+        // extensions, // optional
+        // extras, // optional
+
+      }) => {
+        const {
+          input: inputIndex,
+          // required
+          interpolation = 'LINEAR',
+          output: outputIndex // required
+          // extensions, // optional
+          // extras, // optional
+
+        } = samplers[samplerIndex];
+        const {
+          node: nodeIndex,
+          // optional - TODO: when is it not included?
+          path // required
+          // extensions, // optional
+          // extras, // optional
+
+        } = target;
+        const node = nodes[nodeIndex];
+        const transform = TRANSFORMS[path];
+        const times = this.parseAccessor(inputIndex, desc, bufferViews).data;
+        const values = this.parseAccessor(outputIndex, desc, bufferViews).data;
+        return {
+          node,
+          transform,
+          interpolation,
+          times,
+          values
+        };
+      });
+      return {
+        name,
+        animation: new _GLTFAnimation.GLTFAnimation(data)
+      };
+    });
+  }
+
+  static parseScenes(desc, nodes) {
+    if (!desc.scenes) return null;
+    return desc.scenes.map(({
+      nodes: nodesIndices = [],
+      name,
+      // optional
+      extensions,
+      extras
+    }) => {
+      const scene = nodesIndices.reduce((map, i) => {
+        // Don't add null nodes (instanced transforms)
+        if (nodes[i]) map.push(nodes[i]);
+        return map;
+      }, []);
+      scene.extras = extras;
+      return scene;
+    });
+  }
+
+  static parseLights(gl, desc, nodes, scenes) {
+    const lights = {
+      directional: [],
+      point: [],
+      spot: []
+    }; // Update matrices on root nodes
+
+    scenes.forEach(scene => scene.forEach(node => node.updateMatrixWorld())); // uses KHR_lights_punctual extension
+
+    const lightsDescArray = desc.extensions?.KHR_lights_punctual?.lights || []; // Need nodes for transforms
+
+    nodes.forEach(node => {
+      if (!node?.extensions?.KHR_lights_punctual) return;
+      const lightIndex = node.extensions.KHR_lights_punctual.light;
+      const lightDesc = lightsDescArray[lightIndex];
+      const light = {
+        name: lightDesc.name || '',
+        color: {
+          value: new _Vec.Vec3().set(lightDesc.color || 1)
+        }
+      }; // Apply intensity directly to color
+
+      if (lightDesc.intensity !== undefined) light.color.value.multiply(lightDesc.intensity);
+
+      switch (lightDesc.type) {
+        case 'directional':
+          light.direction = {
+            value: new _Vec.Vec3(0, 0, 1).transformDirection(node.worldMatrix)
+          };
+          break;
+
+        case 'point':
+          light.position = {
+            value: new _Vec.Vec3().applyMatrix4(node.worldMatrix)
+          };
+          light.distance = {
+            value: lightDesc.range
+          };
+          light.decay = {
+            value: 2
+          };
+          break;
+
+        case 'spot':
+          // TODO: support spot uniforms
+          Object.assign(light, lightDesc);
+          break;
+      }
+
+      lights[lightDesc.type].push(light);
+    });
+    return lights;
+  }
+
+}
+
+exports.GLTFLoader = GLTFLoader;
+},{"../core/Geometry.js":"../node_modules/ogl/src/core/Geometry.js","../core/Transform.js":"../node_modules/ogl/src/core/Transform.js","../core/Texture.js":"../node_modules/ogl/src/core/Texture.js","../core/Mesh.js":"../node_modules/ogl/src/core/Mesh.js","./GLTFAnimation.js":"../node_modules/ogl/src/extras/GLTFAnimation.js","./GLTFSkin.js":"../node_modules/ogl/src/extras/GLTFSkin.js","../math/Mat4.js":"../node_modules/ogl/src/math/Mat4.js","../math/Vec3.js":"../node_modules/ogl/src/math/Vec3.js","./NormalProgram.js":"../node_modules/ogl/src/extras/NormalProgram.js"}],"../node_modules/ogl/src/extras/BasisManager.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9277,22 +10826,22 @@ exports.BasisManager = BasisManager;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-Object.defineProperty(exports, "Geometry", {
+Object.defineProperty(exports, "Animation", {
   enumerable: true,
   get: function () {
-    return _Geometry.Geometry;
+    return _Animation.Animation;
   }
 });
-Object.defineProperty(exports, "Program", {
+Object.defineProperty(exports, "BasisManager", {
   enumerable: true,
   get: function () {
-    return _Program.Program;
+    return _BasisManager.BasisManager;
   }
 });
-Object.defineProperty(exports, "Renderer", {
+Object.defineProperty(exports, "Box", {
   enumerable: true,
   get: function () {
-    return _Renderer.Renderer;
+    return _Box.Box;
   }
 });
 Object.defineProperty(exports, "Camera", {
@@ -9301,40 +10850,64 @@ Object.defineProperty(exports, "Camera", {
     return _Camera.Camera;
   }
 });
-Object.defineProperty(exports, "Transform", {
-  enumerable: true,
-  get: function () {
-    return _Transform.Transform;
-  }
-});
-Object.defineProperty(exports, "Mesh", {
-  enumerable: true,
-  get: function () {
-    return _Mesh.Mesh;
-  }
-});
-Object.defineProperty(exports, "Texture", {
-  enumerable: true,
-  get: function () {
-    return _Texture.Texture;
-  }
-});
-Object.defineProperty(exports, "RenderTarget", {
-  enumerable: true,
-  get: function () {
-    return _RenderTarget.RenderTarget;
-  }
-});
 Object.defineProperty(exports, "Color", {
   enumerable: true,
   get: function () {
     return _Color.Color;
   }
 });
+Object.defineProperty(exports, "Curve", {
+  enumerable: true,
+  get: function () {
+    return _Curve.Curve;
+  }
+});
+Object.defineProperty(exports, "Cylinder", {
+  enumerable: true,
+  get: function () {
+    return _Cylinder.Cylinder;
+  }
+});
 Object.defineProperty(exports, "Euler", {
   enumerable: true,
   get: function () {
     return _Euler.Euler;
+  }
+});
+Object.defineProperty(exports, "Flowmap", {
+  enumerable: true,
+  get: function () {
+    return _Flowmap.Flowmap;
+  }
+});
+Object.defineProperty(exports, "GLTFLoader", {
+  enumerable: true,
+  get: function () {
+    return _GLTFLoader.GLTFLoader;
+  }
+});
+Object.defineProperty(exports, "GLTFSkin", {
+  enumerable: true,
+  get: function () {
+    return _GLTFSkin.GLTFSkin;
+  }
+});
+Object.defineProperty(exports, "GPGPU", {
+  enumerable: true,
+  get: function () {
+    return _GPGPU.GPGPU;
+  }
+});
+Object.defineProperty(exports, "Geometry", {
+  enumerable: true,
+  get: function () {
+    return _Geometry.Geometry;
+  }
+});
+Object.defineProperty(exports, "KTXTexture", {
+  enumerable: true,
+  get: function () {
+    return _KTXTexture.KTXTexture;
   }
 });
 Object.defineProperty(exports, "Mat3", {
@@ -9349,10 +10922,124 @@ Object.defineProperty(exports, "Mat4", {
     return _Mat2.Mat4;
   }
 });
+Object.defineProperty(exports, "Mesh", {
+  enumerable: true,
+  get: function () {
+    return _Mesh.Mesh;
+  }
+});
+Object.defineProperty(exports, "NormalProgram", {
+  enumerable: true,
+  get: function () {
+    return _NormalProgram.NormalProgram;
+  }
+});
+Object.defineProperty(exports, "Orbit", {
+  enumerable: true,
+  get: function () {
+    return _Orbit.Orbit;
+  }
+});
+Object.defineProperty(exports, "Plane", {
+  enumerable: true,
+  get: function () {
+    return _Plane.Plane;
+  }
+});
+Object.defineProperty(exports, "Polyline", {
+  enumerable: true,
+  get: function () {
+    return _Polyline.Polyline;
+  }
+});
+Object.defineProperty(exports, "Post", {
+  enumerable: true,
+  get: function () {
+    return _Post.Post;
+  }
+});
+Object.defineProperty(exports, "Program", {
+  enumerable: true,
+  get: function () {
+    return _Program.Program;
+  }
+});
 Object.defineProperty(exports, "Quat", {
   enumerable: true,
   get: function () {
     return _Quat.Quat;
+  }
+});
+Object.defineProperty(exports, "Raycast", {
+  enumerable: true,
+  get: function () {
+    return _Raycast.Raycast;
+  }
+});
+Object.defineProperty(exports, "RenderTarget", {
+  enumerable: true,
+  get: function () {
+    return _RenderTarget.RenderTarget;
+  }
+});
+Object.defineProperty(exports, "Renderer", {
+  enumerable: true,
+  get: function () {
+    return _Renderer.Renderer;
+  }
+});
+Object.defineProperty(exports, "Shadow", {
+  enumerable: true,
+  get: function () {
+    return _Shadow.Shadow;
+  }
+});
+Object.defineProperty(exports, "Skin", {
+  enumerable: true,
+  get: function () {
+    return _Skin.Skin;
+  }
+});
+Object.defineProperty(exports, "Sphere", {
+  enumerable: true,
+  get: function () {
+    return _Sphere.Sphere;
+  }
+});
+Object.defineProperty(exports, "Text", {
+  enumerable: true,
+  get: function () {
+    return _Text.Text;
+  }
+});
+Object.defineProperty(exports, "Texture", {
+  enumerable: true,
+  get: function () {
+    return _Texture.Texture;
+  }
+});
+Object.defineProperty(exports, "TextureLoader", {
+  enumerable: true,
+  get: function () {
+    return _TextureLoader.TextureLoader;
+  }
+});
+Object.defineProperty(exports, "Torus", {
+  enumerable: true,
+  get: function () {
+    return _Torus.Torus;
+  }
+});
+Object.defineProperty(exports, "Transform", {
+  enumerable: true,
+  get: function () {
+    return _Transform.Transform;
+  }
+});
+Object.defineProperty(exports, "Triangle", {
+  enumerable: true,
+  get: function () {
+    return _Triangle.Triangle;
   }
 });
 Object.defineProperty(exports, "Vec2", {
@@ -9371,138 +11058,6 @@ Object.defineProperty(exports, "Vec4", {
   enumerable: true,
   get: function () {
     return _Vec3.Vec4;
-  }
-});
-Object.defineProperty(exports, "Plane", {
-  enumerable: true,
-  get: function () {
-    return _Plane.Plane;
-  }
-});
-Object.defineProperty(exports, "Box", {
-  enumerable: true,
-  get: function () {
-    return _Box.Box;
-  }
-});
-Object.defineProperty(exports, "Sphere", {
-  enumerable: true,
-  get: function () {
-    return _Sphere.Sphere;
-  }
-});
-Object.defineProperty(exports, "Cylinder", {
-  enumerable: true,
-  get: function () {
-    return _Cylinder.Cylinder;
-  }
-});
-Object.defineProperty(exports, "Triangle", {
-  enumerable: true,
-  get: function () {
-    return _Triangle.Triangle;
-  }
-});
-Object.defineProperty(exports, "Torus", {
-  enumerable: true,
-  get: function () {
-    return _Torus.Torus;
-  }
-});
-Object.defineProperty(exports, "Orbit", {
-  enumerable: true,
-  get: function () {
-    return _Orbit.Orbit;
-  }
-});
-Object.defineProperty(exports, "Raycast", {
-  enumerable: true,
-  get: function () {
-    return _Raycast.Raycast;
-  }
-});
-Object.defineProperty(exports, "Curve", {
-  enumerable: true,
-  get: function () {
-    return _Curve.Curve;
-  }
-});
-Object.defineProperty(exports, "Post", {
-  enumerable: true,
-  get: function () {
-    return _Post.Post;
-  }
-});
-Object.defineProperty(exports, "Skin", {
-  enumerable: true,
-  get: function () {
-    return _Skin.Skin;
-  }
-});
-Object.defineProperty(exports, "Animation", {
-  enumerable: true,
-  get: function () {
-    return _Animation.Animation;
-  }
-});
-Object.defineProperty(exports, "Text", {
-  enumerable: true,
-  get: function () {
-    return _Text.Text;
-  }
-});
-Object.defineProperty(exports, "NormalProgram", {
-  enumerable: true,
-  get: function () {
-    return _NormalProgram.NormalProgram;
-  }
-});
-Object.defineProperty(exports, "Flowmap", {
-  enumerable: true,
-  get: function () {
-    return _Flowmap.Flowmap;
-  }
-});
-Object.defineProperty(exports, "GPGPU", {
-  enumerable: true,
-  get: function () {
-    return _GPGPU.GPGPU;
-  }
-});
-Object.defineProperty(exports, "Polyline", {
-  enumerable: true,
-  get: function () {
-    return _Polyline.Polyline;
-  }
-});
-Object.defineProperty(exports, "Shadow", {
-  enumerable: true,
-  get: function () {
-    return _Shadow.Shadow;
-  }
-});
-Object.defineProperty(exports, "KTXTexture", {
-  enumerable: true,
-  get: function () {
-    return _KTXTexture.KTXTexture;
-  }
-});
-Object.defineProperty(exports, "TextureLoader", {
-  enumerable: true,
-  get: function () {
-    return _TextureLoader.TextureLoader;
-  }
-});
-Object.defineProperty(exports, "GLTFSkin", {
-  enumerable: true,
-  get: function () {
-    return _GLTFSkin.GLTFSkin;
-  }
-});
-Object.defineProperty(exports, "BasisManager", {
-  enumerable: true,
-  get: function () {
-    return _BasisManager.BasisManager;
   }
 });
 
@@ -9578,656 +11133,12 @@ var _KTXTexture = require("./extras/KTXTexture.js");
 
 var _TextureLoader = require("./extras/TextureLoader.js");
 
+var _GLTFLoader = require("./extras/GLTFLoader.js");
+
 var _GLTFSkin = require("./extras/GLTFSkin.js");
 
 var _BasisManager = require("./extras/BasisManager.js");
-},{"./core/Geometry.js":"../node_modules/ogl/src/core/Geometry.js","./core/Program.js":"../node_modules/ogl/src/core/Program.js","./core/Renderer.js":"../node_modules/ogl/src/core/Renderer.js","./core/Camera.js":"../node_modules/ogl/src/core/Camera.js","./core/Transform.js":"../node_modules/ogl/src/core/Transform.js","./core/Mesh.js":"../node_modules/ogl/src/core/Mesh.js","./core/Texture.js":"../node_modules/ogl/src/core/Texture.js","./core/RenderTarget.js":"../node_modules/ogl/src/core/RenderTarget.js","./math/Color.js":"../node_modules/ogl/src/math/Color.js","./math/Euler.js":"../node_modules/ogl/src/math/Euler.js","./math/Mat3.js":"../node_modules/ogl/src/math/Mat3.js","./math/Mat4.js":"../node_modules/ogl/src/math/Mat4.js","./math/Quat.js":"../node_modules/ogl/src/math/Quat.js","./math/Vec2.js":"../node_modules/ogl/src/math/Vec2.js","./math/Vec3.js":"../node_modules/ogl/src/math/Vec3.js","./math/Vec4.js":"../node_modules/ogl/src/math/Vec4.js","./extras/Plane.js":"../node_modules/ogl/src/extras/Plane.js","./extras/Box.js":"../node_modules/ogl/src/extras/Box.js","./extras/Sphere.js":"../node_modules/ogl/src/extras/Sphere.js","./extras/Cylinder.js":"../node_modules/ogl/src/extras/Cylinder.js","./extras/Triangle.js":"../node_modules/ogl/src/extras/Triangle.js","./extras/Torus.js":"../node_modules/ogl/src/extras/Torus.js","./extras/Orbit.js":"../node_modules/ogl/src/extras/Orbit.js","./extras/Raycast.js":"../node_modules/ogl/src/extras/Raycast.js","./extras/Curve.js":"../node_modules/ogl/src/extras/Curve.js","./extras/Post.js":"../node_modules/ogl/src/extras/Post.js","./extras/Skin.js":"../node_modules/ogl/src/extras/Skin.js","./extras/Animation.js":"../node_modules/ogl/src/extras/Animation.js","./extras/Text.js":"../node_modules/ogl/src/extras/Text.js","./extras/NormalProgram.js":"../node_modules/ogl/src/extras/NormalProgram.js","./extras/Flowmap.js":"../node_modules/ogl/src/extras/Flowmap.js","./extras/GPGPU.js":"../node_modules/ogl/src/extras/GPGPU.js","./extras/Polyline.js":"../node_modules/ogl/src/extras/Polyline.js","./extras/Shadow.js":"../node_modules/ogl/src/extras/Shadow.js","./extras/KTXTexture.js":"../node_modules/ogl/src/extras/KTXTexture.js","./extras/TextureLoader.js":"../node_modules/ogl/src/extras/TextureLoader.js","./extras/GLTFSkin.js":"../node_modules/ogl/src/extras/GLTFSkin.js","./extras/BasisManager.js":"../node_modules/ogl/src/extras/BasisManager.js"}],"js/follow.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _ogl = require("ogl");
-
-var lines = function lines() {
-  var vertex =
-  /* glsl */
-  "\n    precision highp float;\n    attribute vec3 position;\n    attribute vec3 next;\n    attribute vec3 prev;\n    attribute vec2 uv;\n    attribute float side;\n    uniform vec2 uResolution;\n    uniform float uDPR;\n    uniform float uThickness;\n    vec4 getPosition() {\n        vec4 current = vec4(position, 1);\n        vec2 aspect = vec2(uResolution.x / uResolution.y, 1);\n        vec2 nextScreen = next.xy * aspect;\n        vec2 prevScreen = prev.xy * aspect;\n    \n        // Calculate the tangent direction\n        vec2 tangent = normalize(nextScreen - prevScreen);\n    \n        // Rotate 90 degrees to get the normal\n        vec2 normal = vec2(-tangent.y, tangent.x);\n        normal /= aspect;\n        // Taper the line to be fatter in the middle, and skinny at the ends using the uv.y\n        normal *= mix(1.0, 0.1, pow(abs(uv.y - 0.5) * 2.0, 2.0) );\n        // When the points are on top of each other, shrink the line to avoid artifacts.\n        float dist = length(nextScreen - prevScreen);\n        normal *= smoothstep(0.0, 0.06, dist);\n        float pixelWidthRatio = 1.0 / (uResolution.y / uDPR);\n        float pixelWidth = current.w* pixelWidthRatio;\n        normal *= pixelWidth * uThickness;\n        current.xy -= normal * side;\n    \n        return current;\n    }\n    void main() {\n        gl_Position = getPosition();\n    }\n";
-  {
-    var resize = function resize() {
-      renderer.setSize(window.innerWidth, window.innerHeight); // We call resize on the polylines to update their resolution uniforms
-
-      _lines.forEach(function (line) {
-        return line.polyline.resize();
-      });
-    };
-
-    // Just a helper function to make the code neater
-    var random = function random(a, b) {
-      var alpha = Math.random();
-      return a * (1.0 - alpha) + b * alpha;
-    }; // If you're interested in learning about drawing lines with geometry,
-    // go through this detailed article by Matt DesLauriers
-    // https://mattdesl.svbtle.com/drawing-lines-is-hard
-    // It's an excellent breakdown of the approaches and their pitfalls.
-    // In this example, we're making screen-space polylines. Basically it
-    // involves creating a geometry of vertices along a path - with two vertices
-    // at each point. Then in the vertex shader, we push each pair apart to
-    // give the line some width.
-    // We're going to make a number of different coloured lines for fun.
-
-
-    var updateMouse = function updateMouse(e) {
-      if (e.changedTouches && e.changedTouches.length) {
-        e.x = e.changedTouches[0].pageX;
-        e.y = e.changedTouches[0].pageY;
-      }
-
-      if (e.x === undefined) {
-        e.x = e.pageX;
-        e.y = e.pageY;
-      } // Get mouse value in -1 to 1 range, with y flipped
-
-
-      mouse.set(e.x / gl.renderer.width * 2 - 1, e.y / gl.renderer.height * -2 + 1, 0);
-    };
-
-    var update = function update(t) {
-      requestAnimationFrame(update);
-
-      _lines.forEach(function (line) {
-        // Update polyline input points
-        for (var i = line.points.length - 1; i >= 0; i--) {
-          if (!i) {
-            // For the first point, spring ease it to the mouse position
-            tmp.copy(mouse).add(line.mouseOffset).sub(line.points[i]).multiply(line.spring);
-            line.mouseVelocity.add(tmp).multiply(line.friction);
-            line.points[i].add(line.mouseVelocity);
-          } else {
-            // The rest of the points ease to the point in front of them, making a line
-            line.points[i].lerp(line.points[i - 1], 0.9);
-          }
-        }
-
-        line.polyline.updateGeometry();
-      });
-
-      renderer.render({
-        scene: scene
-      });
-    };
-
-    var renderer = new _ogl.Renderer({
-      dpr: 2
-    });
-    var gl = renderer.gl;
-    document.body.appendChild(gl.canvas);
-    gl.clearColor(0.945, 0.945, 0.945, 0.1);
-    var scene = new _ogl.Transform();
-    var _lines = [];
-    window.addEventListener('resize', resize, false);
-    ['#e09f7d', '#ffffff', '#ec4067', '#a01a7d', '#11071a'].forEach(function (color, i) {
-      // Store a few values for each lines' spring movement
-      var line = {
-        spring: random(0.02, 0.1),
-        friction: random(0.7, 0.95),
-        mouseVelocity: new _ogl.Vec3(),
-        mouseOffset: new _ogl.Vec3(random(-1, 1) * 0.02)
-      }; // Create an array of Vec3s (eg [[0, 0, 0], ...])
-      // Note: Only pass in one for each point on the line - the class will handle
-      // the doubling of vertices for the polyline effect.
-
-      var count = 30;
-      var points = line.points = [];
-
-      for (var _i = 0; _i < count; _i++) {
-        points.push(new _ogl.Vec3());
-      } // Pass in the points, and any custom elements - for example here we've made
-      // custom shaders, and accompanying uniforms.
-
-
-      line.polyline = new _ogl.Polyline(gl, {
-        points: points,
-        vertex: vertex,
-        uniforms: {
-          uColor: {
-            value: new _ogl.Color(color)
-          },
-          uThickness: {
-            value: random(10, 150)
-          }
-        }
-      });
-      line.polyline.mesh.setParent(scene);
-
-      _lines.push(line);
-    }); // Call initial resize after creating the polylines
-
-    resize(); // Add handlers to get mouse position
-
-    var mouse = new _ogl.Vec3();
-
-    if ('ontouchstart' in window) {
-      window.addEventListener('touchstart', updateMouse, false);
-      window.addEventListener('touchmove', updateMouse, false);
-    } else {
-      window.addEventListener('mousemove', updateMouse, false);
-    }
-
-    var tmp = new _ogl.Vec3();
-    requestAnimationFrame(update);
-  }
-};
-
-var _default = lines;
-exports.default = _default;
-},{"ogl":"../node_modules/ogl/src/index.mjs"}],"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js":[function(require,module,exports) {
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-module.exports = _classCallCheck;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{}],"../node_modules/core-js/library/modules/_global.js":[function(require,module,exports) {
-
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-
-},{}],"../node_modules/core-js/library/modules/_core.js":[function(require,module,exports) {
-var core = module.exports = { version: '2.6.12' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-},{}],"../node_modules/core-js/library/modules/_a-function.js":[function(require,module,exports) {
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-},{}],"../node_modules/core-js/library/modules/_ctx.js":[function(require,module,exports) {
-// optional / simple context binding
-var aFunction = require('./_a-function');
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-},{"./_a-function":"../node_modules/core-js/library/modules/_a-function.js"}],"../node_modules/core-js/library/modules/_is-object.js":[function(require,module,exports) {
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-},{}],"../node_modules/core-js/library/modules/_an-object.js":[function(require,module,exports) {
-var isObject = require('./_is-object');
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-},{"./_is-object":"../node_modules/core-js/library/modules/_is-object.js"}],"../node_modules/core-js/library/modules/_fails.js":[function(require,module,exports) {
-module.exports = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
-
-},{}],"../node_modules/core-js/library/modules/_descriptors.js":[function(require,module,exports) {
-// Thank's IE8 for his funny defineProperty
-module.exports = !require('./_fails')(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-},{"./_fails":"../node_modules/core-js/library/modules/_fails.js"}],"../node_modules/core-js/library/modules/_dom-create.js":[function(require,module,exports) {
-var isObject = require('./_is-object');
-var document = require('./_global').document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-},{"./_is-object":"../node_modules/core-js/library/modules/_is-object.js","./_global":"../node_modules/core-js/library/modules/_global.js"}],"../node_modules/core-js/library/modules/_ie8-dom-define.js":[function(require,module,exports) {
-module.exports = !require('./_descriptors') && !require('./_fails')(function () {
-  return Object.defineProperty(require('./_dom-create')('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-},{"./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js","./_fails":"../node_modules/core-js/library/modules/_fails.js","./_dom-create":"../node_modules/core-js/library/modules/_dom-create.js"}],"../node_modules/core-js/library/modules/_to-primitive.js":[function(require,module,exports) {
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = require('./_is-object');
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-},{"./_is-object":"../node_modules/core-js/library/modules/_is-object.js"}],"../node_modules/core-js/library/modules/_object-dp.js":[function(require,module,exports) {
-var anObject = require('./_an-object');
-var IE8_DOM_DEFINE = require('./_ie8-dom-define');
-var toPrimitive = require('./_to-primitive');
-var dP = Object.defineProperty;
-
-exports.f = require('./_descriptors') ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-},{"./_an-object":"../node_modules/core-js/library/modules/_an-object.js","./_ie8-dom-define":"../node_modules/core-js/library/modules/_ie8-dom-define.js","./_to-primitive":"../node_modules/core-js/library/modules/_to-primitive.js","./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js"}],"../node_modules/core-js/library/modules/_property-desc.js":[function(require,module,exports) {
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-},{}],"../node_modules/core-js/library/modules/_hide.js":[function(require,module,exports) {
-var dP = require('./_object-dp');
-var createDesc = require('./_property-desc');
-module.exports = require('./_descriptors') ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-},{"./_object-dp":"../node_modules/core-js/library/modules/_object-dp.js","./_property-desc":"../node_modules/core-js/library/modules/_property-desc.js","./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js"}],"../node_modules/core-js/library/modules/_has.js":[function(require,module,exports) {
-var hasOwnProperty = {}.hasOwnProperty;
-module.exports = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-},{}],"../node_modules/core-js/library/modules/_export.js":[function(require,module,exports) {
-
-var global = require('./_global');
-var core = require('./_core');
-var ctx = require('./_ctx');
-var hide = require('./_hide');
-var has = require('./_has');
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && has(exports, key)) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-module.exports = $export;
-
-},{"./_global":"../node_modules/core-js/library/modules/_global.js","./_core":"../node_modules/core-js/library/modules/_core.js","./_ctx":"../node_modules/core-js/library/modules/_ctx.js","./_hide":"../node_modules/core-js/library/modules/_hide.js","./_has":"../node_modules/core-js/library/modules/_has.js"}],"../node_modules/core-js/library/modules/es6.object.define-property.js":[function(require,module,exports) {
-var $export = require('./_export');
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !require('./_descriptors'), 'Object', { defineProperty: require('./_object-dp').f });
-
-},{"./_export":"../node_modules/core-js/library/modules/_export.js","./_descriptors":"../node_modules/core-js/library/modules/_descriptors.js","./_object-dp":"../node_modules/core-js/library/modules/_object-dp.js"}],"../node_modules/core-js/library/fn/object/define-property.js":[function(require,module,exports) {
-require('../../modules/es6.object.define-property');
-var $Object = require('../../modules/_core').Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-},{"../../modules/es6.object.define-property":"../node_modules/core-js/library/modules/es6.object.define-property.js","../../modules/_core":"../node_modules/core-js/library/modules/_core.js"}],"../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js":[function(require,module,exports) {
-module.exports = require("core-js/library/fn/object/define-property");
-},{"core-js/library/fn/object/define-property":"../node_modules/core-js/library/fn/object/define-property.js"}],"../node_modules/@babel/runtime-corejs2/helpers/createClass.js":[function(require,module,exports) {
-var _Object$defineProperty = require("@babel/runtime-corejs2/core-js/object/define-property");
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-
-    _Object$defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-module.exports = _createClass;
-module.exports["default"] = module.exports, module.exports.__esModule = true;
-},{"@babel/runtime-corejs2/core-js/object/define-property":"../node_modules/@babel/runtime-corejs2/core-js/object/define-property.js"}],"js/interface/Nav.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var Navbar = function Navbar() {
-  var template = "\n        <nav>\n            <button id=\"home\">About Me </button>\n            <button id=\"experiment\">Experiments</button> \n            <button id=\"project\">Work</button> \n        </nav>\n       \n    ";
-  return template;
-};
-
-var _default = Navbar;
-exports.default = _default;
-},{}],"js/interface/Contact.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var Contact = function Contact() {
-  var template = "\n\n        <ul id=\"links\">\n            <a href =\"https://www.instagram.com/cyrstem/\"target=\"_blank\"><img src=\"insta.png\"></a>\n                <a href =\"http://ec.linkedin.com/in/jacobohz\" target=\"_blank\"><img src=\"in.png\"></a>\n            <a href =\"https://github.com/cyrstem/\" target=\"_blank\"><img src=\"git.png\"></a>\n        </ul>\n    ";
-  return template;
-};
-
-var _default = Contact;
-exports.default = _default;
-},{}],"js/pages/Home.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var Home = function Home() {
-  var template = "\n    \n        <main>\n        <h1>Hello..</h1>\n            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador.</p> \n            <p>I specialize building custom digital or physical experiences,</p>\n            <p><b>self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL</b></p>\n            <p>and recently curious about <b>Machine Learning.</b></p>\n            <p> contact me at <b>cyrstem[at]gmail[dot]com</b></p>   \n        </main>\n    ";
-  return template;
-};
-
-var _default = Home;
-exports.default = _default;
-},{}],"js/pages/Portafolio.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var Portafolio = function Portafolio() {
-  var template = "\n      <div class =\"sites\"> \n         <ul>\n         <li>\n          <a href=\"https://activetheory.net/\" target=\"_blank\">\n            <span>Active Theory</span> \n            <span>WebGL Developer</span>\n            <span>2021</span>\n          </a>\n         </li>\n         <li>\n            <a href=\"https://myuniguru.com/\" target=\"_blank\">\n              <span>My Uniguru</span>\n              <span>FullStack Developer</span>\n              <span class=\"number\">2020</span>\n            </a>\n          </li>\n          <li>\n          <a href=\"https://smartco.com.ec\" target=\"_blank\"> \n            <span>Smartco </span>\n            <span>Unity Developer</span>\n            <span class=\"number\">2019 - 2020</span>\n          </a>\n        </li>\n          <li>\n            <a href=\"https://www.yaesta.com\" target=\"_blank\">\n              <span> YaEsta </span>\n              <span> Front-end  & Designer</span> \n              <span class=\"number\">2016 - 2018</span>\n            </a>\n          </li>\n          \n      \n          <li>\n            <a href=\"https://www.pachamama.org.ec/en/\" target=\"_blank\">\n              <span> Pachamama</span>\n              <span> Front-end Developer</span>\n              <span class=\"number\">2010 \u2013 2013</span>\n            </a>\n          </li>\n         </ul>\n      </div>\n    ";
-  return template;
-};
-
-var _default = Portafolio;
-exports.default = _default;
-},{}],"data.json":[function(require,module,exports) {
-module.exports = {
-  "projects": [{
-    "title": "Moving Photon",
-    "description": "I Help develop and deploy the Virtual Experience for Moving Photon an interactive installation/performance created by installation artistFriendred Peng. Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance,interactive performance with EEG and a remote performance."
-  }, {
-    "title": "Glitch Machine",
-    "description": "   as"
-  }, {
-    "title": "Noizu",
-    "description": "   as"
-  }]
-};
-},{}],"js/pages/Experiments.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _data = _interopRequireDefault(require("/data.json"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//console.log(data.projects[0])
-var Experiments = function Experiments() {
-  var template = "\n   <div id=\"portafolio\">\n    <section class=\"proj\">\n        <a href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> <img src=\"poster4.jpg\" width=\"500\" /></a>\n    </section>\n    <section class=\"info\">\n        <h2>Moving Photon</h2>\n        <p>I Help develop and deploy the Virtual Experience for\n            <a href=\"https://friendred.studio/2021/10/07/moving-photon/\" target=\"_blank\"> Moving Photon</a> an\n            interactive installation/performance\n            created by installation artist<a href=\"https://friendred.studio\" target=\"_blank\"> Friendred Peng.</a>\n            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,\n            interactive installation, interactive performance,interactive performance with EEG and a <a\n                href=\"https://movingphoton.friendred.studio/\" target=\"_blank\"> remote performance.</a>\n    </section>\n    <section class=\"info\">\n    <h2>Glitch MAchine</h2>\n        <p>A custom Glitch App build for<a href=\"https://www.instagram.com/jenna___marsh/ target=\"_blank\"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>\n    </section>\n    <section class=\"proj\">\n        <a href=\"https://www.instagram.com/p/CNRC1QZHf66/\"> <img src= \"insta-0.jpg\" width=\"500\"/></a>\n     </section>\n     <section class=\"proj\">\n       <a href=\"https://onesimpleidea.itch.io/noizu\" target=\"_blank\"><img src= \"noizu.png\" width=\"500\"/></a>\n    </section>\n    <section class=\"info\">\n    <h2>Noizu</h2>\n        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>\n     </section>\n     <section class=\"info\">\n     <h2>PACMan YaEsta.com</h2>\n     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>\n      </section>\n    <section class=\"proj\">\n       <a href=\"https://www.youtube.com/watch?v=YHZd0TxPMkY\"> <img src= \"insta-3.jpg\" width=\"500\"/></a>  \n    </section>\n   \n</div>\n    ";
-  return template;
-};
-
-var _default = Experiments;
-exports.default = _default;
-},{"/data.json":"data.json"}],"js/Stage.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Stage = /*#__PURE__*/function () {
-  function Stage(_ref) {
-    var _ref$scene = _ref.scene,
-        scene = _ref$scene === void 0 ? 'scene' : _ref$scene,
-        _ref$active = _ref.active,
-        active = _ref$active === void 0 ? false : _ref$active;
-    (0, _classCallCheck2.default)(this, Stage);
-    this.scene = scene;
-    this.active = true;
-    console.log(this.scene, "|", this.active);
-  }
-
-  (0, _createClass2.default)(Stage, [{
-    key: "init",
-    value: function init() {//something
-    }
-  }, {
-    key: "load",
-    value: function load() {//something
-    }
-  }, {
-    key: "remove",
-    value: function remove() {//something
-    }
-  }, {
-    key: "drar",
-    value: function drar() {//soemthign
-    }
-  }, {
-    key: "addEventListener",
-    value: function addEventListener(something) {}
-  }]);
-  return Stage;
-}();
-
-exports.default = Stage;
-},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js"}],"js/app.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime-corejs2/helpers/createClass"));
-
-var _Nav = _interopRequireDefault(require("./interface/Nav"));
-
-var _Contact = _interopRequireDefault(require("./interface/Contact"));
-
-var _Home = _interopRequireDefault(require("./pages/Home"));
-
-var _Portafolio = _interopRequireDefault(require("./pages/Portafolio"));
-
-var _Experiments = _interopRequireDefault(require("./pages/Experiments"));
-
-var _Stage = _interopRequireDefault(require("./Stage"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var stage = null;
-
-var GUIView = /*#__PURE__*/function () {
-  function GUIView() {
-    (0, _classCallCheck2.default)(this, GUIView);
-  }
-
-  (0, _createClass2.default)(GUIView, [{
-    key: "init",
-    value: function init() {
-      this.load();
-      this.addListeners();
-      this.simpleSign(); //this.responsive();
-    }
-  }, {
-    key: "load",
-    value: function load() {
-      //load UI and socials media  plus main content
-      document.getElementById("ui").innerHTML = (0, _Nav.default)();
-      document.getElementById("container").innerHTML = (0, _Home.default)();
-      document.getElementById("contact").innerHTML = (0, _Contact.default)();
-    }
-  }, {
-    key: "addListeners",
-    value: function addListeners() {
-      window.addEventListener("click", function (event) {
-        var links = event.target.id;
-
-        switch (links) {
-          case 'home':
-            document.getElementById("container").innerHTML = (0, _Home.default)();
-            stage = new _Stage.default({
-              scene: "sectionA",
-              active: true
-            });
-            break;
-
-          case 'experiment':
-            document.getElementById("container").innerHTML = (0, _Experiments.default)();
-            stage = new _Stage.default({
-              scene: "sectionB",
-              active: false
-            });
-            break;
-
-          case 'project':
-            document.getElementById("container").innerHTML = (0, _Portafolio.default)();
-            stage = new _Stage.default({
-              scene: "sectionC",
-              active: true
-            });
-            break;
-        }
-      }, false);
-    }
-  }, {
-    key: "responsive",
-    value: function responsive() {
-      //responsive screens
-      var x = window.matchMedia("(max-width: 700px)");
-
-      if (x.matches) {
-        //console.log("responsive biatch");
-        document.addEventListener("click", function (event) {
-          if (event.target.id !== "experiment") return;
-          document.getElementById("container").innerHTML = (0, _Experiments.default)();
-          document.getElementById("ui").style.top = "10vh";
-        });
-      }
-    }
-  }, {
-    key: "simpleSign",
-    value: function simpleSign() {
-      if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
-        var args = ["\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n", "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"];
-        window.console.log.apply(console, args);
-      } else if (window.console) {
-        window.console.log("-created by cyrstem  -");
-      }
-    }
-  }]);
-  return GUIView;
-}();
-
-exports.default = GUIView;
-},{"@babel/runtime-corejs2/helpers/classCallCheck":"../node_modules/@babel/runtime-corejs2/helpers/classCallCheck.js","@babel/runtime-corejs2/helpers/createClass":"../node_modules/@babel/runtime-corejs2/helpers/createClass.js","./interface/Nav":"js/interface/Nav.js","./interface/Contact":"js/interface/Contact.js","./pages/Home":"js/pages/Home.js","./pages/Portafolio":"js/pages/Portafolio.js","./pages/Experiments":"js/pages/Experiments.js","./Stage":"js/Stage.js"}],"shaders/frag.glsl":[function(require,module,exports) {
+},{"./core/Geometry.js":"../node_modules/ogl/src/core/Geometry.js","./core/Program.js":"../node_modules/ogl/src/core/Program.js","./core/Renderer.js":"../node_modules/ogl/src/core/Renderer.js","./core/Camera.js":"../node_modules/ogl/src/core/Camera.js","./core/Transform.js":"../node_modules/ogl/src/core/Transform.js","./core/Mesh.js":"../node_modules/ogl/src/core/Mesh.js","./core/Texture.js":"../node_modules/ogl/src/core/Texture.js","./core/RenderTarget.js":"../node_modules/ogl/src/core/RenderTarget.js","./math/Color.js":"../node_modules/ogl/src/math/Color.js","./math/Euler.js":"../node_modules/ogl/src/math/Euler.js","./math/Mat3.js":"../node_modules/ogl/src/math/Mat3.js","./math/Mat4.js":"../node_modules/ogl/src/math/Mat4.js","./math/Quat.js":"../node_modules/ogl/src/math/Quat.js","./math/Vec2.js":"../node_modules/ogl/src/math/Vec2.js","./math/Vec3.js":"../node_modules/ogl/src/math/Vec3.js","./math/Vec4.js":"../node_modules/ogl/src/math/Vec4.js","./extras/Plane.js":"../node_modules/ogl/src/extras/Plane.js","./extras/Box.js":"../node_modules/ogl/src/extras/Box.js","./extras/Sphere.js":"../node_modules/ogl/src/extras/Sphere.js","./extras/Cylinder.js":"../node_modules/ogl/src/extras/Cylinder.js","./extras/Triangle.js":"../node_modules/ogl/src/extras/Triangle.js","./extras/Torus.js":"../node_modules/ogl/src/extras/Torus.js","./extras/Orbit.js":"../node_modules/ogl/src/extras/Orbit.js","./extras/Raycast.js":"../node_modules/ogl/src/extras/Raycast.js","./extras/Curve.js":"../node_modules/ogl/src/extras/Curve.js","./extras/Post.js":"../node_modules/ogl/src/extras/Post.js","./extras/Skin.js":"../node_modules/ogl/src/extras/Skin.js","./extras/Animation.js":"../node_modules/ogl/src/extras/Animation.js","./extras/Text.js":"../node_modules/ogl/src/extras/Text.js","./extras/NormalProgram.js":"../node_modules/ogl/src/extras/NormalProgram.js","./extras/Flowmap.js":"../node_modules/ogl/src/extras/Flowmap.js","./extras/GPGPU.js":"../node_modules/ogl/src/extras/GPGPU.js","./extras/Polyline.js":"../node_modules/ogl/src/extras/Polyline.js","./extras/Shadow.js":"../node_modules/ogl/src/extras/Shadow.js","./extras/KTXTexture.js":"../node_modules/ogl/src/extras/KTXTexture.js","./extras/TextureLoader.js":"../node_modules/ogl/src/extras/TextureLoader.js","./extras/GLTFLoader.js":"../node_modules/ogl/src/extras/GLTFLoader.js","./extras/GLTFSkin.js":"../node_modules/ogl/src/extras/GLTFSkin.js","./extras/BasisManager.js":"../node_modules/ogl/src/extras/BasisManager.js"}],"shaders/frag.glsl":[function(require,module,exports) {
 module.exports = "precision highp float;\n#define GLSLIFY 1\n\n        uniform float uTime;\n        uniform vec3 uColor;\n        varying vec2 vUv;\n\n        float random (vec2 st) {\n            return fract(sin(dot(st.xy,\n                                 vec2(12.9898,78.233)))*\n                43758.5453123);\n        }\n\n        void main() {\n            vec2 st = gl_FragCoord.xy/vUv.xy;\n            st *= 10.0;\n            float rnd = random(st);\n            // gl_FragColor.rgb = 0.1 + 1.5 * rnd * sin(vUv.xyx + uTime) * uColor;\n            // gl_FragColor.a = 1.0;\n            gl_FragColor = vec4(vec3(1),1);\n        }";
 },{}],"shaders/vert.glsl":[function(require,module,exports) {
 module.exports = "#define GLSLIFY 1\n  attribute vec2 uv;\n        attribute vec2 position;\n        varying vec2 vUv;\n        void main() {\n            vUv = uv;\n            gl_Position = vec4(position, 0, 1);\n        }";
@@ -10404,14 +11315,13 @@ exports.default = Thing;
 
 require("./style/main.scss");
 
-var _follow = _interopRequireDefault(require("./js/follow"));
-
 var _app = _interopRequireDefault(require("./js/app"));
 
 var _thingA = _interopRequireDefault(require("./js/thingA"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import lines from "./js/follow";
 var app = function app() {
   var ui = new _app.default();
   ui.init();
@@ -10419,14 +11329,13 @@ var app = function app() {
     scene: 'stateA',
     active: true
   }); //		thing.draw()
-
-  (0, _follow.default)();
+  // lines();
 };
 
 window.onload = function (event) {
   app();
 };
-},{"./style/main.scss":"style/main.scss","./js/follow":"js/follow.js","./js/app":"js/app.js","./js/thingA":"js/thingA.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./style/main.scss":"style/main.scss","./js/app":"js/app.js","./js/thingA":"js/thingA.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10454,7 +11363,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42631" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "45109" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -18,8 +18,6 @@ export default class GUIView{
         //this.responsive();
     }
     load(){
-        
-
         	//load UI and socials media  plus main content
         document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("container").innerHTML = Home();
