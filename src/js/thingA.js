@@ -1,87 +1,61 @@
 // import { Renderer, Camera, Transform, Program, Mesh, Sphere, Orbit } from "ogl";
 
-import { Renderer, Program, Color, Mesh, Triangle } from 'ogl';
-import frag from '../shaders/frag.glsl';
-import vert from '../shaders/vert.glsl';
+import { Renderer, Camera, Transform, Plane } from 'ogl'
 
-let vertex;
-let fragment;
+// import frag from '../shaders/frag.glsl';
+// import vert from '../shaders/vert.glsl';
 
-export default class Thing {
-    constructor({scene='something',active=false}) {
-        this.scene = scene
-        this.active = active
+// let vertex;
+// let fragment;
 
-        console.log(this.scene, "|",  this.active)
+export default class thingA {
+    // constructor({scene='something',active=false}) {
+    constructor() {
+        // this.scene = scene
+        // this.active = active
+
+        // console.log(this.scene, "|",  this.active)
         // this.vertex = null;
         // this.fragment= null
+        this.createRenderer()
+        this.createCamera()
+        this.createScene()
+        this.createGeometry()
+        console.log('hello')
+        //this.onResize()
+
+        this.createGeometry()
     }
 
-    init() {
-        //this.load();
-        //this.addListeners();
-        this.loadShaders();
-        // this.loadMeshes();
-        this.addListeners();
-        this.draw();
+    createRenderer() {
+        this.renderer = new Renderer()
 
-    }
-
-    loadShaders() {
+        this.gl = this.renderer.gl
+        this.gl.clearColor(1,1,1, 1)
+       
+        this.renderer.setSize(window.innerWidth, window.innerHeight)
+        document.body.appendChild(this.gl.canvas)
 
 
     }
-    draw() {
 
-        vertex = vert;
+    createCamera() {
+        this.camera = new Camera(this.gl)
+        this.camera.fov = 45
+        this.camera.position.z = 20
 
-        fragment = frag;
+    }
 
-        console.log("draw")
-        const renderer = new Renderer();
-        const gl = renderer.gl;
-        document.body.appendChild(gl.canvas);
-        gl.clearColor(1, 1, 1, 1);
+    createScene() {
+        this.scene = new Transform()
+    }
+    createGeometry() {
+        this.planeGeometry = new Plane(this.gl, {
+            heightSegments: 50,
+            widthSegments: 100,
 
-        function resize() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-        window.addEventListener('resize', resize, false);
-        resize();
-
-        // Rather than using a plane (two triangles) to cover the viewport here is a
-        // triangle that includes -1 to 1 range for 'position', and 0 to 1 range for 'uv'.
-        // Excess will be out of the viewport.
-
-        //         position                uv
-        //      (-1, 3)                  (0, 2)
-        //         |\                      |\
-        //         |__\(1, 1)              |__\(1, 1)
-        //         |__|_\                  |__|_\
-        //   (-1, -1)   (3, -1)        (0, 0)   (2, 0)
-
-        const geometry = new Triangle(gl);
-
-        const program = new Program(gl, {
-            vertex,
-            fragment,
-            uniforms: {
-                uTime: { value: 0 },
-                uColor: { value: new Color(0.3, 0.8, 0.5) },
-            },
-        });
-
-        const mesh = new Mesh(gl, { geometry, program });
-
-        requestAnimationFrame(update);
-        function update(t) {
-            requestAnimationFrame(update);
-
-            program.uniforms.uTime.value = t * 0.001;
-
-            // Don't need a camera if camera uniforms aren't required
-            renderer.render({ scene: mesh });
-        }
+        })
+        // console.log(this.planeGeometry)
     }
 
 }

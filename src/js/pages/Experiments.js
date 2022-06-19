@@ -1,13 +1,16 @@
 
 import data from '../../data.json';
 
+import images from '../images.js'
 console.log(data.projects[0])
+
+console.log(images)
 
 
 
 const Experiments = () => {
 	const template = `
-    <main>
+<main>
    <div id="portafolio">
     <section class="proj">
         <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
@@ -23,7 +26,7 @@ const Experiments = () => {
                 href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
     </section>
     <section class="info">
-    <h2>Glitch MAchine</h2>
+    <h2>Glitch Machine</h2>
         <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/ target="_blank"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>
     </section>
     <section class="proj">

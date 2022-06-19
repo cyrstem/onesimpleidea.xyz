@@ -1,3 +1,7 @@
+
+
+
+
 export default class Stage {
     constructor({scene = 'scene', active =false}){
         this.scene = scene
