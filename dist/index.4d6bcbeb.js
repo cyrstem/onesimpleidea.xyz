@@ -551,470 +551,149 @@ window.onload = (event)=>{
     app();
 };
 
-},{"./style/main.scss":"knddS","./js/app":"8lRBv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./js/thingA":"Jn4jt","./js/follow":"caDxV"}],"knddS":[function() {},{}],"8lRBv":[function(require,module,exports) {
+},{"./style/main.scss":"knddS","./js/follow":"caDxV","./js/app":"8lRBv","./js/thingA":"Jn4jt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"knddS":[function() {},{}],"caDxV":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _nav = require("./interface/Nav");
-var _navDefault = parcelHelpers.interopDefault(_nav);
-var _contact = require("./interface/Contact");
-var _contactDefault = parcelHelpers.interopDefault(_contact);
-var _home = require("./pages/Home");
-var _homeDefault = parcelHelpers.interopDefault(_home);
-var _portafolio = require("./pages/Portafolio");
-var _portafolioDefault = parcelHelpers.interopDefault(_portafolio);
-var _experiments = require("./pages/Experiments"); //import Stage  from "./Stage"
-var _experimentsDefault = parcelHelpers.interopDefault(_experiments);
-let stage = null;
-class GUIView {
-    constructor(){}
-    init() {
-        this.load();
-        this.addListeners();
-        this.simpleSign(); //this.responsive();
+var _ogl = require("ogl");
+const lines = ()=>{
+    const vertex = /* glsl */ `
+    precision highp float;
+    attribute vec3 position;
+    attribute vec3 next;
+    attribute vec3 prev;
+    attribute vec2 uv;
+    attribute float side;
+    uniform vec2 uResolution;
+    uniform float uDPR;
+    uniform float uThickness;
+    vec4 getPosition() {
+        vec4 current = vec4(position, 1);
+        vec2 aspect = vec2(uResolution.x / uResolution.y, 1);
+        vec2 nextScreen = next.xy * aspect;
+        vec2 prevScreen = prev.xy * aspect;
+    
+        // Calculate the tangent direction
+        vec2 tangent = normalize(nextScreen - prevScreen);
+    
+        // Rotate 90 degrees to get the normal
+        vec2 normal = vec2(-tangent.y, tangent.x);
+        normal /= aspect;
+        // Taper the line to be fatter in the middle, and skinny at the ends using the uv.y
+        normal *= mix(1.0, 0.1, pow(abs(uv.y - 0.5) * 2.0, 2.0) );
+        // When the points are on top of each other, shrink the line to avoid artifacts.
+        float dist = length(nextScreen - prevScreen);
+        normal *= smoothstep(0.0, 0.06, dist);
+        float pixelWidthRatio = 1.0 / (uResolution.y / uDPR);
+        float pixelWidth = current.w* pixelWidthRatio;
+        normal *= pixelWidth * uThickness;
+        current.xy -= normal * side;
+    
+        return current;
     }
-    load() {
-        //load UI and socials media  plus main content
-        document.getElementById("ui").innerHTML = (0, _navDefault.default)();
-        document.getElementById("container").innerHTML = (0, _homeDefault.default)();
-        document.getElementById("contact").innerHTML = (0, _contactDefault.default)();
+    void main() {
+        gl_Position = getPosition();
     }
-    addListeners() {
-        window.addEventListener("click", (event)=>{
-            let links = event.target.id;
-            switch(links){
-                case "home":
-                    document.getElementById("container").innerHTML = (0, _homeDefault.default)();
-                    stage = new Stage({
-                        scene: "sectionA",
-                        active: true
-                    });
-                    break;
-                case "experiment":
-                    document.getElementById("container").innerHTML = (0, _experimentsDefault.default)();
-                    stage = new Stage({
-                        scene: "sectionB",
-                        active: false
-                    });
-                    break;
-                case "project":
-                    document.getElementById("container").innerHTML = (0, _portafolioDefault.default)();
-                    stage = new Stage({
-                        scene: "sectionC",
-                        active: true
-                    });
-                    break;
-            }
-        }, false);
-    }
-    responsive() {
-        //responsive screens
-        var x = window.matchMedia("(max-width: 700px)");
-        if (x.matches) //console.log("responsive biatch");
-        document.addEventListener("click", function(event) {
-            if (event.target.id !== "experiment") return;
-            document.getElementById("container").innerHTML = (0, _experimentsDefault.default)();
-            document.getElementById("ui").style.top = "10vh";
+`;
+    {
+        const renderer = new (0, _ogl.Renderer)({
+            dpr: 2
         });
-    }
-    simpleSign() {
-        if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
-            const args = [
-                "\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n",
-                "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"
-            ];
-            window.console.log.apply(console, args);
-        } else if (window.console) window.console.log("-created by cyrstem  -");
-    }
-}
-exports.default = GUIView;
-
-},{"./interface/Nav":"5VgNt","./interface/Contact":"kYRX7","./pages/Home":"j0Sts","./pages/Portafolio":"kWuWt","./pages/Experiments":"cHmqK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5VgNt":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const Navbar = ()=>{
-    const template = `
-        <nav>
-            <button id="home">About Me </button>
-            <button id="experiment">Experiments</button> 
-        </nav>
-       
-    `;
-    return template;
-};
-exports.default = Navbar;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, "__esModule", {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
+        const gl = renderer.gl;
+        document.body.appendChild(gl.canvas);
+        gl.clearColor(0.945, 0.945, 0.945, 0.1);
+        const scene = new (0, _ogl.Transform)();
+        const lines1 = [];
+        function resize() {
+            renderer.setSize(window.innerWidth, window.innerHeight); // We call resize on the polylines to update their resolution uniforms
+            lines1.forEach((line)=>line.polyline.resize());
+        }
+        window.addEventListener("resize", resize, false); // Just a helper function to make the code neater
+        function random(a, b) {
+            const alpha = Math.random();
+            return a * (1.0 - alpha) + b * alpha;
+        } // If you're interested in learning about drawing lines with geometry,
+        // go through this detailed article by Matt DesLauriers
+        // https://mattdesl.svbtle.com/drawing-lines-is-hard
+        // It's an excellent breakdown of the approaches and their pitfalls.
+        // In this example, we're making screen-space polylines. Basically it
+        // involves creating a geometry of vertices along a path - with two vertices
+        // at each point. Then in the vertex shader, we push each pair apart to
+        // give the line some width.
+        // We're going to make a number of different coloured lines for fun.
+        [
+            "#e09f7d",
+            "#ffffff",
+            "#ec4067",
+            "#a01a7d",
+            "#11071a"
+        ].forEach((color, i)=>{
+            // Store a few values for each lines' spring movement
+            const line = {
+                spring: random(0.02, 0.1),
+                friction: random(0.7, 0.95),
+                mouseVelocity: new (0, _ogl.Vec3)(),
+                mouseOffset: new (0, _ogl.Vec3)(random(-1, 1) * 0.02)
+            }; // Create an array of Vec3s (eg [[0, 0, 0], ...])
+            // Note: Only pass in one for each point on the line - the class will handle
+            // the doubling of vertices for the polyline effect.
+            const count = 30;
+            const points = line.points = [];
+            for(let i1 = 0; i1 < count; i1++)points.push(new (0, _ogl.Vec3)()); // Pass in the points, and any custom elements - for example here we've made
+            // custom shaders, and accompanying uniforms.
+            line.polyline = new (0, _ogl.Polyline)(gl, {
+                points,
+                vertex,
+                uniforms: {
+                    uColor: {
+                        value: new (0, _ogl.Color)(color)
+                    },
+                    uThickness: {
+                        value: random(10, 150)
+                    }
+                }
+            });
+            line.polyline.mesh.setParent(scene);
+            lines1.push(line);
+        }); // Call initial resize after creating the polylines
+        resize(); // Add handlers to get mouse position
+        const mouse = new (0, _ogl.Vec3)();
+        if ("ontouchstart" in window) {
+            window.addEventListener("touchstart", updateMouse, false);
+            window.addEventListener("touchmove", updateMouse, false);
+        } else window.addEventListener("mousemove", updateMouse, false);
+        function updateMouse(e) {
+            if (e.changedTouches && e.changedTouches.length) {
+                e.x = e.changedTouches[0].pageX;
+                e.y = e.changedTouches[0].pageY;
             }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"kYRX7":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const Contact = ()=>{
-    const template = `
-
-        <ul id="links">
-            <a href ="https://www.instagram.com/cyrstem/"target="_blank"><img src="insta.png"></a>
-                <a href ="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="in.png"></a>
-            <a href ="https://github.com/cyrstem/" target="_blank"><img src="git.png"></a>
-        </ul>
-    `;
-    return template;
-};
-exports.default = Contact;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"j0Sts":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const Home = ()=>{
-    const template = `
-    <main>
-        <div id="content">
-            <p>Hello...</p>
-            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialize on building custom digital or physical experiences.</p> 
-            <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
-            <div id ="sites"> 
-            <p> I have worked for:</p>
-            <ul>
-            <li>
-             <a href="https://activetheory.net/" target="_blank">
-               <span>Active Theory</span> 
-               <span>WebGL Developer</span>
-               <span>2021</span>
-             </a>
-            </li>
-            <li>
-               <a href="https://myuniguru.com/" target="_blank">
-                 <span>My Uniguru</span>
-                 <span>FullStack Developer</span>
-                 <span class="number">2020</span>
-               </a>
-             </li>
-             <li>
-             <a href="https://smartco.com.ec" target="_blank"> 
-               <span>Smartco </span>
-               <span>Unity Developer</span>
-               <span class="number">2019 - 2020</span>
-             </a>
-           </li>
-             <li>
-               <a href="https://www.yaesta.com" target="_blank">
-                 <span> YaEsta </span>
-                 <span> Front-end  & Designer</span> 
-                 <span class="number">2016 - 2018</span>
-               </a>
-             </li>
-            </ul>
-         </div>
-         <p>Contact me at <b>cyrstem[at]gmail[dot]com</b></p>  
-        </div>
-    </main>
-    `;
-    return template;
-};
-exports.default = Home;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kWuWt":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const Portafolio = ()=>{
-    const template = `
-      <div class ="sites"> 
-         <ul>
-         <li>
-          <a href="https://activetheory.net/" target="_blank">
-            <span>Active Theory</span> 
-            <span>WebGL Developer</span>
-            <span>2021</span>
-          </a>
-         </li>
-         <li>
-            <a href="https://myuniguru.com/" target="_blank">
-              <span>My Uniguru</span>
-              <span>FullStack Developer</span>
-              <span class="number">2020</span>
-            </a>
-          </li>
-          <li>
-          <a href="https://smartco.com.ec" target="_blank"> 
-            <span>Smartco </span>
-            <span>Unity Developer</span>
-            <span class="number">2019 - 2020</span>
-          </a>
-        </li>
-          <li>
-            <a href="https://www.yaesta.com" target="_blank">
-              <span> YaEsta </span>
-              <span> Front-end  & Designer</span> 
-              <span class="number">2016 - 2018</span>
-            </a>
-          </li>
-          
-      
-          <li>
-            <a href="https://www.pachamama.org.ec/en/" target="_blank">
-              <span> Pachamama</span>
-              <span> Front-end Developer</span>
-              <span class="number">2010 – 2013</span>
-            </a>
-          </li>
-         </ul>
-      </div>
-    `;
-    return template;
-};
-exports.default = Portafolio;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cHmqK":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _dataJson = require("../../data.json");
-var _dataJsonDefault = parcelHelpers.interopDefault(_dataJson);
-var _imagesJs = require("../images.js");
-var _imagesJsDefault = parcelHelpers.interopDefault(_imagesJs);
-console.log((0, _dataJsonDefault.default).projects[0]);
-console.log((0, _imagesJsDefault.default));
-const Experiments = ()=>{
-    const template = `
-<main>
-   <div id="portafolio">
-    <section class="proj">
-        <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
-    </section>
-    <section class="info">
-        <h2>Moving Photon</h2>
-        <p>I Help develop and deploy the Virtual Experience for
-            <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank"> Moving Photon</a> an
-            interactive installation/performance
-            created by installation artist<a href="https://friendred.studio" target="_blank"> Friendred Peng.</a>
-            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,
-            interactive installation, interactive performance,interactive performance with EEG and a <a
-                href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
-    </section>
-    <section class="info">
-    <h2>Glitch Machine</h2>
-        <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/ target="_blank"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>
-    </section>
-    <section class="proj">
-        <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src= "insta-0.jpg" width="500"/></a>
-     </section>
-     <section class="proj">
-       <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src= "noizu.png" width="500"/></a>
-    </section>
-    <section class="info">
-    <h2>Noizu</h2>
-        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
-     </section>
-     <section class="info">
-     <h2>PACMan YaEsta.com</h2>
-     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>
-      </section>
-    <section class="proj">
-       <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src= "insta-3.jpg" width="500"/></a>  
-    </section>
-   
-</div>
-</main>
-    `;
-    return template;
-};
-exports.default = Experiments;
-
-},{"../../data.json":"aLYkf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../images.js":"4XIGb"}],"aLYkf":[function(require,module,exports) {
-module.exports = JSON.parse('{"projects":[{"title":"Moving Photon","description":"I Help develop and deploy the Virtual Experience for Moving Photon an interactive installation/performance created by installation artistFriendred Peng. Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance,interactive performance with EEG and a remote performance."},{"title":"Glitch Machine","description":"   as"},{"title":"Noizu","description":"   as"}]}');
-
-},{}],"4XIGb":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _insta0Jpg = require("../../images/insta-0.jpg");
-var _insta0JpgDefault = parcelHelpers.interopDefault(_insta0Jpg);
-var _insta1Jpg = require("../../images/insta-1.jpg");
-var _insta1JpgDefault = parcelHelpers.interopDefault(_insta1Jpg);
-var _insta2Jpg = require("../../images/insta-2.jpg");
-var _insta2JpgDefault = parcelHelpers.interopDefault(_insta2Jpg);
-var _insta3Jpg = require("../../images/insta-3.jpg");
-var _insta3JpgDefault = parcelHelpers.interopDefault(_insta3Jpg);
-const images = {
-    imageOne: (0, _insta0JpgDefault.default),
-    imageTwo: (0, _insta1JpgDefault.default),
-    imageThree: (0, _insta2JpgDefault.default),
-    imageFour: (0, _insta3JpgDefault.default)
-};
-exports.default = images;
-
-},{"../../images/insta-0.jpg":"72kaL","../../images/insta-1.jpg":"fEPy5","../../images/insta-2.jpg":"fCFLI","../../images/insta-3.jpg":"c2uSi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"72kaL":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-0.04c9ec34.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
-"use strict";
-var bundleURL = {};
-function getBundleURLCached(id) {
-    var value = bundleURL[id];
-    if (!value) {
-        value = getBundleURL();
-        bundleURL[id] = value;
+            if (e.x === undefined) {
+                e.x = e.pageX;
+                e.y = e.pageY;
+            } // Get mouse value in -1 to 1 range, with y flipped
+            mouse.set(e.x / gl.renderer.width * 2 - 1, e.y / gl.renderer.height * -2 + 1, 0);
+        }
+        const tmp = new (0, _ogl.Vec3)();
+        requestAnimationFrame(update);
+        function update(t) {
+            requestAnimationFrame(update);
+            lines1.forEach((line)=>{
+                // Update polyline input points
+                for(let i = line.points.length - 1; i >= 0; i--)if (!i) {
+                    // For the first point, spring ease it to the mouse position
+                    tmp.copy(mouse).add(line.mouseOffset).sub(line.points[i]).multiply(line.spring);
+                    line.mouseVelocity.add(tmp).multiply(line.friction);
+                    line.points[i].add(line.mouseVelocity);
+                } else // The rest of the points ease to the point in front of them, making a line
+                line.points[i].lerp(line.points[i - 1], 0.9);
+                line.polyline.updateGeometry();
+            });
+            renderer.render({
+                scene
+            });
+        }
     }
-    return value;
-}
-function getBundleURL() {
-    try {
-        throw new Error();
-    } catch (err) {
-        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
-        if (matches) // The first two stack frames will be this function and getBundleURLCached.
-        // Use the 3rd one, which will be a runtime in the original bundle.
-        return getBaseURL(matches[2]);
-    }
-    return "/";
-}
-function getBaseURL(url) {
-    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
-} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
-function getOrigin(url) {
-    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
-    if (!matches) throw new Error("Origin not found");
-    return matches[0];
-}
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-exports.getOrigin = getOrigin;
-
-},{}],"fEPy5":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-1.1da67019.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"fCFLI":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-2.0f425bc2.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"c2uSi":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-3.46599cf7.jpg" + "?" + Date.now();
-
-},{"./helpers/bundle-url":"lgJ39"}],"Jn4jt":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-// import { Renderer, Camera, Transform, Program, Mesh, Sphere, Orbit } from "ogl";
-var _ogl = require("ogl"); // import frag from '../shaders/frag.glsl';
-class thingA {
-    // constructor({scene='something',active=false}) {
-    constructor(){
-        // this.scene = scene
-        // this.active = active
-        // console.log(this.scene, "|",  this.active)
-        // this.vertex = null;
-        // this.fragment= null
-        this.createRenderer();
-        this.createCamera();
-        this.createScene();
-        this.createGeometry();
-        console.log("hello"); //this.onResize()
-        this.createGeometry();
-    }
-    createRenderer() {
-        this.renderer = new (0, _ogl.Renderer)();
-        this.gl = this.renderer.gl;
-        this.gl.clearColor(1, 1, 1, 1);
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(this.gl.canvas);
-    }
-    createCamera() {
-        this.camera = new (0, _ogl.Camera)(this.gl);
-        this.camera.fov = 45;
-        this.camera.position.z = 20;
-    }
-    createScene() {
-        this.scene = new (0, _ogl.Transform)();
-    }
-    createGeometry() {
-        this.planeGeometry = new (0, _ogl.Plane)(this.gl, {
-            heightSegments: 50,
-            widthSegments: 100
-        }); // console.log(this.planeGeometry)
-    }
-} // const thingA = () => {
- //     const vertex = /* glsl */ `
- //     attribute vec3 position;
- //     attribute vec3 normal;
- //     uniform mat4 modelViewMatrix;
- //     uniform mat4 projectionMatrix;
- //     uniform mat3 normalMatrix;
- //     varying vec3 vNormal;
- //     void main() {
- //         vNormal = normalize(normalMatrix * normal);
- //         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
- //     }
- // `;
- //     const fragment = /* glsl */ `
- //     precision highp float;
- //     varying vec3 vNormal;
- //     void main() {
- //         vec3 normal = normalize(vNormal);
- //         float lighting = dot(normal, normalize(vec3(-0.3, 0.8, 0.6)));
- //         gl_FragColor.rgb = vec3(0.2, 0.8, 1.0) + lighting * 0.1;
- //         gl_FragColor.a = 1.0;
- //     }
- // `;
- //     {
- //         const renderer = new Renderer({ dpr: 2 });
- //         const gl = renderer.gl;
- //         document.body.appendChild(gl.canvas);
- //         gl.clearColor(1, 1, 1, 1);
- //         const camera = new Camera(gl, { fov: 35 });
- //         camera.position.set(0, 1, 7);
- //         camera.lookAt([0, 0, 0]);
- //         const controls = new Orbit(camera);
- //         function resize() {
- //             renderer.setSize(window.innerWidth, window.innerHeight);
- //             camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
- //         }
- //         window.addEventListener('resize', resize, false);
- //         resize();
- //         const scene = new Transform();
- //         const sphereGeometry = new Sphere(gl);
- //         const program = new Program(gl, {
- //             vertex,
- //             fragment,
- //             // Don't cull faces so that plane is double sided - default is gl.BACK
- //             cullFace: null,
- //         });
- //         const sphere = new Mesh(gl, { geometry: sphereGeometry, program });
- //         sphere.position.set(1.3, 0, 0);
- //         sphere.setParent(scene);
- //         requestAnimationFrame(update);
- //         function update() {
- //             requestAnimationFrame(update);
- //             controls.update();
- //             sphere.rotation.y -= 0.03;
- //             renderer.render({ scene, camera });
- //         }
- //     }
- // }
- // export default thingA;
-exports.default = thingA;
+};
+exports.default = lines;
 
 },{"ogl":"e9Ial","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"e9Ial":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1811,7 +1490,37 @@ function exactEquals(a, b) {
     return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hxCzn":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"hxCzn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Program", ()=>Program);
@@ -5903,149 +5612,440 @@ const defaultFragment = /* glsl */ `
     }
 `;
 
-},{"../core/Geometry.js":"7kwQs","../core/Program.js":"hxCzn","../core/Mesh.js":"iRRlc","../math/Vec2.js":"FI8Uu","../math/Vec3.js":"bkjH4","../math/Color.js":"gBlRt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"caDxV":[function(require,module,exports) {
+},{"../core/Geometry.js":"7kwQs","../core/Program.js":"hxCzn","../core/Mesh.js":"iRRlc","../math/Vec2.js":"FI8Uu","../math/Vec3.js":"bkjH4","../math/Color.js":"gBlRt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"8lRBv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-var _ogl = require("ogl");
-const lines = ()=>{
-    const vertex = /* glsl */ `
-    precision highp float;
-    attribute vec3 position;
-    attribute vec3 next;
-    attribute vec3 prev;
-    attribute vec2 uv;
-    attribute float side;
-    uniform vec2 uResolution;
-    uniform float uDPR;
-    uniform float uThickness;
-    vec4 getPosition() {
-        vec4 current = vec4(position, 1);
-        vec2 aspect = vec2(uResolution.x / uResolution.y, 1);
-        vec2 nextScreen = next.xy * aspect;
-        vec2 prevScreen = prev.xy * aspect;
-    
-        // Calculate the tangent direction
-        vec2 tangent = normalize(nextScreen - prevScreen);
-    
-        // Rotate 90 degrees to get the normal
-        vec2 normal = vec2(-tangent.y, tangent.x);
-        normal /= aspect;
-        // Taper the line to be fatter in the middle, and skinny at the ends using the uv.y
-        normal *= mix(1.0, 0.1, pow(abs(uv.y - 0.5) * 2.0, 2.0) );
-        // When the points are on top of each other, shrink the line to avoid artifacts.
-        float dist = length(nextScreen - prevScreen);
-        normal *= smoothstep(0.0, 0.06, dist);
-        float pixelWidthRatio = 1.0 / (uResolution.y / uDPR);
-        float pixelWidth = current.w* pixelWidthRatio;
-        normal *= pixelWidth * uThickness;
-        current.xy -= normal * side;
-    
-        return current;
+var _nav = require("./interface/Nav");
+var _navDefault = parcelHelpers.interopDefault(_nav);
+var _contact = require("./interface/Contact");
+var _contactDefault = parcelHelpers.interopDefault(_contact);
+var _home = require("./pages/Home");
+var _homeDefault = parcelHelpers.interopDefault(_home);
+var _portafolio = require("./pages/Portafolio");
+var _portafolioDefault = parcelHelpers.interopDefault(_portafolio);
+var _experiments = require("./pages/Experiments"); //import Stage  from "./Stage"
+var _experimentsDefault = parcelHelpers.interopDefault(_experiments);
+let stage = null;
+class GUIView {
+    constructor(){}
+    init() {
+        this.load();
+        this.addListeners();
+        this.simpleSign(); //this.responsive();
     }
-    void main() {
-        gl_Position = getPosition();
+    load() {
+        //load UI and socials media  plus main content
+        document.getElementById("ui").innerHTML = (0, _navDefault.default)();
+        document.getElementById("container").innerHTML = (0, _homeDefault.default)();
+        document.getElementById("contact").innerHTML = (0, _contactDefault.default)();
     }
-`;
-    {
-        const renderer = new (0, _ogl.Renderer)({
-            dpr: 2
-        });
-        const gl = renderer.gl;
-        document.body.appendChild(gl.canvas);
-        gl.clearColor(0.945, 0.945, 0.945, 0.1);
-        const scene = new (0, _ogl.Transform)();
-        const lines1 = [];
-        function resize() {
-            renderer.setSize(window.innerWidth, window.innerHeight); // We call resize on the polylines to update their resolution uniforms
-            lines1.forEach((line)=>line.polyline.resize());
-        }
-        window.addEventListener("resize", resize, false); // Just a helper function to make the code neater
-        function random(a, b) {
-            const alpha = Math.random();
-            return a * (1.0 - alpha) + b * alpha;
-        } // If you're interested in learning about drawing lines with geometry,
-        // go through this detailed article by Matt DesLauriers
-        // https://mattdesl.svbtle.com/drawing-lines-is-hard
-        // It's an excellent breakdown of the approaches and their pitfalls.
-        // In this example, we're making screen-space polylines. Basically it
-        // involves creating a geometry of vertices along a path - with two vertices
-        // at each point. Then in the vertex shader, we push each pair apart to
-        // give the line some width.
-        // We're going to make a number of different coloured lines for fun.
-        [
-            "#e09f7d",
-            "#ffffff",
-            "#ec4067",
-            "#a01a7d",
-            "#11071a"
-        ].forEach((color, i)=>{
-            // Store a few values for each lines' spring movement
-            const line = {
-                spring: random(0.02, 0.1),
-                friction: random(0.7, 0.95),
-                mouseVelocity: new (0, _ogl.Vec3)(),
-                mouseOffset: new (0, _ogl.Vec3)(random(-1, 1) * 0.02)
-            }; // Create an array of Vec3s (eg [[0, 0, 0], ...])
-            // Note: Only pass in one for each point on the line - the class will handle
-            // the doubling of vertices for the polyline effect.
-            const count = 30;
-            const points = line.points = [];
-            for(let i1 = 0; i1 < count; i1++)points.push(new (0, _ogl.Vec3)()); // Pass in the points, and any custom elements - for example here we've made
-            // custom shaders, and accompanying uniforms.
-            line.polyline = new (0, _ogl.Polyline)(gl, {
-                points,
-                vertex,
-                uniforms: {
-                    uColor: {
-                        value: new (0, _ogl.Color)(color)
-                    },
-                    uThickness: {
-                        value: random(10, 150)
-                    }
-                }
-            });
-            line.polyline.mesh.setParent(scene);
-            lines1.push(line);
-        }); // Call initial resize after creating the polylines
-        resize(); // Add handlers to get mouse position
-        const mouse = new (0, _ogl.Vec3)();
-        if ("ontouchstart" in window) {
-            window.addEventListener("touchstart", updateMouse, false);
-            window.addEventListener("touchmove", updateMouse, false);
-        } else window.addEventListener("mousemove", updateMouse, false);
-        function updateMouse(e) {
-            if (e.changedTouches && e.changedTouches.length) {
-                e.x = e.changedTouches[0].pageX;
-                e.y = e.changedTouches[0].pageY;
+    addListeners() {
+        window.addEventListener("click", (event)=>{
+            let links = event.target.id;
+            switch(links){
+                case "home":
+                    document.getElementById("container").innerHTML = (0, _homeDefault.default)();
+                    stage = new Stage({
+                        scene: "sectionA",
+                        active: true
+                    });
+                    break;
+                case "experiment":
+                    document.getElementById("container").innerHTML = (0, _experimentsDefault.default)();
+                    stage = new Stage({
+                        scene: "sectionB",
+                        active: false
+                    });
+                    break;
+                case "project":
+                    document.getElementById("container").innerHTML = (0, _portafolioDefault.default)();
+                    stage = new Stage({
+                        scene: "sectionC",
+                        active: true
+                    });
+                    break;
             }
-            if (e.x === undefined) {
-                e.x = e.pageX;
-                e.y = e.pageY;
-            } // Get mouse value in -1 to 1 range, with y flipped
-            mouse.set(e.x / gl.renderer.width * 2 - 1, e.y / gl.renderer.height * -2 + 1, 0);
-        }
-        const tmp = new (0, _ogl.Vec3)();
-        requestAnimationFrame(update);
-        function update(t) {
-            requestAnimationFrame(update);
-            lines1.forEach((line)=>{
-                // Update polyline input points
-                for(let i = line.points.length - 1; i >= 0; i--)if (!i) {
-                    // For the first point, spring ease it to the mouse position
-                    tmp.copy(mouse).add(line.mouseOffset).sub(line.points[i]).multiply(line.spring);
-                    line.mouseVelocity.add(tmp).multiply(line.friction);
-                    line.points[i].add(line.mouseVelocity);
-                } else // The rest of the points ease to the point in front of them, making a line
-                line.points[i].lerp(line.points[i - 1], 0.9);
-                line.polyline.updateGeometry();
-            });
-            renderer.render({
-                scene
-            });
-        }
+        }, false);
     }
+    responsive() {
+        //responsive screens
+        var x = window.matchMedia("(max-width: 700px)");
+        if (x.matches) //console.log("responsive biatch");
+        document.addEventListener("click", function(event) {
+            if (event.target.id !== "experiment") return;
+            document.getElementById("container").innerHTML = (0, _experimentsDefault.default)();
+            document.getElementById("ui").style.top = "10vh";
+        });
+    }
+    simpleSign() {
+        if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
+            const args = [
+                "\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n",
+                "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"
+            ];
+            window.console.log.apply(console, args);
+        } else if (window.console) window.console.log("-created by cyrstem  -");
+    }
+}
+exports.default = GUIView;
+
+},{"./interface/Nav":"5VgNt","./interface/Contact":"kYRX7","./pages/Home":"j0Sts","./pages/Portafolio":"kWuWt","./pages/Experiments":"cHmqK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5VgNt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const Navbar = ()=>{
+    const template = `
+        <nav>
+            <button id="home">About Me </button>
+            <button id="experiment">Experiments</button> 
+        </nav>
+       
+    `;
+    return template;
 };
-exports.default = lines;
+exports.default = Navbar;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kYRX7":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const Contact = ()=>{
+    const template = `
+
+        <ul id="links">
+            <a href ="https://www.instagram.com/cyrstem/"target="_blank"><img src="insta.png"></a>
+                <a href ="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="in.png"></a>
+            <a href ="https://github.com/cyrstem/" target="_blank"><img src="git.png"></a>
+        </ul>
+    `;
+    return template;
+};
+exports.default = Contact;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"j0Sts":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const Home = ()=>{
+    const template = `
+    <main>
+        <div id="content">
+            <p>Hello...</p>
+            <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialize on building custom digital or physical experiences.</p> 
+            <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
+            <div id ="sites"> 
+            <p> I have worked for:</p>
+            <ul>
+            <li>
+             <a href="https://activetheory.net/" target="_blank">
+               <span>Active Theory</span> 
+               <span>WebGL Developer</span>
+               <span>2021</span>
+             </a>
+            </li>
+            <li>
+               <a href="https://myuniguru.com/" target="_blank">
+                 <span>My Uniguru</span>
+                 <span>FullStack Developer</span>
+                 <span class="number">2020</span>
+               </a>
+             </li>
+             <li>
+             <a href="https://smartco.com.ec" target="_blank"> 
+               <span>Smartco </span>
+               <span>Unity Developer</span>
+               <span class="number">2019 - 2020</span>
+             </a>
+           </li>
+             <li>
+               <a href="https://www.yaesta.com" target="_blank">
+                 <span> YaEsta </span>
+                 <span> Front-end  & Designer</span> 
+                 <span class="number">2016 - 2018</span>
+               </a>
+             </li>
+            </ul>
+         </div>
+         <p>Contact me at <b>cyrstem[at]gmail[dot]com</b></p>  
+        </div>
+    </main>
+    `;
+    return template;
+};
+exports.default = Home;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"kWuWt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const Portafolio = ()=>{
+    const template = `
+      <div class ="sites"> 
+         <ul>
+         <li>
+          <a href="https://activetheory.net/" target="_blank">
+            <span>Active Theory</span> 
+            <span>WebGL Developer</span>
+            <span>2021</span>
+          </a>
+         </li>
+         <li>
+            <a href="https://myuniguru.com/" target="_blank">
+              <span>My Uniguru</span>
+              <span>FullStack Developer</span>
+              <span class="number">2020</span>
+            </a>
+          </li>
+          <li>
+          <a href="https://smartco.com.ec" target="_blank"> 
+            <span>Smartco </span>
+            <span>Unity Developer</span>
+            <span class="number">2019 - 2020</span>
+          </a>
+        </li>
+          <li>
+            <a href="https://www.yaesta.com" target="_blank">
+              <span> YaEsta </span>
+              <span> Front-end  & Designer</span> 
+              <span class="number">2016 - 2018</span>
+            </a>
+          </li>
+          
+      
+          <li>
+            <a href="https://www.pachamama.org.ec/en/" target="_blank">
+              <span> Pachamama</span>
+              <span> Front-end Developer</span>
+              <span class="number">2010 – 2013</span>
+            </a>
+          </li>
+         </ul>
+      </div>
+    `;
+    return template;
+};
+exports.default = Portafolio;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cHmqK":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _dataJson = require("../../data.json");
+var _dataJsonDefault = parcelHelpers.interopDefault(_dataJson);
+var _imagesJs = require("../images.js");
+var _imagesJsDefault = parcelHelpers.interopDefault(_imagesJs);
+console.log((0, _dataJsonDefault.default).projects[0]);
+console.log((0, _imagesJsDefault.default));
+const Experiments = ()=>{
+    const template = `
+<main>
+   <div id="portafolio">
+    <section class="proj">
+        <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
+    </section>
+    <section class="info">
+        <h2>Moving Photon</h2>
+        <p>I Help develop and deploy the Virtual Experience for
+            <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank"> Moving Photon</a> an
+            interactive installation/performance
+            created by installation artist<a href="https://friendred.studio" target="_blank"> Friendred Peng.</a>
+            Participation in Moving Photon can be in 5 different ways, including a Phantom performance,
+            interactive installation, interactive performance,interactive performance with EEG and a <a
+                href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
+    </section>
+    <section class="info">
+    <h2>Glitch Machine</h2>
+        <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/ target="_blank"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>
+    </section>
+    <section class="proj">
+        <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src= "insta-0.jpg" width="500"/></a>
+     </section>
+     <section class="proj">
+       <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src= "noizu.png" width="500"/></a>
+    </section>
+    <section class="info">
+    <h2>Noizu</h2>
+        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
+     </section>
+     <section class="info">
+     <h2>PACMan YaEsta.com</h2>
+     <p>Develop a Physical installation with Mapping and live interaction  for the launch of the e-commerce site YaEsta.com back in the day</p>
+      </section>
+    <section class="proj">
+       <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src= "insta-3.jpg" width="500"/></a>  
+    </section>
+   
+</div>
+</main>
+    `;
+    return template;
+};
+exports.default = Experiments;
+
+},{"../../data.json":"aLYkf","../images.js":"4XIGb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aLYkf":[function(require,module,exports) {
+module.exports = JSON.parse('{"projects":[{"title":"Moving Photon","description":"I Help develop and deploy the Virtual Experience for Moving Photon an interactive installation/performance created by installation artistFriendred Peng. Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance,interactive performance with EEG and a remote performance."},{"title":"Glitch Machine","description":"   as"},{"title":"Noizu","description":"   as"}]}');
+
+},{}],"4XIGb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _insta0Jpg = require("../../images/insta-0.jpg");
+var _insta0JpgDefault = parcelHelpers.interopDefault(_insta0Jpg);
+var _insta1Jpg = require("../../images/insta-1.jpg");
+var _insta1JpgDefault = parcelHelpers.interopDefault(_insta1Jpg);
+var _insta2Jpg = require("../../images/insta-2.jpg");
+var _insta2JpgDefault = parcelHelpers.interopDefault(_insta2Jpg);
+var _insta3Jpg = require("../../images/insta-3.jpg");
+var _insta3JpgDefault = parcelHelpers.interopDefault(_insta3Jpg);
+const images = {
+    imageOne: (0, _insta0JpgDefault.default),
+    imageTwo: (0, _insta1JpgDefault.default),
+    imageThree: (0, _insta2JpgDefault.default),
+    imageFour: (0, _insta3JpgDefault.default)
+};
+exports.default = images;
+
+},{"../../images/insta-0.jpg":"72kaL","../../images/insta-1.jpg":"fEPy5","../../images/insta-2.jpg":"fCFLI","../../images/insta-3.jpg":"c2uSi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"72kaL":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-0.04c9ec34.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"fEPy5":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-1.1da67019.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fCFLI":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-2.0f425bc2.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"c2uSi":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-3.46599cf7.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"Jn4jt":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+// import { Renderer, Camera, Transform, Program, Mesh, Sphere, Orbit } from "ogl";
+var _ogl = require("ogl"); // import frag from '../shaders/frag.glsl';
+class thingA {
+    // constructor({scene='something',active=false}) {
+    constructor(){
+        // this.scene = scene
+        // this.active = active
+        // console.log(this.scene, "|",  this.active)
+        // this.vertex = null;
+        // this.fragment= null
+        this.createRenderer();
+        this.createCamera();
+        this.createScene();
+        this.createGeometry();
+        console.log("hello"); //this.onResize()
+        this.createGeometry();
+    }
+    createRenderer() {
+        this.renderer = new (0, _ogl.Renderer)();
+        this.gl = this.renderer.gl;
+        this.gl.clearColor(1, 1, 1, 1);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(this.gl.canvas);
+    }
+    createCamera() {
+        this.camera = new (0, _ogl.Camera)(this.gl);
+        this.camera.fov = 45;
+        this.camera.position.z = 20;
+    }
+    createScene() {
+        this.scene = new (0, _ogl.Transform)();
+    }
+    createGeometry() {
+        this.planeGeometry = new (0, _ogl.Plane)(this.gl, {
+            heightSegments: 50,
+            widthSegments: 100
+        }); // console.log(this.planeGeometry)
+    }
+} // const thingA = () => {
+ //     const vertex = /* glsl */ `
+ //     attribute vec3 position;
+ //     attribute vec3 normal;
+ //     uniform mat4 modelViewMatrix;
+ //     uniform mat4 projectionMatrix;
+ //     uniform mat3 normalMatrix;
+ //     varying vec3 vNormal;
+ //     void main() {
+ //         vNormal = normalize(normalMatrix * normal);
+ //         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+ //     }
+ // `;
+ //     const fragment = /* glsl */ `
+ //     precision highp float;
+ //     varying vec3 vNormal;
+ //     void main() {
+ //         vec3 normal = normalize(vNormal);
+ //         float lighting = dot(normal, normalize(vec3(-0.3, 0.8, 0.6)));
+ //         gl_FragColor.rgb = vec3(0.2, 0.8, 1.0) + lighting * 0.1;
+ //         gl_FragColor.a = 1.0;
+ //     }
+ // `;
+ //     {
+ //         const renderer = new Renderer({ dpr: 2 });
+ //         const gl = renderer.gl;
+ //         document.body.appendChild(gl.canvas);
+ //         gl.clearColor(1, 1, 1, 1);
+ //         const camera = new Camera(gl, { fov: 35 });
+ //         camera.position.set(0, 1, 7);
+ //         camera.lookAt([0, 0, 0]);
+ //         const controls = new Orbit(camera);
+ //         function resize() {
+ //             renderer.setSize(window.innerWidth, window.innerHeight);
+ //             camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+ //         }
+ //         window.addEventListener('resize', resize, false);
+ //         resize();
+ //         const scene = new Transform();
+ //         const sphereGeometry = new Sphere(gl);
+ //         const program = new Program(gl, {
+ //             vertex,
+ //             fragment,
+ //             // Don't cull faces so that plane is double sided - default is gl.BACK
+ //             cullFace: null,
+ //         });
+ //         const sphere = new Mesh(gl, { geometry: sphereGeometry, program });
+ //         sphere.position.set(1.3, 0, 0);
+ //         sphere.setParent(scene);
+ //         requestAnimationFrame(update);
+ //         function update() {
+ //             requestAnimationFrame(update);
+ //             controls.update();
+ //             sphere.rotation.y -= 0.03;
+ //             renderer.render({ scene, camera });
+ //         }
+ //     }
+ // }
+ // export default thingA;
+exports.default = thingA;
 
 },{"ogl":"e9Ial","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8TtF2","gLLPy"], "gLLPy", "parcelRequire0146")
 
