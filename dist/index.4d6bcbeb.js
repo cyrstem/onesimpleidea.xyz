@@ -533,25 +533,25 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"gLLPy":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _mainScss = require("./style/main.scss"); // import lines from "./js/follow";
+var _mainScss = require("./style/main.scss");
+var _follow = require("./js/follow");
+var _followDefault = parcelHelpers.interopDefault(_follow);
 var _app = require("./js/app");
 var _appDefault = parcelHelpers.interopDefault(_app);
 var _thingA = require("./js/thingA");
 var _thingADefault = parcelHelpers.interopDefault(_thingA);
 const app = ()=>{
     let ui = new (0, _appDefault.default)();
-    ui.init();
-    let thing = new (0, _thingADefault.default)({
-        scene: "stateA",
-        active: true
-    }); //		thing.draw()
-// lines();
+    ui.init(); //let thing = new thingA( {scene:'stateA', active: true} );
+    //let thing = new thingA();
+    //		thing.draw()
+    (0, _followDefault.default)();
 };
 window.onload = (event)=>{
     app();
 };
 
-},{"./style/main.scss":"knddS","./js/app":"8lRBv","./js/thingA":"Jn4jt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"knddS":[function() {},{}],"8lRBv":[function(require,module,exports) {
+},{"./style/main.scss":"knddS","./js/app":"8lRBv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./js/thingA":"Jn4jt","./js/follow":"caDxV"}],"knddS":[function() {},{}],"8lRBv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _nav = require("./interface/Nav");
@@ -562,10 +562,8 @@ var _home = require("./pages/Home");
 var _homeDefault = parcelHelpers.interopDefault(_home);
 var _portafolio = require("./pages/Portafolio");
 var _portafolioDefault = parcelHelpers.interopDefault(_portafolio);
-var _experiments = require("./pages/Experiments");
+var _experiments = require("./pages/Experiments"); //import Stage  from "./Stage"
 var _experimentsDefault = parcelHelpers.interopDefault(_experiments);
-var _stage = require("./Stage");
-var _stageDefault = parcelHelpers.interopDefault(_stage);
 let stage = null;
 class GUIView {
     constructor(){}
@@ -586,21 +584,21 @@ class GUIView {
             switch(links){
                 case "home":
                     document.getElementById("container").innerHTML = (0, _homeDefault.default)();
-                    stage = new (0, _stageDefault.default)({
+                    stage = new Stage({
                         scene: "sectionA",
                         active: true
                     });
                     break;
                 case "experiment":
                     document.getElementById("container").innerHTML = (0, _experimentsDefault.default)();
-                    stage = new (0, _stageDefault.default)({
+                    stage = new Stage({
                         scene: "sectionB",
                         active: false
                     });
                     break;
                 case "project":
                     document.getElementById("container").innerHTML = (0, _portafolioDefault.default)();
-                    stage = new (0, _stageDefault.default)({
+                    stage = new Stage({
                         scene: "sectionC",
                         active: true
                     });
@@ -630,7 +628,7 @@ class GUIView {
 }
 exports.default = GUIView;
 
-},{"./interface/Nav":"5VgNt","./interface/Contact":"kYRX7","./pages/Home":"j0Sts","./pages/Portafolio":"kWuWt","./pages/Experiments":"cHmqK","./Stage":"5MQQY","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5VgNt":[function(require,module,exports) {
+},{"./interface/Nav":"5VgNt","./interface/Contact":"kYRX7","./pages/Home":"j0Sts","./pages/Portafolio":"kWuWt","./pages/Experiments":"cHmqK","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5VgNt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 const Navbar = ()=>{
@@ -798,10 +796,13 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _dataJson = require("../../data.json");
 var _dataJsonDefault = parcelHelpers.interopDefault(_dataJson);
+var _imagesJs = require("../images.js");
+var _imagesJsDefault = parcelHelpers.interopDefault(_imagesJs);
 console.log((0, _dataJsonDefault.default).projects[0]);
+console.log((0, _imagesJsDefault.default));
 const Experiments = ()=>{
     const template = `
-    <main>
+<main>
    <div id="portafolio">
     <section class="proj">
         <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
@@ -817,7 +818,7 @@ const Experiments = ()=>{
                 href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
     </section>
     <section class="info">
-    <h2>Glitch MAchine</h2>
+    <h2>Glitch Machine</h2>
         <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/ target="_blank"> Jenna Marsh </a>, it lets you play with a image applying different filters and export the resulting image for printing</p>
     </section>
     <section class="proj">
@@ -845,98 +846,114 @@ const Experiments = ()=>{
 };
 exports.default = Experiments;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../data.json":"aLYkf"}],"aLYkf":[function(require,module,exports) {
+},{"../../data.json":"aLYkf","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../images.js":"4XIGb"}],"aLYkf":[function(require,module,exports) {
 module.exports = JSON.parse('{"projects":[{"title":"Moving Photon","description":"I Help develop and deploy the Virtual Experience for Moving Photon an interactive installation/performance created by installation artistFriendred Peng. Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance,interactive performance with EEG and a remote performance."},{"title":"Glitch Machine","description":"   as"},{"title":"Noizu","description":"   as"}]}');
 
-},{}],"5MQQY":[function(require,module,exports) {
+},{}],"4XIGb":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class Stage {
-    constructor({ scene ="scene" , active =false  }){
-        this.scene = scene;
-        this.active = true;
-        console.log(this.scene, "|", this.active);
-    }
-    init() {}
-    load() {}
-    remove() {}
-    drar() {}
-    addEventListener(something) {}
-}
-exports.default = Stage;
+var _insta0Jpg = require("../../images/insta-0.jpg");
+var _insta0JpgDefault = parcelHelpers.interopDefault(_insta0Jpg);
+var _insta1Jpg = require("../../images/insta-1.jpg");
+var _insta1JpgDefault = parcelHelpers.interopDefault(_insta1Jpg);
+var _insta2Jpg = require("../../images/insta-2.jpg");
+var _insta2JpgDefault = parcelHelpers.interopDefault(_insta2Jpg);
+var _insta3Jpg = require("../../images/insta-3.jpg");
+var _insta3JpgDefault = parcelHelpers.interopDefault(_insta3Jpg);
+const images = {
+    imageOne: (0, _insta0JpgDefault.default),
+    imageTwo: (0, _insta1JpgDefault.default),
+    imageThree: (0, _insta2JpgDefault.default),
+    imageFour: (0, _insta3JpgDefault.default)
+};
+exports.default = images;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Jn4jt":[function(require,module,exports) {
+},{"../../images/insta-0.jpg":"72kaL","../../images/insta-1.jpg":"fEPy5","../../images/insta-2.jpg":"fCFLI","../../images/insta-3.jpg":"c2uSi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"72kaL":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-0.04c9ec34.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
+"use strict";
+var bundleURL = {};
+function getBundleURLCached(id) {
+    var value = bundleURL[id];
+    if (!value) {
+        value = getBundleURL();
+        bundleURL[id] = value;
+    }
+    return value;
+}
+function getBundleURL() {
+    try {
+        throw new Error();
+    } catch (err) {
+        var matches = ("" + err.stack).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^)\n]+/g);
+        if (matches) // The first two stack frames will be this function and getBundleURLCached.
+        // Use the 3rd one, which will be a runtime in the original bundle.
+        return getBaseURL(matches[2]);
+    }
+    return "/";
+}
+function getBaseURL(url) {
+    return ("" + url).replace(/^((?:https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/.+)\/[^/]+$/, "$1") + "/";
+} // TODO: Replace uses with `new URL(url).origin` when ie11 is no longer supported.
+function getOrigin(url) {
+    var matches = ("" + url).match(/(https?|file|ftp|(chrome|moz|safari-web)-extension):\/\/[^/]+/);
+    if (!matches) throw new Error("Origin not found");
+    return matches[0];
+}
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+exports.getOrigin = getOrigin;
+
+},{}],"fEPy5":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-1.1da67019.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"fCFLI":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-2.0f425bc2.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"c2uSi":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("gnRNX") + "insta-3.46599cf7.jpg" + "?" + Date.now();
+
+},{"./helpers/bundle-url":"lgJ39"}],"Jn4jt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // import { Renderer, Camera, Transform, Program, Mesh, Sphere, Orbit } from "ogl";
-var _ogl = require("ogl");
-var _fragGlsl = require("../shaders/frag.glsl");
-var _fragGlslDefault = parcelHelpers.interopDefault(_fragGlsl);
-var _vertGlsl = require("../shaders/vert.glsl");
-var _vertGlslDefault = parcelHelpers.interopDefault(_vertGlsl);
-let vertex;
-let fragment;
-class Thing {
-    constructor({ scene ="something" , active =false  }){
-        this.scene = scene;
-        this.active = active;
-        console.log(this.scene, "|", this.active); // this.vertex = null;
-    // this.fragment= null
+var _ogl = require("ogl"); // import frag from '../shaders/frag.glsl';
+class thingA {
+    // constructor({scene='something',active=false}) {
+    constructor(){
+        // this.scene = scene
+        // this.active = active
+        // console.log(this.scene, "|",  this.active)
+        // this.vertex = null;
+        // this.fragment= null
+        this.createRenderer();
+        this.createCamera();
+        this.createScene();
+        this.createGeometry();
+        console.log("hello"); //this.onResize()
+        this.createGeometry();
     }
-    init() {
-        //this.load();
-        //this.addListeners();
-        this.loadShaders(); // this.loadMeshes();
-        this.addListeners();
-        this.draw();
+    createRenderer() {
+        this.renderer = new (0, _ogl.Renderer)();
+        this.gl = this.renderer.gl;
+        this.gl.clearColor(1, 1, 1, 1);
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(this.gl.canvas);
     }
-    loadShaders() {}
-    draw() {
-        vertex = (0, _vertGlslDefault.default);
-        fragment = (0, _fragGlslDefault.default);
-        console.log("draw");
-        const renderer = new (0, _ogl.Renderer)();
-        const gl = renderer.gl;
-        document.body.appendChild(gl.canvas);
-        gl.clearColor(1, 1, 1, 1);
-        function resize() {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-        window.addEventListener("resize", resize, false);
-        resize(); // Rather than using a plane (two triangles) to cover the viewport here is a
-        // triangle that includes -1 to 1 range for 'position', and 0 to 1 range for 'uv'.
-        // Excess will be out of the viewport.
-        //         position                uv
-        //      (-1, 3)                  (0, 2)
-        //         |\                      |\
-        //         |__\(1, 1)              |__\(1, 1)
-        //         |__|_\                  |__|_\
-        //   (-1, -1)   (3, -1)        (0, 0)   (2, 0)
-        const geometry = new (0, _ogl.Triangle)(gl);
-        const program = new (0, _ogl.Program)(gl, {
-            vertex,
-            fragment,
-            uniforms: {
-                uTime: {
-                    value: 0
-                },
-                uColor: {
-                    value: new (0, _ogl.Color)(0.3, 0.8, 0.5)
-                }
-            }
-        });
-        const mesh = new (0, _ogl.Mesh)(gl, {
-            geometry,
-            program
-        });
-        requestAnimationFrame(update);
-        function update(t) {
-            requestAnimationFrame(update);
-            program.uniforms.uTime.value = t * 0.001; // Don't need a camera if camera uniforms aren't required
-            renderer.render({
-                scene: mesh
-            });
-        }
+    createCamera() {
+        this.camera = new (0, _ogl.Camera)(this.gl);
+        this.camera.fov = 45;
+        this.camera.position.z = 20;
+    }
+    createScene() {
+        this.scene = new (0, _ogl.Transform)();
+    }
+    createGeometry() {
+        this.planeGeometry = new (0, _ogl.Plane)(this.gl, {
+            heightSegments: 50,
+            widthSegments: 100
+        }); // console.log(this.planeGeometry)
     }
 } // const thingA = () => {
  //     const vertex = /* glsl */ `
@@ -997,9 +1014,9 @@ class Thing {
  //     }
  // }
  // export default thingA;
-exports.default = Thing;
+exports.default = thingA;
 
-},{"ogl":"e9Ial","../shaders/frag.glsl":"c3ZTU","../shaders/vert.glsl":"kq7er","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"e9Ial":[function(require,module,exports) {
+},{"ogl":"e9Ial","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"e9Ial":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // Core
@@ -1084,7 +1101,7 @@ var _gltfloaderJs = require("./extras/GLTFLoader.js");
 var _gltfskinJs = require("./extras/GLTFSkin.js");
 var _basisManagerJs = require("./extras/BasisManager.js");
 
-},{"./core/Geometry.js":"7kwQs","./core/Program.js":"hxCzn","./core/Renderer.js":"e79XI","./core/Camera.js":false,"./core/Transform.js":"hU0Se","./core/Mesh.js":"iRRlc","./core/Texture.js":false,"./core/RenderTarget.js":false,"./math/Color.js":"gBlRt","./math/Euler.js":"hSG0c","./math/Mat3.js":"eqIcR","./math/Mat4.js":"rzKzO","./math/Quat.js":"5CfRF","./math/Vec2.js":false,"./math/Vec3.js":"bkjH4","./math/Vec4.js":false,"./extras/Plane.js":false,"./extras/Box.js":false,"./extras/Sphere.js":false,"./extras/Cylinder.js":false,"./extras/Triangle.js":"emPNv","./extras/Torus.js":false,"./extras/Orbit.js":false,"./extras/Raycast.js":false,"./extras/Curve.js":false,"./extras/Post.js":false,"./extras/Skin.js":false,"./extras/Animation.js":false,"./extras/Text.js":false,"./extras/NormalProgram.js":false,"./extras/Flowmap.js":false,"./extras/GPGPU.js":false,"./extras/Polyline.js":false,"./extras/Shadow.js":false,"./extras/KTXTexture.js":false,"./extras/TextureLoader.js":false,"./extras/GLTFLoader.js":false,"./extras/GLTFSkin.js":false,"./extras/BasisManager.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7kwQs":[function(require,module,exports) {
+},{"./core/Geometry.js":"7kwQs","./core/Program.js":"hxCzn","./core/Renderer.js":"e79XI","./core/Camera.js":"9E469","./core/Transform.js":"hU0Se","./core/Mesh.js":"iRRlc","./core/Texture.js":"gLHw4","./core/RenderTarget.js":"1x59O","./math/Color.js":"gBlRt","./math/Euler.js":"hSG0c","./math/Mat3.js":"eqIcR","./math/Mat4.js":"rzKzO","./math/Quat.js":"5CfRF","./math/Vec2.js":"FI8Uu","./math/Vec3.js":"bkjH4","./math/Vec4.js":false,"./extras/Plane.js":"k6Atv","./extras/Box.js":false,"./extras/Sphere.js":false,"./extras/Cylinder.js":false,"./extras/Triangle.js":"emPNv","./extras/Torus.js":false,"./extras/Orbit.js":false,"./extras/Raycast.js":false,"./extras/Curve.js":false,"./extras/Post.js":"eFkrG","./extras/Skin.js":false,"./extras/Animation.js":false,"./extras/Text.js":false,"./extras/NormalProgram.js":false,"./extras/Flowmap.js":false,"./extras/GPGPU.js":false,"./extras/Polyline.js":"7RDRq","./extras/Shadow.js":false,"./extras/KTXTexture.js":false,"./extras/TextureLoader.js":false,"./extras/GLTFLoader.js":false,"./extras/GLTFSkin.js":false,"./extras/BasisManager.js":false,"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7kwQs":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Geometry", ()=>Geometry);
@@ -1902,11 +1919,11 @@ class Program {
     }
     use({ flipFaces =false  } = {}) {
         let textureUnit = -1;
-        const programActive = this.gl.renderer.currentProgram === this.id;
+        const programActive = this.gl.renderer.state.currentProgram === this.id;
         // Avoid gl call if program already in use
         if (!programActive) {
             this.gl.useProgram(this.program);
-            this.gl.renderer.currentProgram = this.id;
+            this.gl.renderer.state.currentProgram = this.id;
         }
         // Set only the active uniforms found in the shader
         this.uniformLocations.forEach((location, activeUniform)=>{
@@ -2100,6 +2117,7 @@ class Renderer {
         this.state.activeTextureUnit = 0;
         this.state.boundBuffer = null;
         this.state.uniformLocations = new Map();
+        this.state.currentProgram = null;
         // store requested extensions
         this.extensions = {};
         // Initialise extra format types
@@ -2315,7 +2333,149 @@ class Renderer {
     }
 }
 
-},{"../math/Vec3.js":"bkjH4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hU0Se":[function(require,module,exports) {
+},{"../math/Vec3.js":"bkjH4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9E469":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Camera", ()=>Camera);
+var _transformJs = require("./Transform.js");
+var _mat4Js = require("../math/Mat4.js");
+var _vec3Js = require("../math/Vec3.js");
+const tempMat4 = new (0, _mat4Js.Mat4)();
+const tempVec3a = new (0, _vec3Js.Vec3)();
+const tempVec3b = new (0, _vec3Js.Vec3)();
+class Camera extends (0, _transformJs.Transform) {
+    constructor(gl, { near =0.1 , far =100 , fov =45 , aspect =1 , left , right , bottom , top , zoom =1  } = {}){
+        super();
+        Object.assign(this, {
+            near,
+            far,
+            fov,
+            aspect,
+            left,
+            right,
+            bottom,
+            top,
+            zoom
+        });
+        this.projectionMatrix = new (0, _mat4Js.Mat4)();
+        this.viewMatrix = new (0, _mat4Js.Mat4)();
+        this.projectionViewMatrix = new (0, _mat4Js.Mat4)();
+        this.worldPosition = new (0, _vec3Js.Vec3)();
+        // Use orthographic if left/right set, else default to perspective camera
+        this.type = left || right ? "orthographic" : "perspective";
+        if (this.type === "orthographic") this.orthographic();
+        else this.perspective();
+    }
+    perspective({ near =this.near , far =this.far , fov =this.fov , aspect =this.aspect  } = {}) {
+        Object.assign(this, {
+            near,
+            far,
+            fov,
+            aspect
+        });
+        this.projectionMatrix.fromPerspective({
+            fov: fov * (Math.PI / 180),
+            aspect,
+            near,
+            far
+        });
+        this.type = "perspective";
+        return this;
+    }
+    orthographic({ near =this.near , far =this.far , left =this.left , right =this.right , bottom =this.bottom , top =this.top , zoom =this.zoom ,  } = {}) {
+        Object.assign(this, {
+            near,
+            far,
+            left,
+            right,
+            bottom,
+            top,
+            zoom
+        });
+        left /= zoom;
+        right /= zoom;
+        bottom /= zoom;
+        top /= zoom;
+        this.projectionMatrix.fromOrthogonal({
+            left,
+            right,
+            bottom,
+            top,
+            near,
+            far
+        });
+        this.type = "orthographic";
+        return this;
+    }
+    updateMatrixWorld() {
+        super.updateMatrixWorld();
+        this.viewMatrix.inverse(this.worldMatrix);
+        this.worldMatrix.getTranslation(this.worldPosition);
+        // used for sorting
+        this.projectionViewMatrix.multiply(this.projectionMatrix, this.viewMatrix);
+        return this;
+    }
+    lookAt(target) {
+        super.lookAt(target, true);
+        return this;
+    }
+    // Project 3D coordinate to 2D point
+    project(v) {
+        v.applyMatrix4(this.viewMatrix);
+        v.applyMatrix4(this.projectionMatrix);
+        return this;
+    }
+    // Unproject 2D point to 3D coordinate
+    unproject(v) {
+        v.applyMatrix4(tempMat4.inverse(this.projectionMatrix));
+        v.applyMatrix4(this.worldMatrix);
+        return this;
+    }
+    updateFrustum() {
+        if (!this.frustum) this.frustum = [
+            new (0, _vec3Js.Vec3)(),
+            new (0, _vec3Js.Vec3)(),
+            new (0, _vec3Js.Vec3)(),
+            new (0, _vec3Js.Vec3)(),
+            new (0, _vec3Js.Vec3)(),
+            new (0, _vec3Js.Vec3)()
+        ];
+        const m = this.projectionViewMatrix;
+        this.frustum[0].set(m[3] - m[0], m[7] - m[4], m[11] - m[8]).constant = m[15] - m[12]; // -x
+        this.frustum[1].set(m[3] + m[0], m[7] + m[4], m[11] + m[8]).constant = m[15] + m[12]; // +x
+        this.frustum[2].set(m[3] + m[1], m[7] + m[5], m[11] + m[9]).constant = m[15] + m[13]; // +y
+        this.frustum[3].set(m[3] - m[1], m[7] - m[5], m[11] - m[9]).constant = m[15] - m[13]; // -y
+        this.frustum[4].set(m[3] - m[2], m[7] - m[6], m[11] - m[10]).constant = m[15] - m[14]; // +z (far)
+        this.frustum[5].set(m[3] + m[2], m[7] + m[6], m[11] + m[10]).constant = m[15] + m[14]; // -z (near)
+        for(let i = 0; i < 6; i++){
+            const invLen = 1.0 / this.frustum[i].distance();
+            this.frustum[i].multiply(invLen);
+            this.frustum[i].constant *= invLen;
+        }
+    }
+    frustumIntersectsMesh(node) {
+        // If no position attribute, treat as frustumCulled false
+        if (!node.geometry.attributes.position) return true;
+        if (!node.geometry.bounds || node.geometry.bounds.radius === Infinity) node.geometry.computeBoundingSphere();
+        if (!node.geometry.bounds) return true;
+        const center = tempVec3a;
+        center.copy(node.geometry.bounds.center);
+        center.applyMatrix4(node.worldMatrix);
+        const radius = node.geometry.bounds.radius * node.worldMatrix.getMaxScaleOnAxis();
+        return this.frustumIntersectsSphere(center, radius);
+    }
+    frustumIntersectsSphere(center, radius) {
+        const normal = tempVec3b;
+        for(let i = 0; i < 6; i++){
+            const plane = this.frustum[i];
+            const distance = normal.copy(plane).dot(center) + plane.constant;
+            if (distance < -radius) return false;
+        }
+        return true;
+    }
+}
+
+},{"./Transform.js":"hU0Se","../math/Mat4.js":"rzKzO","../math/Vec3.js":"bkjH4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hU0Se":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Transform", ()=>Transform);
@@ -4555,7 +4715,256 @@ function multiplyScalar(out, a, b) {
     return out;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gBlRt":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gLHw4":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Texture", ()=>Texture);
+// TODO: delete texture
+// TODO: use texSubImage2D for updates (video or when loaded)
+// TODO: need? encoding = linearEncoding
+// TODO: support non-compressed mipmaps uploads
+const emptyPixel = new Uint8Array(4);
+function isPowerOf2(value) {
+    return (value & value - 1) === 0;
+}
+let ID = 1;
+class Texture {
+    constructor(gl, { image , target =gl.TEXTURE_2D , type =gl.UNSIGNED_BYTE , format =gl.RGBA , internalFormat =format , wrapS =gl.CLAMP_TO_EDGE , wrapT =gl.CLAMP_TO_EDGE , generateMipmaps =true , minFilter =generateMipmaps ? gl.NEAREST_MIPMAP_LINEAR : gl.LINEAR , magFilter =gl.LINEAR , premultiplyAlpha =false , unpackAlignment =4 , flipY =target == gl.TEXTURE_2D ? true : false , anisotropy =0 , level =0 , width , height =width ,  } = {}){
+        this.gl = gl;
+        this.id = ID++;
+        this.image = image;
+        this.target = target;
+        this.type = type;
+        this.format = format;
+        this.internalFormat = internalFormat;
+        this.minFilter = minFilter;
+        this.magFilter = magFilter;
+        this.wrapS = wrapS;
+        this.wrapT = wrapT;
+        this.generateMipmaps = generateMipmaps;
+        this.premultiplyAlpha = premultiplyAlpha;
+        this.unpackAlignment = unpackAlignment;
+        this.flipY = flipY;
+        this.anisotropy = Math.min(anisotropy, this.gl.renderer.parameters.maxAnisotropy);
+        this.level = level;
+        this.width = width;
+        this.height = height;
+        this.texture = this.gl.createTexture();
+        this.store = {
+            image: null
+        };
+        // Alias for state store to avoid redundant calls for global state
+        this.glState = this.gl.renderer.state;
+        // State store to avoid redundant calls for per-texture state
+        this.state = {};
+        this.state.minFilter = this.gl.NEAREST_MIPMAP_LINEAR;
+        this.state.magFilter = this.gl.LINEAR;
+        this.state.wrapS = this.gl.REPEAT;
+        this.state.wrapT = this.gl.REPEAT;
+        this.state.anisotropy = 0;
+    }
+    bind() {
+        // Already bound to active texture unit
+        if (this.glState.textureUnits[this.glState.activeTextureUnit] === this.id) return;
+        this.gl.bindTexture(this.target, this.texture);
+        this.glState.textureUnits[this.glState.activeTextureUnit] = this.id;
+    }
+    update(textureUnit = 0) {
+        const needsUpdate = !(this.image === this.store.image && !this.needsUpdate);
+        // Make sure that texture is bound to its texture unit
+        if (needsUpdate || this.glState.textureUnits[textureUnit] !== this.id) {
+            // set active texture unit to perform texture functions
+            this.gl.renderer.activeTexture(textureUnit);
+            this.bind();
+        }
+        if (!needsUpdate) return;
+        this.needsUpdate = false;
+        if (this.flipY !== this.glState.flipY) {
+            this.gl.pixelStorei(this.gl.UNPACK_FLIP_Y_WEBGL, this.flipY);
+            this.glState.flipY = this.flipY;
+        }
+        if (this.premultiplyAlpha !== this.glState.premultiplyAlpha) {
+            this.gl.pixelStorei(this.gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, this.premultiplyAlpha);
+            this.glState.premultiplyAlpha = this.premultiplyAlpha;
+        }
+        if (this.unpackAlignment !== this.glState.unpackAlignment) {
+            this.gl.pixelStorei(this.gl.UNPACK_ALIGNMENT, this.unpackAlignment);
+            this.glState.unpackAlignment = this.unpackAlignment;
+        }
+        if (this.minFilter !== this.state.minFilter) {
+            this.gl.texParameteri(this.target, this.gl.TEXTURE_MIN_FILTER, this.minFilter);
+            this.state.minFilter = this.minFilter;
+        }
+        if (this.magFilter !== this.state.magFilter) {
+            this.gl.texParameteri(this.target, this.gl.TEXTURE_MAG_FILTER, this.magFilter);
+            this.state.magFilter = this.magFilter;
+        }
+        if (this.wrapS !== this.state.wrapS) {
+            this.gl.texParameteri(this.target, this.gl.TEXTURE_WRAP_S, this.wrapS);
+            this.state.wrapS = this.wrapS;
+        }
+        if (this.wrapT !== this.state.wrapT) {
+            this.gl.texParameteri(this.target, this.gl.TEXTURE_WRAP_T, this.wrapT);
+            this.state.wrapT = this.wrapT;
+        }
+        if (this.anisotropy && this.anisotropy !== this.state.anisotropy) {
+            this.gl.texParameterf(this.target, this.gl.renderer.getExtension("EXT_texture_filter_anisotropic").TEXTURE_MAX_ANISOTROPY_EXT, this.anisotropy);
+            this.state.anisotropy = this.anisotropy;
+        }
+        if (this.image) {
+            if (this.image.width) {
+                this.width = this.image.width;
+                this.height = this.image.height;
+            }
+            if (this.target === this.gl.TEXTURE_CUBE_MAP) // For cube maps
+            for(let i = 0; i < 6; i++)this.gl.texImage2D(this.gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, this.level, this.internalFormat, this.format, this.type, this.image[i]);
+            else if (ArrayBuffer.isView(this.image)) // Data texture
+            this.gl.texImage2D(this.target, this.level, this.internalFormat, this.width, this.height, 0, this.format, this.type, this.image);
+            else if (this.image.isCompressedTexture) // Compressed texture
+            for(let level = 0; level < this.image.length; level++)this.gl.compressedTexImage2D(this.target, level, this.internalFormat, this.image[level].width, this.image[level].height, 0, this.image[level].data);
+            else // Regular texture
+            this.gl.texImage2D(this.target, this.level, this.internalFormat, this.format, this.type, this.image);
+            if (this.generateMipmaps) {
+                // For WebGL1, if not a power of 2, turn off mips, set wrapping to clamp to edge and minFilter to linear
+                if (!this.gl.renderer.isWebgl2 && (!isPowerOf2(this.image.width) || !isPowerOf2(this.image.height))) {
+                    this.generateMipmaps = false;
+                    this.wrapS = this.wrapT = this.gl.CLAMP_TO_EDGE;
+                    this.minFilter = this.gl.LINEAR;
+                } else this.gl.generateMipmap(this.target);
+            }
+            // Callback for when data is pushed to GPU
+            this.onUpdate && this.onUpdate();
+        } else {
+            if (this.target === this.gl.TEXTURE_CUBE_MAP) // Upload empty pixel for each side while no image to avoid errors while image or video loading
+            for(let i = 0; i < 6; i++)this.gl.texImage2D(this.gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, emptyPixel);
+            else if (this.width) // image intentionally left null for RenderTarget
+            this.gl.texImage2D(this.target, this.level, this.internalFormat, this.width, this.height, 0, this.format, this.type, null);
+            else // Upload empty pixel if no image to avoid errors while image or video loading
+            this.gl.texImage2D(this.target, 0, this.gl.RGBA, 1, 1, 0, this.gl.RGBA, this.gl.UNSIGNED_BYTE, emptyPixel);
+        }
+        this.store.image = this.image;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"1x59O":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "RenderTarget", ()=>RenderTarget);
+// TODO: test stencil and depth
+var _textureJs = require("./Texture.js");
+class RenderTarget {
+    constructor(gl, { width =gl.canvas.width , height =gl.canvas.height , target =gl.FRAMEBUFFER , color =1 , depth =true , stencil =false , depthTexture =false , wrapS =gl.CLAMP_TO_EDGE , wrapT =gl.CLAMP_TO_EDGE , minFilter =gl.LINEAR , magFilter =minFilter , type =gl.UNSIGNED_BYTE , format =gl.RGBA , internalFormat =format , unpackAlignment , premultiplyAlpha ,  } = {}){
+        this.gl = gl;
+        this.width = width;
+        this.height = height;
+        this.depth = depth;
+        this.buffer = this.gl.createFramebuffer();
+        this.target = target;
+        this.gl.renderer.bindFramebuffer(this);
+        this.textures = [];
+        const drawBuffers = [];
+        // create and attach required num of color textures
+        for(let i = 0; i < color; i++){
+            this.textures.push(new (0, _textureJs.Texture)(gl, {
+                width,
+                height,
+                wrapS,
+                wrapT,
+                minFilter,
+                magFilter,
+                type,
+                format,
+                internalFormat,
+                unpackAlignment,
+                premultiplyAlpha,
+                flipY: false,
+                generateMipmaps: false
+            }));
+            this.textures[i].update();
+            this.gl.framebufferTexture2D(this.target, this.gl.COLOR_ATTACHMENT0 + i, this.gl.TEXTURE_2D, this.textures[i].texture, 0 /* level */ );
+            drawBuffers.push(this.gl.COLOR_ATTACHMENT0 + i);
+        }
+        // For multi-render targets shader access
+        if (drawBuffers.length > 1) this.gl.renderer.drawBuffers(drawBuffers);
+        // alias for majority of use cases
+        this.texture = this.textures[0];
+        // note depth textures break stencil - so can't use together
+        if (depthTexture && (this.gl.renderer.isWebgl2 || this.gl.renderer.getExtension("WEBGL_depth_texture"))) {
+            this.depthTexture = new (0, _textureJs.Texture)(gl, {
+                width,
+                height,
+                minFilter: this.gl.NEAREST,
+                magFilter: this.gl.NEAREST,
+                format: this.gl.DEPTH_COMPONENT,
+                internalFormat: gl.renderer.isWebgl2 ? this.gl.DEPTH_COMPONENT16 : this.gl.DEPTH_COMPONENT,
+                type: this.gl.UNSIGNED_INT
+            });
+            this.depthTexture.update();
+            this.gl.framebufferTexture2D(this.target, this.gl.DEPTH_ATTACHMENT, this.gl.TEXTURE_2D, this.depthTexture.texture, 0 /* level */ );
+        } else {
+            // Render buffers
+            if (depth && !stencil) {
+                this.depthBuffer = this.gl.createRenderbuffer();
+                this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.depthBuffer);
+                this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_COMPONENT16, width, height);
+                this.gl.framebufferRenderbuffer(this.target, this.gl.DEPTH_ATTACHMENT, this.gl.RENDERBUFFER, this.depthBuffer);
+            }
+            if (stencil && !depth) {
+                this.stencilBuffer = this.gl.createRenderbuffer();
+                this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.stencilBuffer);
+                this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.STENCIL_INDEX8, width, height);
+                this.gl.framebufferRenderbuffer(this.target, this.gl.STENCIL_ATTACHMENT, this.gl.RENDERBUFFER, this.stencilBuffer);
+            }
+            if (depth && stencil) {
+                this.depthStencilBuffer = this.gl.createRenderbuffer();
+                this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.depthStencilBuffer);
+                this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_STENCIL, width, height);
+                this.gl.framebufferRenderbuffer(this.target, this.gl.DEPTH_STENCIL_ATTACHMENT, this.gl.RENDERBUFFER, this.depthStencilBuffer);
+            }
+        }
+        this.gl.renderer.bindFramebuffer({
+            target: this.target
+        });
+    }
+    setSize(width, height) {
+        if (this.width === width && this.height === height) return;
+        this.width = width;
+        this.height = height;
+        this.gl.renderer.bindFramebuffer(this);
+        for(let i = 0; i < this.textures.length; i++){
+            this.textures[i].width = width;
+            this.textures[i].height = height;
+            this.textures[i].needsUpdate = true;
+            this.textures[i].update();
+            this.gl.framebufferTexture2D(this.target, this.gl.COLOR_ATTACHMENT0 + i, this.gl.TEXTURE_2D, this.textures[i].texture, 0 /* level */ );
+        }
+        if (this.depthTexture) {
+            this.depthTexture.width = width;
+            this.depthTexture.height = height;
+            this.depthTexture.needsUpdate = true;
+            this.depthTexture.update();
+            this.gl.framebufferTexture2D(this.target, this.gl.DEPTH_ATTACHMENT, this.gl.TEXTURE_2D, this.depthTexture.texture, 0 /* level */ );
+        } else {
+            if (this.depthBuffer) {
+                this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.depthBuffer);
+                this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_COMPONENT16, width, height);
+            }
+            if (this.stencilBuffer) {
+                this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.stencilBuffer);
+                this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.STENCIL_INDEX8, width, height);
+            }
+            if (this.depthStencilBuffer) {
+                this.gl.bindRenderbuffer(this.gl.RENDERBUFFER, this.depthStencilBuffer);
+                this.gl.renderbufferStorage(this.gl.RENDERBUFFER, this.gl.DEPTH_STENCIL, width, height);
+            }
+        }
+        this.gl.renderer.bindFramebuffer({
+            target: this.target
+        });
+    }
+}
+
+},{"./Texture.js":"gLHw4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gBlRt":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 // Color stored as an array of RGB decimal values (between 0 > 1)
@@ -4662,7 +5071,479 @@ function parseColor(color) {
     ];
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"emPNv":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"FI8Uu":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Vec2", ()=>Vec2);
+var _vec2FuncJs = require("./functions/Vec2Func.js");
+class Vec2 extends Array {
+    constructor(x = 0, y = x){
+        super(x, y);
+        return this;
+    }
+    get x() {
+        return this[0];
+    }
+    get y() {
+        return this[1];
+    }
+    set x(v) {
+        this[0] = v;
+    }
+    set y(v) {
+        this[1] = v;
+    }
+    set(x, y = x) {
+        if (x.length) return this.copy(x);
+        _vec2FuncJs.set(this, x, y);
+        return this;
+    }
+    copy(v) {
+        _vec2FuncJs.copy(this, v);
+        return this;
+    }
+    add(va, vb) {
+        if (vb) _vec2FuncJs.add(this, va, vb);
+        else _vec2FuncJs.add(this, this, va);
+        return this;
+    }
+    sub(va, vb) {
+        if (vb) _vec2FuncJs.subtract(this, va, vb);
+        else _vec2FuncJs.subtract(this, this, va);
+        return this;
+    }
+    multiply(v) {
+        if (v.length) _vec2FuncJs.multiply(this, this, v);
+        else _vec2FuncJs.scale(this, this, v);
+        return this;
+    }
+    divide(v) {
+        if (v.length) _vec2FuncJs.divide(this, this, v);
+        else _vec2FuncJs.scale(this, this, 1 / v);
+        return this;
+    }
+    inverse(v = this) {
+        _vec2FuncJs.inverse(this, v);
+        return this;
+    }
+    // Can't use 'length' as Array.prototype uses it
+    len() {
+        return _vec2FuncJs.length(this);
+    }
+    distance(v) {
+        if (v) return _vec2FuncJs.distance(this, v);
+        else return _vec2FuncJs.length(this);
+    }
+    squaredLen() {
+        return this.squaredDistance();
+    }
+    squaredDistance(v) {
+        if (v) return _vec2FuncJs.squaredDistance(this, v);
+        else return _vec2FuncJs.squaredLength(this);
+    }
+    negate(v = this) {
+        _vec2FuncJs.negate(this, v);
+        return this;
+    }
+    cross(va, vb) {
+        if (vb) return _vec2FuncJs.cross(va, vb);
+        return _vec2FuncJs.cross(this, va);
+    }
+    scale(v) {
+        _vec2FuncJs.scale(this, this, v);
+        return this;
+    }
+    normalize() {
+        _vec2FuncJs.normalize(this, this);
+        return this;
+    }
+    dot(v) {
+        return _vec2FuncJs.dot(this, v);
+    }
+    equals(v) {
+        return _vec2FuncJs.exactEquals(this, v);
+    }
+    applyMatrix3(mat3) {
+        _vec2FuncJs.transformMat3(this, this, mat3);
+        return this;
+    }
+    applyMatrix4(mat4) {
+        _vec2FuncJs.transformMat4(this, this, mat4);
+        return this;
+    }
+    lerp(v, a) {
+        _vec2FuncJs.lerp(this, this, v, a);
+        return this;
+    }
+    clone() {
+        return new Vec2(this[0], this[1]);
+    }
+    fromArray(a, o = 0) {
+        this[0] = a[o];
+        this[1] = a[o + 1];
+        return this;
+    }
+    toArray(a = [], o = 0) {
+        a[o] = this[0];
+        a[o + 1] = this[1];
+        return a;
+    }
+}
+
+},{"./functions/Vec2Func.js":"c6K0h","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c6K0h":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+/**
+ * Copy the values from one vec2 to another
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the source vector
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "copy", ()=>copy);
+/**
+ * Set the components of a vec2 to the given values
+ *
+ * @param {vec2} out the receiving vector
+ * @param {Number} x X component
+ * @param {Number} y Y component
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "set", ()=>set);
+/**
+ * Adds two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "add", ()=>add);
+/**
+ * Subtracts vector b from vector a
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "subtract", ()=>subtract);
+/**
+ * Multiplies two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "multiply", ()=>multiply);
+/**
+ * Divides two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "divide", ()=>divide);
+/**
+ * Scales a vec2 by a scalar number
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to scale
+ * @param {Number} b amount to scale the vector by
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "scale", ()=>scale);
+/**
+ * Calculates the euclidian distance between two vec2's
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} distance between a and b
+ */ parcelHelpers.export(exports, "distance", ()=>distance);
+/**
+ * Calculates the squared euclidian distance between two vec2's
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} squared distance between a and b
+ */ parcelHelpers.export(exports, "squaredDistance", ()=>squaredDistance);
+/**
+ * Calculates the length of a vec2
+ *
+ * @param {vec2} a vector to calculate length of
+ * @returns {Number} length of a
+ */ parcelHelpers.export(exports, "length", ()=>length);
+/**
+ * Calculates the squared length of a vec2
+ *
+ * @param {vec2} a vector to calculate squared length of
+ * @returns {Number} squared length of a
+ */ parcelHelpers.export(exports, "squaredLength", ()=>squaredLength);
+/**
+ * Negates the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to negate
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "negate", ()=>negate);
+/**
+ * Returns the inverse of the components of a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to invert
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "inverse", ()=>inverse);
+/**
+ * Normalize a vec2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a vector to normalize
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "normalize", ()=>normalize);
+/**
+ * Calculates the dot product of two vec2's
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} dot product of a and b
+ */ parcelHelpers.export(exports, "dot", ()=>dot);
+/**
+ * Computes the cross product of two vec2's
+ * Note that the cross product returns a scalar
+ *
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @returns {Number} cross product of a and b
+ */ parcelHelpers.export(exports, "cross", ()=>cross);
+/**
+ * Performs a linear interpolation between two vec2's
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the first operand
+ * @param {vec2} b the second operand
+ * @param {Number} t interpolation amount between the two inputs
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "lerp", ()=>lerp);
+/**
+ * Transforms the vec2 with a mat2
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat2} m matrix to transform with
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "transformMat2", ()=>transformMat2);
+/**
+ * Transforms the vec2 with a mat2d
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat2d} m matrix to transform with
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "transformMat2d", ()=>transformMat2d);
+/**
+ * Transforms the vec2 with a mat3
+ * 3rd vector component is implicitly '1'
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat3} m matrix to transform with
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "transformMat3", ()=>transformMat3);
+/**
+ * Transforms the vec2 with a mat4
+ * 3rd vector component is implicitly '0'
+ * 4th vector component is implicitly '1'
+ *
+ * @param {vec2} out the receiving vector
+ * @param {vec2} a the vector to transform
+ * @param {mat4} m matrix to transform with
+ * @returns {vec2} out
+ */ parcelHelpers.export(exports, "transformMat4", ()=>transformMat4);
+/**
+ * Returns whether or not the vectors exactly have the same elements in the same position (when compared with ===)
+ *
+ * @param {vec2} a The first vector.
+ * @param {vec2} b The second vector.
+ * @returns {Boolean} True if the vectors are equal, false otherwise.
+ */ parcelHelpers.export(exports, "exactEquals", ()=>exactEquals);
+const EPSILON = 0.000001;
+function copy(out, a) {
+    out[0] = a[0];
+    out[1] = a[1];
+    return out;
+}
+function set(out, x, y) {
+    out[0] = x;
+    out[1] = y;
+    return out;
+}
+function add(out, a, b) {
+    out[0] = a[0] + b[0];
+    out[1] = a[1] + b[1];
+    return out;
+}
+function subtract(out, a, b) {
+    out[0] = a[0] - b[0];
+    out[1] = a[1] - b[1];
+    return out;
+}
+function multiply(out, a, b) {
+    out[0] = a[0] * b[0];
+    out[1] = a[1] * b[1];
+    return out;
+}
+function divide(out, a, b) {
+    out[0] = a[0] / b[0];
+    out[1] = a[1] / b[1];
+    return out;
+}
+function scale(out, a, b) {
+    out[0] = a[0] * b;
+    out[1] = a[1] * b;
+    return out;
+}
+function distance(a, b) {
+    var x = b[0] - a[0], y = b[1] - a[1];
+    return Math.sqrt(x * x + y * y);
+}
+function squaredDistance(a, b) {
+    var x = b[0] - a[0], y = b[1] - a[1];
+    return x * x + y * y;
+}
+function length(a) {
+    var x = a[0], y = a[1];
+    return Math.sqrt(x * x + y * y);
+}
+function squaredLength(a) {
+    var x = a[0], y = a[1];
+    return x * x + y * y;
+}
+function negate(out, a) {
+    out[0] = -a[0];
+    out[1] = -a[1];
+    return out;
+}
+function inverse(out, a) {
+    out[0] = 1.0 / a[0];
+    out[1] = 1.0 / a[1];
+    return out;
+}
+function normalize(out, a) {
+    var x = a[0], y = a[1];
+    var len = x * x + y * y;
+    if (len > 0) //TODO: evaluate use of glm_invsqrt here?
+    len = 1 / Math.sqrt(len);
+    out[0] = a[0] * len;
+    out[1] = a[1] * len;
+    return out;
+}
+function dot(a, b) {
+    return a[0] * b[0] + a[1] * b[1];
+}
+function cross(a, b) {
+    return a[0] * b[1] - a[1] * b[0];
+}
+function lerp(out, a, b, t) {
+    var ax = a[0], ay = a[1];
+    out[0] = ax + t * (b[0] - ax);
+    out[1] = ay + t * (b[1] - ay);
+    return out;
+}
+function transformMat2(out, a, m) {
+    var x = a[0], y = a[1];
+    out[0] = m[0] * x + m[2] * y;
+    out[1] = m[1] * x + m[3] * y;
+    return out;
+}
+function transformMat2d(out, a, m) {
+    var x = a[0], y = a[1];
+    out[0] = m[0] * x + m[2] * y + m[4];
+    out[1] = m[1] * x + m[3] * y + m[5];
+    return out;
+}
+function transformMat3(out, a, m) {
+    var x = a[0], y = a[1];
+    out[0] = m[0] * x + m[3] * y + m[6];
+    out[1] = m[1] * x + m[4] * y + m[7];
+    return out;
+}
+function transformMat4(out, a, m) {
+    let x = a[0];
+    let y = a[1];
+    out[0] = m[0] * x + m[4] * y + m[12];
+    out[1] = m[1] * x + m[5] * y + m[13];
+    return out;
+}
+function exactEquals(a, b) {
+    return a[0] === b[0] && a[1] === b[1];
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"k6Atv":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Plane", ()=>Plane);
+var _geometryJs = require("../core/Geometry.js");
+class Plane extends (0, _geometryJs.Geometry) {
+    constructor(gl, { width =1 , height =1 , widthSegments =1 , heightSegments =1 , attributes ={}  } = {}){
+        const wSegs = widthSegments;
+        const hSegs = heightSegments;
+        // Determine length of arrays
+        const num = (wSegs + 1) * (hSegs + 1);
+        const numIndices = wSegs * hSegs * 6;
+        // Generate empty arrays once
+        const position = new Float32Array(num * 3);
+        const normal = new Float32Array(num * 3);
+        const uv = new Float32Array(num * 2);
+        const index = numIndices > 65536 ? new Uint32Array(numIndices) : new Uint16Array(numIndices);
+        Plane.buildPlane(position, normal, uv, index, width, height, 0, wSegs, hSegs);
+        Object.assign(attributes, {
+            position: {
+                size: 3,
+                data: position
+            },
+            normal: {
+                size: 3,
+                data: normal
+            },
+            uv: {
+                size: 2,
+                data: uv
+            },
+            index: {
+                data: index
+            }
+        });
+        super(gl, attributes);
+    }
+    static buildPlane(position, normal, uv, index, width, height, depth, wSegs, hSegs, u = 0, v = 1, w = 2, uDir = 1, vDir = -1, i = 0, ii = 0) {
+        const io = i;
+        const segW = width / wSegs;
+        const segH = height / hSegs;
+        for(let iy = 0; iy <= hSegs; iy++){
+            let y = iy * segH - height / 2;
+            for(let ix = 0; ix <= wSegs; ix++, i++){
+                let x = ix * segW - width / 2;
+                position[i * 3 + u] = x * uDir;
+                position[i * 3 + v] = y * vDir;
+                position[i * 3 + w] = depth / 2;
+                normal[i * 3 + u] = 0;
+                normal[i * 3 + v] = 0;
+                normal[i * 3 + w] = depth >= 0 ? 1 : -1;
+                uv[i * 2] = ix / wSegs;
+                uv[i * 2 + 1] = 1 - iy / hSegs;
+                if (iy === hSegs || ix === wSegs) continue;
+                let a = io + ix + iy * (wSegs + 1);
+                let b = io + ix + (iy + 1) * (wSegs + 1);
+                let c = io + ix + (iy + 1) * (wSegs + 1) + 1;
+                let d = io + ix + iy * (wSegs + 1) + 1;
+                index[ii * 6] = a;
+                index[ii * 6 + 1] = b;
+                index[ii * 6 + 2] = d;
+                index[ii * 6 + 3] = b;
+                index[ii * 6 + 4] = c;
+                index[ii * 6 + 5] = d;
+                ii++;
+            }
+        }
+    }
+}
+
+},{"../core/Geometry.js":"7kwQs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"emPNv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Triangle", ()=>Triangle);
@@ -4697,12 +5578,475 @@ class Triangle extends (0, _geometryJs.Geometry) {
     }
 }
 
-},{"../core/Geometry.js":"7kwQs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"c3ZTU":[function(require,module,exports) {
-module.exports = "precision highp float;\n#define GLSLIFY 1\n\n        uniform float uTime;\n        uniform vec3 uColor;\n        varying vec2 vUv;\n\n        float random (vec2 st) {\n            return fract(sin(dot(st.xy,\n                                 vec2(12.9898,78.233)))*\n                43758.5453123);\n        }\n\n        void main() {\n            vec2 st = gl_FragCoord.xy/vUv.xy;\n            st *= 10.0;\n            float rnd = random(st);\n            // gl_FragColor.rgb = 0.1 + 1.5 * rnd * sin(vUv.xyx + uTime) * uColor;\n            // gl_FragColor.a = 1.0;\n            gl_FragColor = vec4(vec3(1),1);\n        }";
+},{"../core/Geometry.js":"7kwQs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eFkrG":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Post", ()=>Post);
+// TODO: Destroy render targets if size changed and exists
+var _programJs = require("../core/Program.js");
+var _meshJs = require("../core/Mesh.js");
+var _renderTargetJs = require("../core/RenderTarget.js");
+var _triangleJs = require("./Triangle.js");
+class Post {
+    constructor(gl, { width , height , dpr , wrapS =gl.CLAMP_TO_EDGE , wrapT =gl.CLAMP_TO_EDGE , minFilter =gl.LINEAR , magFilter =gl.LINEAR , geometry =new (0, _triangleJs.Triangle)(gl) , targetOnly =null ,  } = {}){
+        this.gl = gl;
+        this.options = {
+            wrapS,
+            wrapT,
+            minFilter,
+            magFilter
+        };
+        this.passes = [];
+        this.geometry = geometry;
+        this.uniform = {
+            value: null
+        };
+        this.targetOnly = targetOnly;
+        const fbo = this.fbo = {
+            read: null,
+            write: null,
+            swap: ()=>{
+                let temp = fbo.read;
+                fbo.read = fbo.write;
+                fbo.write = temp;
+            }
+        };
+        this.resize({
+            width,
+            height,
+            dpr
+        });
+    }
+    addPass({ vertex =defaultVertex , fragment =defaultFragment , uniforms ={} , textureUniform ="tMap" , enabled =true  } = {}) {
+        uniforms[textureUniform] = {
+            value: this.fbo.read.texture
+        };
+        const program = new (0, _programJs.Program)(this.gl, {
+            vertex,
+            fragment,
+            uniforms
+        });
+        const mesh = new (0, _meshJs.Mesh)(this.gl, {
+            geometry: this.geometry,
+            program
+        });
+        const pass = {
+            mesh,
+            program,
+            uniforms,
+            enabled,
+            textureUniform
+        };
+        this.passes.push(pass);
+        return pass;
+    }
+    resize({ width , height , dpr  } = {}) {
+        if (dpr) this.dpr = dpr;
+        if (width) {
+            this.width = width;
+            this.height = height || width;
+        }
+        dpr = this.dpr || this.gl.renderer.dpr;
+        width = Math.floor((this.width || this.gl.renderer.width) * dpr);
+        height = Math.floor((this.height || this.gl.renderer.height) * dpr);
+        this.options.width = width;
+        this.options.height = height;
+        this.fbo.read = new (0, _renderTargetJs.RenderTarget)(this.gl, this.options);
+        this.fbo.write = new (0, _renderTargetJs.RenderTarget)(this.gl, this.options);
+    }
+    // Uses same arguments as renderer.render, with addition of optional texture passed in to avoid scene render
+    render({ scene , camera , texture , target =null , update =true , sort =true , frustumCull =true  }) {
+        const enabledPasses = this.passes.filter((pass)=>pass.enabled);
+        if (!texture) {
+            this.gl.renderer.render({
+                scene,
+                camera,
+                target: enabledPasses.length || !target && this.targetOnly ? this.fbo.write : target,
+                update,
+                sort,
+                frustumCull
+            });
+            this.fbo.swap();
+        }
+        enabledPasses.forEach((pass, i)=>{
+            pass.mesh.program.uniforms[pass.textureUniform].value = !i && texture ? texture : this.fbo.read.texture;
+            this.gl.renderer.render({
+                scene: pass.mesh,
+                target: i === enabledPasses.length - 1 && (target || !this.targetOnly) ? target : this.fbo.write,
+                clear: true
+            });
+            this.fbo.swap();
+        });
+        this.uniform.value = this.fbo.read.texture;
+    }
+}
+const defaultVertex = /* glsl */ `
+    attribute vec2 uv;
+    attribute vec2 position;
 
-},{}],"kq7er":[function(require,module,exports) {
-module.exports = "#define GLSLIFY 1\n  attribute vec2 uv;\n        attribute vec2 position;\n        varying vec2 vUv;\n        void main() {\n            vUv = uv;\n            gl_Position = vec4(position, 0, 1);\n        }";
+    varying vec2 vUv;
 
-},{}]},["8TtF2","gLLPy"], "gLLPy", "parcelRequire0146")
+    void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 0, 1);
+    }
+`;
+const defaultFragment = /* glsl */ `
+    precision highp float;
+
+    uniform sampler2D tMap;
+    varying vec2 vUv;
+
+    void main() {
+        gl_FragColor = texture2D(tMap, vUv);
+    }
+`;
+
+},{"../core/Program.js":"hxCzn","../core/Mesh.js":"iRRlc","../core/RenderTarget.js":"1x59O","./Triangle.js":"emPNv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7RDRq":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Polyline", ()=>Polyline);
+var _geometryJs = require("../core/Geometry.js");
+var _programJs = require("../core/Program.js");
+var _meshJs = require("../core/Mesh.js");
+var _vec2Js = require("../math/Vec2.js");
+var _vec3Js = require("../math/Vec3.js");
+var _colorJs = require("../math/Color.js");
+const tmp = new (0, _vec3Js.Vec3)();
+class Polyline {
+    constructor(gl, { points , vertex =defaultVertex , fragment =defaultFragment , uniforms ={} , attributes ={}  }){
+        this.gl = gl;
+        this.points = points;
+        this.count = points.length;
+        // Create buffers
+        this.position = new Float32Array(this.count * 6);
+        this.prev = new Float32Array(this.count * 6);
+        this.next = new Float32Array(this.count * 6);
+        const side = new Float32Array(this.count * 2);
+        const uv = new Float32Array(this.count * 4);
+        const index = new Uint16Array((this.count - 1) * 6);
+        // Set static buffers
+        for(let i = 0; i < this.count; i++){
+            side.set([
+                -1,
+                1
+            ], i * 2);
+            const v = i / (this.count - 1);
+            uv.set([
+                0,
+                v,
+                1,
+                v
+            ], i * 4);
+            if (i === this.count - 1) continue;
+            const ind = i * 2;
+            index.set([
+                ind + 0,
+                ind + 1,
+                ind + 2
+            ], (ind + 0) * 3);
+            index.set([
+                ind + 2,
+                ind + 1,
+                ind + 3
+            ], (ind + 1) * 3);
+        }
+        const geometry = this.geometry = new (0, _geometryJs.Geometry)(gl, Object.assign(attributes, {
+            position: {
+                size: 3,
+                data: this.position
+            },
+            prev: {
+                size: 3,
+                data: this.prev
+            },
+            next: {
+                size: 3,
+                data: this.next
+            },
+            side: {
+                size: 1,
+                data: side
+            },
+            uv: {
+                size: 2,
+                data: uv
+            },
+            index: {
+                size: 1,
+                data: index
+            }
+        }));
+        // Populate dynamic buffers
+        this.updateGeometry();
+        if (!uniforms.uResolution) this.resolution = uniforms.uResolution = {
+            value: new (0, _vec2Js.Vec2)()
+        };
+        if (!uniforms.uDPR) this.dpr = uniforms.uDPR = {
+            value: 1
+        };
+        if (!uniforms.uThickness) this.thickness = uniforms.uThickness = {
+            value: 1
+        };
+        if (!uniforms.uColor) this.color = uniforms.uColor = {
+            value: new (0, _colorJs.Color)("#000")
+        };
+        if (!uniforms.uMiter) this.miter = uniforms.uMiter = {
+            value: 1
+        };
+        // Set size uniforms' values
+        this.resize();
+        const program = this.program = new (0, _programJs.Program)(gl, {
+            vertex,
+            fragment,
+            uniforms
+        });
+        this.mesh = new (0, _meshJs.Mesh)(gl, {
+            geometry,
+            program
+        });
+    }
+    updateGeometry() {
+        this.points.forEach((p, i)=>{
+            p.toArray(this.position, i * 6);
+            p.toArray(this.position, i * 6 + 3);
+            if (!i) {
+                // If first point, calculate prev using the distance to 2nd point
+                tmp.copy(p).sub(this.points[i + 1]).add(p);
+                tmp.toArray(this.prev, i * 6);
+                tmp.toArray(this.prev, i * 6 + 3);
+            } else {
+                p.toArray(this.next, (i - 1) * 6);
+                p.toArray(this.next, (i - 1) * 6 + 3);
+            }
+            if (i === this.points.length - 1) {
+                // If last point, calculate next using distance to 2nd last point
+                tmp.copy(p).sub(this.points[i - 1]).add(p);
+                tmp.toArray(this.next, i * 6);
+                tmp.toArray(this.next, i * 6 + 3);
+            } else {
+                p.toArray(this.prev, (i + 1) * 6);
+                p.toArray(this.prev, (i + 1) * 6 + 3);
+            }
+        });
+        this.geometry.attributes.position.needsUpdate = true;
+        this.geometry.attributes.prev.needsUpdate = true;
+        this.geometry.attributes.next.needsUpdate = true;
+    }
+    // Only need to call if not handling resolution uniforms manually
+    resize() {
+        // Update automatic uniforms if not overridden
+        if (this.resolution) this.resolution.value.set(this.gl.canvas.width, this.gl.canvas.height);
+        if (this.dpr) this.dpr.value = this.gl.renderer.dpr;
+    }
+}
+const defaultVertex = /* glsl */ `
+    precision highp float;
+
+    attribute vec3 position;
+    attribute vec3 next;
+    attribute vec3 prev;
+    attribute vec2 uv;
+    attribute float side;
+
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    uniform vec2 uResolution;
+    uniform float uDPR;
+    uniform float uThickness;
+    uniform float uMiter;
+
+    varying vec2 vUv;
+
+    vec4 getPosition() {
+        mat4 mvp = projectionMatrix * modelViewMatrix;
+        vec4 current = mvp * vec4(position, 1);
+        vec4 nextPos = mvp * vec4(next, 1);
+        vec4 prevPos = mvp * vec4(prev, 1);
+
+        vec2 aspect = vec2(uResolution.x / uResolution.y, 1);    
+        vec2 currentScreen = current.xy / current.w * aspect;
+        vec2 nextScreen = nextPos.xy / nextPos.w * aspect;
+        vec2 prevScreen = prevPos.xy / prevPos.w * aspect;
+    
+        vec2 dir1 = normalize(currentScreen - prevScreen);
+        vec2 dir2 = normalize(nextScreen - currentScreen);
+        vec2 dir = normalize(dir1 + dir2);
+    
+        vec2 normal = vec2(-dir.y, dir.x);
+        normal /= mix(1.0, max(0.3, dot(normal, vec2(-dir1.y, dir1.x))), uMiter);
+        normal /= aspect;
+
+        float pixelWidthRatio = 1.0 / (uResolution.y / uDPR);
+        float pixelWidth = current.w * pixelWidthRatio;
+        normal *= pixelWidth * uThickness;
+        current.xy -= normal * side;
+    
+        return current;
+    }
+
+    void main() {
+        vUv = uv;
+        gl_Position = getPosition();
+    }
+`;
+const defaultFragment = /* glsl */ `
+    precision highp float;
+
+    uniform vec3 uColor;
+    
+    varying vec2 vUv;
+
+    void main() {
+        gl_FragColor.rgb = uColor;
+        gl_FragColor.a = 1.0;
+    }
+`;
+
+},{"../core/Geometry.js":"7kwQs","../core/Program.js":"hxCzn","../core/Mesh.js":"iRRlc","../math/Vec2.js":"FI8Uu","../math/Vec3.js":"bkjH4","../math/Color.js":"gBlRt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"caDxV":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _ogl = require("ogl");
+const lines = ()=>{
+    const vertex = /* glsl */ `
+    precision highp float;
+    attribute vec3 position;
+    attribute vec3 next;
+    attribute vec3 prev;
+    attribute vec2 uv;
+    attribute float side;
+    uniform vec2 uResolution;
+    uniform float uDPR;
+    uniform float uThickness;
+    vec4 getPosition() {
+        vec4 current = vec4(position, 1);
+        vec2 aspect = vec2(uResolution.x / uResolution.y, 1);
+        vec2 nextScreen = next.xy * aspect;
+        vec2 prevScreen = prev.xy * aspect;
+    
+        // Calculate the tangent direction
+        vec2 tangent = normalize(nextScreen - prevScreen);
+    
+        // Rotate 90 degrees to get the normal
+        vec2 normal = vec2(-tangent.y, tangent.x);
+        normal /= aspect;
+        // Taper the line to be fatter in the middle, and skinny at the ends using the uv.y
+        normal *= mix(1.0, 0.1, pow(abs(uv.y - 0.5) * 2.0, 2.0) );
+        // When the points are on top of each other, shrink the line to avoid artifacts.
+        float dist = length(nextScreen - prevScreen);
+        normal *= smoothstep(0.0, 0.06, dist);
+        float pixelWidthRatio = 1.0 / (uResolution.y / uDPR);
+        float pixelWidth = current.w* pixelWidthRatio;
+        normal *= pixelWidth * uThickness;
+        current.xy -= normal * side;
+    
+        return current;
+    }
+    void main() {
+        gl_Position = getPosition();
+    }
+`;
+    {
+        const renderer = new (0, _ogl.Renderer)({
+            dpr: 2
+        });
+        const gl = renderer.gl;
+        document.body.appendChild(gl.canvas);
+        gl.clearColor(0.945, 0.945, 0.945, 0.1);
+        const scene = new (0, _ogl.Transform)();
+        const lines1 = [];
+        function resize() {
+            renderer.setSize(window.innerWidth, window.innerHeight); // We call resize on the polylines to update their resolution uniforms
+            lines1.forEach((line)=>line.polyline.resize());
+        }
+        window.addEventListener("resize", resize, false); // Just a helper function to make the code neater
+        function random(a, b) {
+            const alpha = Math.random();
+            return a * (1.0 - alpha) + b * alpha;
+        } // If you're interested in learning about drawing lines with geometry,
+        // go through this detailed article by Matt DesLauriers
+        // https://mattdesl.svbtle.com/drawing-lines-is-hard
+        // It's an excellent breakdown of the approaches and their pitfalls.
+        // In this example, we're making screen-space polylines. Basically it
+        // involves creating a geometry of vertices along a path - with two vertices
+        // at each point. Then in the vertex shader, we push each pair apart to
+        // give the line some width.
+        // We're going to make a number of different coloured lines for fun.
+        [
+            "#e09f7d",
+            "#ffffff",
+            "#ec4067",
+            "#a01a7d",
+            "#11071a"
+        ].forEach((color, i)=>{
+            // Store a few values for each lines' spring movement
+            const line = {
+                spring: random(0.02, 0.1),
+                friction: random(0.7, 0.95),
+                mouseVelocity: new (0, _ogl.Vec3)(),
+                mouseOffset: new (0, _ogl.Vec3)(random(-1, 1) * 0.02)
+            }; // Create an array of Vec3s (eg [[0, 0, 0], ...])
+            // Note: Only pass in one for each point on the line - the class will handle
+            // the doubling of vertices for the polyline effect.
+            const count = 30;
+            const points = line.points = [];
+            for(let i1 = 0; i1 < count; i1++)points.push(new (0, _ogl.Vec3)()); // Pass in the points, and any custom elements - for example here we've made
+            // custom shaders, and accompanying uniforms.
+            line.polyline = new (0, _ogl.Polyline)(gl, {
+                points,
+                vertex,
+                uniforms: {
+                    uColor: {
+                        value: new (0, _ogl.Color)(color)
+                    },
+                    uThickness: {
+                        value: random(10, 150)
+                    }
+                }
+            });
+            line.polyline.mesh.setParent(scene);
+            lines1.push(line);
+        }); // Call initial resize after creating the polylines
+        resize(); // Add handlers to get mouse position
+        const mouse = new (0, _ogl.Vec3)();
+        if ("ontouchstart" in window) {
+            window.addEventListener("touchstart", updateMouse, false);
+            window.addEventListener("touchmove", updateMouse, false);
+        } else window.addEventListener("mousemove", updateMouse, false);
+        function updateMouse(e) {
+            if (e.changedTouches && e.changedTouches.length) {
+                e.x = e.changedTouches[0].pageX;
+                e.y = e.changedTouches[0].pageY;
+            }
+            if (e.x === undefined) {
+                e.x = e.pageX;
+                e.y = e.pageY;
+            } // Get mouse value in -1 to 1 range, with y flipped
+            mouse.set(e.x / gl.renderer.width * 2 - 1, e.y / gl.renderer.height * -2 + 1, 0);
+        }
+        const tmp = new (0, _ogl.Vec3)();
+        requestAnimationFrame(update);
+        function update(t) {
+            requestAnimationFrame(update);
+            lines1.forEach((line)=>{
+                // Update polyline input points
+                for(let i = line.points.length - 1; i >= 0; i--)if (!i) {
+                    // For the first point, spring ease it to the mouse position
+                    tmp.copy(mouse).add(line.mouseOffset).sub(line.points[i]).multiply(line.spring);
+                    line.mouseVelocity.add(tmp).multiply(line.friction);
+                    line.points[i].add(line.mouseVelocity);
+                } else // The rest of the points ease to the point in front of them, making a line
+                line.points[i].lerp(line.points[i - 1], 0.9);
+                line.polyline.updateGeometry();
+            });
+            renderer.render({
+                scene
+            });
+        }
+    }
+};
+exports.default = lines;
+
+},{"ogl":"e9Ial","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["8TtF2","gLLPy"], "gLLPy", "parcelRequire0146")
 
 //# sourceMappingURL=index.4d6bcbeb.js.map
