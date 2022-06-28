@@ -3,6 +3,7 @@
 import { Renderer, Camera, Transform, Program, Mesh, Box } from 'ogl'
 
 
+
 export default class Stage {
     constructor() {
         //methots
@@ -26,8 +27,9 @@ export default class Stage {
     }
     createCamera() {
         this.camera = new Camera(this.gl)
-        this.camera.fov = 45
-        this.camera.position.z = 20
+        this.camera.fov = 35
+        this.camera.position.set(0, 1, 7);
+        //this.camera.position.z = 7
     }
     createScene() {
         this.scene = new Transform()
@@ -43,25 +45,31 @@ export default class Stage {
 
         // Let's use the Box helper from OGL
         const geometry = new Box(this.gl);
-
-        // This complicated set of instructions tells our box to be pink. It's called
-        // "program" for a reason, but it doesn't matter right now.
         const program = new Program(this.gl, {
-            vertex: `
+            vertex: /* glsl */ `
+            attribute vec2 uv;
             attribute vec3 position;
-
             uniform mat4 modelViewMatrix;
             uniform mat4 projectionMatrix;
-
+            varying vec2 vUv;
             void main() {
+                vUv = uv;
                 gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
-            `,
-            fragment: `
-            void main() {
-                gl_FragColor = vec4(0.2, 0.4, 0.4, 1.0); // Pink!
-            }
         `,
+            fragment: /* glsl */ `
+        precision highp float;
+        uniform float uTime;
+        uniform vec3 uColor;
+        varying vec2 vUv;
+        void main() {
+            gl_FragColor.rgb = 0.5 + 0.3 * cos(vUv.xyx + uTime) + uColor;
+            gl_FragColor.a = 1.0;
+        }
+    `,
+            uniforms: {
+                uTime: { value: 0 },
+            }
         });
 
         const mesh = new Mesh(this.gl, { geometry, program });
@@ -102,8 +110,6 @@ export default class Stage {
             scene: this.scene,
             camera: this.camera
         })
-
-
 
         window.requestAnimationFrame(this.update.bind(this))
     }
