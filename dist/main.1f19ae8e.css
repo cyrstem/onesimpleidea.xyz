@@ -1,0 +1,201 @@
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Rajdhani&display=swap");
+button {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  font-family: "Rajdhani", sans-serif;
+  background-color: transparent;
+  text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+  cursor: pointer;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus {
+  border-bottom-style: solid;
+  border-width: thin;
+  filter: brightness(0.25);
+  color: black;
+}
+
+button:hover {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+button:active {
+  text-decoration: underline;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+  z-index: 0;
+}
+
+main {
+  padding-top: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+
+#container {
+  z-index: 1;
+  position: absolute;
+  width: 100vh;
+}
+
+#content {
+  padding-left: 3%;
+  position: absolute;
+  font-family: "Rajdhani", sans-serif;
+  font-size: 1.5rem;
+  width: 45vh;
+  color: #3d3d3d;
+}
+#content b {
+  color: black;
+}
+
+#sites {
+  text-align: left;
+}
+#sites ul {
+  list-style-type: none;
+}
+#sites a {
+  display: flex;
+  text-decoration: none;
+}
+#sites spanfirst-child {
+  margin: 3px;
+  padding: 2px;
+}
+#sites span:nth-child(2) {
+  padding-left: 24px;
+  flex-grow: 1;
+}
+#sites a {
+  text-decoration: none;
+  color: black;
+}
+#sites a:hover {
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+}
+#sites a:active {
+  text-decoration: none;
+}
+
+#portafolio {
+  height: 100vh;
+  position: fixed;
+  overflow-y: scroll;
+  margin: 3px;
+}
+
+#ui {
+  z-index: 1000;
+  position: absolute;
+  top: 2vh;
+  right: 3%;
+}
+
+#contact {
+  z-index: 1000;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  bottom: 1vh;
+}
+#contact #links {
+  padding: 0px;
+  margin: 0px;
+}
+#contact a {
+  padding: 0.5rem;
+  text-decoration: none;
+}
+#contact a:hover {
+  border-bottom: 1px solid black;
+  transition: all 6.8s ease;
+  transform: scale(10);
+}
+#contact img {
+  width: 10%;
+}
+
+@media all and (max-width: 480px) {
+  main {
+    padding-left: 3%;
+    padding-top: 0px;
+    width: 50vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+  #content {
+    position: absolute;
+    font-family: "Rajdhani", sans-serif;
+    font-size: 1.2rem;
+    color: #3d3d3d;
+  }
+  #content b {
+    color: black;
+  }
+  #sites ul {
+    list-style-type: none;
+    padding: 1rem;
+  }
+  #sites a {
+    display: flex;
+    text-decoration: none;
+  }
+  #sites spanfirst-child {
+    margin: 0px;
+    padding: 0px;
+  }
+  #sites span:nth-child(2) {
+    padding-left: 2.2rem;
+  }
+  #sites span:last-child {
+    padding-right: 2rem;
+  }
+  #sites a {
+    text-decoration: none;
+    color: black;
+  }
+  #sites a:hover {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  #sites a:active {
+    text-decoration: none;
+  }
+}
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes pulseD {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+/*# sourceMappingURL=/main.1f19ae8e.css.map */
