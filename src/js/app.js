@@ -3,7 +3,7 @@ import Contact from "./interface/Contact";
 import Home from "./pages/Home";
 import Portafolio from "./pages/Portafolio";
 import Experiments from "./pages/Experiments";
-//import Stage  from "./Stage"
+
 
 
 let stage = null

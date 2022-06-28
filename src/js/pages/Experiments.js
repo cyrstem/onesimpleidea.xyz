@@ -1,10 +1,10 @@
 
-import data from '../../data.json';
+// import data from '../../data.json';
 
-import images from '../images.js'
-console.log(data.projects[0])
+// import images from '../images.js'
+// console.log(data.projects[0])
 
-console.log(images)
+// console.log(images)
 
 
 
