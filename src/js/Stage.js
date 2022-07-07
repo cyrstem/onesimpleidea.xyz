@@ -10,7 +10,7 @@ export default class Stage {
         this.createRenderer()
         this.createCamera()
         this.createScene()
-        //this.createBackground()
+        
         this.onResize()
         this.createGeo()
         this.update()
@@ -34,13 +34,7 @@ export default class Stage {
     createScene() {
         this.scene = new Transform()
     }
-    createBackground() {
-        this.background = new Background({
-            gl: this.gl,
-            scene: this.scene,
-            viewport: this.viewport
-        })
-    }
+    
     createGeo() {
 
         // Let's use the Box helper from OGL
@@ -63,7 +57,7 @@ export default class Stage {
         uniform vec3 uColor;
         varying vec2 vUv;
         void main() {
-            gl_FragColor.rgb = 0.5 + 0.3 * cos(vUv.xyx + uTime) + uColor;
+            gl_FragColor.rgb = 0.3 + .5 * cos(vUv.xyx + uTime) + uColor;
             gl_FragColor.a = 1.0;
         }
     `,
@@ -96,14 +90,6 @@ export default class Stage {
             aspect: this.gl.canvas.width / this.gl.canvas.height
         })
 
-        const fov = this.camera.fov * (Math.PI / 180)
-        const height = 2 * Math.tan(fov / 2) * this.camera.position.z
-        const width = height * this.camera.aspect
-
-        this.viewport = {
-            height,
-            width
-        }
     }
     update() {
         this.renderer.render({
