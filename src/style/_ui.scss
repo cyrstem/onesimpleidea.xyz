@@ -24,6 +24,7 @@ button:focus {
 	border-width: thin;
 	filter: brightness(0.25);
 	color: black;
+	text-decoration: none;
 }
 
 button:hover {
@@ -31,6 +32,3 @@ button:hover {
 	
 }
 
-button:active {
-	text-decoration: underline;
-}
