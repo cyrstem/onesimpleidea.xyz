@@ -1,79 +1,66 @@
-import { Renderer, Camera, Transform, Program, Mesh, Box, Orbit } from 'ogl'
+//import * as THREE from "three";
+import { Scene,Camera,PerspectiveCamera, WebGLRenderer,Mesh,BoxGeometry,MeshBasicMaterial } from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 
 export default class App {
     constructor(stage) {
-        this.scene = new Transform();
-        this.container = stage.dom;
+        console.log('dev')
+        this.scene = new Scene();
 
-        //stage sizes
+        this.container = stage.dom;
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
+        this.renderer = new WebGLRenderer();
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.renderer.setSize(this.width, this.height);
+        this.renderer.setClearColor(0xeeeeee, 1);
 
-        this.renderer = new Renderer();
+        this.container.appendChild(this.renderer.domElement);
 
-        this.gl = this.renderer.gl;
-        this.gl.clearColor(0.945, 0.945, 0.945, 0.1);
-        this.container.appendChild(this.gl.canvas);
-        this.renderer.setSize(this.width, this.height)
+        this.camera = new PerspectiveCamera(
+            45,
+            window.innerWidth / window.innerHeight,
+            0.001,
+            1000
+        );
 
-        this.camera = new Camera(this.gl);
-        this.camera.fov = 35;
-        this.camera.position.set(0, 1, 7)
-
-
-        //functions
+        
+        this.camera.position.set(0, 2, 6);
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        this.time = 0;
+        this.addListener()
         this.addObjects();
         this.resize();
         this.render();
     }
+    addListener() {
+        window.addEventListener("resize", this.resize.bind(this));
+      }
+
+
     resize() {
         this.width = this.container.offsetWidth;
-        this.height = this.container.offsetHeight
-        this.renderer.setSize(this.width, this.height)
+        this.height = this.container.offsetHeight;
+        this.renderer.setSize(this.width, this.height);
+        this.camera.aspect = this.width / this.height;
+        this.camera.updateProjectionMatrix();
     }
 
     addObjects() {
+        this.geometry = new BoxGeometry(1, 1, 1);
+        this.material = new MeshBasicMaterial({ color: 0x00ff00 });
+        this.cube = new Mesh(this.geometry, this.material);
+        this.scene.add(this.cube);
 
-        // Let's use the Box helper from OGL
-        const geometry = new Box(this.gl);
-        const program = new Program(this.gl, {
-            vertex: /* glsl */ `
-            attribute vec2 uv;
-            attribute vec3 position;
-            uniform mat4 modelViewMatrix;
-            uniform mat4 projectionMatrix;
-            varying vec2 vUv;
-            void main() {
-                vUv = uv;
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-        `,
-            fragment: /* glsl */ `
-        precision highp float;
-        uniform float uTime;
-        uniform vec3 uColor;
-        varying vec2 vUv;
-        void main() {
-            gl_FragColor.rgb = 0.3 + .5 * cos(vUv.xyx + uTime) + uColor;
-            gl_FragColor.a = 1.0;
-        }
-    `,
-            uniforms: {
-                uTime: { value: 0 },
-            }
-        });
-
-        const mesh = new Mesh(this.gl, { geometry, program });
-
-        // And finally we add it to the scene
-        mesh.setParent(this.scene);
     }
 
 
     render() {
+        this.time += 0.05;
+        // this.material.uniforms.time.value = this.time;
         requestAnimationFrame(this.render.bind(this));
-        this.renderer.render(this.scene, this.camera)
+        this.renderer.render(this.scene, this.camera);
     }
 
 }
