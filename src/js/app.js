@@ -1,11 +1,11 @@
 //import * as THREE from "three";
-import { Scene,Camera,PerspectiveCamera, WebGLRenderer,Mesh,BoxGeometry,MeshBasicMaterial } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-
+import fragment from './shader/fragment.glsl';
+import vertex from './shader/vertex.glsl/'
 export default class App {
     constructor(stage) {
-        console.log('dev')
         this.scene = new Scene();
 
         this.container = stage.dom;
@@ -25,7 +25,7 @@ export default class App {
             1000
         );
 
-        
+
         this.camera.position.set(0, 2, 6);
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.time = 0;
@@ -36,7 +36,7 @@ export default class App {
     }
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
-      }
+    }
 
 
     resize() {
@@ -48,11 +48,21 @@ export default class App {
     }
 
     addObjects() {
-        this.geometry = new BoxGeometry(1, 1, 1);
-        this.material = new MeshBasicMaterial({ color: 0x00ff00 });
-        this.cube = new Mesh(this.geometry, this.material);
-        this.scene.add(this.cube);
+        //this.geometry = new BoxGeometry(1, 1, 1);
+        //this.material = new MeshBasicMaterial({ color: 0x00ff00 });
 
+        // this.cube = new Mesh(this.geometry, this.material);
+        // this.scene.add(this.cube);
+        this.material = new ShaderMaterial({
+            uniforms: {
+                time: { value: 1.0 }
+            },
+            vertexShader:vertex ,
+            fragmentShader:fragment,
+        })
+        this.geometry = new BoxGeometry(1, 1, 1);
+        this.cube = new Mesh(this.geometry, this.material);
+        this.scene.add(this.cube)
     }
 
 
