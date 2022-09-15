@@ -67,7 +67,7 @@ export default class App {
 
 
     render() {
-        this.time += 0.05;
+        this.time += 0.4;
         // this.material.uniforms.time.value = this.time;
         requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
