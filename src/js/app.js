@@ -1,73 +1,79 @@
-import Navbar from "./interface/Nav";
-import Contact from "./interface/Contact";
-import Home from "./pages/Home";
-import Portafolio from "./pages/Portafolio";
-import Experiments from "./pages/Experiments";
+import { Renderer, Camera, Transform, Program, Mesh, Box, Orbit } from 'ogl'
 
 
+export default class App {
+    constructor(stage) {
+        this.scene = new Transform();
+        this.container = stage.dom;
 
-let stage = null
-export default class GUIView{
-    constructor(){}
+        //stage sizes
+        this.width = this.container.offsetWidth;
+        this.height = this.container.offsetHeight;
 
-    init(){
-        this.load();
-        this.addListeners();
-        this.simpleSign();
-        
-        //this.responsive();
+        this.renderer = new Renderer();
+
+        this.gl = this.renderer.gl;
+        this.gl.clearColor(0.945, 0.945, 0.945, 0.1);
+        this.container.appendChild(this.gl.canvas);
+        this.renderer.setSize(this.width, this.height)
+
+        this.camera = new Camera(this.gl);
+        this.camera.fov = 35;
+        this.camera.position.set(0, 1, 7)
+
+
+        //functions
+        this.addObjects();
+        this.resize();
+        this.render();
     }
-    load(){
-        	//load UI and socials media  plus main content
-        document.getElementById("ui").innerHTML = Navbar();
-        document.getElementById("container").innerHTML = Home();
-        document.getElementById("contact").innerHTML = Contact();
-
+    resize() {
+        this.width = this.container.offsetWidth;
+        this.height = this.container.offsetHeight
+        this.renderer.setSize(this.width, this.height)
     }
-    addListeners(){
-        window.addEventListener("click", (event) => {
-            let links = event.target.id;
-           
-            switch (links) {
-                case 'home':
-                    document.getElementById("container").innerHTML = Home();
-                     stage = new Stage({scene:"sectionA",active:true})
-                    break;
-                case 'experiment':
-                    document.getElementById("container").innerHTML = Experiments();
-                    stage = new Stage({scene:"sectionB",active:false})
-                    break;
-                case 'project':
-                    document.getElementById("container").innerHTML = Portafolio();
-                    stage = new Stage({scene:"sectionC",active:true})
-                    break;
+
+    addObjects() {
+
+        // Let's use the Box helper from OGL
+        const geometry = new Box(this.gl);
+        const program = new Program(this.gl, {
+            vertex: /* glsl */ `
+            attribute vec2 uv;
+            attribute vec3 position;
+            uniform mat4 modelViewMatrix;
+            uniform mat4 projectionMatrix;
+            varying vec2 vUv;
+            void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
             }
-        
-        }, false);
-        
-    }
-    responsive(){
-        	//responsive screens
-        var x = window.matchMedia("(max-width: 700px)");
-        if (x.matches) {
-            //console.log("responsive biatch");
-            document.addEventListener("click", function (event) {
-                if (event.target.id !== "experiment") return;
-                document.getElementById("container").innerHTML = Experiments();
-                document.getElementById("ui").style.top = "10vh";
-            });
+        `,
+            fragment: /* glsl */ `
+        precision highp float;
+        uniform float uTime;
+        uniform vec3 uColor;
+        varying vec2 vUv;
+        void main() {
+            gl_FragColor.rgb = 0.3 + .5 * cos(vUv.xyx + uTime) + uColor;
+            gl_FragColor.a = 1.0;
         }
+    `,
+            uniforms: {
+                uTime: { value: 0 },
+            }
+        });
+
+        const mesh = new Mesh(this.gl, { geometry, program });
+
+        // And finally we add it to the scene
+        mesh.setParent(this.scene);
     }
 
-    simpleSign(){
-        if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
-            const args = [
-                "\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n",
-                "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;",
-            ];
-            window.console.log.apply(console, args);
-        } else if (window.console) {
-            window.console.log("-created by cyrstem  -");
-        }
+
+    render() {
+        requestAnimationFrame(this.render.bind(this));
+        this.renderer.render(this.scene, this.camera)
     }
+
 }
