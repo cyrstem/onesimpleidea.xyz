@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2 } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import fragment from './shader/fragment.glsl';
@@ -7,6 +7,7 @@ import vertex from './shader/vertex.glsl/'
 
 export default class App {
     constructor(stage) {
+        console.log("wintermute..")
         this.scene = new Scene();
 
         this.container = stage.dom;
@@ -27,16 +28,17 @@ export default class App {
             0.001,
             1000
         );
-
-
         this.camera.position.set(0, 2, 3);
+
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.time = 0;
         this.target = new Vector2();
         this.mouse = new Vector2();
+        this.raycaster = new Raycaster();
       
 
         this.addListener()
+
         this.addObjects();
         this.resize();
         this.render();
@@ -44,6 +46,7 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove',this.onMouseMove.bind(this));
+        window.addEventListener('click',this.onClick.bind(this));
     }
 
 
@@ -82,12 +85,45 @@ export default class App {
         this.target.y = (event.y - this.mouse.y) * 0.02;
         this.cube.rotation.x += 0.001 * (this.target.y - this.cube.rotation.x);
         this.cube.rotation.y += 0.001 * (this.target.x - this.cube.rotation.y);
-        
-     
+
+
+
+
+    }
+
+    onClick = ()=> {
+        //console.log('click')
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+        this.intersects = this.raycaster.intersectObject(this.cube,true)
+        if (this.intersects.length > 0 ) {
+            var index = Math.floor( this.intersects[0].faceIndex / 2 );
+            switch (index) {
+               case 0: 
+                console.log('face',index);
+                break;
+               case 1: 
+               console.log('face',index);
+                break;
+               case 2:
+                console.log('face',index);
+                break; 
+               case 3:
+                console.log('face',index);
+                break; 
+               case 4:
+                console.log('face',index);
+                break; 
+               case 5:
+                console.log('face',index);
+                break; 
+            }
+        }
+      
     }
 
     render() {
-        this.time += 0.4;
+        this.time += 0.02;
+       // console.log(this.time)
         this.material.uniforms.time.value = this.time;
         //movement mouse 
       
