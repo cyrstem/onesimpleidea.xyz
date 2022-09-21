@@ -1,137 +1,73 @@
-// import { Renderer, Camera, Transform, Program, Mesh, Sphere, Orbit } from "ogl";
+import Navbar from "./interface/Nav";
+import Contact from "./interface/Contact";
+import Home from "./pages/Home";
+import Portafolio from "./pages/Portafolio";
+import Experiments from "./pages/Experiments";
 
-import { Renderer, Camera, Transform, Plane } from 'ogl'
 
-// import frag from '../shaders/frag.glsl';
-// import vert from '../shaders/vert.glsl';
 
-// let vertex;
-// let fragment;
+let stage = null
+export default class GUIView{
+    constructor(){}
 
-export default class thingA {
-    // constructor({scene='something',active=false}) {
-    constructor() {
-        // this.scene = scene
-        // this.active = active
-
-        // console.log(this.scene, "|",  this.active)
-        // this.vertex = null;
-        // this.fragment= null
-        this.createRenderer()
-        this.createCamera()
-        this.createScene()
-        this.createGeometry()
-        console.log('hello')
-        //this.onResize()
-
-        this.createGeometry()
+    init(){
+        this.load();
+        this.addListeners();
+        this.simpleSign();
+        
+        //this.responsive();
     }
-
-    createRenderer() {
-        this.renderer = new Renderer()
-
-        this.gl = this.renderer.gl
-        this.gl.clearColor(1,1,1, 1)
-       
-        this.renderer.setSize(window.innerWidth, window.innerHeight)
-        document.body.appendChild(this.gl.canvas)
-
+    load(){
+        	//load UI and socials media  plus main content
+        document.getElementById("ui").innerHTML = Navbar();
+        document.getElementById("container").innerHTML = Home();
+        document.getElementById("contact").innerHTML = Contact();
 
     }
-
-    createCamera() {
-        this.camera = new Camera(this.gl)
-        this.camera.fov = 45
-        this.camera.position.z = 20
-
+    addListeners(){
+        window.addEventListener("click", (event) => {
+            let links = event.target.id;
+           
+            switch (links) {
+                case 'home':
+                    document.getElementById("container").innerHTML = Home();
+                     stage = new Stage({scene:"sectionA",active:true})
+                    break;
+                case 'experiment':
+                    document.getElementById("container").innerHTML = Experiments();
+                    stage = new Stage({scene:"sectionB",active:false})
+                    break;
+                case 'project':
+                    document.getElementById("container").innerHTML = Portafolio();
+                    stage = new Stage({scene:"sectionC",active:true})
+                    break;
+            }
+        
+        }, false);
+        
+    }
+    responsive(){
+        	//responsive screens
+        var x = window.matchMedia("(max-width: 700px)");
+        if (x.matches) {
+            //console.log("responsive biatch");
+            document.addEventListener("click", function (event) {
+                if (event.target.id !== "experiment") return;
+                document.getElementById("container").innerHTML = Experiments();
+                document.getElementById("ui").style.top = "10vh";
+            });
+        }
     }
 
-    createScene() {
-        this.scene = new Transform()
+    simpleSign(){
+        if (window.navigator.userAgent.toLowerCase().indexOf("chrome") > -1) {
+            const args = [
+                "\n %c ->> created by cyrstem more info on onesimpleidea.xyz\n",
+                "border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;",
+            ];
+            window.console.log.apply(console, args);
+        } else if (window.console) {
+            window.console.log("-created by cyrstem  -");
+        }
     }
-    createGeometry() {
-        this.planeGeometry = new Plane(this.gl, {
-            heightSegments: 50,
-            widthSegments: 100,
-
-        })
-        // console.log(this.planeGeometry)
-    }
-
 }
-// const thingA = () => {
-//     const vertex = /* glsl */ `
-//     attribute vec3 position;
-//     attribute vec3 normal;
-//     uniform mat4 modelViewMatrix;
-//     uniform mat4 projectionMatrix;
-//     uniform mat3 normalMatrix;
-//     varying vec3 vNormal;
-//     void main() {
-//         vNormal = normalize(normalMatrix * normal);
-//         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-//     }
-// `;
-
-//     const fragment = /* glsl */ `
-//     precision highp float;
-//     varying vec3 vNormal;
-//     void main() {
-//         vec3 normal = normalize(vNormal);
-//         float lighting = dot(normal, normalize(vec3(-0.3, 0.8, 0.6)));
-//         gl_FragColor.rgb = vec3(0.2, 0.8, 1.0) + lighting * 0.1;
-//         gl_FragColor.a = 1.0;
-//     }
-// `;
-
-//     {
-//         const renderer = new Renderer({ dpr: 2 });
-//         const gl = renderer.gl;
-//         document.body.appendChild(gl.canvas);
-//         gl.clearColor(1, 1, 1, 1);
-
-//         const camera = new Camera(gl, { fov: 35 });
-//         camera.position.set(0, 1, 7);
-//         camera.lookAt([0, 0, 0]);
-//         const controls = new Orbit(camera);
-
-//         function resize() {
-//             renderer.setSize(window.innerWidth, window.innerHeight);
-//             camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
-//         }
-//         window.addEventListener('resize', resize, false);
-//         resize();
-
-//         const scene = new Transform();
-
-//         const sphereGeometry = new Sphere(gl);
-
-//         const program = new Program(gl, {
-//             vertex,
-//             fragment,
-
-//             // Don't cull faces so that plane is double sided - default is gl.BACK
-//             cullFace: null,
-//         });
-
-
-
-//         const sphere = new Mesh(gl, { geometry: sphereGeometry, program });
-//         sphere.position.set(1.3, 0, 0);
-//         sphere.setParent(scene);
-
-//         requestAnimationFrame(update);
-//         function update() {
-//             requestAnimationFrame(update);
-//             controls.update();
-
-
-//             sphere.rotation.y -= 0.03;
-
-
-//             renderer.render({ scene, camera });
-//         }
-//     }
-// }
-
-// export default thingA;

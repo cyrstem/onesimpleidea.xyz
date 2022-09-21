@@ -4,6 +4,6 @@ precision highp float;
         varying vec3 vUv;
 
       void main() {
-         gl_FragColor.rgb = 0.3 + .5 * sin(vUv.xyx + uTime) + uColor;
-            gl_FragColor.a = 1.0;
+         gl_FragColor.rgb = 0.3 + .5 * tan(vUv.xyx + uTime+0.03) + uColor;
+            gl_FragColor.a = .7;
       }

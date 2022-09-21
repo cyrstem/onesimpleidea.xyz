@@ -6,6 +6,7 @@ import "./style/main.scss";
 // import thingA from "./js/thingA";
 
 import App from './js/app'
+
 window.onload = (event) => {
 	new App(
 		{
