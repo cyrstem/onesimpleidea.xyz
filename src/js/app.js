@@ -5,11 +5,13 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
 
+
 export default class App {
     constructor(stage) {
         console.log("wintermute..")
+        // this.ui = new UI;
         this.scene = new Scene();
-
+       
         this.container = stage.dom;
 
         this.width = this.container.offsetWidth;
@@ -85,10 +87,6 @@ export default class App {
         this.target.y = (event.y - this.mouse.y) * 0.02;
         this.cube.rotation.x += 0.001 * (this.target.y - this.cube.rotation.x);
         this.cube.rotation.y += 0.001 * (this.target.x - this.cube.rotation.y);
-
-
-
-
     }
 
     onClick = ()=> {
@@ -100,12 +98,14 @@ export default class App {
             switch (index) {
                case 0: 
                 console.log('face',index);
+               
                 break;
                case 1: 
                console.log('face',index);
                 break;
                case 2:
                 console.log('face',index);
+                
                 break; 
                case 3:
                 console.log('face',index);
@@ -115,6 +115,7 @@ export default class App {
                 break; 
                case 5:
                 console.log('face',index);
+                
                 break; 
             }
         }

@@ -8,9 +8,12 @@ import "./style/main.scss";
 import App from './js/app'
 
 window.onload = (event) => {
+
 	new App(
 		{
 			dom:document.getElementById('container')
 		}
 	);
+
+
 };

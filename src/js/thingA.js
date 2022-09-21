@@ -8,8 +8,10 @@ import Experiments from "./pages/Experiments";
 
 let stage = null
 export default class GUIView{
-    constructor(){}
-
+    constructor(){
+        console.log('something in the way ')
+    }
+  
     init(){
         this.load();
         this.addListeners();
