@@ -8,7 +8,9 @@ import UI from './UI';
 
 export default class App {
     constructor(stage) {
+        
         console.log("wintermute..")
+
         this.ui = new UI;
         this.scene = new Scene();
        
