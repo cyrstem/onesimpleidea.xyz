@@ -1,155 +1,197 @@
-@import'_ui';
-//variables to complete
-$tnormalcolor:black;
-//base  for all the site 
-canvas{
-	display: block;
-	z-index:0;
-}
+@import "_ui";
+@import "_vars";
 
-#container{
-	position: absolute;
-	z-index: 1000;
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 
 }
+
+canvas {
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+}
+
 main{
-	width: 66vh;
-	height: 30vh;
-	padding: 2px;
-	margin: 3px;
+	
+	padding-top: 0px;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	z-index: 2;
+
+}
+
+#container {
+	z-index: 1;
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+#content{
+	padding-left: 3%;
+	position:absolute;
+	font-family: $main-font;
+	font-size: 1.5rem;
+	width: 45vh;
+	color: #3d3d3d;
+	b{
+		color: black;
+	}
+}
+
+#sites{
 	text-align: left;
-	color:$mainColor;
-	border-color:$borderColor;
-	border-style:outset;
-	border-width: 0.1em;
-	border-left-style: none;
-	border-right-style: none;
-	font-size:$mainSize;
-	word-wrap:break-all;
-	overflow-wrap: break-word;
-	overflow-y:scroll ;
-	h1{
-		text-align: center;
-		font-size:1.3rem;
+	ul {
+		list-style-type: none;
 	}
-	p{
-		color:$mainColor;
+
+	a {
+		display: flex;
+		text-decoration: none;
 	}
+
+	span {
+		&first-child {
+			margin: 3px;
+			padding: 2px;
+		}
+
+		&:nth-child(2) {
+			padding-left: 24px;
+			flex-grow: 1;
+		}
+	}
+
+	a {
+		text-decoration: none;
+		color: black;
+	}
+
+	a:hover {
+		text-decoration: none;
+		color: rgba($color: #000000, $alpha: .5);
+
+	}
+
+	a:active {
+		text-decoration: none;
+	}
+
 }
-
-#portafolio{ 
-	 width: 120vh;
-	 height: 80vh;
-	 margin-bottom: 100px;
-	 color:$mainColor;
-	 font-size:1.5rem;
-	 overflow-y:scroll;
-		display: grid;
-		grid-template-columns: auto auto;
-		//padding: 10px;
+#portafolio{
+	
+	height: 100vh;
+	
+	position: fixed;
+	overflow-y: scroll;
+	margin: 3px;
 }
-
-.proj {
-  width:50vh;
-  padding: 10px;
-  font-size: 1rem;
-  margin-bottom: 15px;
-  p{
-	  background-color: black;
-	  color: white;
-  }
-}
-
-
 #ui{
 	z-index: 1000;
-	bottom: 10vh;
 	position: absolute;
+	top:2vh;
+	right:3%;
 }
-
-//footer and quote
 
 #contact {
 	z-index: 1000;
 	position: absolute;
+	right: 0;
 	text-align: center;
-	bottom: 0vh;
-	margin-right: 4vh;
-	
-
-}
-#links{
-	a{
-		border-color:black;
-		padding: 5px;
-		// margin: 4px;
+	bottom: 1vh;
+	#links{
+		padding: 0px;
+		margin: 0px;
+	}
+	a {
+		padding: 0.5rem;
 		text-decoration: none;
-		color:black;
-	}
-	a:hover{
-		border-bottom-style: solid;
-		border-width: thin;
-	
-	}
-}
-small{
-   background-color: black;
-   color:white;
-   padding: 3px;
-}
-
-
-//responsive------------------------------------------------------------
-@media screen and(max-width:600px){
-	main{
-		width: auto;
-		height: auto;
-		text-align: center;
-		font-size: 1.0rem;
-		overflow-y: scroll;
-	}
-	
-	#ui{	
-		top: 2vh;
-		width: auto;
-		height: 100px;
 	}
 
-	#portafolio{
-		display: grid;
-		grid-template-columns: auto;
-		padding: 10px;
-		width: auto;
-		height: 40vh;	
-		text-align: center;
-		overflow-y: scroll;
-		border-color:$borderColor;
-		border-style:outset;
-		border-width: 0.1em;
-		border-left-style: none;
-		border-right-style: none;
+	a:hover {
+		//padding: 1rem;
+		border-bottom: 1px solid black;
+		transition: all 6.8s ease;
+		transform: scale(10);
 		
-			ul{
-				list-style-type: none;
-				text-align: center;
+	}
+	img{
+		width: 10%;
+	}
+	
+}
+// @media all and (min-width: 480px) and (max-width: 768px) { }
+@media all and (max-width: 480px) {
+
+	main{
+		padding-left: 3%;
+		padding-top: 0px;
+		width: 50vw;
+		height: 100vh;
+		overflow: hidden;
+	
+	}
+	#content{
+		
+		position:absolute;
+		font-family: $main-font;
+		font-size: 1.2rem;
+		// width: 45vh;
+		color: #3d3d3d;
+		b{
+			color: black;
+		}
+	}
+
+	#sites{
+		
+		ul {
+			list-style-type: none;
+			padding: 1rem;
+		}
+	
+		a {
+			display: flex;
+			text-decoration: none;
+		}
+	
+		span {
+			&first-child {
 				margin: 0px;
-				padding: 25px;
+				padding: 0px;
 			}
-	}
 	
-	//footer and quote
+			&:nth-child(2) {
+				padding-left: 2.2rem;
+				// flex-grow: 1;
+			}
+			&:last-child{
+				padding-right: 2rem;
+			}
+			
+				
+		}
 	
-	#contact {
-		z-index: 1000;
-		position: absolute;
-		text-align: center;
-		text-justify:inter-word;
-		width: auto;
-		bottom: 1vh;
-	}
-	small{
-		display: none;
-	}
+		a {
+			text-decoration: none;
+			color: black;
+		}
 	
+		a:hover {
+			text-decoration: none;
+			color: rgba($color: #000000, $alpha: .5);
+	
+		}
+	
+		a:active {
+			text-decoration: none;
+		}
+	
+	}
+
+
 
 }

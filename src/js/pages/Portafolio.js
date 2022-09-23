@@ -1,50 +1,48 @@
-
-const Portafolio =()=>{
-    const template = `
-    <div>
-       <div id ="portafolio">
-         <section class="proj">
-            <h3>Noizu</h3>
-            <a href="https://onesimpleidea.itch.io/noizu"><img src= "noizu.png" width="500"/></a>
-               <p>Audio player inspired on winamp and sonique, build in C++ with minimal interace and controls and a music visualizer</p>
-         </section>
-
-         <section class="proj">
-            <h3>Glitch</h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Small app that allows you to crete glitch art build with openframeworks</p>
-         </section>
-
-         <section class="proj">
-            <h3>Rutas</h3>
-            <a href="https://rutas-ec.herokuapp.com/"> <img src= "skull.png" width="500"/></a>
-               <p>Web App in developement </p>
-         </section>
-         <section class="proj">
-            <h3>Yaesta Pacman</h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Visual instalation(game and mapping dev) for Site launch here a video from the event</p>
-         </section>
-         <section class="proj">
-            <h3>Yaesta.com</h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Frontend Developer and Lead Designer (2016-2018)</p>
-         </section>
-         <section class="proj">
-            <h3>Smartco </h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Web App</p>
-         </section>
-         <section class="proj">
-            <h3>Todo Legal </h3>
-            <a href="#"> <img src= "skull.png" width="500"/></a>
-               <p>Web App</p>
-         </section>
+const Portafolio = () => {
+  const template = `
+      <div class ="sites"> 
+         <ul>
+         <li>
+          <a href="https://activetheory.net/" target="_blank">
+            <span>Active Theory</span> 
+            <span>WebGL Developer</span>
+            <span>2021</span>
+          </a>
+         </li>
+         <li>
+            <a href="https://myuniguru.com/" target="_blank">
+              <span>My Uniguru</span>
+              <span>FullStack Developer</span>
+              <span class="number">2020</span>
+            </a>
+          </li>
+          <li>
+          <a href="https://smartco.com.ec" target="_blank"> 
+            <span>Smartco </span>
+            <span>Unity Developer</span>
+            <span class="number">2019 - 2020</span>
+          </a>
+        </li>
+          <li>
+            <a href="https://www.yaesta.com" target="_blank">
+              <span> YaEsta </span>
+              <span> Front-end  & Designer</span> 
+              <span class="number">2016 - 2018</span>
+            </a>
+          </li>
           
-       </div>
-       </div>
+      
+          <li>
+            <a href="https://www.pachamama.org.ec/en/" target="_blank">
+              <span> Pachamama</span>
+              <span> Front-end Developer</span>
+              <span class="number">2010 – 2013</span>
+            </a>
+          </li>
+         </ul>
+      </div>
     `;
-    return template;
-}
+  return template;
+};
 
 export default Portafolio;
