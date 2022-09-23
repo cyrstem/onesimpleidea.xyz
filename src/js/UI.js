@@ -20,7 +20,7 @@ export default class UI {
     }
 
     initHTML(){
-        document.getElementById("ui").innerHTML = Navbar();
+        // document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("container").innerHTML = Home();
         document.getElementById("contact").innerHTML = Contact();
     }
