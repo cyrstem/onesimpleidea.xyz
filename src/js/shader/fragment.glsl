@@ -1,9 +1,11 @@
 precision highp float;
- uniform float uTime;
+ uniform float time;
         uniform vec3 uColor;
         varying vec3 vUv;
 
       void main() {
-         gl_FragColor.rgb = 0.3 + .5 *sin (vUv.xyx + (uTime)) + uColor;
+        // float r = 0.2+.5 *cos(vUv.xyx+ )
+         gl_FragColor.rgb = 0.3 + .5 *sin (vUv.xyx + (time)) + uColor;
+
          gl_FragColor.a = .7;
       }

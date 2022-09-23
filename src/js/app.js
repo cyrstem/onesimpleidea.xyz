@@ -4,12 +4,12 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
-
+import UI from './UI';
 
 export default class App {
     constructor(stage) {
         console.log("wintermute..")
-        // this.ui = new UI;
+        this.ui = new UI;
         this.scene = new Scene();
        
         this.container = stage.dom;
