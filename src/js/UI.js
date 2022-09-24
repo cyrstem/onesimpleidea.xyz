@@ -1,12 +1,12 @@
 import Navbar from "./interface/Nav";
 import Home from "./pages/Home";
 import Contact from "./interface/Contact";
+
 export default class UI {
     constructor(){
        
-        this.nav = null;
-        this.contacts = null;
     
+        this.links = null;
         this.initHTML()
 
         this.addListeners()
@@ -20,13 +20,14 @@ export default class UI {
     }
 
     initHTML(){
-        // document.getElementById("ui").innerHTML = Navbar();
-        document.getElementById("container").innerHTML = Home();
+        document.getElementById("ui").innerHTML = Navbar();
+        //document.getElementById("container").innerHTML = Home();
         document.getElementById("contact").innerHTML = Contact();
     }
     onClick(event){
-        let links = event.target.id;
-           console.log(event)
+       this.links= event.target.id;
+           console.log(this.links);
+
     //     switch (links) {
     //         case 'home':
     //             document.getElementById("container").innerHTML = Home();
