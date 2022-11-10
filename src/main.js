@@ -10,6 +10,5 @@ window.onload = (event) => {
 			dom: document.getElementById('container')
 		}
 	);
-
 	simpleSign();
 };

@@ -1,15 +1,7 @@
 
-// import data from '../../data.json';
-
-// import images from '../images.js'
-// console.log(data.projects[0])
-
-// console.log(images)
-
-
 
 const Experiments = () => {
-	const template = `
+    const template = `
 <main>
    <div id="portafolio">
     <section class="proj">
@@ -50,7 +42,7 @@ const Experiments = () => {
 </div>
 </main>
     `;
-	return template;
+    return template;
 };
 
 export default Experiments;

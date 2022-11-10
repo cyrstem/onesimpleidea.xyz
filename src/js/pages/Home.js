@@ -1,6 +1,6 @@
 
 const Home = () => {
-  const insta = new URL('./logo.png', import.meta.url);
+  //const insta = new URL('./logo.png', import.meta.url);
     const template = `
     <main>
         <div id="content">
@@ -8,7 +8,7 @@ const Home = () => {
             <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialized in building custom digital or physical experiences.</p> 
             <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
             <div id ="sites"> 
-            <p> I have Worked with:</p>
+            <p> I have collaborated with:</p>
             <ul>
             <li>
             <a href="https://activetheory.net/" target="_blank">

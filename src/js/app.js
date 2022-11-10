@@ -6,13 +6,14 @@ import gsap from 'gsap';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
 import UI from './UI';
+import { About } from './pages/AboutMe';
 
 export default class App {
     constructor(stage) {
 
         console.log("wintermute..")
 
-        this.ui = new UI;
+        // this.ui = new UI;
         this.scene = new Scene();
 
         this.container = stage.dom;
@@ -85,8 +86,8 @@ export default class App {
 
     onMouseMove(event) {
         //this for camera 
-        this.mouse.x = (event.clientX / this.width)* 2 - 1;
-        this.mouse.y = -(event.clientY /this.height) * 2 + 1;
+        this.mouse.x = (event.clientX / this.width) * 2 - 1;
+        this.mouse.y = -(event.clientY / this.height) * 2 + 1;
 
         //console.log(event)
         this.target.x = (event.x - this.mouse.x) * 0.072;
@@ -95,8 +96,8 @@ export default class App {
         this.cube.rotation.x += 0.001 * (this.target.y - this.cube.rotation.x);
         this.cube.rotation.y += 0.001 * (this.target.x - this.cube.rotation.y);
 
-       
-       // gsap.to(this.cube.position, { duration: 1, delay: 0.2, z: -0.5,yoyo:true })
+
+        gsap.to(this.cube.rotation, { duration: 1, z: -0.5, yoyo: true })
         // this.raycaster.setFromCamera(this.mouse,this.camera);
 
         // this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
@@ -111,10 +112,18 @@ export default class App {
         // }
 
     }
+    view(element) {
 
+
+    }
     onClick = (event) => {
-        //console.log('click',event)
-
+        //console.log('click',this.ui.links)
+        // let element = this.ui.links
+        // switch(element){
+        //     case 'home':
+        //        About.view = true
+        //     break;
+        // }
         // this.raycaster.setFromCamera(this.mouse, this.camera);
 
         // // if (this.intersects.length > 0 ) {
@@ -147,7 +156,7 @@ export default class App {
     }
 
     render() {
-        this.time += 0.02;
+        this.time += 0.002;
         //mouse 
 
 
@@ -155,7 +164,7 @@ export default class App {
         this.material.uniforms.time.value = this.time;
         //movement mouse 
 
-        this.camera.position.x = this.mouse.x *5;
+        this.camera.position.x = this.mouse.x * 0.05;
         this.camera.lookAt(this.cube.position)
 
         requestAnimationFrame(this.render.bind(this));
