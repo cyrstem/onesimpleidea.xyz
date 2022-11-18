@@ -13,7 +13,7 @@ export default class App {
 
         console.log("wintermute..")
 
-        // this.ui = new UI;
+        this.ui = new UI;
         this.scene = new Scene();
 
         this.container = stage.dom;
@@ -117,7 +117,7 @@ export default class App {
 
     }
     onClick = (event) => {
-        //console.log('click',this.ui.links)
+        console.log('click',this.ui.links)
         // let element = this.ui.links
         // switch(element){
         //     case 'home':

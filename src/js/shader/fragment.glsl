@@ -3,58 +3,42 @@ uniform float time;
 uniform vec3 uColor;
 varying vec3 vUv;
 
-float random(vec2 st){
-    return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*
-43758.5453123);
-}
-// Based on Morgan McGuire @morgan3d
-// https://www.shadertoy.com/view/4dS3Wd
-float noise(in vec2 st){
-vec2 i=floor(st);
-vec2 f=fract(st);
 
-// Four corners in 2D of a tile
-float a=random(i);
-float b=random(i+vec2(1.,0.));
-float c=random(i+vec2(0.,1.));
-float d=random(i+vec2(1.,1.));
-
-vec2 u=f*f*(3.-2.*f);
-
-return mix(a,b,u.x)+
-(c-a)*u.y*(1.-u.x)+
-(d-b)*u.x*u.y;
+float random (vec2 st) {
+    return fract(sin(dot(st.xy,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
 }
 
-#define OCTAVES 6
-float fbm(in vec2 st){
-// Initial values
-float value=0.;
-float amplitude=.5;
-float frequency=0.;
-//
-// Loop of octaves
-for(int i=0;i<OCTAVES;i++){
-    value+=amplitude*noise(st);
-    st*=2.;
-    amplitude*=.5;
+float noise (in vec2 st) {
+    vec2 i = floor(st);
+    vec2 f = fract(st);
+
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+    // Smooth Interpolation
+
+    // Cubic Hermine Curve.  Same as SmoothStep()
+    vec2 u = f*f*(3.0-2.0*f);
+    // u = smoothstep(0.,1.,f);
+
+    // Mix 4 coorners percentages
+    return mix(a, b, u.x) +
+            (c - a)* u.y * (1.0 - u.x) +
+            (d - b) * u.x * u.y;
 }
-return value;
-}
+
+vec3 colorA = vec3(0.0, 0.0, 0.0078);
+vec3 colorB = vec3(0.902, 0.0, 0.0);
 
 void main(){
 
 vec2 st=gl_FragCoord.xy/vUv.xy;
-vec3 color=vec3(0.);
-vec2 translate=vec2(cos(time),sin(time));
-st+=translate*10.;
+vec3 color = vec3(vUv.x,vUv.x,vUv.x);
 
-float strength=floor(vUv.x*10.)/10.*floor(vUv.y*10.)/10.;
-float r=1.*strength;
-float g=.2*strength;
-float b=.1*strength;
-
-color-=vec3(st.x,st.y,r);
-
-gl_FragColor=vec4(color,1.);
+    gl_FragColor = vec4(color,1.0);
 }

@@ -1,8 +1,8 @@
 const Navbar =()=>{
     const template = `
         <nav>
-            <button id="home">About Me </button>
-            <button id="experiment">Experiments</button> 
+            <button id="home">About</button>
+            <button id="experiment">Work</button> 
         </nav>
        
     `;

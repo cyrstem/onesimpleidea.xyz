@@ -18,12 +18,12 @@ export default class UI {
 
     initHTML(){
         document.getElementById("ui").innerHTML = Navbar();
-        document.getElementById("container").innerHTML = Home();
+       // document.getElementById("container").innerHTML = Home();
         document.getElementById("contact").innerHTML = Contact();
     }
     onClick(event){
        this.links= event.target.id;
-        //    console.log(this.links);
+        console.log('this is where',this.links);
 
         // switch (links) {
         //     case 'home':
