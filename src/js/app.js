@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
 import UI from './UI';
-import { About } from './pages/AboutMe';
+import { About } from './pages/About';
 
 export default class App {
     constructor(stage) {
@@ -117,42 +117,16 @@ export default class App {
 
     }
     onClick = (event) => {
-        console.log('click',this.ui.links)
-        // let element = this.ui.links
-        // switch(element){
-        //     case 'home':
-        //        About.view = true
-        //     break;
-        // }
-        // this.raycaster.setFromCamera(this.mouse, this.camera);
-
-        // // if (this.intersects.length > 0 ) {
-        // //     var index = Math.floor( this.intersects[0].faceIndex / 2 );
-        // //     switch (index) {
-        // //        case 0: 
-        // //         console.log('face',index);
-
-        // //         break;
-        // //        case 1: 
-        // //        console.log('face',index);
-        // //         break;
-        // //        case 2:
-        // //         console.log('face',index);
-
-        // //         break; 
-        // //        case 3:
-        // //         console.log('face',index);
-        // //         break; 
-        // //        case 4:
-        // //         console.log('face',index);
-        // //         break; 
-        // //        case 5:
-        // //         console.log('face',index);
-
-        // //         break; 
-        // //     }
-        // }
-
+        console.log('click', this.ui.links)
+        let links = event.target.id;
+        switch (links) {
+            case 'aboutMe':
+                document.getElementById("container").innerHTML = About();
+                break;
+            case 'experiment':
+                document.getElementById("container").innerHTML = Experiments();
+                break;
+        }
     }
 
     render() {

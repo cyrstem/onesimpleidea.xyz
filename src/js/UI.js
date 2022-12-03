@@ -24,6 +24,7 @@ export default class UI {
     onClick(event){
        this.links= event.target.id;
         console.log('this is where',this.links);
+        
 
         // switch (links) {
         //     case 'home':
