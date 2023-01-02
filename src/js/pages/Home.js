@@ -11,31 +11,31 @@ const Home = () => {
         <li>
         <a href="https://activetheory.net/" target="_blank">
           <span>Active Theory</span> 
-          <span>WebGL Developer</span>
+          <span> --- WebGL Developer</span>
         </a>
        </li>
         <li>
          <a href="https://visualgoodness.com/" target="_blank">
            <span>Visual Goodness </span> 
-           <span>WebGL Developer</span>
+           <span> --- WebGL Developer</span>
          </a>
         </li>
         <li>
            <a href="https://myuniguru.com/" target="_blank">
              <span>My Uniguru</span>
-             <span>FullStack Developer</span>
+             <span> --- FullStack Developer</span>
            </a>
          </li>
          <li>
          <a href="https://smartco.com.ec" target="_blank"> 
            <span>Smartco </span>
-           <span>Unity Developer</span>
+           <span> --- Unity Developer</span>
          </a>
        </li>
          <li>
            <a href="https://www.yaesta.com" target="_blank">
              <span> YaEsta </span>
-             <span> Front-end  & Designer</span> 
+             <span> --- Front-end  & Designer</span> 
            </a>
          </li>
         </ul>

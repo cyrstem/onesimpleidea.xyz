@@ -76,19 +76,19 @@ const lines = ()=>{
     // give the line some width.
 
     // We're going to make a number of different coloured lines for fun.
-    ['#e09f7d', '#ffffff', '#ec4067', '#a01a7d', '#11071a'].forEach((color, i) => {
+    ['#ff0000', '#202020', '#000000', '#1f0000', '#ffffff'].forEach((color, i) => {
         // Store a few values for each lines' spring movement
         const line = {
-            spring: random(0.02, 0.1),
-            friction: random(0.7, 0.95),
+            spring: random(0.02, 0.3),
+            friction: random(0.4, 0.95),
             mouseVelocity: new Vec3(),
-            mouseOffset: new Vec3(random(-1, 1) * 0.02),
+            mouseOffset: new Vec3(random(-1, 1) * 0.09),
         };
 
         // Create an array of Vec3s (eg [[0, 0, 0], ...])
         // Note: Only pass in one for each point on the line - the class will handle
         // the doubling of vertices for the polyline effect.
-        const count = 30;
+        const count = random(30,60);
         const points = (line.points = []);
         for (let i = 0; i < count; i++) points.push(new Vec3());
 
@@ -99,7 +99,7 @@ const lines = ()=>{
             vertex,
             uniforms: {
                 uColor: { value: new Color(color) },
-                uThickness: { value: random(10, 150) },
+                uThickness: { value: random(10, 280) },
             },
         });
 
@@ -150,7 +150,7 @@ const lines = ()=>{
                     line.points[i].add(line.mouseVelocity);
                 } else {
                     // The rest of the points ease to the point in front of them, making a line
-                    line.points[i].lerp(line.points[i - 1], 0.9);
+                    line.points[i].lerp(line.points[i - 1], 0.8);
                 }
             }
             line.polyline.updateGeometry();
