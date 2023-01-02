@@ -60,16 +60,36 @@ button:active {
 }
 
 main {
-  padding-left: 35px;
-  padding-right: 35px;
+  color: black;
+  padding: 10%;
+  font-size: 1.3rem;
+  align-items: center;
+}
+main ul {
+  list-style-type: none;
+}
+main a {
+  text-decoration: none;
   color: black;
 }
-main h1 {
-  font-size: 10em;
+main a:hover {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: black;
 }
-main p {
-  padding-left: 15px;
-  font-size: 1.4rem;
+main #links a:hover {
+  text-decoration: none;
+  background-color: transparent;
+}
+
+#links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+#links img {
+  padding: 0.9rem;
 }
 
 #portafolio {
@@ -78,66 +98,30 @@ main p {
   display: grid;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  height: 80vh;
+  height: 60vh;
   padding-left: 25px;
   padding-right: 25px;
   overflow-x: scroll;
   column-gap: 0.5rem;
   justify-items: center;
-  row-gap: 0.5rem;
-  grid-template-columns: 2fr 2fr;
+  row-gap: 0.3rem;
+  grid-template-columns: 3fr 3fr;
   transition: width 1s;
   animation: pulse 2s;
 }
 #portafolio section {
-  padding: 2rem;
+  margin: 10px 10px 10px 10px;
+  padding: 1rem;
   color: black;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   line-height: 2.5rem;
   text-align: justify;
 }
 #portafolio section h2 {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 #portafolio img {
   border-left: 1px solid black;
-}
-
-.sites {
-  font-size: 1.2rem;
-  position: fixed;
-  bottom: 40vh;
-  width: 600px;
-  padding: 15px;
-  grid-column: 1/8;
-  grid-row: 2;
-  align-self: flex-end;
-}
-.sites ul {
-  list-style-type: none;
-}
-.sites a {
-  display: flex;
-  text-decoration: none;
-}
-.sites spanfirst-child {
-  margin: 3px;
-  padding: 2px;
-}
-.sites span:nth-child(2) {
-  padding-left: 24px;
-  flex-grow: 1;
-}
-.sites a {
-  text-decoration: none;
-  color: black;
-}
-.sites a:hover {
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.5);
-}
-.sites a:active {
-  text-decoration: none;
 }
 
 #ui {
@@ -165,15 +149,8 @@ main p {
 }
 
 @media all and (max-width: 480px) {
-  main h1 {
-    font-size: 5rem;
-  }
-  main p {
-    font-size: 0.8rem;
-  }
-
-  #contact {
-    bottom: -1px;
+  main {
+    font-size: 1.1rem;
   }
 
   .sites {
@@ -251,6 +228,7 @@ canvas {
 }
 
 #container {
+  display: flex;
   z-index: 1;
   position: absolute;
 }

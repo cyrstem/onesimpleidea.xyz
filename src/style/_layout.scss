@@ -5,46 +5,70 @@ $tnormalcolor: black;
 //base  for all the site
 
 main {
-	padding-left: 35px;
-	padding-right: 35px;
-	// padding: 0px 10px 0px;
-	color: black;
-
-	h1 {
-		font-size: 10em;
+	color: $tnormalcolor;
+	padding: 10%;
+	font-size: 1.3rem;
+	align-items: center;
+		ul {
+		list-style-type: none;
+		
+		}
+		a {
+		text-decoration: none;
+		color: black;
 	}
 
-	p {
-		padding-left: 15px;
-		font-size: 1.4rem;
+	a:hover {
+		text-decoration: none;
+		color: rgba($color: #ffffff, $alpha: .9);
+		background-color: black;
+
+	}
+	#links{
+		a:hover {
+		
+			text-decoration: none;
+			background-color: transparent;
+	
+		}
 	}
 }
+#links{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: flex-start;
+	img{
+		padding: 0.9rem;
+	}
 
+}
 #portafolio {
 	position: relative;
 	top: 10vh;
 	display: grid;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
-	height: 80vh;
+	height: 60vh;
 	padding-left: 25px;
 	padding-right: 25px;
 	overflow-x: scroll;
 	column-gap: 0.5rem;
 	justify-items: center;
-	row-gap: 0.5rem;
-	grid-template-columns: 2fr 2fr;
+	row-gap: 0.3rem;
+	grid-template-columns: 3fr 3fr;
 	transition: width 1s;
 	animation: pulse 2s;
 
 	section {
-		padding: 2rem;
+		margin: 10px 10px 10px 10px;
+		padding: 1rem;
 		color: black;
-		font-size: 1.3rem;
+		font-size: 1.2rem;
 		line-height: 2.5rem;
 		text-align: justify;
 		h2{
-			font-size: 3rem;
+			font-size: 2rem;
 		}
 
 	}
@@ -54,52 +78,39 @@ main {
 }
 
 
-.sites {
-	font-size: 1.2rem;
-	position: fixed;
-	bottom: 40vh;
-	width: 600px;
-	padding: 15px;
-	grid-column: 1/8;
-	grid-row: 2;
-	align-self: flex-end;
+// .sites {
+// 	font-size: 1.2rem;
+// 	position: fixed;
+// 	bottom: 40vh;
+// 	width: 600px;
+// 	padding: 15px;
+// 	grid-column: 1/8;
+// 	grid-row: 2;
+// 	align-self: flex-end;
 
-	ul {
-		list-style-type: none;
-	}
+// 	ul {
+// 		list-style-type: none;
+// 	}
 
-	a {
-		display: flex;
-		text-decoration: none;
-	}
+// 	a {
+// 		display: flex;
+// 		text-decoration: none;
+// 	}
 
-	span {
-		&first-child {
-			margin: 3px;
-			padding: 2px;
-		}
+// 	span {
+// 		&first-child {
+// 			margin: 3px;
+// 			padding: 2px;
+// 		}
 
-		&:nth-child(2) {
-			padding-left: 24px;
-			flex-grow: 1;
-		}
-	}
+// 		&:nth-child(2) {
+// 			padding-left: 24px;
+// 			flex-grow: 1;
+// 		}
+// 	}
 
-	a {
-		text-decoration: none;
-		color: black;
-	}
-
-	a:hover {
-		text-decoration: none;
-		color: rgba($color: #000000, $alpha: .5);
-
-	}
-
-	a:active {
-		text-decoration: none;
-	}
-}
+	
+// }
 
 
 
@@ -137,25 +148,15 @@ main {
 
 @media all and (max-width: 480px) {
 	main {
-		h1 {
-			font-size: 5rem;
-		}
-
-		p {
-			font-size: 0.8rem;
-		}
+	font-size: 1.1rem;
 	}
 
-	#contact {
-		bottom: -1px;
-	}
 
 	.sites {
 		font-size: 0.8rem;
 		position: fixed;
 		top: 150px;
 		width: 320px;
-		// padding: 2px;
 		padding-top: 20px;
 		grid-column: 1/4;
 		grid-row: 1;

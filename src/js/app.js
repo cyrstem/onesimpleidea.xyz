@@ -20,7 +20,7 @@ export default class GUIView{
         	//load UI and socials media  plus main content
         document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("container").innerHTML = Home();
-        document.getElementById("contact").innerHTML = Contact();
+        // document.getElementById("contact").innerHTML = Contact();
 
     }
     addListeners(){
