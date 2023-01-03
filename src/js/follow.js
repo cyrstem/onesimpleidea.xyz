@@ -99,7 +99,7 @@ const lines = ()=>{
             vertex,
             uniforms: {
                 uColor: { value: new Color(color) },
-                uThickness: { value: random(10, 280) },
+                uThickness: { value: random(1, 280) },
             },
         });
 
