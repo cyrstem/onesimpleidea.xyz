@@ -32,13 +32,19 @@ float noise (in vec2 st) {
             (d - b) * u.x * u.y;
 }
 
-vec3 colorA = vec3(0.0, 0.0, 0.0078);
-vec3 colorB = vec3(0.902, 0.0, 0.0);
+vec3 colorA = vec3(0.0078, 0.0078, 0.9922);
+vec3 colorB = vec3(1.0, 0.0314, 0.0314);
 
 void main(){
 
-vec2 st=gl_FragCoord.xy/vUv.xy;
-vec3 color = vec3(vUv.x,vUv.x,vUv.x);
+vec2 st = gl_FragCoord.xy/vUv.xy;
+
+ float pct = abs(sin(time));
+
+    // Mix uses pct (a value from 0-1) to
+    // mix the two colors
+    vec3 color = mix(colorA, colorB, pct);
+//vec3 color = vec3(vUv.x,vUv.x,vUv.x);
 
     gl_FragColor = vec4(color,1.0);
 }

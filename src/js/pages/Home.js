@@ -21,12 +21,6 @@ const Home = () => {
                <span>WebGL Developer</span>
              </a>
             </li>
-            <li>
-               <a href="https://myuniguru.com/" target="_blank">
-                 <span>My Uniguru</span>
-                 <span>FullStack Developer</span>
-               </a>
-             </li>
              <li>
              <a href="https://smartco.com.ec" target="_blank"> 
                <span>Smartco </span>

@@ -3,7 +3,9 @@
 const Experiments = () => {
     const template = `
 <main>
-   <div> GOT IT!!!!!</div>
+    <div id="content">
+        <div> GOT IT!!!!!</div>
+    </div>
 </main>
     `;
     return template;

@@ -26,16 +26,17 @@ export default class UI {
     }
     onClick(event){
        this.links= event.target.id;
-        //console.log('this is where',this.links);
-        
-        // if(this.links !== 'home') {
+        if(this.links !== 'home') {
             
-        //    document.getElementById("terminal").innerHTML = Home();
-        // }
-        // if(this.links !== 'experiments'){
-            
-        //     document.getElementById("terminal").innerHTML = Experiments();
-        // }
+            console.log('home')
+           document.getElementById("terminal").innerHTML = Experiments();
+           return
+        }
+        if(this.links !== 'experiments'){
+            console.log('work')
+            document.getElementById("terminal").innerHTML = Home();
+            return
+        }
     
     }
     // remove(){

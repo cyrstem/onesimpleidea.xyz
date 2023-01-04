@@ -72,7 +72,7 @@ export default class App {
 
         this.material = new ShaderMaterial({
             uniforms: {
-                time: { value: 1.0 }
+                time: { value:0 }
             },
             vertexShader: vertex,
             fragmentShader: fragment,
@@ -128,7 +128,7 @@ export default class App {
     }
 
     render() {
-        this.time += 0.002;
+        this.time += 0.02;
         //mouse 
 
 
