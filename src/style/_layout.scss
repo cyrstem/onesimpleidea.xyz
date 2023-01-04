@@ -18,26 +18,35 @@ canvas {
 }
 
 main{
-	padding-top: 0px;
-	width: 100vw;
-	height: 100vh;
-	position: absolute;
+	// width: 100vw;
+	// height: 100vh;
+	// position: absolute;
 	z-index: 2;
 
 }
 
 #container {
-	z-index: 1;
+	z-index: 0;
 	position: absolute;
 	width: 100vw;
 	height: 100vh;
 }
+
+#terminal{
+	z-index: 3;
+	top: 10vh;
+	width: 50vw;
+	height: auto;
+	margin: 25px;
+	// position: absolute;
+	background:rgba($color: #b69f9f, $alpha: .3);
+}
 #content{
-	padding-left: 2%;
+	padding: 23px;
 	position:absolute;
 	font-family: $main-font;
 	font-size: 1.5rem;
-	width: 45vh;
+	width: 50vw;
 	color: #3d3d3d;
 	b{
 		color: black;
@@ -88,7 +97,6 @@ main{
 #portafolio{
 	
 	height: 100vh;
-	
 	position: fixed;
 	overflow-y: scroll;
 	margin: 3px;
@@ -97,7 +105,6 @@ main{
 	z-index: 1000;
 	position: absolute;
 	top:2vh;
-		
 }
 
 #contact {

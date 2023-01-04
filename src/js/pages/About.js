@@ -48,5 +48,5 @@ const About = () => {
       `;
       return template;
   };
+
   export default About;
-  

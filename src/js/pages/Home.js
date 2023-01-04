@@ -1,6 +1,5 @@
 
 const Home = () => {
-  //const insta = new URL('./logo.png', import.meta.url);
     const template = `
     <main>
         <div id="content">

@@ -6,7 +6,7 @@ import gsap from 'gsap';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
 import UI from './UI';
-import { About } from './pages/About';
+
 
 export default class App {
     constructor(stage) {
@@ -70,8 +70,6 @@ export default class App {
 
     addObjects() {
 
-
-
         this.material = new ShaderMaterial({
             uniforms: {
                 time: { value: 1.0 }
@@ -117,16 +115,16 @@ export default class App {
 
     }
     onClick = (event) => {
-        console.log('click', this.ui.links)
+        //console.log('click', this.ui.links)
         let links = event.target.id;
-        switch (links) {
-            case 'aboutMe':
-                document.getElementById("container").innerHTML = About();
-                break;
-            case 'experiment':
-                document.getElementById("container").innerHTML = Experiments();
-                break;
-        }
+        // switch (links) {
+        //     case 'aboutMe':
+        //         document.getElementById("container").innerHTML = About();
+        //         break;
+        //     case 'experiment':
+        //         document.getElementById("container").innerHTML = Experiments();
+        //         break;
+        // }
     }
 
     render() {
