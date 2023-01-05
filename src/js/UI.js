@@ -16,12 +16,8 @@ export default class UI {
 
     }
     addListeners() {
-         let nav = document.getElementById('nav');
-        let link = document.querySelectorAll('a');
-        nav.addEventListener('click',this.onClick.bind(this),false)
-
-        // nav.addEventListener('click', this.onClick.bind(this), false);
-        //link.addEventListener('click',this.onClick.bind(this),false)
+    let nav = document.getElementById('nav');
+       nav.addEventListener('click',this.onClick.bind(this),false)
     }
 
     initHTML() {
