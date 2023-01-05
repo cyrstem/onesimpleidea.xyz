@@ -1,6 +1,6 @@
 
 
-const Experiments = () => {
+const Portafolio = () => {
     const template = `
 <main>
     <div id="content">
@@ -11,4 +11,4 @@ const Experiments = () => {
     return template;
 };
 
-export default Experiments;
+export default Portafolio;

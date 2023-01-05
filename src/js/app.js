@@ -10,8 +10,8 @@ import UI from './UI';
 
 export default class App {
     constructor(stage) {
-
-        console.log("wintermute..")
+        this.c = console.log.bind(document);
+        this.c("wintermute..")
 
         this.ui = new UI;
         this.scene = new Scene();
@@ -115,6 +115,7 @@ export default class App {
 
     }
     onClick = (event) => {
+        event.preventDefault();
         //console.log('click', this.ui.links)
         let links = event.target.id;
         // switch (links) {

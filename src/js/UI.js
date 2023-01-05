@@ -1,9 +1,9 @@
 import Navbar from "./interface/Nav";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Contact from "./interface/Contact";
 
 import About from "./pages/About";
-import Experiments from "./pages/Experiments";
+import Portafolio from './pages/Portafolio';
 
 export default class UI {
     constructor(){
@@ -12,6 +12,7 @@ export default class UI {
 
         this.addListeners()
         //this.remove()
+        this.c = console.log.bind(document);
 
     }
     addListeners(){
@@ -21,20 +22,23 @@ export default class UI {
 
     initHTML(){
         document.getElementById("ui").innerHTML = Navbar();
-        document.getElementById("terminal").innerHTML = Home();
+        //document.getElementById("terminal").innerHTML = Home();
         document.getElementById("contact").innerHTML = Contact();
     }
     onClick(event){
+
+        event.preventDefault();
        this.links= event.target.id;
+      this.c(this.links);
         if(this.links !== 'home') {
             
-            console.log('home')
-           document.getElementById("terminal").innerHTML = Experiments();
+            this.c(this.links)
+           document.getElementById("terminal").innerHTML = Portafolio();
            return
         }
-        if(this.links !== 'experiments'){
-            console.log('work')
-            document.getElementById("terminal").innerHTML = Home();
+        if(this.links !== 'Portafolio'){
+           
+            document.getElementById("terminal").innerHTML = About();
             return
         }
     
