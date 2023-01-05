@@ -1,12 +1,12 @@
 import Navbar from "./interface/Nav";
-// import Home from "./pages/Home";
 import Contact from "./interface/Contact";
 
 import About from "./pages/About";
 import Portafolio from './pages/Portafolio';
+import { LineLoop } from "three";
 
 export default class UI {
-    constructor(){
+    constructor() {
         this.links = null;
         this.initHTML()
 
@@ -15,35 +15,39 @@ export default class UI {
         this.c = console.log.bind(document);
 
     }
-    addListeners(){
-        //console.log('ready')
-        window.addEventListener('click',this.onClick.bind(this),false);
+    addListeners() {
+         let nav = document.getElementById('nav');
+        let link = document.querySelectorAll('a');
+        nav.addEventListener('click',this.onClick.bind(this),false)
+
+        // nav.addEventListener('click', this.onClick.bind(this), false);
+        //link.addEventListener('click',this.onClick.bind(this),false)
     }
 
-    initHTML(){
+    initHTML() {
         document.getElementById("ui").innerHTML = Navbar();
-        //document.getElementById("terminal").innerHTML = Home();
+        document.getElementById("terminal").innerHTML = Portafolio();
         document.getElementById("contact").innerHTML = Contact();
     }
-    onClick(event){
+    onClick(event) {
 
         event.preventDefault();
-       this.links= event.target.id;
-      this.c(this.links);
-        if(this.links !== 'home') {
-            
+        this.links = event.target.id;
+        this.c(this.links);
+        if (this.links !== 'home') {
+
             this.c(this.links)
-           document.getElementById("terminal").innerHTML = Portafolio();
-           return
+            document.getElementById("terminal").innerHTML = Portafolio();
+            return
         }
-        if(this.links !== 'Portafolio'){
-           
+        if (this.links !== 'Portafolio') {
+
             document.getElementById("terminal").innerHTML = About();
             return
         }
-    
+
     }
     // remove(){
-        
+
     // }
 }

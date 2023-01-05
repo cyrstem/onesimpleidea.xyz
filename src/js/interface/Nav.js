@@ -1,6 +1,6 @@
 const Navbar =()=>{
     const template = `
-        <nav>
+        <nav id="nav">
             <button id="home">About</button>
             <button id="experiment">Work</button> 
         </nav>

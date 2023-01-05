@@ -56,7 +56,7 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-        window.addEventListener('click', this.onClick.bind(this));
+       // window.addEventListener('click', this.onClick.bind(this));
     }
 
 
@@ -72,7 +72,7 @@ export default class App {
 
         this.material = new ShaderMaterial({
             uniforms: {
-                time: { value:0 }
+                time: { value: 0 }
             },
             vertexShader: vertex,
             fragmentShader: fragment,

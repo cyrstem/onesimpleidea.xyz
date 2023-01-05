@@ -3,9 +3,10 @@
 const Portafolio = () => {
     const template = `
 <main>
-    <div id="content">
-        <div> GOT IT!!!!!</div>
-    </div>
+        <div id="content">
+            <div> Portafolio goes here!!</div>
+            
+        </div>
 </main>
     `;
     return template;
