@@ -3,7 +3,6 @@ import Contact from "./interface/Contact";
 
 import About from "./pages/About";
 import Portafolio from './pages/Portafolio';
-import { LineLoop } from "three";
 
 export default class UI {
     constructor() {
@@ -25,6 +24,7 @@ export default class UI {
         document.getElementById("terminal").innerHTML = Portafolio();
         document.getElementById("contact").innerHTML = Contact();
     }
+
     onClick(event) {
 
         event.preventDefault();
@@ -42,6 +42,9 @@ export default class UI {
             return
         }
 
+    }
+    view(){
+        //document.getElementById('hero-img').src = imgUrl
     }
     // remove(){
 

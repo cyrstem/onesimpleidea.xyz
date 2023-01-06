@@ -19,9 +19,10 @@ canvas {
 }
 
 main{
-	width: 100vw;
-	height: 100vh;
+	// width: 100vw;
+	// height: 100vh;
 	position: absolute;
+	display: contents;
 	z-index: 2;
 }
 
@@ -36,7 +37,7 @@ main{
 	position: absolute;
 	z-index: 3;
 	top: 10vh;
-	width: 50vw;
+	width: 80vw;
 	//pointer-events: none;
 	margin: 25px;
 	// position: absolute;
@@ -47,7 +48,7 @@ main{
 	position:absolute;
 	font-family: $main-font;
 	font-size: 1.5rem;
-	width: 50vw;
+	width: fit-content;
 	color: #3d3d3d;
 	b{
 		color: black;
@@ -64,6 +65,8 @@ main{
 	a {
 		display: flex;
 		text-decoration: none;
+		padding: 5px;
+		width: fit-content;
 	}
 
 	span {
@@ -96,12 +99,12 @@ main{
 
 }
 #portafolio{
-	height: 100vh;
-	position: relative;
+	//width: 100vw;
+	// height: 100vh;
+	
 	overflow-y: scroll;
 	margin: 3px;
-	background-color: blue($color: #1100ff);
-	z-index: 3000;
+	background-color: red;
 }
 #ui{
 	z-index: 1000;
