@@ -49,6 +49,7 @@ main{
 	font-family: $main-font;
 	font-size: 1.5rem;
 	width: fit-content;
+	overflow-y: scroll;
 	color: #3d3d3d;
 	b{
 		color: black;
@@ -99,12 +100,10 @@ main{
 
 }
 #portafolio{
-	//width: 100vw;
-	// height: 100vh;
-	
-	overflow-y: scroll;
+	position: relative;
 	margin: 3px;
-	background-color: red;
+	height: 80vh;
+	// background-color: red;
 }
 #ui{
 	z-index: 1000;

@@ -1,5 +1,5 @@
 var mu=Object.defineProperty;var gu=(o,e,t)=>e in o?mu(o,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):o[e]=t;var ao=(o,e,t)=>(gu(o,typeof e!="symbol"?e+"":e,t),t);const _u=function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const i of document.querySelectorAll('link[rel="modulepreload"]'))n(i);new MutationObserver(i=>{for(const r of i)if(r.type==="childList")for(const a of r.addedNodes)a.tagName==="LINK"&&a.rel==="modulepreload"&&n(a)}).observe(document,{childList:!0,subtree:!0});function t(i){const r={};return i.integrity&&(r.integrity=i.integrity),i.referrerpolicy&&(r.referrerPolicy=i.referrerpolicy),i.crossorigin==="use-credentials"?r.credentials="include":i.crossorigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function n(i){if(i.ep)return;i.ep=!0;const r=t(i);fetch(i.href,r)}};_u();function xu(){if(window.navigator.userAgent.toLowerCase().indexOf("chrome")>-1){const o=[`
- %c ->> created by cyrstem more info on onesimpleidea.xyz
+ %c ->> created by cyrstem 
 `,"border: 1px solid #000;color: #fff; background: #171717; padding:5px 0;"];window.console.log.apply(console,o)}else window.console&&window.console.log("-created by cyrstem  -")}/**
  * @license
  * Copyright 2010-2022 Three.js Authors
@@ -3182,7 +3182,7 @@ vec2 st = gl_FragCoord.xy/vUv.xy;
       vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
       gl_Position = projectionMatrix * modelViewPosition; 
     }`;const I_=()=>`
-        <nav>
+        <nav id="nav">
             <button id="home">About</button>
             <button id="experiment">Work</button> 
         </nav>
@@ -3215,12 +3215,6 @@ vec2 st = gl_FragCoord.xy/vUv.xy;
                  <span> -- WebGL Developer</span>
                </a>
               </li>
-              <li>
-                 <a href="https://myuniguru.com/" target="_blank">
-                   <span>My Uniguru</span>
-                   <span> -- FullStack Developer</span>
-                 </a>
-               </li>
                <li>
                <a href="https://smartco.com.ec" target="_blank"> 
                  <span>Smartco </span>
@@ -3242,12 +3236,11 @@ vec2 st = gl_FragCoord.xy/vUv.xy;
       `,kl=()=>`
 <main>
     <div id="content">
-        <div> Portafolio goes here!!</div>
-        <div id="portafolio">
-    <section class="info">
-        <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
-    </section>
-    <section class="info">
+        <div id="portafolio"> 
+        <section class="info">
+            <a  href="https://movingphoton.friendred.studio/" target="_blank"> <img src="assets/skull.png"/></a>
+        </section>
+        <section class="info">
         <h2>Moving Photon</h2>
         <p>I Help develop and deploy the Virtual Experience for
             <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
@@ -3256,36 +3249,9 @@ vec2 st = gl_FragCoord.xy/vUv.xy;
             Participation in Moving Photon can be in 5 different ways, including a Phantom performance,
             interactive installation, interactive performance,interactive performance with EEG and a <a
                 href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
-    </section>
-    <section class="info">
-        <h2>Glitch Machine</h2>
-        <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/ target=" _blank">Jenna
-                Marsh</a>, it lets you play with a image applying different filters and export the resulting image for
-            printing</p>
-    </section>
-    <section class="info">
-        <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src="insta-0.jpg" width="500" /></a>
-    </section>
-    <section class="info">
-        <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src="noizu.png" width="500" /></a>
-    </section>
-    <section class="info">
-        <h2>Noizu</h2>
-        <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my
-            old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and
-            different every time this is a preview</p>
-    </section>
-    <section class="info">
-        <h2>PACMAN YaEsta.com</h2>
-        <p>Develop a Physical installation with Mapping and live interaction for the launch of the e-commerce site
-            YaEsta.com back in the day</p>
-    </section>
-    <section class="info">
-        <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src="insta-3.jpg" width="500" /></a>
-    </section>
-
-</div>
+        </section>
+        </div>   
     </div>
 </main>
-    `;class N_{constructor(){this.links=null,this.initHTML(),this.addListeners(),this.c=console.log.bind(document)}addListeners(){window.addEventListener("click",this.onClick.bind(this),!1)}initHTML(){document.getElementById("ui").innerHTML=I_(),document.getElementById("terminal").innerHTML=kl(),document.getElementById("contact").innerHTML=F_()}onClick(e){if(e.preventDefault(),this.links=e.target.id,this.c(this.links),this.links!=="home"){this.c(this.links),document.getElementById("terminal").innerHTML=kl();return}if(this.links!=="Portafolio"){document.getElementById("terminal").innerHTML=O_();return}}}class z_{constructor(e){ao(this,"onClick",e=>{e.preventDefault(),e.target.id});this.c=console.log.bind(document),this.c("wintermute.."),this.ui=new N_,this.scene=new mg,this.container=e.dom,this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer=new uc,this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)),this.renderer.setSize(this.width,this.height),this.renderer.setClearColor(15658734,1),this.container.appendChild(this.renderer.domElement),this.camera=new kt(45,window.innerWidth/window.innerHeight,.001,1e3),this.camera.position.set(0,2,3),this.camera.minDistance=.8,this.camera.maxDistance=30,this.controls=new _g(this.camera,this.renderer.domElement),this.time=0,this.target=new Se,this.mouse=new Se,this.raycaster=new gg,this.raycaster.setFromCamera(this.mouse,this.camera),this.addListener(),this.addObjects(),this.resize(),this.render()}addListener(){window.addEventListener("resize",this.resize.bind(this)),window.addEventListener("mousemove",this.onMouseMove.bind(this)),window.addEventListener("click",this.onClick.bind(this))}resize(){this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer.setSize(this.width,this.height),this.camera.aspect=this.width/this.height,this.camera.updateProjectionMatrix()}addObjects(){this.material=new Gn({uniforms:{time:{value:0}},vertexShader:R_,fragmentShader:D_}),this.geometry=new ar(1,1,1),this.cube=new vn(this.geometry,this.material),this.scene.add(this.cube)}onMouseMove(e){this.mouse.x=e.clientX/this.width*2-1,this.mouse.y=-(e.clientY/this.height)*2+1,this.target.x=(e.x-this.mouse.x)*.072,this.target.y=-(e.y-this.mouse.y)*.072,this.cube.rotation.x+=.001*(this.target.y-this.cube.rotation.x),this.cube.rotation.y+=.001*(this.target.x-this.cube.rotation.y),cu.to(this.cube.rotation,{duration:1,z:-.5,yoyo:!0})}view(e){}render(){this.time+=.02,this.material.uniforms.time.value=this.time,this.camera.position.x=this.mouse.x*.05,this.camera.lookAt(this.cube.position),requestAnimationFrame(this.render.bind(this)),this.renderer.render(this.scene,this.camera)}}window.onload=o=>{new z_({dom:document.getElementById("container")}),xu()};
-//# sourceMappingURL=index.18a90aae.js.map
+    `;class N_{constructor(){this.links=null,this.initHTML(),this.addListeners(),this.c=console.log.bind(document)}addListeners(){document.getElementById("nav").addEventListener("click",this.onClick.bind(this),!1)}initHTML(){document.getElementById("ui").innerHTML=I_(),document.getElementById("terminal").innerHTML=kl(),document.getElementById("contact").innerHTML=F_()}onClick(e){if(e.preventDefault(),this.links=e.target.id,this.c(this.links),this.links!=="home"){this.c(this.links),document.getElementById("terminal").innerHTML=kl();return}if(this.links!=="Portafolio"){document.getElementById("terminal").innerHTML=O_();return}}view(){}}class z_{constructor(e){ao(this,"onClick",e=>{e.preventDefault(),e.target.id});this.c=console.log.bind(document),this.c("wintermute.."),this.ui=new N_,this.scene=new mg,this.container=e.dom,this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer=new uc,this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)),this.renderer.setSize(this.width,this.height),this.renderer.setClearColor(15658734,1),this.container.appendChild(this.renderer.domElement),this.camera=new kt(45,window.innerWidth/window.innerHeight,.001,1e3),this.camera.position.set(0,2,3),this.camera.minDistance=.8,this.camera.maxDistance=30,this.controls=new _g(this.camera,this.renderer.domElement),this.time=0,this.target=new Se,this.mouse=new Se,this.raycaster=new gg,this.raycaster.setFromCamera(this.mouse,this.camera),this.addListener(),this.addObjects(),this.resize(),this.render()}addListener(){window.addEventListener("resize",this.resize.bind(this)),window.addEventListener("mousemove",this.onMouseMove.bind(this))}resize(){this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer.setSize(this.width,this.height),this.camera.aspect=this.width/this.height,this.camera.updateProjectionMatrix()}addObjects(){this.material=new Gn({uniforms:{time:{value:0}},vertexShader:R_,fragmentShader:D_}),this.geometry=new ar(1,1,1),this.cube=new vn(this.geometry,this.material),this.scene.add(this.cube)}onMouseMove(e){this.mouse.x=e.clientX/this.width*2-1,this.mouse.y=-(e.clientY/this.height)*2+1,this.target.x=(e.x-this.mouse.x)*.072,this.target.y=-(e.y-this.mouse.y)*.072,this.cube.rotation.x+=.001*(this.target.y-this.cube.rotation.x),this.cube.rotation.y+=.001*(this.target.x-this.cube.rotation.y),cu.to(this.cube.rotation,{duration:1,z:-.5,yoyo:!0})}view(e){}render(){this.time+=.02,this.material.uniforms.time.value=this.time,this.camera.position.x=this.mouse.x*.05,this.camera.lookAt(this.cube.position),requestAnimationFrame(this.render.bind(this)),this.renderer.render(this.scene,this.camera)}}window.onload=o=>{new z_({dom:document.getElementById("container")}),xu()};
+//# sourceMappingURL=index.2c550bc4.js.map
