@@ -6,13 +6,14 @@ import gsap from 'gsap';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
 import UI from './UI';
-
+import { imgLoc } from './utils/lib';
 
 export default class App {
     constructor(stage) {
         this.c = console.log.bind(document);
         this.c("wintermute..")
 
+        this.c(imgLoc)
         this.ui = new UI;
         this.scene = new Scene();
 
@@ -77,6 +78,7 @@ export default class App {
             vertexShader: vertex,
             fragmentShader: fragment,
         })
+        
         this.geometry = new BoxGeometry(1, 1, 1);
         this.cube = new Mesh(this.geometry, this.material);
         this.scene.add(this.cube)

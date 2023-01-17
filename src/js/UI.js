@@ -21,7 +21,7 @@ export default class UI {
 
     initHTML() {
         document.getElementById("ui").innerHTML = Navbar();
-        document.getElementById("terminal").innerHTML = Portafolio();
+        //document.getElementById("terminal").innerHTML = Portafolio();
         document.getElementById("contact").innerHTML = Contact();
     }
 
