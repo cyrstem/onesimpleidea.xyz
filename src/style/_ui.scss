@@ -14,8 +14,6 @@ button {
 	font-size: 1.2rem;
 	cursor: pointer;
 	text-align: center;
-	-webkit-appearance: none;
-	-moz-appearance: none;
 }
 
 button:hover,
@@ -32,3 +30,26 @@ button:hover {
 	
 }
 
+// //scroll bar  settings on ly works on chrome
+
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+	scrollbar-width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: transparent;
+	opacity: 1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: rgb(0, 0, 0);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: rgba($color: #030303, $alpha: 1);
+}

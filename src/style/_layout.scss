@@ -6,7 +6,9 @@ body {
 	padding: 0;
 	overflow: hidden;
 }
-html,body{
+
+html,
+body {
 	display: flex;
 	justify-content: center;
 }
@@ -18,7 +20,7 @@ canvas {
 	z-index: 0;
 }
 
-main{
+main {
 	// width: 100vw;
 	// height: 100vh;
 	position: absolute;
@@ -33,7 +35,7 @@ main{
 	height: 100vh;
 }
 
-#terminal{
+#terminal {
 	position: absolute;
 	z-index: 3;
 	top: 10vh;
@@ -43,21 +45,24 @@ main{
 	// position: absolute;
 	// background:rgba($color: #b69f9f, $alpha: .3);
 }
-#content{
+
+#content {
 	//padding: 23px;
-	position:absolute;
+	position: absolute;
 	font-family: $main-font;
 	font-size: 1.5rem;
 	width: fit-content;
 	overflow-y: scroll;
 	color: #3d3d3d;
-	b{
+
+	b {
 		color: black;
 	}
 }
 
-#sites{
+#sites {
 	text-align: left;
+
 	ul {
 		list-style-type: none;
 		padding: 0.3rem;
@@ -88,7 +93,7 @@ main{
 	}
 
 	a:hover {
-		background-color:rgba($color: #000000, $alpha:1);
+		background-color: rgba($color: #000000, $alpha: 1);
 		text-decoration: none;
 		color: rgba($color: #ffffff, $alpha: 1);
 
@@ -99,29 +104,53 @@ main{
 	}
 
 }
-#portafolio{
+
+#portafolio {
+	
 	position: relative;
 	margin: 3px;
-	height: 80vh;
-	// background-color: red;
+	height: 70vh;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+
+	grid-gap: 20px;
+
+
+	.info {
+		// border: 3px solid white;
+		 background-color:rgba($color: #ffffff, $alpha: 1);
+		justify-content: center;
+		display: flex;
+		align-items: center;
+		height: auto;
+		text-align: left;
+		padding: 9px;
+		h2{
+			padding: 10px;
+		}
+	
+	}
 }
-#ui{
+
+#ui {
 	z-index: 1000;
 	position: absolute;
-	top:2vh;
+	top: 2vh;
 }
 
 #contact {
 	z-index: 1000;
 	position: absolute;
-	
+
 	//right: 50%;
 	text-align: center;
 	bottom: 10vh;
-	#links{
+
+	#links {
 		padding: 0px;
 		margin: 0px;
 	}
+
 	a {
 		padding: 0.5rem;
 		text-decoration: none;
@@ -129,39 +158,55 @@ main{
 
 	a:hover {
 		//padding: 1rem;
-		
+
 		border-bottom: 1px solid black;
 		transition: all 6.8s ease;
 		transform: scale(10);
-		
+
 	}
-	img{
+
+	img {
 		width: 10%;
 	}
-	
+
 }
+
 // @media all and (min-width: 480px) and (max-width: 768px) { }
 @media all and (max-width: 480px) {
 
-	main{
+	main {
 		overflow: hidden;
 	}
-	#content{
+
+	#content {
 		//padding: 2px;
-		position:relative;
+		position: relative;
 		font-family: $main-font;
 		font-size: 1.2rem;
 		width: 100%;
 		color: #3d3d3d;
-		b{
+
+		b {
 			color: black;
 		}
 	}
-	#terminal{
+
+	#terminal {
 		width: 100vw;
-		overflow-y:scroll ;
+		overflow-y: scroll;
 	}
-	#contact{
+
+#portafolio {
+	
+	position: relative;
+	margin: 3px;
+	height: 80vh;
+	display: grid;
+	grid-template-columns: auto;
+
+	grid-gap: 20px;
+}
+	#contact {
 		bottom: 3vh;
 	}
 }

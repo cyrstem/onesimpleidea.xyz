@@ -10,7 +10,7 @@ const Portafolio = () => {
         </section>
         <section class="info">
             <h2>Moving Photon</h2>
-            <p>I Help develop and deploy the Virtual Experience for
+            <p>I collaborated on developing and deploying the Virtual Experience for
                 <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
                 interactive installation/performance
                 created by installation artist<a href="https://friendred.studio" target="_blank"> Friendred Peng.</a>
