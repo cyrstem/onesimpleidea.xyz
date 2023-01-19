@@ -6,7 +6,7 @@ const Portafolio = () => {
     <div id="content">
         <div id="portafolio"> 
         <section class="info">
-        <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="assets/poster4.jpg" width="500" /></a>
+        <a href="https://movingphoton.friendred.studio/" target="_blank"> <img src="poster4.jpg" width="500" /></a>
         </section>
         <section class="info">
             <h2>Moving Photon</h2>
@@ -25,10 +25,10 @@ const Portafolio = () => {
                 printing</p>
         </section>
         <section class="info">
-            <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src="assets/insta-0.jpg" width="500" /></a>
+            <a href="https://www.instagram.com/p/CNRC1QZHf66/"> <img src="insta-0.jpg" width="500" /></a>
         </section>
         <section class="info">
-            <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src="assets/noizu.png" width="500" /></a>
+            <a href="https://onesimpleidea.itch.io/noizu" target="_blank"><img src="noizu.png" width="500" /></a>
         </section>
         <section class="info">
             <h2>Noizu</h2>
@@ -42,7 +42,7 @@ const Portafolio = () => {
                 YaEsta.com back in the day</p>
         </section>
         <section class="info">
-            <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src="assets/insta-3.jpg" width="500" /></a>
+            <a href="https://www.youtube.com/watch?v=YHZd0TxPMkY"> <img src="insta-3.jpg" width="500" /></a>
         </section>
         </div>   
     </div>

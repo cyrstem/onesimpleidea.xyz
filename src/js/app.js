@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
@@ -13,6 +13,7 @@ export default class App {
         this.c = console.log.bind(document);
         this.c("wintermute..")
 
+        this.clock = new Clock();
         this.c(imgLoc)
         this.ui = new UI;
         this.scene = new Scene();
@@ -73,10 +74,11 @@ export default class App {
 
         this.material = new ShaderMaterial({
             uniforms: {
-                time: { value: 0 }
+                time: { value: this.clock }
             },
             vertexShader: vertex,
             fragmentShader: fragment,
+            
         })
         
         this.geometry = new BoxGeometry(1, 1, 1);

@@ -29,13 +29,16 @@ export default class UI {
 
         event.preventDefault();
         this.links = event.target.id;
+
         this.c(this.links);
+
         if (this.links !== 'home') {
 
             this.c(this.links)
             document.getElementById("terminal").innerHTML = Portafolio();
             return
         }
+        
         if (this.links !== 'Portafolio') {
 
             document.getElementById("terminal").innerHTML = About();
@@ -46,7 +49,5 @@ export default class UI {
     view(){
         //document.getElementById('hero-img').src = imgUrl
     }
-    // remove(){
 
-    // }
 }

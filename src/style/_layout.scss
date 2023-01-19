@@ -123,6 +123,7 @@ main {
 		 background-color:rgba($color: #ffffff, $alpha: 1);
 		justify-content: center;
 		display: flex;
+		flex-grow: 1;
 		align-items: center;
 		height: auto;
 		text-align: left;
@@ -131,6 +132,9 @@ main {
 			padding: 10px;
 		}
 	
+	}
+	img{
+		padding: -12px;
 	}
 }
 
