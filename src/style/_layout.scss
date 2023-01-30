@@ -92,12 +92,14 @@ main {
 	a {
 		//text-decoration: none;
 		color: black;
+		
 	}
 
 	a:hover {
 		background-color: rgba($color: #000000, $alpha: 1);
 		text-decoration: none;
 		color: rgba($color: #ffffff, $alpha: 1);
+		--d: 100%;
 
 	}
 
@@ -150,7 +152,7 @@ main {
 
 	//right: 50%;
 	text-align: center;
-	bottom: 10vh;
+	bottom: 2vh;
 
 	#links {
 		padding: 0px;
@@ -160,14 +162,14 @@ main {
 	a {
 		padding: 0.5rem;
 		text-decoration: none;
+	
 	}
 
 	a:hover {
-		//padding: 1rem;
-
 		border-bottom: 1px solid black;
-		transition: all 6.8s ease;
+		transition: all 2.8s ease;
 		transform: scale(10);
+		
 
 	}
 
@@ -176,6 +178,9 @@ main {
 	}
 
 }
+
+
+
 
 // @media all and (min-width: 480px) and (max-width: 768px) { }
 @media all and (max-width: 480px) {
