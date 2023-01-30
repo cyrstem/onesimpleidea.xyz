@@ -51,7 +51,7 @@ export default class App {
 
         this.addListener()
 
-        this.addObjects();
+        //this.addObjects();
         this.resize();
         this.render();
     }

@@ -39,7 +39,7 @@ main {
 	position: absolute;
 	z-index: 3;
 	top: 10vh;
-	width: 80vw;
+	width: 63vw;
 	//pointer-events: none;
 	margin: 25px;
 	// position: absolute;
@@ -188,7 +188,7 @@ main {
 		//padding: 2px;
 		position: relative;
 		font-family: $main-font;
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 		width: 100%;
 		color: #3d3d3d;
 
@@ -198,8 +198,9 @@ main {
 	}
 
 	#terminal {
-		width: 100vw;
+		width: 100%;
 		overflow-y: scroll;
+		top: 2vh;
 	}
 
 #portafolio {
@@ -209,10 +210,9 @@ main {
 	height: 80vh;
 	display: grid;
 	grid-template-columns: auto;
-
 	grid-gap: 20px;
 }
 	#contact {
-		bottom: 3vh;
+		bottom: 2vh;
 	}
 }
