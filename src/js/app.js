@@ -1,12 +1,12 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/'
 import UI from './UI';
-import { imgLoc } from './utils/lib';
+// import { imgLoc } from './utils/lib';
 
 export default class App {
     constructor(stage) {
@@ -14,7 +14,7 @@ export default class App {
         this.c("wintermute..")
 
         this.clock = new Clock();
-        this.c(imgLoc)
+       // this.c(imgLoc)
         this.ui = new UI;
         this.scene = new Scene();
 
@@ -58,7 +58,7 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-       // window.addEventListener('click', this.onClick.bind(this));
+      
     }
 
 
@@ -71,6 +71,7 @@ export default class App {
     }
 
     addObjects() {
+        this.geos = new Object3D();
 
         this.material = new ShaderMaterial({
             uniforms: {
@@ -80,40 +81,53 @@ export default class App {
             fragmentShader: fragment,
             
         })
-        
         this.geometry = new BoxGeometry(1, 1, 1);
-        this.cube = new Mesh(this.geometry, this.material);
-        this.scene.add(this.cube)
+        
+        for(let i =0; i<250; i++){
+            this.mesh = new Mesh(this.geometry,this.material);
+            this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
+            this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
+            this.mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+            this.geos.add(this.mesh);
+        }
+        this.scene.add(this.geos);
+        
+
     }
 
+    galleryLoad(){
+
+    }
     onMouseMove(event) {
         //this for camera 
         this.mouse.x = (event.clientX / this.width) * 2 - 1;
         this.mouse.y = -(event.clientY / this.height) * 2 + 1;
 
         //console.log(event)
-        this.target.x = (event.x - this.mouse.x) * 0.072;
-        this.target.y = -(event.y - this.mouse.y) * 0.072;
+        this.target.x = (event.x - this.mouse.x) * 0.0072;
+        this.target.y = -(event.y - this.mouse.y) * 0.0072;
 
-        this.cube.rotation.x += 0.001 * (this.target.y - this.cube.rotation.x);
-        this.cube.rotation.y += 0.001 * (this.target.x - this.cube.rotation.y);
+        this.geos.rotation.x += 0.001 * (this.target.y - this.geos.rotation.x);
+        this.geos.rotation.y += 0.001 * (this.target.x - this.geos.rotation.y);
 
 
-        gsap.to(this.cube.rotation, { duration: 1, z: -0.5, yoyo: true })
-        // this.raycaster.setFromCamera(this.mouse,this.camera);
+        gsap.to(this.geos.rotation, { duration: 1, z: -0.5, yoyo: true })
+        this.raycaster.setFromCamera(this.mouse,this.camera);
 
-        // this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
+        this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
 
-        // for (var i = 0; i <this.intersects.length; i++) {
-        //     gsap.to(this.intersects[i].object.position, {
-        //         duration: 1.5,
-        //         x:-0.5,
-        //         repeat:-1,
-        //         yoyo:true,
-        //     });
-        // }
+        for (var i = 0; i <this.intersects.length; i++) {
+            gsap.to(this.intersects[i].object.position, {
+                duration: 1.2,
+                x: -0.5,
+                z: -0.3,
+                repeat:-1,
+                yoyo:true,
+            });
+        }
 
     }
+
     view(element) {
 
 
@@ -122,27 +136,18 @@ export default class App {
         event.preventDefault();
         //console.log('click', this.ui.links)
         let links = event.target.id;
-        // switch (links) {
-        //     case 'aboutMe':
-        //         document.getElementById("container").innerHTML = About();
-        //         break;
-        //     case 'experiment':
-        //         document.getElementById("container").innerHTML = Experiments();
-        //         break;
-        // }
+       
     }
 
     render() {
         this.time += 0.02;
         //mouse 
-
-
         // console.log(this.time)
         this.material.uniforms.time.value = this.time;
         //movement mouse 
 
         this.camera.position.x = this.mouse.x * 0.05;
-        this.camera.lookAt(this.cube.position)
+        //this.camera.lookAt(this.cube.position)
 
         requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
