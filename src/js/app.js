@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
@@ -49,15 +49,18 @@ export default class App {
 
 
 
+        
+        this.view(this.ui);
         this.addListener()
-
-        //this.addObjects();
+        this.addObjects();
         this.resize();
         this.render();
     }
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
+        //this allowsme to read the click from the ui dont knwo if its right but it works
+        window.addEventListener("click",this.view.bind(this))
       
     }
 
@@ -91,6 +94,7 @@ export default class App {
             this.geos.add(this.mesh);
         }
         this.scene.add(this.geos);
+        this.geos.visible = false;
         
 
     }
@@ -129,17 +133,22 @@ export default class App {
     }
 
     view(element) {
-
-
-    }
-    onClick = (event) => {
-        event.preventDefault();
-        //console.log('click', this.ui.links)
-        let links = event.target.id;
-       
+        this.portafolio = this.ui.portafolio;
+        this.about = this.ui.about;
+           
+            if(this.portafolio === true){
+                this.c('something else')
+                this.geos.visible =true;
+            }
+            if(this.about === true){
+                this.c('something new')
+                this.geos.visible =false;
+            }
+            
     }
 
     render() {
+        
         this.time += 0.02;
         //mouse 
         // console.log(this.time)

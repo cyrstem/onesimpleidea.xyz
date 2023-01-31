@@ -9,6 +9,8 @@ export default class UI {
         this.links = null;
         this.initHTML()
 
+        this.about = false
+        this.portafolio = false
         this.addListeners()
         //this.remove()
         this.c = console.log.bind(document);
@@ -30,18 +32,19 @@ export default class UI {
         event.preventDefault();
         this.links = event.target.id;
 
-        this.c(this.links);
-
         if (this.links !== 'home') {
 
-            this.c(this.links)
+            //this.c(this.links)
+            this.portafolio = false
             document.getElementById("terminal").innerHTML = Portafolio();
+            this.about =true;
             return
         }
         
         if (this.links !== 'Portafolio') {
-
+            this.about =false;
             document.getElementById("terminal").innerHTML = About();
+            this.portafolio = true;
             return
         }
 
