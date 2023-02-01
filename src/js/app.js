@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
@@ -53,6 +53,7 @@ export default class App {
         this.view(this.ui);
         this.addListener()
         this.addObjects();
+        this.galleryLoad()
         this.resize();
         this.render();
     }
@@ -100,6 +101,27 @@ export default class App {
     }
 
     galleryLoad(){
+        this.planes = new Object3D();
+        this.material = new ShaderMaterial({
+            uniforms: {
+                time: { value: this.clock }
+            },
+            vertexShader: vertex,
+            fragmentShader: fragment,
+            
+        })
+        this.geometry = new PlaneGeometry(10,10,10);
+        
+        for(let i =0; i<250; i++){
+            this.mesh = new Mesh(this.geometry,this.material);
+            this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
+            this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
+            this.mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+            this.planes.add(this.mesh);
+        }
+        this.scene.add(this.planes);
+        this.planes.visible = false;
+        
 
     }
     onMouseMove(event) {
@@ -132,6 +154,7 @@ export default class App {
 
     }
 
+
     view(element) {
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
@@ -139,12 +162,16 @@ export default class App {
             if(this.portafolio === true){
                 this.c('something else')
                 this.geos.visible =true;
+                this.planes.visible = false;
             }
             if(this.about === true){
                 this.c('something new')
                 this.geos.visible =false;
+                this.planes.visible = true
             }
-            
+            if(this === ' '){
+                this.c('click')
+            }
     }
 
     render() {
