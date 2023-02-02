@@ -1,10 +1,14 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
 import fragment from './shader/fragment.glsl';
-import vertex from './shader/vertex.glsl/'
+import vertex from './shader/vertex.glsl/';
+
+import cubeF from './shader/cubeF.glsl'
+import cubeV from './shader/cubeV.glsl'
+
 import UI from './UI';
 // import { imgLoc } from './utils/lib';
 
@@ -27,6 +31,7 @@ export default class App {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0xeeeeee, 1);
+        this.renderer.outputEncoding = sRGBEncoding;
 
         this.container.appendChild(this.renderer.domElement);
 
@@ -48,7 +53,11 @@ export default class App {
         this.raycaster.setFromCamera(this.mouse, this.camera)
 
 
-
+        this.lightAm = new AmbientLight(0x000000);
+        this.spotLight = new PointLight(0xffffff,2.0)
+        this.spotLight.position.set(0,100,0)
+        this.scene.add(this.lightAm)
+        this.scene.add(this.spotLight)
         
         this.view(this.ui);
         this.addListener()
@@ -75,25 +84,38 @@ export default class App {
     }
 
     addObjects() {
-        this.geos = new Object3D();
 
-        this.material = new ShaderMaterial({
-            uniforms: {
-                time: { value: this.clock }
-            },
-            vertexShader: vertex,
-            fragmentShader: fragment,
-            
+    // this.light(0x090909)
+        this.geos = new Object3D();
+        
+        this.mat = new MeshStandardMaterial({
+            color: 0xebebeb,
+            metalness:0.0,
+            roughness: 1.,
+            emissive:0x000000,
+            depthTest :true,
+            depthWrite:true
         })
-        this.geometry = new BoxGeometry(1, 1, 1);
+
+        // this.mat = new ShaderMaterial({
+        //     uniforms: {
+        //         time: { value: this.clock }
+        //     },
+        //     vertexShader: cubeV,
+        //     fragmentShader: cubeF,
+            
+        // })
+        this.geom = new BoxGeometry(1, 1, 1);
         
         for(let i =0; i<250; i++){
-            this.mesh = new Mesh(this.geometry,this.material);
+            this.mesh = new Mesh(this.geom,this.mat);
+
             this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
             this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
             this.mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
             this.geos.add(this.mesh);
         }
+
         this.scene.add(this.geos);
         this.geos.visible = false;
         
@@ -102,6 +124,7 @@ export default class App {
 
     galleryLoad(){
         this.planes = new Object3D();
+
         this.material = new ShaderMaterial({
             uniforms: {
                 time: { value: this.clock }
@@ -112,13 +135,11 @@ export default class App {
         })
         this.geometry = new PlaneGeometry(10,10,10);
         
-        for(let i =0; i<250; i++){
+       
             this.mesh = new Mesh(this.geometry,this.material);
-            this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
-            this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-            this.mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+          
             this.planes.add(this.mesh);
-        }
+      
         this.scene.add(this.planes);
         this.planes.visible = false;
         
@@ -187,6 +208,9 @@ export default class App {
 
         requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
+        
+        this.renderer.toneMapping = LinearToneMapping
+     
     }
 
 }
