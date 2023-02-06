@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding, ACESFilmicToneMapping} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
@@ -209,7 +209,7 @@ export default class App {
         requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
         
-        this.renderer.toneMapping = LinearToneMapping
+        this.renderer.toneMapping = ACESFilmicToneMapping
      
     }
 
