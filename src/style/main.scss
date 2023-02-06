@@ -1,13 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-$custom-font: 'Roboto', sans-serif;
-
-$mainColor: #303030;
-$secondColor: white;
-$mainSize: 1rem;
-$borderColor: #303030;
 
 @import "_layout";
 
+<<<<<<< HEAD
 html,
 body {
 	margin: 0;
@@ -27,6 +21,10 @@ canvas {
 	display: flex;
 	z-index: 1;
 	position: absolute;
+=======
+*,*:after,*:before{
+	box-sizing: border-box;
+>>>>>>> dev
 }
 
 @keyframes pulse {

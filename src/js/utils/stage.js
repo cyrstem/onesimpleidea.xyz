@@ -47,8 +47,8 @@ function createCubes() {
 	});
 	for (var i = 0; i < 250; i++) {
 		var mesh = new THREE.Mesh(geometry, material);
-		mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
-		mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
+		mesh.position.x = (Math.random() - 0.5) * 100 * Math.random();
+		mesh.position.y = (Math.random() - 0.5) * 100 * Math.random();
 		mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
 		cubes.add(mesh);
 	}
