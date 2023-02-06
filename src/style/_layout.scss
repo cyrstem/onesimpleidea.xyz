@@ -21,16 +21,6 @@ canvas {
 }
 
 main {
-<<<<<<< HEAD
-	color: $tnormalcolor;
-	padding: 10%;
-	font-size: 1.3rem;
-	align-items: center;
-
-	ul {
-		list-style-type: none;
-
-=======
 	// width: 100vw;
 	// height: 100vh;
 	position: absolute;
@@ -97,7 +87,6 @@ main {
 			padding-left: 24px;
 			flex-grow: 1;
 		}
->>>>>>> dev
 	}
 
 	a {
@@ -169,8 +158,8 @@ main {
 	// // grid-template-columns: 1fr 1fr;
 	transition: width 1s;
 	animation: pulse 2s;
-	color: $tnormalcolor;
-
+	color: black;
+}
 	a {
 		text-decoration: none;
 		background-color: black;
@@ -199,7 +188,7 @@ main {
 		// 	border-left: 1px solid black;
 	}
 
-}
+
 
 #portafolio {
 	
@@ -293,21 +282,11 @@ main {
 @media all and (max-width: 480px) {
 
 	main {
-<<<<<<< HEAD
-		font-size: 1.1rem;
-		overflow-x: auto;
-	}
-
-
-
-	#portafolio {
-=======
 		overflow: hidden;
 	}
 
 	#content {
 		//padding: 2px;
->>>>>>> dev
 		position: relative;
 		font-family: $main-font;
 		font-size: 1.1rem;
@@ -325,15 +304,6 @@ main {
 		top: 2vh;
 	}
 
-<<<<<<< HEAD
-	section {
-		//width: 50%;
-		font-size: 0.8rem;
-
-		h3 {
-			opacity: 0.7;
-		}
-=======
 #portafolio {
 	
 	position: relative;
@@ -345,6 +315,5 @@ main {
 }
 	#contact {
 		bottom: 2vh;
->>>>>>> dev
 	}
 }
