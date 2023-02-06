@@ -12,7 +12,7 @@ export default class UI {
         this.about = false
         this.portafolio = false
         this.addListeners()
-        //this.remove()
+      
         this.c = console.log.bind(document);
 
     }
@@ -23,7 +23,6 @@ export default class UI {
 
     initHTML() {
         document.getElementById("ui").innerHTML = Navbar();
-        //document.getElementById("terminal").innerHTML = Portafolio();
         document.getElementById("contact").innerHTML = Contact();
     }
 
@@ -33,8 +32,6 @@ export default class UI {
         this.links = event.target.id;
 
         if (this.links !== 'home') {
-
-            //this.c(this.links)
             this.portafolio = false
             document.getElementById("terminal").innerHTML = Portafolio();
             this.about =true;
@@ -49,8 +46,6 @@ export default class UI {
         }
 
     }
-    view(){
-        //document.getElementById('hero-img').src = imgUrl
-    }
+  
 
 }

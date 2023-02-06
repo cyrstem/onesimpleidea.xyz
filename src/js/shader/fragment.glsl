@@ -33,7 +33,7 @@ float noise (in vec2 st) {
 }
 
 vec3 colorA = vec3(0.9804, 0.9804, 0.9804);
-vec3 colorB = vec3(0.9686, 0.0157, 0.0157);
+vec3 colorB = vec3(0.7725, 0.7647, 0.7647);
 
 void main(){
 
