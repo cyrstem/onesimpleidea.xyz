@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding, ACESFilmicToneMapping} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding, ACESFilmicToneMapping, Fog} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
@@ -51,14 +51,25 @@ export default class App {
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
         this.raycaster.setFromCamera(this.mouse, this.camera)
-
-
-        this.lightAm = new AmbientLight(0x000000);
-        this.spotLight = new PointLight(0xffffff,2.0)
-        this.spotLight.position.set(0,100,0)
-        this.scene.add(this.lightAm)
-        this.scene.add(this.spotLight)
         
+        //lights
+        this.ambient = new AmbientLight(0x000000);
+        this.scene.add(this.ambient)
+
+        this.light1 = new PointLight(0xffffff,1,0)
+        this.light1.position.set(0.200,0)
+        this.scene.add(this.light1)
+      
+        this.light2 = new PointLight(0xffffff,1,0)
+        this.light2.position.set(100,200,100)
+        this.scene.add(this.light2)
+        
+
+        this.light3 = new PointLight(0xffffff,1,0)
+        this.light3.position.set(- 100, -200, 1100)
+        this.scene.add(this.light3)
+        
+
         this.view(this.ui);
         this.addListener()
         this.addObjects();
@@ -89,12 +100,12 @@ export default class App {
         this.geos = new Object3D();
         
         this.mat = new MeshStandardMaterial({
-            color: 0xebebeb,
-            metalness:0.990,
-            roughness: 0.66,
+            color:0xc1c2c3,
+            metalness:0.152,
+            roughness: 0.41,
             emissive:0x000000,
             depthTest :true,
-            depthWrite:true
+            depthWrite:true,
         })
 
         // this.mat = new ShaderMaterial({
