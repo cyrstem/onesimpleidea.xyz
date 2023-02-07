@@ -90,8 +90,8 @@ export default class App {
         
         this.mat = new MeshStandardMaterial({
             color: 0xebebeb,
-            metalness:0.0,
-            roughness: 1.,
+            metalness:0.990,
+            roughness: 0.66,
             emissive:0x000000,
             depthTest :true,
             depthWrite:true
