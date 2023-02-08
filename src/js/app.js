@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding, ACESFilmicToneMapping, Fog} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding, ACESFilmicToneMapping, Fog, Vector4} from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import gsap from 'gsap';
 
@@ -138,20 +138,28 @@ export default class App {
 
         this.material = new ShaderMaterial({
             uniforms: {
-                time: { value: this.clock }
+                uTime: { value: this.clock },
+                tWater:{value: null},
+                res:{
+                    value:new Vector4(window.innerWidth,window.innerHeight,null,null)
+                },
+                tFlow:{value:null}
+
             },
             vertexShader: vertex,
             fragmentShader: fragment,
             
         })
-        this.geometry = new PlaneGeometry(10,10,10);
+        this.geometry = new PlaneGeometry(10,10,10,10);
         
        
             this.mesh = new Mesh(this.geometry,this.material);
           
             this.planes.add(this.mesh);
+           this.planes.rotateX(-45)
       
         this.scene.add(this.planes);
+
         this.planes.visible = false;
         
 
@@ -211,7 +219,7 @@ export default class App {
         this.time += 0.02;
         //mouse 
         // console.log(this.time)
-        this.material.uniforms.time.value = this.time;
+        this.material.uniforms.uTime.value = this.time;
         //movement mouse 
 
         this.camera.position.x = this.mouse.x * 0.05;
