@@ -1,6 +1,9 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster,Clock ,GLSL3, Object3D,Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight,sRGBEncoding, ACESFilmicToneMapping, Fog, Vector4} from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import gsap from 'gsap';
 
 import fragment from './shader/fragment.glsl';
@@ -10,6 +13,7 @@ import cubeF from './shader/cubeF.glsl'
 import cubeV from './shader/cubeV.glsl'
 
 import UI from './UI';
+
 // import { imgLoc } from './utils/lib';
 
 export default class App {
@@ -18,7 +22,7 @@ export default class App {
         this.c("wintermute..")
 
         this.clock = new Clock();
-       // this.c(imgLoc)
+        // this.c(imgLoc)
         this.ui = new UI;
         this.scene = new Scene();
 
@@ -51,24 +55,32 @@ export default class App {
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
         this.raycaster.setFromCamera(this.mouse, this.camera)
-        
+
         //lights
         this.ambient = new AmbientLight(0x000000);
         this.scene.add(this.ambient)
 
-        this.light1 = new PointLight(0xffffff,1,0)
-        this.light1.position.set(0.200,0)
+        this.light1 = new PointLight(0xffffff, 1, 0)
+        this.light1.position.set(0.200, 0)
         this.scene.add(this.light1)
-      
-        this.light2 = new PointLight(0xffffff,1,0)
-        this.light2.position.set(100,200,100)
-        this.scene.add(this.light2)
-        
 
-        this.light3 = new PointLight(0xffffff,1,0)
+        this.light2 = new PointLight(0xffffff, 1, 0)
+        this.light2.position.set(100, 200, 100)
+        this.scene.add(this.light2)
+
+
+        this.light3 = new PointLight(0xffffff, 1, 0)
         this.light3.position.set(- 100, -200, 1100)
         this.scene.add(this.light3)
-        
+
+        /**
+* Post processing
+*/
+        this.effectComposer = new EffectComposer(this.renderer)
+        this.effectComposer.setSize(window.innerWidth, window.innerHeight)
+        this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+        this.renderPass = new RenderPass(this.scene, this.camera)
+
 
         this.view(this.ui);
         this.addListener()
@@ -81,8 +93,8 @@ export default class App {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
         //this allowsme to read the click from the ui dont knwo if its right but it works
-        window.addEventListener("click",this.view.bind(this))
-      
+        window.addEventListener("click", this.view.bind(this))
+
     }
 
 
@@ -96,16 +108,16 @@ export default class App {
 
     addObjects() {
 
-    // this.light(0x090909)
+        // this.light(0x090909)
         this.geos = new Object3D();
-        
+
         this.mat = new MeshStandardMaterial({
-            color:0xc1c2c3,
-            metalness:0.152,
+            color: 0xc1c2c3,
+            metalness: 0.152,
             roughness: 0.41,
-            emissive:0x000000,
-            depthTest :true,
-            depthWrite:true,
+            emissive: 0x000000,
+            depthTest: true,
+            depthWrite: true,
         })
 
         // this.mat = new ShaderMaterial({
@@ -114,12 +126,12 @@ export default class App {
         //     },
         //     vertexShader: cubeV,
         //     fragmentShader: cubeF,
-            
+
         // })
         this.geom = new BoxGeometry(1, 1, 1);
-        
-        for(let i =0; i<250; i++){
-            this.mesh = new Mesh(this.geom,this.mat);
+
+        for (let i = 0; i < 250; i++) {
+            this.mesh = new Mesh(this.geom, this.mat);
 
             this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
             this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
@@ -129,39 +141,52 @@ export default class App {
 
         this.scene.add(this.geos);
         this.geos.visible = false;
-        
+
 
     }
 
-    galleryLoad(){
+    galleryLoad() {
+
+
+        // this.image = new Image()
+        // this.texture = new Texture(this.image)
+        // this.image.addEventListener('load', () => {
+        //     this.texture.needsUpdate = true
+        // })
+        // this.image.src = './img/insta-0.jpg'
+        // this.c(this.image)
+
         this.planes = new Object3D();
 
         this.material = new ShaderMaterial({
             uniforms: {
                 uTime: { value: this.clock },
-                tWater:{value: null},
-                res:{
-                    value:new Vector4(window.innerWidth,window.innerHeight,null,null)
+                tWater: { value: null },
+                res: {
+                    value: new Vector4(window.innerWidth, window.innerHeight, null, null)
                 },
-                tFlow:{value:null}
+                tFlow: { value: null }
 
             },
             vertexShader: vertex,
             fragmentShader: fragment,
-            
+
         })
-        this.geometry = new PlaneGeometry(10,10,10,10);
-        
-       
-            this.mesh = new Mesh(this.geometry,this.material);
-          
-            this.planes.add(this.mesh);
-           this.planes.rotateX(-45)
-      
+        this.geometry = new PlaneGeometry(10, 10, 10, 10);
+
+
+        this.mesh = new Mesh(this.geometry, this.material);
+
+        this.planes.add(this.mesh);
+        this.planes.rotateX(-45)
+
         this.scene.add(this.planes);
 
         this.planes.visible = false;
-        
+        // this.effectComposer.addPass(this.renderPass)
+        // this.displacementPass = new ShaderPass(this.material)
+        // this.effectComposer.addPass(this.displacementPass)
+
 
     }
     onMouseMove(event) {
@@ -178,17 +203,17 @@ export default class App {
 
 
         gsap.to(this.geos.rotation, { duration: 1, z: -0.5, yoyo: true })
-        this.raycaster.setFromCamera(this.mouse,this.camera);
+        this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
 
-        for (var i = 0; i <this.intersects.length; i++) {
+        for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
                 duration: 1.2,
                 x: -0.5,
                 z: -0.3,
-                repeat:-1,
-                yoyo:true,
+                repeat: -1,
+                yoyo: true,
             });
         }
 
@@ -198,28 +223,29 @@ export default class App {
     view(element) {
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
-           
-            if(this.portafolio === true){
-                this.c('something else')
-                this.geos.visible =true;
-                this.planes.visible = false;
-            }
-            if(this.about === true){
-                this.c('something new')
-                this.geos.visible =false;
-                this.planes.visible = true
-            }
-            if(this === ' '){
-                this.c('click')
-            }
+
+        if (this.portafolio === true) {
+            this.c('something else')
+            this.geos.visible = true;
+            this.planes.visible = false;
+        }
+        if (this.about === true) {
+            this.c('something new')
+            this.geos.visible = false;
+            this.planes.visible = true
+        }
+        if (this === ' ') {
+            this.c('click')
+        }
     }
 
     render() {
-        
+
         this.time += 0.02;
         //mouse 
         // console.log(this.time)
         this.material.uniforms.uTime.value = this.time;
+        // this.material.uniforms.tFlow.value = this.displacementPass
         //movement mouse 
 
         this.camera.position.x = this.mouse.x * 0.05;
@@ -227,9 +253,10 @@ export default class App {
 
         requestAnimationFrame(this.render.bind(this));
         this.renderer.render(this.scene, this.camera);
-        
+        //this.effectComposer.render()
+
         this.renderer.toneMapping = ACESFilmicToneMapping
-     
+
     }
 
 }
