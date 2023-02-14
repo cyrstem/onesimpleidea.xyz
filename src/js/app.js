@@ -172,7 +172,7 @@ export default class App {
                 res: {
                     value: new Vector4(window.innerWidth, window.innerHeight, null, null)
                 },
-                tFlow: { value: null }
+                mousePos:{ value: new Vector2(null,null)},
 
             },
             vertexShader: vertex,
