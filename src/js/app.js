@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
@@ -11,6 +11,9 @@ import vertex from './shader/vertex.glsl/';
 
 import cubeF from './shader/cubeF.glsl'
 import cubeV from './shader/cubeV.glsl'
+
+import rawVertex from './shader/rawVertex.glsl'
+import rawFragment from './shader/rawFragment.glsl'
 
 import UI from './UI';
 
@@ -119,23 +122,27 @@ export default class App {
             depthTest: true,
             depthWrite: true,
         })
+        this.phongMat = new MeshPhongMaterial({
+            color: 0xc1c2c3,
+            metalness: 0.152,
+            roughness: 0.71,
+            emissive: 0x00000,
+            specular: 0xffffff,
+            depthTest: true,
+            depthWrite: true,
+          
+        })
 
-        // this.mat = new ShaderMaterial({
-        //     uniforms: {
-        //         time: { value: this.clock }
-        //     },
-        //     vertexShader: cubeV,
-        //     fragmentShader: cubeF,
 
-        // })
+      
         this.geom = new BoxGeometry(1, 1, 1);
 
         for (let i = 0; i < 250; i++) {
-            this.mesh = new Mesh(this.geom, this.mat);
+            this.mesh = new Mesh(this.geom, this.phongMat);
 
             this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
             this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-            this.mesh.position.z = (Math.random() - 0.5) * 100 * Math.random();
+            this.mesh.position.z = (Math.random() - 0.5) * 90 * Math.random();
             this.geos.add(this.mesh);
         }
 
@@ -173,10 +180,20 @@ export default class App {
            // wireframe:true
 
         })
+        this.shaderM = new RawShaderMaterial({
+            uniforms: {
+                mouseRange: { value: null },
+                mousePos:{ value: new Vector2(null,null)},
+                mouseColor:{value:null}
+            },
+            vertexShader:rawVertex,
+            fragmentShader:rawFragment,
+        })
+
         this.geometry = new PlaneGeometry(10, 10);
 
 
-        this.mesh = new Mesh(this.geometry, this.material);
+        this.mesh = new Mesh(this.geometry, this.shaderM);
 
         this.planes.add(this.mesh);
         this.planes.rotateX(-45)
@@ -246,6 +263,7 @@ export default class App {
         //mouse 
         // console.log(this.time)
         this.material.uniforms.uTime.value = this.time;
+       
         // this.material.uniforms.tFlow.value = this.displacementPass
         //movement mouse 
 

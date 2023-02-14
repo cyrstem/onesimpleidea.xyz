@@ -1,9 +1,7 @@
-precision highp float;
-
-uniform sampler2D uTex;
+precision mediump float;
 uniform float uTime;
-varying vec2 vUv;
 uniform vec4 res;
+varying vec2 vUv;
 
 
 float random (in vec2 _st) {
@@ -49,8 +47,10 @@ float fbm ( in vec2 _st) {
     return v;
 }
 
-void main(){
-    vec2 st = gl_FragCoord.xy/res.xy*2.;
+
+void main()
+{
+      vec2 st = gl_FragCoord.xy/res.xy*3.;
     // st += st * abs(sin(u_time*0.1)*3.0);
     vec3 color = vec3(0.0, 0.0, 0.0);
 
@@ -77,7 +77,6 @@ void main(){
                 clamp(length(r.x),0.0,1.0));
     float coef = (f * f * f + (0.9 * f * f) + (0.5 * f));
 
-    gl_FragColor = vec4(coef*color,0.5);
-	//gl_FragColor = vec4(vec3(0.8471, 0.8471, 0.8471),1.0);
-   
+   // gl_FragColor = vec4(coef*color,1.);
+    gl_FragColor=vec4(1.,0.,0.,1.);
 }
