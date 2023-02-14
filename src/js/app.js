@@ -48,9 +48,9 @@ export default class App {
             0.001,
             1000
         );
-        this.camera.position.set(0, 2, 3);
+        this.camera.position.set(0, 2, 45);
         this.camera.minDistance = 0.8;
-        this.camera.maxDistance = 30;
+        this.camera.maxDistance = 50;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.time = 0;
@@ -147,7 +147,7 @@ export default class App {
         }
 
         this.scene.add(this.geos);
-        this.geos.visible = false;
+        this.geos.visible = true;
 
 
     }
