@@ -24,6 +24,9 @@ export default class UI {
     initHTML() {
         document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("contact").innerHTML = Contact();
+        // document.getElementById("terminal").innerHTML = About();
+        
+    
     }
 
     onClick(event) {
