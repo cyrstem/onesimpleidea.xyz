@@ -170,9 +170,10 @@ export default class App {
             },
             vertexShader: vertex,
             fragmentShader: fragment,
+           // wireframe:true
 
         })
-        this.geometry = new PlaneGeometry(10, 10, 10, 10);
+        this.geometry = new PlaneGeometry(10, 10);
 
 
         this.mesh = new Mesh(this.geometry, this.material);
@@ -241,7 +242,7 @@ export default class App {
 
     render() {
 
-        this.time += 0.02;
+        this.time += 0.05;
         //mouse 
         // console.log(this.time)
         this.material.uniforms.uTime.value = this.time;
