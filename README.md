@@ -1,10 +1,11 @@
 
-# O N E S I M P L E I D E A . X Y Z 
+## O N E S I M P L E I D E A . X Y Z 
 
-Portafolio build with Parcel Node and sass and Threejs
+Portafolio work thing is made with Vite, JS,  css and Threejs.  
+
 ```
--To develop: npm run dev
--To build: npm run prod
--To publish: npm run dep
+- dev: npm run dev
+- build: npm run prod
+- deploy: npm run dep
 
 ```
