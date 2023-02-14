@@ -124,8 +124,8 @@ export default class App {
         })
         this.phongMat = new MeshPhongMaterial({
             color: 0xc1c2c3,
-            metalness: 0.152,
-            roughness: 0.71,
+            // metalness: 0.152,
+            // roughness: 0.71,
             emissive: 0x00000,
             specular: 0xffffff,
             depthTest: true,
@@ -182,18 +182,23 @@ export default class App {
         })
         this.shaderM = new RawShaderMaterial({
             uniforms: {
-                mouseRange: { value: null },
+                uTime:{value:this.clock},
+                res: {
+                    value: new Vector4(window.innerWidth, window.innerHeight, null, null)
+                },
+                mouseRange: { value: 3 },
                 mousePos:{ value: new Vector2(null,null)},
                 mouseColor:{value:null}
             },
             vertexShader:rawVertex,
             fragmentShader:rawFragment,
+           // wireframe: true
         })
 
         this.geometry = new PlaneGeometry(10, 10);
 
 
-        this.mesh = new Mesh(this.geometry, this.shaderM);
+        this.mesh = new Mesh(this.geometry, this.material);
 
         this.planes.add(this.mesh);
         this.planes.rotateX(-45)
@@ -263,6 +268,8 @@ export default class App {
         //mouse 
         // console.log(this.time)
         this.material.uniforms.uTime.value = this.time;
+        // this.shaderM.uniforms.mousePos.value.x =this.mouse.x;
+        // this.shaderM.uniforms.mousePos.value.y =this.mouse.y;
        
         // this.material.uniforms.tFlow.value = this.displacementPass
         //movement mouse 
