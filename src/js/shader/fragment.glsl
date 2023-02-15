@@ -1,11 +1,10 @@
 precision highp float;
 
 #include './noise.glsl'
-uniform sampler2D uTex;
 uniform float uTime;
 varying vec2 vUv;
 uniform vec4 res;
-varying float vWave;
+
 
 #define NUM_OCTAVES 8
 
@@ -25,10 +24,10 @@ float fbm ( in vec2 _st) {
 }
 
 void main(){
-     float wave = vWave * 10.25;
+    
     vec2 st = gl_FragCoord.xy/res.xy*3.0;
    // st += * abs(sin(uTime*0.1)*vWave);
-   st +=vWave;
+
     vec3 color = vec3(0.0, 0.0, 0.0);
 
     vec2 q = vec2(0.);
