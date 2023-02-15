@@ -36,7 +36,7 @@ main {
 #terminal {
 	position: absolute;
 	z-index: 3;
-	top: 10vh;
+	top: 5vh;
 	width: 63vw;
 	margin: 25px;
 }
@@ -47,7 +47,8 @@ main {
 	font-family: $main-font;
 	font-size: 1.5rem;
 	width: fit-content;
-	overflow-y: scroll;
+	height: fit-content;
+	// overflow-y: scroll;
 	color: #3d3d3d;
 	padding: 2.3rem;
 
@@ -116,48 +117,45 @@ main {
 }
 
 #portafolio {
-	position: relative;
-	margin: 3px;
-	height: 70vh;
-	display: grid;
-	grid-template-columns: 1fr 2fr;
+	width: 600px;
+	height: 100vw;
+	transform: rotate(-90deg) translateY(-500px);
+	transform-origin: top right;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	margin: 10px;
+// position: relative;	
+// display: flex;
+// flex-direction: row;
+// justify-content: center;
+// overflow-x: scroll;
 
-	grid-gap: 20px;
+// div{width: 200vw;
+// padding: 3px;}
+// img{
+// 	width: fit-content;
+// }
+// position: relative;
+// display: flex;
+// justify-content: center;
+div {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  transform: rotate(90deg);
+  margin: 10px 0;
+  padding: 20px;
 
-
-	.info {
-
-		justify-content: center;
-		display: flex;
-		flex-grow: 1;
-		align-items: center;
-		height: auto;
-		text-align: left;
-		padding: 9px;
-
-		h2 {
-			padding: 10px;
-		}
-
-		a {
-			text-decoration: none;
-			color: #000000;
-			font-weight: bolder;
-			background:
-				linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-			transition: 0.6s;
-		}
-
-		a:hover {
-			--d: 100%;
-		}
-
-	}
-
-	img {
-		padding: -12px;
-	}
+  img{
+	padding: 20px;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+  }
 }
+}
+
+
 
 #ui {
 	z-index: 1000;
