@@ -4,8 +4,8 @@
 Portafolio work thing is made with Vite, JS,  css and Threejs.  
 
 ```
-- dev: npm run dev
-- build: npm run prod
+- dev: yarn run dev
+- build: yarn run prod
 - deploy: npm run dep
 
 ```

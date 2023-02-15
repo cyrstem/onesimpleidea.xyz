@@ -9,9 +9,6 @@ import gsap from 'gsap';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/';
 
-import cubeF from './shader/cubeF.glsl'
-import cubeV from './shader/cubeV.glsl'
-
 import rawVertex from './shader/rawVertex.glsl'
 import rawFragment from './shader/rawFragment.glsl'
 
@@ -124,8 +121,6 @@ export default class App {
         })
         this.phongMat = new MeshPhongMaterial({
             color: 0xc1c2c3,
-            // metalness: 0.152,
-            // roughness: 0.71,
             emissive: 0x00000,
             specular: 0xffffff,
             depthTest: true,
@@ -153,15 +148,6 @@ export default class App {
     }
 
     galleryLoad() {
-
-
-        // this.image = new Image()
-        // this.texture = new Texture(this.image)
-        // this.image.addEventListener('load', () => {
-        //     this.texture.needsUpdate = true
-        // })
-        // this.image.src = './img/insta-0.jpg'
-        // this.c(this.image)
 
         this.planes = new Object3D();
 
