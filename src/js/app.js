@@ -168,11 +168,9 @@ export default class App {
         this.material = new ShaderMaterial({
             uniforms: {
                 uTime: { value: this.clock },
-                tWater: { value: null },
                 res: {
                     value: new Vector4(window.innerWidth, window.innerHeight, null, null)
                 },
-                tFlow: { value: null }
 
             },
             vertexShader: vertex,

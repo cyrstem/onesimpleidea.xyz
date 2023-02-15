@@ -1,6 +1,11 @@
 varying vec2 vUv;
+varying float uTime;
+
+
+#include './mNoise.glsl'
 
 void main(){
-  //vec4 pos = position;
-  gl_Position = vec4(position,1.0);
+ vUv = uv;
+gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
 }
