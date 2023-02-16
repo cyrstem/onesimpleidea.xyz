@@ -1,30 +1,6 @@
 @import "_ui";
 @import "_vars";
 
-body {
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-}
-
-html,
-body {
-	display: flex;
-	justify-content: center;
-}
-
-canvas {
-	height: 100vh;
-	width: 100vw;
-	position: fixed;
-	z-index: 0;
-}
-
-main {
-	position: absolute;
-	display: contents;
-	z-index: 2;
-}
 
 #container {
 	z-index: 0;
@@ -117,44 +93,9 @@ main {
 }
 
 #portafolio {
-	width: 600px;
-	height: 100vw;
-	transform: rotate(-90deg) translateY(-500px);
-	transform-origin: top right;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	margin: 10px;
-// position: relative;	
-// display: flex;
-// flex-direction: row;
-// justify-content: center;
-// overflow-x: scroll;
-
-// div{width: 200vw;
-// padding: 3px;}
-// img{
-// 	width: fit-content;
-// }
-// position: relative;
-// display: flex;
-// justify-content: center;
-div {
-  position: relative;
-  width: 100%;
-  height: 500px;
-  transform: rotate(90deg);
-  margin: 10px 0;
-  padding: 20px;
-
-  img{
-	padding: 20px;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-  }
+	
+	
 }
-}
-
 
 
 #ui {
@@ -177,8 +118,8 @@ div {
 	a {
 		padding: -0.4rem;
 		background:
-		linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-	transition: 0.6s;
+			linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
+		transition: 0.6s;
 	}
 
 	a:hover {
