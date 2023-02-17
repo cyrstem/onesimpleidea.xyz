@@ -93,8 +93,35 @@
 }
 
 #portafolio {
+	display: flex;
+	overflow-x: auto;
 	
+	div{
+		background-color: #c4c4c4;
+		margin: 8px 10px 8px 10px;
+		transition: 0.3s all;
+		object-fit: cover;
+		width: 600px;
+		height: 600px;
 	
+			&:last-of-type {
+			  margin-right: 8px;
+			  margin-left: 10px;
+			}
+		img {
+			height: 100%;
+			cursor: pointer;
+		
+			transition: 0.3s all;
+	  
+			&:hover {
+			  filter: contrast(10%);
+			}
+		  }
+		  &:hover {
+			transform: translateY(-4px);
+		  }
+	}
 }
 
 
@@ -168,12 +195,12 @@
 
 	#portafolio {
 
-		position: relative;
-		margin: 3px;
-		height: 80vh;
-		display: grid;
-		grid-template-columns: auto;
-		grid-gap: 20px;
+		// position: relative;
+		// margin: 3px;
+		// height: 80vh;
+		// display: grid;
+		// grid-template-columns: auto;
+		// grid-gap: 20px;
 	}
 
 	#contact {
