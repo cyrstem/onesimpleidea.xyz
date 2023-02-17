@@ -95,32 +95,58 @@
 #portafolio {
 	display: flex;
 	overflow-x: auto;
-	
-	div{
+
+	div {
 		background-color: #c4c4c4;
 		margin: 8px 10px 8px 10px;
 		transition: 0.3s all;
 		object-fit: cover;
 		width: 600px;
 		height: 600px;
-	
-			&:last-of-type {
-			  margin-right: 8px;
-			  margin-left: 10px;
+
+		&:last-of-type {
+			margin-right: 8px;
+			margin-left: 10px;
+		}
+		article {
+			
+			text-align: center;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			opacity: 0;
+			transition: .5s ease;
+			color: white;
+			background-color: rgba($color: #2b2828, $alpha: 0.8);;
+			&:hover{
+				opacity: 1;
 			}
+		p{
+			padding: 15px;
+		}
+
+		
+		}
+
 		img {
 			height: 100%;
 			cursor: pointer;
-		
+
 			transition: 0.3s all;
-	  
+
 			&:hover {
-			  filter: contrast(10%);
+				 filter: contrast(10%);
 			}
-		  }
-		  &:hover {
+			
+		}
+
+		&:hover {
 			transform: translateY(-4px);
-		  }
+		
+			
+		}
 	}
 }
 
