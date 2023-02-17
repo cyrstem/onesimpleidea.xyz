@@ -225,7 +225,7 @@ export default class App {
                 ease: "power2.out"
             });
         }
-        gsap.to(this.camera.position,{z:20 , ease: "power2.out",delay:1.});
+        gsap.to(this.camera.position,{y:1,z:15 ,ease: "power2.InOut",delay:1.});
     }
    
        
