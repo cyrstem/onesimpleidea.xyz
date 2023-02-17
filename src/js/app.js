@@ -40,7 +40,7 @@ export default class App {
         this.container.appendChild(this.renderer.domElement);
 
         this.camera = new PerspectiveCamera(
-            45,
+            55,
             window.innerWidth / window.innerHeight,
             0.001,
             1000
@@ -73,13 +73,13 @@ export default class App {
         this.light3.position.set(- 100, -200, 1100)
         this.scene.add(this.light3)
 
-        /**
-* Post processing
-*/
-        this.effectComposer = new EffectComposer(this.renderer)
-        this.effectComposer.setSize(window.innerWidth, window.innerHeight)
-        this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-        this.renderPass = new RenderPass(this.scene, this.camera)
+//         /**
+// * Post processing
+// */
+//         this.effectComposer = new EffectComposer(this.renderer)
+//         this.effectComposer.setSize(window.innerWidth, window.innerHeight)
+//         this.effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+//         this.renderPass = new RenderPass(this.scene, this.camera)
 
 
         this.view(this.ui);
@@ -135,9 +135,9 @@ export default class App {
         for (let i = 0; i < 250; i++) {
             this.mesh = new Mesh(this.geom, this.phongMat);
 
-            this.mesh.position.x = (Math.random() - 0.5) * 90 * Math.random();
-            this.mesh.position.y = (Math.random() - 0.5) * 90 * Math.random();
-            this.mesh.position.z = (Math.random() - 0.5) * 90 * Math.random();
+            this.mesh.position.x = (Math.random() - 0.5) * 10 * Math.random();
+            this.mesh.position.y = (Math.random() - 0.5) * 10 * Math.random();
+            this.mesh.position.z = (Math.random() - 0.5) * 10 * Math.random();
             this.geos.add(this.mesh);
         }
 
@@ -202,14 +202,14 @@ export default class App {
         this.mouse.y = -(event.clientY / this.height) * 2 + 1;
 
         //console.log(event)
-        this.target.x = (event.x - this.mouse.x) * 0.0072;
-        this.target.y = -(event.y - this.mouse.y) * 0.0072;
+        this.target.x = (event.x - this.mouse.x) * 0.009;
+        this.target.y = -(event.y - this.mouse.y) *0.009;
 
-        this.geos.rotation.x += 0.001 * (this.target.y - this.geos.rotation.x);
-        this.geos.rotation.y += 0.001 * (this.target.x - this.geos.rotation.y);
+        this.geos.rotation.x += 0.005 * (this.target.y - this.geos.rotation.x);
+        this.geos.rotation.y += 0.005 * (this.target.x - this.geos.rotation.y);
 
 
-        gsap.to(this.geos.rotation, { duration: 1, z: -0.5, yoyo: true })
+        gsap.to(this.geos.rotation, { duration: 1.3 , z: -1.5, yoyo: true })
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
@@ -217,22 +217,26 @@ export default class App {
         for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
                 duration: 1.2,
-                x: -0.5,
-                z: -0.3,
-                repeat: -1,
-                yoyo: true,
+                x: (Math.random() - 0.5) * -10 * Math.random(),
+                z: (Math.random() - 0.5) * -10 * Math.random(),
+                y:(Math.random() - 0.5) * -10 * Math.random(),
+                //repeat: -1,
+                //yoyo: true,
+                ease: "power2.out"
             });
         }
-
+        gsap.to(this.camera.position,{z:20 , ease: "power2.out",delay:1.});
     }
-
+   
+       
+    
 
     view(element) {
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
 
         if (this.portafolio === true) {
-            this.c('something else')
+            // this.c('something else')
             this.geos.visible = true;
             this.planes.visible = false;
         }
@@ -240,6 +244,7 @@ export default class App {
             this.c('something new')
             this.geos.visible = false;
             this.planes.visible = true
+           
         }
         if (this === ' ') {
             this.c('click')
