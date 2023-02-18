@@ -3439,21 +3439,43 @@ void main()
         <div id="portafolio">
             <div>
                 <article>
-                    <h2>Moving Photon</h2>
-                    <p>I collaborated on developing and deploying the Virtual Experience for
-                        <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
-                        interactive installation/performance
-                        created by installation artist<a href="https://friendred.studio" target="_blank"> Friendred Peng.</a>
-                        Participation in Moving Photon can be in 5 different ways, including a Phantom performance,
-                        interactive installation, interactive performance,interactive performance with EEG and a <a
-                            href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
+                <h2>Moving Photon</h2>
+                <p>I collaborated on developing the Virtual Experience for
+                    <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
+                    interactive installation/performance
+                    created by installation artist<a href="https://friendred.studio" target="_blank"> Friendred Peng.</a>
+                    Participation in Moving Photon can be in 5 different ways, including a Phantom performance,
+                    interactive installation, interactive performance,interactive performance with EEG and a <a
+                        href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
+                </p>
                 </article>
-                <img src="poster5.jpg"/>
+                <img src="poster5.jpg" />
             </div>
-            <div><img src="insta-0.jpg"/></div>
-            <div><img src="noizu.png" /></div>
-            <div><img src="insta-3.jpg"/></div>
+            <div>
+            <article>
+            <h2>Glitch Machine</h2>
+            <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/" target=" _blank">Jenna
+                Marsh</a>, it lets you play with a image applying different filters and export the resulting image for
+                printing</p>
+            </article>
+                <img src="insta-0.jpg" />
+            </div>
+            <div>
+                <article>
+                <h2>Noizu</h2>
+                <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
+                </article>
+                <img src="noizu.png" />
+            </div>
+            <div>
+            <article>
+            <h2>YaEsta.com</h2>
+            <p>Develop a Physical installation with Mapping and live interaction for the launch of the e-commerce site
+            YaEsta.com back in the day</p>
+            </article>
+            <img src="insta-3.jpg" />
+            </div>
         </div>
     </main>
     `;class K_{constructor(){this.links=null,this.initHTML(),this.about=!1,this.portafolio=!1,this.addListeners(),this.c=console.log.bind(document)}addListeners(){document.getElementById("nav").addEventListener("click",this.onClick.bind(this),!1)}initHTML(){document.getElementById("ui").innerHTML=Y_(),document.getElementById("contact").innerHTML=j_()}onClick(t){if(t.preventDefault(),this.links=t.target.id,this.links!=="home"){this.portafolio=!1,document.getElementById("terminal").innerHTML=$_(),this.about=!0;return}if(this.links!=="Portafolio"){this.about=!1,document.getElementById("terminal").innerHTML=Z_(),this.portafolio=!0;return}}}class J_{constructor(t){this.c=console.log.bind(document),this.c("wintermute.."),this.clock=new Ag,this.ui=new K_,this.scene=new yg,this.container=t.dom,this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer=new vc,this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)),this.renderer.setSize(this.width,this.height),this.renderer.setClearColor(15658734,1),this.renderer.outputEncoding=kt,this.container.appendChild(this.renderer.domElement),this.camera=new Le(55,window.innerWidth/window.innerHeight,.001,1e3),this.camera.position.set(0,2,45),this.camera.minDistance=.8,this.camera.maxDistance=50,this.controls=new Lg(this.camera,this.renderer.domElement),this.time=0,this.target=new vt,this.mouse=new vt,this.raycaster=new Cg,this.raycaster.setFromCamera(this.mouse,this.camera),this.ambient=new Eg(0),this.scene.add(this.ambient),this.light1=new oa(16777215,1,0),this.light1.position.set(.2,0),this.scene.add(this.light1),this.light2=new oa(16777215,1,0),this.light2.position.set(100,200,100),this.scene.add(this.light2),this.light3=new oa(16777215,1,0),this.light3.position.set(-100,-200,1100),this.scene.add(this.light3),this.view(this.ui),this.addListener(),this.addObjects(),this.galleryLoad(),this.resize(),this.render()}addListener(){window.addEventListener("resize",this.resize.bind(this)),window.addEventListener("mousemove",this.onMouseMove.bind(this)),window.addEventListener("click",this.view.bind(this))}resize(){this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer.setSize(this.width,this.height),this.camera.aspect=this.width/this.height,this.camera.updateProjectionMatrix()}addObjects(){this.geos=new he,this.mat=new bg({color:12698307,metalness:.152,roughness:.41,emissive:0,depthTest:!0,depthWrite:!0}),this.phongMat=new Sg({color:12698307,emissive:0,specular:16777215,depthTest:!0,depthWrite:!0}),this.geom=new or(1,1,1);for(let t=0;t<250;t++)this.mesh=new an(this.geom,this.phongMat),this.mesh.position.x=(Math.random()-.5)*10*Math.random(),this.mesh.position.y=(Math.random()-.5)*10*Math.random(),this.mesh.position.z=(Math.random()-.5)*10*Math.random(),this.geos.add(this.mesh);this.scene.add(this.geos),this.geos.visible=!0}galleryLoad(){this.planes=new he,this.material=new bn({uniforms:{uTime:{value:this.clock},res:{value:new Ut(window.innerWidth,window.innerHeight,null,null)}},vertexShader:H_,fragmentShader:W_}),this.shaderM=new Mg({uniforms:{uTime:{value:this.clock},res:{value:new Ut(window.innerWidth,window.innerHeight,null,null)},mouseRange:{value:3},mousePos:{value:new vt(null,null)},mouseColor:{value:null}},vertexShader:X_,fragmentShader:q_}),this.geometry=new ys(10,10),this.mesh=new an(this.geometry,this.material),this.planes.add(this.mesh),this.planes.rotateX(-45),this.scene.add(this.planes),this.planes.visible=!1}onMouseMove(t){this.mouse.x=t.clientX/this.width*2-1,this.mouse.y=-(t.clientY/this.height)*2+1,this.target.x=(t.x-this.mouse.x)*.009,this.target.y=-(t.y-this.mouse.y)*.009,this.geos.rotation.x+=.005*(this.target.y-this.geos.rotation.x),this.geos.rotation.y+=.005*(this.target.x-this.geos.rotation.y),ls.to(this.geos.rotation,{duration:1.3,z:-1.5,yoyo:!0}),this.raycaster.setFromCamera(this.mouse,this.camera),this.intersects=this.raycaster.intersectObjects(this.scene.children,!0);for(var e=0;e<this.intersects.length;e++)ls.to(this.intersects[e].object.position,{duration:1.2,x:(Math.random()-.5)*-10*Math.random(),z:(Math.random()-.5)*-10*Math.random(),y:(Math.random()-.5)*-10*Math.random(),ease:"power2.out"});ls.to(this.camera.position,{y:1,z:15,ease:"power2.InOut",delay:1})}view(t){this.portafolio=this.ui.portafolio,this.about=this.ui.about,this.portafolio===!0&&(this.geos.visible=!0,this.planes.visible=!1),this.about===!0&&(this.c("something new"),this.geos.visible=!1,this.planes.visible=!0),this===" "&&this.c("click")}render(){this.time+=.05,this.material.uniforms.uTime.value=this.time,this.camera.position.x=this.mouse.x*.05,requestAnimationFrame(this.render.bind(this)),this.renderer.render(this.scene,this.camera),this.renderer.toneMapping=tc}}window.onload=o=>{new J_({dom:document.getElementById("container")}),Tu()};
-//# sourceMappingURL=index.f38a76ac.js.map
+//# sourceMappingURL=index.b15d2d65.js.map
