@@ -5,7 +5,6 @@
 button {
 	display: inline-block;
 	border: none;
-
 	margin: 0;
 	font-family: $main-font;
 	background-color: transparent;
@@ -15,13 +14,12 @@ button {
 	cursor: pointer;
 	text-align: center;
 	background:
-		linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
+	linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
 	transition: 0.6s;
 }
 
 button:hover,
 button:focus {
-
 	filter: brightness(0.25);
 	color: black;
 	text-decoration: none;
@@ -31,16 +29,15 @@ button:focus {
 button:hover {
 	color: rgba($color: #000000, $alpha: 0.6);
 	--d: 100%;
-
-
 }
 
 // //scroll bar  settings on ly works on chrome
 
 /* width */
 ::-webkit-scrollbar {
-	width: 1px;
-	scrollbar-width: 0.4rem	;
+	height: 5px;
+	scrollbar-width: 3px;
+	scrollbar-height: 4px;
 }
 
 /* Track */
