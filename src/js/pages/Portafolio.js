@@ -30,7 +30,8 @@ const Portafolio = () => {
             <div>
                 <article>
                 <h2>Noizu</h2>
-                <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
+                <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, 
+                based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
                 </article>
                 <img src="noizu.png" />
             </div>
