@@ -3338,45 +3338,6 @@ void main(){
             <a href ="https://github.com/cyrstem/" target="_blank"><img src="git.png"></a>
         </ul>
     `,K_=()=>`
-      <main>
-          <div id="content">
-              <p>Hello...</p>
-              <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialized in building custom digital or physical experiences.</p> 
-              <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
-              <div id ="sites"> 
-              <p> I have collaborated with:</p>
-              <ul>
-              <li>
-              <a href="https://activetheory.net/" target="_blank">
-                <span>Active Theory</span> 
-                <span> -- WebGL Developer</span>
-              </a>
-             </li>
-              <li>
-               <a href="https://visualgoodness.com/" target="_blank">
-                 <span>Visual Goodness </span> 
-                 <span> -- WebGL Developer</span>
-               </a>
-              </li>
-               <li>
-               <a href="https://smartco.com.ec" target="_blank"> 
-                 <span>Smartco </span>
-                 <span> -- Unity Developer</span>
-               </a>
-             </li>
-               <li>
-                 <a href="https://www.yaesta.com" target="_blank">
-                   <span> YaEsta </span>
-                   <span> -- Front-end  & Designer</span> 
-                 </a>
-               </li>
-              </ul>
-           </div>
-           <p>Contact me at <b>cyrstem[at]gmail[dot]com</b></p>  
-          
-          </div>
-      </main>
-      `,J_=()=>`
     <main>  
         <div id="portafolio">
             <div>
@@ -3396,7 +3357,7 @@ void main(){
             <div>
             <article>
             <h2>Glitch Machine</h2>
-            <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/" target=" _blank">Jenna
+            <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/" target=" _blank">  Jenna
                 Marsh</a>, it lets you play with a image applying different filters and export the resulting image for
                 printing</p>
             </article>
@@ -3420,5 +3381,44 @@ void main(){
             </div>
         </div>
     </main>
-    `;class Q_{constructor(){this.links=null,this.initHTML(),this.about=!1,this.portafolio=!1,this.addListeners(),this.c=console.log.bind(document)}addListeners(){document.getElementById("nav").addEventListener("click",this.onClick.bind(this),!1)}initHTML(){document.getElementById("ui").innerHTML=Z_(),document.getElementById("contact").innerHTML=$_()}onClick(t){if(t.preventDefault(),this.links=t.target.id,this.links!=="home"){this.portafolio=!1,document.getElementById("terminal").innerHTML=J_(),this.about=!0;return}if(this.links!=="Portafolio"){this.about=!1,document.getElementById("terminal").innerHTML=K_(),this.portafolio=!0;return}}}class t0{constructor(t){this.c=console.log.bind(document),this.c("wintermute.."),this.clock=new Dg,this.ui=new Q_,this.scene=new wg,this.container=t.dom,this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer=new Sc,this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)),this.renderer.setSize(this.width,this.height),this.renderer.setClearColor(15658734,1),this.renderer.outputEncoding=kt,this.container.appendChild(this.renderer.domElement),this.camera=new Le(45,window.innerWidth/window.innerHeight,.001,1e3),this.camera.position.set(0,0,45),this.controls=new Ig(this.camera,this.renderer.domElement),this.controls.minDistance=20,this.controls.maxDistance=45,this.time=0,this.fog=new Za(16777215),this.target=new vt,this.mouse=new vt,this.raycaster=new Rg,this.raycaster.setFromCamera(this.mouse,this.camera),this.ambient=new Pg(0),this.scene.add(this.ambient),this.light1=new oa(16777215,1,0),this.light1.position.set(.2,0),this.scene.add(this.light1),this.light2=new oa(16777215,1,0),this.light2.position.set(100,200,100),this.scene.add(this.light2),this.light3=new oa(16777215,1,0),this.light3.position.set(-100,-200,800),this.scene.add(this.light3),this.env(),this.view(this.ui),this.addListener(),this.addObjects(),this.galleryLoad(),this.resize(),this.render()}addListener(){window.addEventListener("resize",this.resize.bind(this)),window.addEventListener("mousemove",this.onMouseMove.bind(this)),window.addEventListener("click",this.view.bind(this))}resize(){this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer.setSize(this.width,this.height),this.camera.aspect=this.width/this.height,this.camera.updateProjectionMatrix()}env(){this.colorA=new Pt(16777215),this.colorB=new Pt(13303036),this.skyGeo=new $a(1600,32,12),this.skyMat=new un({uniforms:{topColor:{value:this.colorA},bottomColor:{value:this.colorB},offset:{value:7}},vertexShader:Ql,fragmentShader:tc,side:De}),this.sky=new Qe(this.skyGeo,this.skyMat),this.scene.add(this.sky),this.c(this.scene)}addObjects(){this.geos=new he,this.mat=new Eg({color:12698307,metalness:.152,roughness:.41,emissive:0,depthTest:!0,depthWrite:!0}),this.phongMat=new Ag({color:12698307,emissive:0,specular:16777215}),this.geom=new or(1,1,1);for(let t=0;t<250;t++)this.mesh=new Qe(this.geom,this.phongMat),this.mesh.position.x=(Math.random()-.5)*10*Math.random(),this.mesh.position.y=(Math.random()-.5)*10*Math.random(),this.mesh.position.z=(Math.random()-.5)*10*Math.random(),this.geos.add(this.mesh);this.scene.add(this.geos),this.geos.visible=!0}galleryLoad(){this.planes=new he,this.material=new un({uniforms:{uTime:{value:this.clock},res:{value:new Ut(window.innerWidth,window.innerHeight,null,null)}},vertexShader:j_,fragmentShader:Y_,wireframe:!0}),this.shaderM=new Tg({uniforms:{uTime:{value:this.clock},res:{value:new Ut(window.innerWidth,window.innerHeight,null,null)},mouseRange:{value:3},mousePos:{value:new vt(null,null)},mouseColor:{value:null}},vertexShader:Ql,fragmentShader:tc}),this.geometry=new ys(10,10),this.mesh=new Qe(this.geometry,this.material),this.planes.add(this.mesh),this.planes.rotateX(-45),this.scene.add(this.planes),this.planes.visible=!1}onMouseMove(t){this.mouse.x=t.clientX/this.width*2-1,this.mouse.y=-(t.clientY/this.height)*2+1,this.target.x=(t.x-this.mouse.x)*.009,this.target.y=-(t.y-this.mouse.y)*.009,this.geos.rotation.x+=.005*(this.target.y-this.geos.rotation.x),this.geos.rotation.y+=.005*(this.target.x-this.geos.rotation.y),ls.to(this.geos.rotation,{duration:1.3,z:-1.5,yoyo:!0}),this.raycaster.setFromCamera(this.mouse,this.camera),this.intersects=this.raycaster.intersectObjects(this.scene.children,!0);for(var e=0;e<this.intersects.length;e++)ls.to(this.intersects[e].object.position,{duration:1.5,x:(Math.random()-.5)*-10*Math.random(),z:(Math.random()-.5)*-10*Math.random(),y:(Math.random()-.5)*-10*Math.random(),ease:"power2.out"});ls.to(this.camera.position,{y:0,z:15,ease:"power3.InOut",delay:.6})}view(t){this.portafolio=this.ui.portafolio,this.about=this.ui.about,this.portafolio===!0&&(this.geos.visible=!0,this.planes.visible=!1),this.about===!0&&(this.c("something new"),this.geos.visible=!1,this.planes.visible=!0),this===" "&&this.c("click")}render(){this.time+=.05,this.material.uniforms.uTime.value=this.time,this.camera.minDistance=20,requestAnimationFrame(this.render.bind(this)),this.renderer.render(this.scene,this.camera),this.renderer.toneMapping=rc}}window.onload=o=>{new t0({dom:document.getElementById("container")}),Lu()};
-//# sourceMappingURL=index.0a1c6772.js.map
+    `,J_=()=>`
+    <main>
+    <div id="content">
+    <p>Hello...</p>
+    <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialized in building custom digital or physical experiences.</p> 
+    <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
+    <div id ="sites"> 
+    <p> I have collaborated with:</p>
+    <ul>
+    <li>
+    <a href="https://activetheory.net/" target="_blank">
+      <span>Active Theory</span> 
+      <span> -- WebGL Developer</span>
+    </a>
+   </li>
+    <li>
+     <a href="https://visualgoodness.com/" target="_blank">
+       <span>Visual Goodness </span> 
+       <span> -- WebGL Developer</span>
+     </a>
+    </li>
+     <li>
+     <a href="https://smartco.com.ec" target="_blank"> 
+       <span>Smartco </span>
+       <span> -- Unity Developer</span>
+     </a>
+   </li>
+     <li>
+       <a href="https://www.yaesta.com" target="_blank">
+         <span> YaEsta </span>
+         <span> -- Front-end  & Designer</span> 
+       </a>
+     </li>
+    </ul>
+ </div>
+ <p>Contact me at <b>cyrstem[at]gmail[dot]com</b></p>  
+
+</div>
+    </main>
+    `;class Q_{constructor(){this.links=null,this.initHTML(),this.about=!1,this.portafolio=!1,this.addListeners()}addListeners(){document.getElementById("nav").addEventListener("click",this.onClick.bind(this),!1)}initHTML(){document.getElementById("ui").innerHTML=Z_(),document.getElementById("contact").innerHTML=$_()}onClick(t){if(t.preventDefault(),this.links=t.target.id,this.links!=="home"){this.portafolio=!1,document.getElementById("terminal").innerHTML=K_(),this.about=!0;return}if(this.links!=="Portafolio"){this.about=!1,document.getElementById("terminal").innerHTML=J_(),this.portafolio=!0;return}}}class t0{constructor(t){this.c=console.log.bind(document),this.c("wintermute.."),this.clock=new Dg,this.ui=new Q_,this.scene=new wg,this.container=t.dom,this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer=new Sc,this.renderer.setPixelRatio(Math.min(window.devicePixelRatio,2)),this.renderer.setSize(this.width,this.height),this.renderer.setClearColor(15658734,1),this.renderer.outputEncoding=kt,this.container.appendChild(this.renderer.domElement),this.camera=new Le(45,window.innerWidth/window.innerHeight,.001,1e3),this.camera.position.set(0,0,45),this.controls=new Ig(this.camera,this.renderer.domElement),this.controls.minDistance=20,this.controls.maxDistance=45,this.time=0,this.fog=new Za(16777215),this.target=new vt,this.mouse=new vt,this.raycaster=new Rg,this.raycaster.setFromCamera(this.mouse,this.camera),this.ambient=new Pg(0),this.scene.add(this.ambient),this.light1=new oa(16777215,1,0),this.light1.position.set(.2,0),this.scene.add(this.light1),this.light2=new oa(16777215,1,0),this.light2.position.set(100,200,100),this.scene.add(this.light2),this.light3=new oa(16777215,1,0),this.light3.position.set(-100,-200,800),this.scene.add(this.light3),this.env(),this.view(this.ui),this.addListener(),this.addObjects(),this.galleryLoad(),this.resize(),this.render()}addListener(){window.addEventListener("resize",this.resize.bind(this)),window.addEventListener("mousemove",this.onMouseMove.bind(this)),window.addEventListener("click",this.view.bind(this))}resize(){this.width=this.container.offsetWidth,this.height=this.container.offsetHeight,this.renderer.setSize(this.width,this.height),this.camera.aspect=this.width/this.height,this.camera.updateProjectionMatrix()}env(){this.colorA=new Pt(16777215),this.colorB=new Pt(13303036),this.skyGeo=new $a(1600,32,12),this.skyMat=new un({uniforms:{topColor:{value:this.colorA},bottomColor:{value:this.colorB},offset:{value:7}},vertexShader:Ql,fragmentShader:tc,side:De}),this.sky=new Qe(this.skyGeo,this.skyMat),this.scene.add(this.sky),this.c(this.scene)}addObjects(){this.geos=new he,this.mat=new Eg({color:12698307,metalness:.152,roughness:.41,emissive:0,depthTest:!0,depthWrite:!0}),this.phongMat=new Ag({color:12698307,emissive:0,specular:16777215}),this.geom=new or(1,1,1);for(let t=0;t<250;t++)this.mesh=new Qe(this.geom,this.phongMat),this.mesh.position.x=(Math.random()-.5)*10*Math.random(),this.mesh.position.y=(Math.random()-.5)*10*Math.random(),this.mesh.position.z=(Math.random()-.5)*10*Math.random(),this.geos.add(this.mesh);this.scene.add(this.geos),this.geos.visible=!0}galleryLoad(){this.planes=new he,this.material=new un({uniforms:{uTime:{value:this.clock},res:{value:new Ut(window.innerWidth,window.innerHeight,null,null)}},vertexShader:j_,fragmentShader:Y_}),this.shaderM=new Tg({uniforms:{uTime:{value:this.clock},res:{value:new Ut(window.innerWidth,window.innerHeight,null,null)},mouseRange:{value:3},mousePos:{value:new vt(null,null)},mouseColor:{value:null}},vertexShader:Ql,fragmentShader:tc}),this.geometry=new ys(10,10),this.mesh=new Qe(this.geometry,this.material),this.planes.add(this.mesh),this.planes.rotateX(-45),this.scene.add(this.planes),this.planes.visible=!1}onMouseMove(t){this.mouse.x=t.clientX/this.width*2-1,this.mouse.y=-(t.clientY/this.height)*2+1,this.target.x=(t.x-this.mouse.x)*.009,this.target.y=-(t.y-this.mouse.y)*.009,this.geos.rotation.x+=.005*(this.target.y-this.geos.rotation.x),this.geos.rotation.y+=.005*(this.target.x-this.geos.rotation.y),ls.to(this.geos.rotation,{duration:1.3,z:-1.5,yoyo:!0}),this.raycaster.setFromCamera(this.mouse,this.camera),this.intersects=this.raycaster.intersectObjects(this.scene.children,!0);for(var e=0;e<this.intersects.length;e++)ls.to(this.intersects[e].object.position,{duration:1.5,x:(Math.random()-.5)*-10*Math.random(),z:(Math.random()-.5)*-10*Math.random(),y:(Math.random()-.5)*-10*Math.random(),ease:"power2.out"});ls.to(this.camera.position,{y:0,z:15,ease:"power3.InOut",delay:.6})}view(t){this.portafolio=this.ui.portafolio,this.about=this.ui.about,this.portafolio===!0&&(this.geos.visible=!0,this.planes.visible=!1),this.about===!0&&(this.c("something new"),this.geos.visible=!1,this.planes.visible=!0),this===" "&&this.c("click")}render(){this.time+=.05,this.material.uniforms.uTime.value=this.time,this.camera.minDistance=20,requestAnimationFrame(this.render.bind(this)),this.renderer.render(this.scene,this.camera),this.renderer.toneMapping=rc}}window.onload=o=>{new t0({dom:document.getElementById("container")}),Lu()};
+//# sourceMappingURL=index.861924e9.js.map
