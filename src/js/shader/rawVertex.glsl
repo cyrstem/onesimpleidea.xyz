@@ -1,14 +1,10 @@
-uniform mat4 projectionMatrix;
-uniform mat4 modelViewMatrix;
+varying vec3 vWorldPosition;
 
-attribute vec3 position;
+			void main() {
 
-attribute vec2 uv;
-varying vec2 vUv;
+				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+				vWorldPosition = worldPosition.xyz;
 
-void main()
-{
-    vUv=uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    
-}
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
