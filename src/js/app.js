@@ -183,7 +183,6 @@ export default class App {
             },
             vertexShader: vertex,
             fragmentShader: fragment,
-           wireframe:true
 
         })
         this.shaderM = new RawShaderMaterial({

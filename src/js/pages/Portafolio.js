@@ -21,7 +21,7 @@ const Portafolio = () => {
             <div>
             <article>
             <h2>Glitch Machine</h2>
-            <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/" target=" _blank">Jenna
+            <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/" target=" _blank">  Jenna
                 Marsh</a>, it lets you play with a image applying different filters and export the resulting image for
                 printing</p>
             </article>

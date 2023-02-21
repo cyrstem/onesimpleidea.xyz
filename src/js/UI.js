@@ -3,30 +3,26 @@ import Contact from "./interface/Contact";
 
 import About from "./pages/About";
 import Portafolio from './pages/Portafolio';
+import Not4U from './pages/Not4U';
 
 export default class UI {
     constructor() {
         this.links = null;
         this.initHTML()
-
         this.about = false
         this.portafolio = false
         this.addListeners()
-      
-        this.c = console.log.bind(document);
 
     }
     addListeners() {
     let nav = document.getElementById('nav');
-       nav.addEventListener('click',this.onClick.bind(this),false)
+    nav.addEventListener('click',this.onClick.bind(this),false)
+  
     }
 
     initHTML() {
         document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("contact").innerHTML = Contact();
-        // document.getElementById("terminal").innerHTML = About();
-        
-    
     }
 
     onClick(event) {
@@ -43,12 +39,11 @@ export default class UI {
         
         if (this.links !== 'Portafolio') {
             this.about =false;
-            document.getElementById("terminal").innerHTML = About();
+            document.getElementById("terminal").innerHTML = Not4U();
             this.portafolio = true;
             return
         }
 
     }
   
-
 }
