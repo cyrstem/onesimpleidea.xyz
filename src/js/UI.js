@@ -9,20 +9,15 @@ export default class UI {
     constructor() {
         this.links = null;
         this.initHTML()
-       
-
         this.about = false
         this.portafolio = false
         this.addListeners()
-      
-        //this.c = console.log.bind(document);
-        this.iLazy()
 
     }
     addListeners() {
     let nav = document.getElementById('nav');
     nav.addEventListener('click',this.onClick.bind(this),false)
-    this.check = window.matchMedia("(max-width: 700px)")
+  
     }
 
     initHTML() {
@@ -50,13 +45,5 @@ export default class UI {
         }
 
     }
-    iLazy(){
-        if(this.check){
-            console.log("responsive biatch");
-            document.getElementById("terminal").innerHTML = Not4U();
-        }
-
-    }
   
-
 }

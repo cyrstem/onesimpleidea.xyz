@@ -193,6 +193,9 @@
 	main {
 		overflow: hidden;
 	}
+	#experiment{
+		display: none;
+	}
 
 	#content {
 		background-color: red;
@@ -212,22 +215,28 @@
 
 	#terminal {
 		width: 100%;
-		overflow-y: scroll;
+		// overflow-y: scroll;
 		top: 1vh;
 	}
 
 	#portafolio {
+		top: 4vh;
+		width: 100vh;
+		display: grid;
+		grid-template-columns: auto;
+		grid-gap: 20px;
+		overflow-x: hidden;
 		img {
 
-			width: 50%;
+			width: 70%;
+			height: 50%;
 		}
 
 		// position: relative;
 		// margin: 3px;
-		// height: 80vh;
-		// display: grid;
-		// grid-template-columns: auto;
-		// grid-gap: 20px;
+		// width: auto;
+		// height: 100vh;
+		
 	}
 
 	#contact {
