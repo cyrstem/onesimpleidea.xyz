@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/cyrstem/onesimpleidea.xyz#readme",
   "dependencies": {
+    "@dogstudio/highway": "^2.2.1",
     "gsap": "^3.11.1",
     "sass": "^1.53.0",
     "three": "^0.144.0",

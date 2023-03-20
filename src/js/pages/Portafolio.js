@@ -2,7 +2,7 @@
 
 const Portafolio = () => {
     const template = `
-    <main>  
+    <main  data-router-wrapper >  
         <div id="portafolio">
             <div>
                 <article>

@@ -3,7 +3,7 @@ const Not4U = () => {
     const template = `
     <main>
     <div id="content">
-    <p>Hello...</p>
+    <p>Full experience on Desktop</p>
     <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialized in building custom digital or physical experiences.</p> 
     <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
     <div id ="sites"> 

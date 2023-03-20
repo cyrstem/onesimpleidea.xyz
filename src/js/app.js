@@ -1,9 +1,8 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh,SphereGeometry,BackSide,Color, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+
+
 import gsap from 'gsap';
 
 import fragment from './shader/fragment.glsl';
@@ -13,17 +12,13 @@ import rawVertex from './shader/rawVertex.glsl'
 import rawFragment from './shader/rawFragment.glsl'
 
 import UI from './UI';
-import { SphereGeometry } from 'three';
-import { BackSide } from 'three';
-import { Color } from 'three';
-import { PointLightHelper } from 'three';
+
 export default class App {
     constructor(stage) {
         this.c = console.log.bind(document);
         this.c("wintermute..")
 
         this.clock = new Clock();
-        // this.c(imgLoc)
         this.ui = new UI;
         this.scene = new Scene();
 
@@ -33,6 +28,7 @@ export default class App {
         this.height = this.container.offsetHeight;
 
         this.renderer = new WebGLRenderer();
+        this.renderer.antialias = true
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0xeeeeee, 1);
@@ -78,7 +74,7 @@ export default class App {
         this.light3 = new PointLight(0xffffff, 1, 0)
         this.light3.position.set(- 100, -200, 800)
         this.scene.add(this.light3)
-        // this.helper = new PointLightHelper(this.light3,5)
+      
 
         this.env();
         this.view(this.ui);
@@ -98,11 +94,18 @@ export default class App {
 
 
     resize() {
+
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
+
         this.renderer.setSize(this.width, this.height);
         this.camera.aspect = this.width / this.height;
         this.camera.updateProjectionMatrix();
+        if( window.matchMedia("(max-width: 700px)")){
+            console.log('ettetete')
+
+        }
+
     }
 
     env(){
@@ -128,8 +131,6 @@ export default class App {
     }
 
     addObjects() {
-        
-        // this.light(0x090909)
         this.geos = new Object3D();
 
         this.mat = new MeshStandardMaterial({
@@ -245,9 +246,6 @@ export default class App {
         gsap.to(this.camera.position,{y:0,z:15 ,ease: "power3.InOut",delay:0.6});
     }
    
-       
-    
-
     view(element) {
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
@@ -262,9 +260,9 @@ export default class App {
             this.planes.visible = true
            
         }
-        if (this === ' ') {
-            this.c('click')
-        }
+        // if (this === ' ') {
+        //     this.c('click')
+        // }
     }
 
     render() {
