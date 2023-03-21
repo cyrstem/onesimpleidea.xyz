@@ -1,16 +1,16 @@
 import Navbar from "./interface/Nav";
 import Contact from "./interface/Contact";
-
 import About from "./pages/About";
 import Portafolio from './pages/Portafolio';
 import Not4U from './pages/Not4U';
 
 export default class UI {
-    constructor() {
+    constructor(active) {
         this.links = null;
         this.initHTML()
         this.about = false
         this.portafolio = false
+        this.active = active;
         this.addListeners()
 
     }
