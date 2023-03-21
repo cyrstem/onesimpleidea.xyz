@@ -1,7 +1,7 @@
 
 import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, SphereGeometry, BackSide, Color, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-
+import Debug from './utils/Debug';
 import gsap from 'gsap';
 
 import fragment from './shader/fragment.glsl';
@@ -16,7 +16,7 @@ export default class App {
     constructor(stage) {
         this.c = console.log.bind(document);
         this.c("wintermute..")
-
+        this.debug = new Debug();
         this.clock = new Clock();
         this.ui = new UI();
         this.scene = new Scene();
@@ -46,11 +46,11 @@ export default class App {
 
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-     
+
         this.time = 0;
         this.fog = new Fog(0xffffff)
 
-        this.scene.fog = new Fog(this.scene.background, 1,500)
+        this.scene.fog = new Fog(this.scene.background, 1, 500)
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
@@ -78,6 +78,7 @@ export default class App {
         window.addEventListener("click", this.view.bind(this))
 
     }
+    
 
 
     resize() {
@@ -107,22 +108,40 @@ export default class App {
         })
         this.sky = new Mesh(this.skyGeo, this.skyMat)
         this.scene.add(this.sky);
- 
+
     }
-    reposition(){
-       
-        this.elements =  this.geos.children
+    reposition() {
+
+        this.elements = this.geos.children
         //console.log(this.elements)
-         this.elements.forEach(element =>{
+        this.elements.forEach(element => {
             element.rotation.x = (Math.random() - 0.06) * 10 * Math.random();
             element.rotation.y = (Math.random() - 0.06) * 10 * Math.random();
             element.rotation.z = (Math.random() - 0.06) * 10 * Math.random();
-         });
-           
-    
+        });
+
+
     }
 
     addObjects() {
+        // Debug
+        if (this.debug.active) {
+            this.debugFolder = this.debug.ui.addFolder('material')
+            this.paramsColor = {
+                color:"#000000",
+                emissive:"#000000",
+                specular:"#000000"
+            }
+            this.debugFolder.addColor(this.paramsColor,'color').onChange(()=>{
+                this.update()
+            });
+            this.debugFolder.addColor(this.paramsColor,'emissive').onChange(()=>{
+                this.update()
+            });
+            this.debugFolder.addColor(this.paramsColor,'specular').onChange(()=>{
+                this.update()
+            });
+        }
         this.geos = new Object3D();
 
         // this.mat = new ShaderMaterial({
@@ -162,7 +181,7 @@ export default class App {
 
 
     }
-    colorSwitch(){
+    colorSwitch() {
         console.log('hello color')
     }
 
@@ -201,22 +220,27 @@ export default class App {
 
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
-       
+
 
         if (this.portafolio === true) {
             this.geos.visible = true;
-            gsap.to(this.geos.position, { x: 10,y:-2, z: 0, ease: "power3.InOut", delay: 0.2 ,onComplete:this.reposition()});
-            
+            gsap.to(this.geos.position, { x: 10, y: -2, z: 0, ease: "power3.InOut", delay: 0.2, onComplete: this.reposition() });
+
         }
         if (this.about === true) {
             this.c('something new')
             //this.geos.visible = false;
-            gsap.to(this.geos.position, { x: 0,y:0, z: 0, ease: "power3.InOut", delay: 0.2, onComplete:this.reposition() });
+            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power3.InOut", delay: 0.2, onComplete: this.reposition() });
             //this.planes.visible = true
 
         }
     }
 
+    update(){
+        this.mesh.material.color.set(this.paramsColor.color)
+        this.mesh.material.color.set(this.paramsColor.emissive)
+        this.mesh.material.specular.set(this.paramsColor.specular)
+    }
     render() {
 
         this.time += 0.05;
