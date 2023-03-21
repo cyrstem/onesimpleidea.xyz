@@ -18,7 +18,7 @@ export default class App {
         this.c("wintermute..")
 
         this.clock = new Clock();
-        this.ui = new UI({active:false});
+        this.ui = new UI();
         this.scene = new Scene();
 
         this.container = stage.dom;
@@ -46,8 +46,7 @@ export default class App {
 
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.minDistance = 20
-        this.controls.maxDistance = 45
+     
         this.time = 0;
         this.fog = new Fog(0xffffff)
 
@@ -57,31 +56,19 @@ export default class App {
         this.raycaster = new Raycaster();
         this.raycaster.setFromCamera(this.mouse, this.camera)
 
-        //lights
-        this.ambient = new AmbientLight(0xffffff);
-        this.scene.add(this.ambient)
-
         this.light1 = new PointLight(0xffffff, 1, 0)
         this.light1.position.set(0.200, 0)
         this.scene.add(this.light1)
 
         this.light2 = new PointLight(0xffffff, 1, 0)
-        this.light2.position.set(100, 200, 100)
+        this.light2.position.set(0, 0, 0)
         this.scene.add(this.light2)
 
-
-        this.light3 = new PointLight(0xffffff, 1, 0)
-        this.light3.position.set(- 100, -200, 800)
-        this.scene.add(this.light3)
-
-
-        //this.env();
-        //this.view(this.ui);
         this.addListener()
         this.addObjects();
-       // this.galleryLoad()
         this.resize();
         this.render();
+        this.env();
     }
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
@@ -106,7 +93,6 @@ export default class App {
     env() {
         this.colorA = new Color(0xffffff)
         this.colorB = new Color(0x000000)
-
         this.skyGeo = new SphereGeometry(1600, 32, 12);
         this.skyMat = new ShaderMaterial({
             uniforms: {
@@ -115,36 +101,47 @@ export default class App {
                 'offset': { value: 5 },
             },
             wireframe: true,
-
             vertexShader: rawVertex,
             fragmentShader: rawFragment,
             side: BackSide
         })
         this.sky = new Mesh(this.skyGeo, this.skyMat)
+        this.scene.add(this.sky);
  
+    }
+    reposition(){
+       
+        this.elements =  this.geos.children
+        //console.log(this.elements)
+         this.elements.forEach(element =>{
+            element.rotation.x = (Math.random() - 0.06) * 10 * Math.random();
+            element.rotation.y = (Math.random() - 0.06) * 10 * Math.random();
+            element.rotation.z = (Math.random() - 0.06) * 10 * Math.random();
+         });
+           
+    
     }
 
     addObjects() {
         this.geos = new Object3D();
 
-        this.mat = new ShaderMaterial({
-            uniforms: {
-                uTime: { value: this.clock },
-                res: {
-                    value: new Vector4(window.innerWidth, window.innerHeight, null, null)
-                },
+        // this.mat = new ShaderMaterial({
+        //     uniforms: {
+        //         uTime: { value: this.clock },
+        //         res: {
+        //             value: new Vector4(window.innerWidth, window.innerHeight, null, null)
+        //         },
 
-            },
-            vertexShader: vertex,
-            fragmentShader: fragment,
+        //     },
+        //     vertexShader: vertex,
+        //     fragmentShader: fragment,
 
-        })
+        // })
 
         this.phongMat = new MeshPhongMaterial({
             color: 0x000000,
             emissive: 0x00000,
             specular: 0xc1c2c3,
-            depthTest: true,
         })
 
 
@@ -168,38 +165,6 @@ export default class App {
     colorSwitch(){
         console.log('hello color')
     }
-
-    // galleryLoad() {
-
-
-    //     this.shaderM = new RawShaderMaterial({
-    //         uniforms: {
-    //             uTime: { value: this.clock },
-    //             res: {
-    //                 value: new Vector4(window.innerWidth, window.innerHeight, null, null)
-    //             },
-    //             mouseRange: { value: 3 },
-    //             mousePos: { value: new Vector2(null, null) },
-    //             mouseColor: { value: null }
-    //         },
-    //         vertexShader: rawVertex,
-    //         fragmentShader: rawFragment,
-
-    //     })
-
-    //     this.geometry = new PlaneGeometry(10, 10);
-
-
-    //     //this.mesh = new Mesh(this.geometry, this.material);
-
-    //     //this.planes.add(this.mesh);
-    //     //this.planes.rotateX(-45)
-
-    //    // this.scene.add(this.planes);
-
-    //     this.planes.visible = false;
-
-    // }
 
     onMouseMove(event) {
         //this for camera 
@@ -229,24 +194,24 @@ export default class App {
             });
         }
 
-        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 0.6 });
+        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 0.2 });
     }
 
     view() {
 
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
-        //this.c(this.portafolio.active)
+       
 
         if (this.portafolio === true) {
             this.geos.visible = true;
-            gsap.to(this.geos.position, { x: 10,y:-2, z: 0, ease: "power3.InOut", delay: 0.2 ,onComplete:this.colorSwitch});
+            gsap.to(this.geos.position, { x: 10,y:-2, z: 0, ease: "power3.InOut", delay: 0.2 ,onComplete:this.reposition()});
             
         }
         if (this.about === true) {
             this.c('something new')
-            this.geos.visible = false;
-            gsap.to(this.geos.position, { x: 0,y:4, z: 105, ease: "power3.InOut", delay: 0.2 });
+            //this.geos.visible = false;
+            gsap.to(this.geos.position, { x: 0,y:0, z: 0, ease: "power3.InOut", delay: 0.2, onComplete:this.reposition() });
             //this.planes.visible = true
 
         }
@@ -255,6 +220,8 @@ export default class App {
     render() {
 
         this.time += 0.05;
+        this.controls.minDistance = 20
+        this.controls.maxDistance = 45
         //this.mati.uniforms.uTime.value = this.time;
         this.camera.minDistance = 20;
 
