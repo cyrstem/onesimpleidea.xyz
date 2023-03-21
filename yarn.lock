@@ -326,6 +326,11 @@ sass@^1.53.0:
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
 
+splitting@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/splitting/-/splitting-1.0.6.tgz#9197b3fd600c5b56038fc06ae8b9f5933d392875"
+  integrity sha512-2hYicS/hTy1MgjTi4ST6B298uoLSx854VfTf0FeMmCeE6OiZjEixTOGPLqnNzSaM/y3jwoEYj5pmDzYFwRInPw==
+
 supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"

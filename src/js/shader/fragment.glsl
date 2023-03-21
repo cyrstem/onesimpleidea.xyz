@@ -53,7 +53,7 @@ void main(){
                 clamp(length(r.x),0.0,1.0));
     float coef = (f * f * f + (0.9 * f * f) + (0.5 * f));
 
-    gl_FragColor = vec4(coef*color,0.5);
+    gl_FragColor = vec4(coef*color,1.0);
 	//gl_FragColor = vec4(vec3(0.8471, 0.8471, 0.8471),1.0);
    
 }

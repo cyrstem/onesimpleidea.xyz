@@ -2,13 +2,13 @@
 const Not4U = () => {
     const template = `
     <main>
-    <div id="content">
+    <div id="content" class="content">
     <p>Full experience on Desktop</p>
     <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialized in building custom digital or physical experiences.</p> 
     <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
-    <div id ="sites"> 
-    <p> I have collaborated with:</p>
-    <ul>
+   <div>
+    <p>I have collaborated with:</p>
+    <ul id ="sites">
     <li>
     <a href="https://activetheory.net/" target="_blank">
       <span>Active Theory</span> 
