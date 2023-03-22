@@ -31,7 +31,6 @@
 
 #sites {
 	text-align: left;
-
 	ul {
 		list-style-type: none;
 		padding: 0.3rem;
@@ -51,7 +50,7 @@
 		}
 
 		&:nth-child(2) {
-			padding-left: 4px;
+			padding-left: 2px;
 			flex-grow: 1;
 		}
 	}
