@@ -105,7 +105,7 @@ export default class App {
     //--------------------------------------------------------------
     loadTexturesAndAddToScene(textureUrls) {
         const manager = new LoadingManager(() => {
-            console.log("check loading of textures",this.textures)
+           // console.log("check loading of textures",this.textures)
             this.material.uniforms.uCurrTex.value = this.textures[0];
             //this.shadeMat.uniforms.uTime.value =this.clock.getElapsedTime()
         })
@@ -323,7 +323,7 @@ export default class App {
             gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
             gsap.to(this.second.position, {
                 x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.8, onComplete: () => {
-                    console.log(this.second)
+                    // console.log(this.second)
                 }
             });
             this.second.visible = false
