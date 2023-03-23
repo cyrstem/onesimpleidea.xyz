@@ -50,7 +50,7 @@ export default class App {
         this.clock = new Clock();
         this.fog = new Fog(0xffffff)
         this.images = []
-        this.scene.fog = new Fog(this.scene.background, 1, 50)
+        this.scene.fog = new Fog(this.scene.background, 3, 50)
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
@@ -101,14 +101,15 @@ export default class App {
             'insta-3.jpg',
 
         ];
-
-        //console.log("hello", this.textureUrls)
-        // this.assets.forEach((item) => {
-        //     this.images.push(item.url)
-        // })
     }
     //--------------------------------------------------------------
     loadTexturesAndAddToScene(textureUrls) {
+
+        // const manager = new THREE.LoadingManager(() => {
+        //     // Set first texture as default
+        //     //this.material.uniforms.uCurrTex.value = this.textures[0];
+        //   });
+
         const loader = new TextureLoader();
         const textures = [];
         this.second = new Group()
@@ -128,6 +129,7 @@ export default class App {
                     uTime: { value: 0.0 },
                     uTexture: { value: textures[i] }
                 },
+                
                 vertexShader: rawVert,
                 fragmentShader: rawFrag,
 
@@ -162,7 +164,8 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-        window.addEventListener('mouseover', this.onMouseOver.bind(this));
+        // window.addEventListener('mouseover', this.onMouseOver.bind(this));
+
         //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
 
@@ -218,9 +221,7 @@ export default class App {
         this.main = new Group()
         this.main.add(this.geos)
         this.scene.add(this.main);
-        this.c(this.scene.children)
-        //this.geos.visible = true;
-        //this.c(this.images)
+
 
         this.loadTexturesAndAddToScene(this.textureUrls)
 
@@ -257,31 +258,20 @@ export default class App {
 
         gsap.to(this.camera.position, { y: 0, z: 15, ease: "power2.InOut", delay: 1.5 });
     }
-    onMouseOver(e) {
-
-        //  this.intersects2 = this.raycaster.intersectObjects(this.second.children, true);
-
-        // for (var i = 0; i < this.intersects.length; i++) {
-        //     gsap.to(this.intersects[i].object.position, {
-        //         duration: 2,
-        //         x: (Math.random() - 0.5) * -10 * Math.random(),
-        //         z: (Math.random() - 0.5) * -10 * Math.random(),
-        //         y: (Math.random() - 0.5) * -10 * Math.random(),
-        //         ease: "power2.out"
-        //     });
-        // }
-
-        //this.shadeMat.uniforms.uTime.value = this.clock.getElapsedTime()
-    }
-
 
 
     view() {
 
+
+        this.navItems = document.querySelectorAll('.nav_item');
+        this.navItems.forEach(item => {
+            console.log(item)
+
+        })
+
+
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
-
-
         if (this.portafolio === true) {
             this.main.visible = true;
             gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
@@ -300,7 +290,7 @@ export default class App {
             this.main.visible = false;
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
             this.second.visible = true
-            gsap.to(this.second.position, { x: 0, y: -0.5, z: 3, ease: "power2.in", delay: 0.4, onComplete: this.recast });
+            gsap.to(this.second.position, { x: 0, y: -0.5, z: 3, ease: "power2.in", delay: 0.4, onComplete: console.log('algo pasa aqui') });
 
         }
     }
