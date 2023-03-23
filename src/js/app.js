@@ -44,7 +44,7 @@ export default class App {
         this.camera.position.set(0, 0, 45);
 
 
-        //this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
 
         this.time = 0;
         this.clock = new Clock();
@@ -72,6 +72,10 @@ export default class App {
     config() {
         // Debug
         if (this.debug.active) {
+
+            this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+            // this.controls.maxDistance = 45
+            // this.camera.minDistance = 20;
             this.debugFolder = this.debug.ui.addFolder('material')
             this.paramsColor = {
                 color: "#000000",
@@ -311,11 +315,9 @@ export default class App {
     render() {
 
         this.time += 0.05;
-        // this.controls.maxDistance = 45
-        // this.camera.minDistance = 20;
         this.geos.rotation.x += 0.003;
         requestAnimationFrame(this.render.bind(this));
-
+        this.shadeMat.uniforms.uTime.value = this.clock.getElapsedTime()
 
         this.renderer.render(this.scene, this.camera);
 

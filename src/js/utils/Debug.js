@@ -1,5 +1,4 @@
 import * as dat from 'lil-gui';
-
 export default class Debug
 {
   constructor() {
@@ -7,6 +6,7 @@ export default class Debug
 
     if(this.active) {
       this.ui = new dat.GUI({ container: document.querySelector('.debug') })
+
     }
   }
 }
