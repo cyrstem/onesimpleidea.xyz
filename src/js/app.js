@@ -1,5 +1,5 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, SphereGeometry, BackSide, Color, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog, TextureLoader, LoadingManager } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, SphereGeometry, BackSide, Color, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog, TextureLoader, LoadingManager, AdditiveBlending, MultiplyBlending } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
 import assets from './utils/assets';
@@ -21,6 +21,7 @@ export default class App {
         this.ui = new UI();
         this.scene = new Scene();
 
+
         this.container = stage.dom;
 
         this.width = this.container.offsetWidth;
@@ -31,8 +32,6 @@ export default class App {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0xeeeeee, 1);
-        this.renderer.outputEncoding = sRGBEncoding;
-
         this.container.appendChild(this.renderer.domElement);
 
         this.camera = new PerspectiveCamera(
@@ -51,22 +50,23 @@ export default class App {
         this.clock = new Clock();
         // console.log(this.clock.getElapsedTime())
         this.fog = new Fog(0xffffff)
-
+        this.images = []
         this.scene.fog = new Fog(this.scene.background, 1, 500)
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
         this.raycaster.setFromCamera(this.mouse, this.camera)
 
-       
+
         this.config()
         this.env();
 
         this.addListener()
-        this.loadGallery()
+
         this.addObjects();
         this.resize();
         this.render();
+
 
     }
     //----------------------------------------------------
@@ -89,8 +89,46 @@ export default class App {
                 this.update()
             });
         }
+
+        this.assets = assets
+
+        this.textureUrls = [
+            'insta-0.jpg',
+            'insta-1.jpg',
+            'insta-2.jpg'
+        ];
+
+        //console.log("hello", this.textureUrls)
+        this.assets.forEach((item) => {
+            this.images.push(item.url)
+        })
     }
-    env(){
+    //--------------------------------------------------------------
+    loadTexturesAndAddToScene(textureUrls) {
+        const loader = new TextureLoader();
+        const textures = [];
+        this.second = new Group()
+
+        // Load all the textures using the TextureLoader
+        for (let i = 0; i < textureUrls.length; i++) {
+            const texture = loader.load(textureUrls[i]);
+            loader.crossOrigin = true
+            textures.push(texture);
+        }
+
+        // Create a plane for each texture and add it to the scene
+        for (let i = 0; i < textures.length; i++) {
+            const geometry = new PlaneGeometry(5, 5);
+            const material = new MeshBasicMaterial({ map: textures[i] });
+            const meshPlane = new Mesh(geometry, material);
+            meshPlane.position.set(i * 2.3, 0, i * 0.4);
+            this.second.add(meshPlane)
+            this.second.visible = false
+            this.scene.add(this.second);
+        }
+    }
+
+    env() {
         //-------------lights
         this.light1 = new PointLight(0xffffff, 1, 0)
         this.light1.position.set(0.200, 0)
@@ -99,30 +137,9 @@ export default class App {
         this.light2 = new PointLight(0xffffff, 1, 0)
         this.light2.position.set(0, 0, 0)
         this.scene.add(this.light2)
-
-        //bubble---------------/
-        // this.colorA = new Color(0x000000)
-        // this.colorB = new Color(0x656666)
-        // this.skyGeo = new SphereGeometry(300, 32, 12);
-
-        // this.skyMat = new ShaderMaterial({
-        //     uniforms: {
-        //         'topColor': { value: this.colorA },
-        //         'bottomColor': { value: this.colorB },
-        //         'offset': { value: 51 },
-        //     },
-        //     //wireframe: true,
-        //     vertexShader: rawVertex,
-        //     fragmentShader: rawFragment,
-        //     side: BackSide
-        // })
-
-        // this.sky = new Mesh(this.skyGeo, this.skyMat)
-        // //console.log(this.sky)
-        // this.scene.add(this.sky);
-
-
     }
+
+
     ///---------------------------------------------
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
@@ -144,37 +161,7 @@ export default class App {
         this.camera.updateProjectionMatrix();
 
     }
-    //---------------------------------------------------------------
-    loadGallery() {
 
-        this.loader = new LoadingManager();
-        this.assets = assets;
-        //console.log(this.assets)
-
-        this.loadingManager = new LoadingManager();
-
-        // this.loadingManager.onStart = () => {
-        //     console.log('loading started')
-        // }
-        // this.loadingManager.onLoad = () => {
-        //     console.log('loading finished')
-        // }
-        // this.loadingManager.onProgress = () => {
-        //     console.log('loading progressing')
-        // }
-        // this.loadingManager.onError = () => {
-        //     console.log('loading error')
-        // }
-
-    this.textureLoader = new TextureLoader(this.loadingManager)
-    
-    //this.image = this.textureLoader.load(assets.path)
-        assets.forEach( item =>{
-            this.images = this.textureLoader.load(item.path)
-            console.log(item.path)
-        })
-        
-    }
 
     reposition() {
 
@@ -188,14 +175,16 @@ export default class App {
 
 
     }
+    recast(){
+       
+    }
 
     addObjects() {
-
         this.geos = new Object3D();
         this.phongMat = new MeshPhongMaterial({
             color: 0x000000,
-            emissive: 0x00000,
-            specular: 0xc1c2c3,
+            emissive: 0x000000,
+            specular: 0xf5e5e5,
         })
 
         this.geom = new BoxGeometry(1, 1, 1);
@@ -209,12 +198,15 @@ export default class App {
             this.geos.add(this.mesh);
         }
 
-       // this.scene.add(this.geos);
+        // this.scene.add(this.geos);
         this.main = new Group()
         this.main.add(this.geos)
         this.scene.add(this.main);
+        this.c(this.scene.children)
         //this.geos.visible = true;
+        //this.c(this.images)
 
+        this.loadTexturesAndAddToScene(this.textureUrls)
 
     }
     onMouseMove(event) {
@@ -234,8 +226,8 @@ export default class App {
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         // console.log(this.scene.children[3].children)
-        //this.cubeElements = this.scene.children[3].children //select onlycubes elements
-        this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
+        this.cubeElements = this.scene.children[2].children //select onlycubes elements
+        this.intersects = this.raycaster.intersectObjects(this.cubeElements, true);
 
         for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
@@ -247,7 +239,7 @@ export default class App {
             });
         }
 
-        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 0.2 });
+        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 0.4 });
     }
 
     view() {
@@ -257,15 +249,21 @@ export default class App {
 
 
         if (this.portafolio === true) {
-            this.geos.visible = true;
-            gsap.to(this.geos.position, { x: 10, y: -2, z: 0, ease: "power3.InOut", delay: 0.2, onComplete: this.reposition() });
+            this.main.visible = true;
+            gsap.to(this.geos.position, { x: 10, y: -2, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
 
+            gsap.to(this.second.position, { x: 0, y: 0, z: -10,opacity:0, ease: "power2.out", delay: 0.4, onComplete: ()=>{
+                console.log(this.second)
+            } });
+           
+            this.second.visible = false
         }
         if (this.about === true) {
-            this.c('something new')
-            //this.geos.visible = false;
-            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power3.InOut", delay: 0.2, onComplete: this.reposition() });
-            //this.planes.visible = true
+            /// this.c('something new')
+            this.main.visible = false;
+            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
+            this.second.visible = true
+            gsap.to(this.second.position, { x: 0, y: 0, z: 2,opacity:1, ease: "power2.in", delay: 0.4, onComplete: this.recast });
 
         }
     }
