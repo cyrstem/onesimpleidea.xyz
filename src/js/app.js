@@ -300,7 +300,7 @@ export default class App {
             this.main.visible = false;
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
             this.second.visible = true
-            gsap.to(this.second.position, { x: 0, y: -0.5, z: 5, ease: "power2.in", delay: 0.4, onComplete: this.recast });
+            gsap.to(this.second.position, { x: 0, y: -0.5, z: 3, ease: "power2.in", delay: 0.4, onComplete: this.recast });
 
         }
     }
