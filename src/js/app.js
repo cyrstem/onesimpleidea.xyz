@@ -1,12 +1,12 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, SphereGeometry, BackSide, Color, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog, TextureLoader, LoadingManager, AdditiveBlending, MultiplyBlending } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, SphereGeometry, BackSide, Color, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, PointLight, Vector4, Texture, MeshPhongMaterial, Fog, TextureLoader, LoadingManager } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
-import assets from './utils/assets';
+// import assets from './utils/assets';
 import gsap from 'gsap';
 
-import fragment from './shader/fragment.glsl';
-import vertex from './shader/vertex.glsl/';
+// import fragment from './shader/fragment.glsl';
+// import vertex from './shader/vertex.glsl/';
 
 import rawVert from './shader/rawVert.glsl'
 import rawFrag from './shader/rawFrag.glsl'
@@ -50,11 +50,11 @@ export default class App {
         this.clock = new Clock();
         this.fog = new Fog(0xffffff)
         this.images = []
-        this.scene.fog = new Fog(this.scene.background, 1, 500)
+        this.scene.fog = new Fog(this.scene.background, 1, 50)
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
-      //  this.raycaster.setFromCamera(this.mouse, this.camera)
+        //      this.raycaster.setFromCamera(this.mouse, this.camera)
 
 
         this.config()
@@ -131,7 +131,7 @@ export default class App {
             })
             // const material = new MeshBasicMaterial({ map: textures[i] });
             const meshPlane = new Mesh(geometry, this.shadeMat);
-            meshPlane.position.set(i * 3.6, 0, 0);
+            meshPlane.position.set(i * 5.6, 0, 0);
             this.second.visible = false
             this.second.add(meshPlane)
             //this.second.position.multiplyScalar(  -0.5 );
@@ -158,7 +158,7 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-        window.addEventListener('mouseover',this.onMouseOver.bind(this));
+        window.addEventListener('mouseover', this.onMouseOver.bind(this));
         //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
 
@@ -253,9 +253,9 @@ export default class App {
 
         gsap.to(this.camera.position, { y: 0, z: 15, ease: "power2.InOut", delay: 1.5 });
     }
-    onMouseOver(e){
+    onMouseOver(e) {
 
-      //  this.intersects2 = this.raycaster.intersectObjects(this.second.children, true);
+        //  this.intersects2 = this.raycaster.intersectObjects(this.second.children, true);
 
         // for (var i = 0; i < this.intersects.length; i++) {
         //     gsap.to(this.intersects[i].object.position, {
@@ -315,8 +315,8 @@ export default class App {
         // this.camera.minDistance = 20;
         this.geos.rotation.x += 0.003;
         requestAnimationFrame(this.render.bind(this));
-      
-        
+
+
         this.renderer.render(this.scene, this.camera);
 
     }
