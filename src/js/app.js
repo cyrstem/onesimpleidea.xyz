@@ -1,14 +1,19 @@
 
-import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, SphereGeometry, BackSide, Color, BoxGeometry, MeshBasicMaterial, ShaderMaterial, RawShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, LinearToneMapping, PointLight, sRGBEncoding, ACESFilmicToneMapping, Vector4, Texture, MeshPhongMaterial, Fog } from 'three';
+import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, SphereGeometry, BackSide, Color, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, PointLight, Vector4, Texture, MeshPhongMaterial, Fog, TextureLoader, LoadingManager } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
+// import assets from './utils/assets';
 import gsap from 'gsap';
 
-import fragment from './shader/fragment.glsl';
-import vertex from './shader/vertex.glsl/';
+import disp from '../../public/insta.png';
+// import fragment from './shader/fragment.glsl';
+// import vertex from './shader/vertex.glsl/';
 
-import rawVertex from './shader/rawVertex.glsl'
-import rawFragment from './shader/rawFragment.glsl'
+import rawVert from './shader/rawVert.glsl'
+import rawFrag from './shader/rawFrag.glsl'
+
+import gVert from './shader/gVert.glsl'
+import gFrag from './shader/gFrag.glsl'
 
 import UI from './UI';
 
@@ -17,9 +22,9 @@ export default class App {
         this.c = console.log.bind(document);
         this.c("wintermute..")
         this.debug = new Debug();
-        this.clock = new Clock();
         this.ui = new UI();
         this.scene = new Scene();
+
 
         this.container = stage.dom;
 
@@ -31,8 +36,6 @@ export default class App {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
         this.renderer.setSize(this.width, this.height);
         this.renderer.setClearColor(0xeeeeee, 1);
-        this.renderer.outputEncoding = sRGBEncoding;
-
         this.container.appendChild(this.renderer.domElement);
 
         this.camera = new PerspectiveCamera(
@@ -45,17 +48,133 @@ export default class App {
         this.camera.position.set(0, 0, 45);
 
 
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+
 
         this.time = 0;
+        this.clock = new Clock();
         this.fog = new Fog(0xffffff)
-
-        this.scene.fog = new Fog(this.scene.background, 1, 500)
+        this.images = []
+        this.scene.fog = new Fog(this.scene.background, 3, 50)
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
-        this.raycaster.setFromCamera(this.mouse, this.camera)
+        //      this.raycaster.setFromCamera(this.mouse, this.camera)
 
+
+        this.config()
+        this.env();
+
+        this.addListener()
+
+        this.addObjects();
+        this.resize();
+        this.render();
+        //console.log(this.second.children.scale)
+
+    }
+    //----------------------------------------------------
+    config() {
+        // Debug
+        if (this.debug.active) {
+
+            this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+            // this.controls.maxDistance = 45
+            // this.camera.minDistance = 20;
+            this.debugFolder = this.debug.ui.addFolder('material')
+            this.paramsColor = {
+                color: "#000000",
+                emissive: "#000000",
+                specular: "#000000"
+            }
+            this.debugFolder.addColor(this.paramsColor, 'color').onChange(() => {
+                this.update()
+            });
+            this.debugFolder.addColor(this.paramsColor, 'emissive').onChange(() => {
+                this.update()
+            });
+            this.debugFolder.addColor(this.paramsColor, 'specular').onChange(() => {
+                this.update()
+            });
+        }
+
+        // this.assets = assets
+        this.textureUrls = [
+            'insta-0.jpg',
+            'insta-1.jpg',
+            'insta-2.jpg',
+            'insta-3.jpg',
+
+        ];
+        this.state ={
+            animating :false,
+            current:0
+        }
+    }
+    //--------------------------------------------------------------
+    loadTexturesAndAddToScene(textureUrls) {
+        const manager = new LoadingManager(() => {
+            console.log("check loading of textures",this.textures)
+            this.material.uniforms.uCurrTex.value = this.textures[0];
+            //this.shadeMat.uniforms.uTime.value =this.clock.getElapsedTime()
+        })
+
+        const loader = new TextureLoader(manager);
+        this.textures = [];
+        this.second = new Group()
+
+        // Load all the textures using the TextureLoader
+        for (let i = 0; i < textureUrls.length; i++) {
+            const texture = loader.load(textureUrls[i]);
+            loader.crossOrigin = true
+           
+            this.textures.push(texture);
+        }
+
+        // // Create a plane for each texture and add it to the scene
+        // for (let i = 0; i < textures.length; i++) {
+        //     const geometry = new PlaneGeometry(6, 6, 32, 32);
+        //     this.shadeMat = new ShaderMaterial({
+        //         uniforms: {
+        //             uTime: { value: 0.0 },
+        //             uTexture: { value: textures[i] }
+        //         },
+
+        //         vertexShader: rawVert,
+        //         fragmentShader: rawFrag,
+        //     })
+           
+        //     const meshPlane = new Mesh(geometry, this.material);
+        //     meshPlane.position.set(i * 5.6, 0, 0);
+        //     this.second.visible = false
+        //     this.second.add(meshPlane)
+        //     //this.second.position.multiplyScalar(  -0.5 );
+        //     this.scene.add(this.second);    
+
+        // }
+        
+        this.plane = new PlaneGeometry(6,6,32,32)
+        this.material = new ShaderMaterial({
+            uniforms: {
+                uCurrTex: { value: 0 },
+                uNextTex: { value: 0 },
+                uDisp: { value:this.textures[1] },
+                uMeshSize: { value: [6, 6] },
+                uImageSize: { value: [0, 0] },
+                uTime: { value: 0 },
+                uProg: { value: 0 },
+            },
+            vertexShader:gVert,
+            fragmentShader:gFrag,
+        })
+        const meshPlane = new Mesh(this.plane, this.material);
+        meshPlane.position.set(3.2, 0, 0);
+        this.second.visible = false
+        this.second.add(meshPlane)
+        this.scene.add(this.second);    
+    }
+
+    env() {
+        //-------------lights
         this.light1 = new PointLight(0xffffff, 1, 0)
         this.light1.position.set(0.200, 0)
         this.scene.add(this.light1)
@@ -63,22 +182,48 @@ export default class App {
         this.light2 = new PointLight(0xffffff, 1, 0)
         this.light2.position.set(0, 0, 0)
         this.scene.add(this.light2)
-
-        this.addListener()
-        this.addObjects();
-        this.resize();
-        this.render();
-        this.env();
     }
+
+
+    ///---------------------------------------------
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
+        // window.addEventListener('mouseover', this.onMouseOver.bind(this));
 
-        //this allowsme to read the click from the ui dont knwo if its right but it works
+        //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
 
+
     }
+
+    switchTextures(index) {
+        if(this.state.animating) return;
     
+        this.state.animating = true;
+    
+        this.navItems[this.state.current].classList.remove('item--current');
+        this.navItems[index].classList.add('item--current');
+        this.state.current = index;
+    
+        this.material.uniforms.uNextTex.value = this.textures[index];
+    
+        const tl = gsap.timeline({
+          onComplete: () => {
+            this.state.animating = false;
+            this.material.uniforms.uCurrTex.value = this.textures[index];
+          }
+        });
+    
+        tl
+          .fromTo(this.material.uniforms.uProg, {
+            value: 0
+          }, {
+            value: 1,
+            duration: 2,
+            ease: 'expo.inOut',
+          }, 0);
+      }
 
 
     resize() {
@@ -91,79 +236,28 @@ export default class App {
 
     }
 
-    env() {
-        this.colorA = new Color(0xffffff)
-        this.colorB = new Color(0x000000)
-        this.skyGeo = new SphereGeometry(1600, 32, 12);
-        this.skyMat = new ShaderMaterial({
-            uniforms: {
-                'topColor': { value: this.colorA },
-                'bottomColor': { value: this.colorB },
-                'offset': { value: 5 },
-            },
-            wireframe: true,
-            vertexShader: rawVertex,
-            fragmentShader: rawFragment,
-            side: BackSide
-        })
-        this.sky = new Mesh(this.skyGeo, this.skyMat)
-        this.scene.add(this.sky);
 
-    }
     reposition() {
 
         this.elements = this.geos.children
         //console.log(this.elements)
         this.elements.forEach(element => {
+           // gsap.to(this.elements.rotation, { x: (Math.random() - 0.06) * 10 * Math.random(), y: (Math.random() - 0.06) * 10 * Math.random(), z: (Math.random() - 0.06) * 10 * Math.random(), ease: "power2.out", delay: 0.4 });
             element.rotation.x = (Math.random() - 0.06) * 10 * Math.random();
             element.rotation.y = (Math.random() - 0.06) * 10 * Math.random();
             element.rotation.z = (Math.random() - 0.06) * 10 * Math.random();
         });
-
+       
 
     }
 
     addObjects() {
-        // Debug
-        if (this.debug.active) {
-            this.debugFolder = this.debug.ui.addFolder('material')
-            this.paramsColor = {
-                color:"#000000",
-                emissive:"#000000",
-                specular:"#000000"
-            }
-            this.debugFolder.addColor(this.paramsColor,'color').onChange(()=>{
-                this.update()
-            });
-            this.debugFolder.addColor(this.paramsColor,'emissive').onChange(()=>{
-                this.update()
-            });
-            this.debugFolder.addColor(this.paramsColor,'specular').onChange(()=>{
-                this.update()
-            });
-        }
         this.geos = new Object3D();
-
-        // this.mat = new ShaderMaterial({
-        //     uniforms: {
-        //         uTime: { value: this.clock },
-        //         res: {
-        //             value: new Vector4(window.innerWidth, window.innerHeight, null, null)
-        //         },
-
-        //     },
-        //     vertexShader: vertex,
-        //     fragmentShader: fragment,
-
-        // })
-
         this.phongMat = new MeshPhongMaterial({
             color: 0x000000,
-            emissive: 0x00000,
-            specular: 0xc1c2c3,
+            emissive: 0x000000,
+            specular: 0xf5e5e5,
         })
-
-
 
         this.geom = new BoxGeometry(1, 1, 1);
 
@@ -176,15 +270,15 @@ export default class App {
             this.geos.add(this.mesh);
         }
 
-        this.scene.add(this.geos);
-        this.geos.visible = true;
+        // this.scene.add(this.geos);
+        this.main = new Group()
+        this.main.add(this.geos)
+        this.scene.add(this.main);
 
+
+        this.loadTexturesAndAddToScene(this.textureUrls)
 
     }
-    colorSwitch() {
-        console.log('hello color')
-    }
-
     onMouseMove(event) {
         //this for camera 
         this.mouse.x = (event.clientX / this.width) * 2 - 1;
@@ -201,11 +295,13 @@ export default class App {
         gsap.to(this.geos.rotation, { duration: 1.3, z: -1.5, yoyo: true })
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
-        this.intersects = this.raycaster.intersectObjects(this.scene.children, true);
+        // console.log(this.scene.children[3].children)
+        this.cubeElements = this.scene.children[2].children //select onlycubes elements
+        this.intersects = this.raycaster.intersectObjects(this.cubeElements, true);
 
         for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
-                duration: 1.5,
+                duration: 2,
                 x: (Math.random() - 0.5) * -10 * Math.random(),
                 z: (Math.random() - 0.5) * -10 * Math.random(),
                 y: (Math.random() - 0.5) * -10 * Math.random(),
@@ -213,43 +309,67 @@ export default class App {
             });
         }
 
-        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 0.2 });
+        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power2.InOut", delay: 1.5 });
     }
+
 
     view() {
 
+
+        this.navItems = document.querySelectorAll('.nav_item');
+
+        this.navItems.forEach((item,i) => {
+           console.log()
+         
+        })
+
+
+
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
-
-
         if (this.portafolio === true) {
-            this.geos.visible = true;
-            gsap.to(this.geos.position, { x: 10, y: -2, z: 0, ease: "power3.InOut", delay: 0.2, onComplete: this.reposition() });
-
+            this.main.visible = true;
+            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
+            gsap.to(this.second.position, {
+                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.8, onComplete: () => {
+                    console.log(this.second)
+                }
+            });
+            this.second.visible = false
         }
         if (this.about === true) {
-            this.c('something new')
-            //this.geos.visible = false;
-            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power3.InOut", delay: 0.2, onComplete: this.reposition() });
-            //this.planes.visible = true
-
+            /// this.c('something new')
+            this.main.visible = false;
+            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
+            this.second.visible = true                                                      //aqui va una parte rara del click
+            gsap.to(this.second.position, { x: 0, y: 0, z: 5, ease: "power2.in", delay: 0.4 });
+            this.addEvents()
+           
         }
     }
+    addEvents(){
+        this.navItems.forEach((el, i) => {
+            el.addEventListener('click', () => {
+                console.log( el.className,i)
+              this.switchTextures(i);
+            });
+          });
+    }
 
-    update(){
+    update() {
         this.mesh.material.color.set(this.paramsColor.color)
         this.mesh.material.color.set(this.paramsColor.emissive)
         this.mesh.material.specular.set(this.paramsColor.specular)
     }
+
+
     render() {
 
         this.time += 0.05;
-        this.controls.minDistance = 20
-        this.controls.maxDistance = 45
-        //this.mati.uniforms.uTime.value = this.time;
-        this.camera.minDistance = 20;
-
+        this.geos.rotation.x += 0.003;
         requestAnimationFrame(this.render.bind(this));
+        //this.shadeMat.uniforms.uTime.value = this.clock.getElapsedTime()
+
         this.renderer.render(this.scene, this.camera);
 
     }

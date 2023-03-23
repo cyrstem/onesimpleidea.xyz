@@ -13,6 +13,7 @@ export default class UI {
         this.about = false
         this.portafolio = false
         this.addListeners()
+     
     }
     addListeners() {
     let nav = document.getElementById('nav');
@@ -23,19 +24,19 @@ export default class UI {
     initHTML() {
         document.getElementById("ui").innerHTML = Navbar();
         document.getElementById("contact").innerHTML = Contact();
+     
     }
 
     onClick(event) {
 
         event.preventDefault();
         this.links = event.target.id;
+        // console.log(this.links)
 
         if (this.links !== 'home') {
             this.portafolio = false
             document.getElementById("terminal").innerHTML = Portafolio();
-             
             this.about =true;
-            
             return
         }
         
