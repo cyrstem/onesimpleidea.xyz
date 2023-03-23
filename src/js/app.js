@@ -2,15 +2,7 @@
 import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, SphereGeometry, BackSide, Color, MeshBasicMaterial, ShaderMaterial, Vector2, Raycaster, Clock, GLSL3, Object3D, Group, PlaneGeometry, AmbientLight, MeshStandardMaterial, PointLight, Vector4, Texture, MeshPhongMaterial, Fog, TextureLoader, LoadingManager } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
-// import assets from './utils/assets';
 import gsap from 'gsap';
-
-import disp from '../../public/insta.png';
-// import fragment from './shader/fragment.glsl';
-// import vertex from './shader/vertex.glsl/';
-
-import rawVert from './shader/rawVert.glsl'
-import rawFrag from './shader/rawFrag.glsl'
 
 import gVert from './shader/gVert.glsl'
 import gFrag from './shader/gFrag.glsl'
@@ -69,7 +61,7 @@ export default class App {
         this.addObjects();
         this.resize();
         this.render();
-        //console.log(this.second.children.scale)
+   
 
     }
     //----------------------------------------------------
@@ -131,6 +123,7 @@ export default class App {
         }
 
         // // Create a plane for each texture and add it to the scene
+        //--------------------------------------------------------------
         // for (let i = 0; i < textures.length; i++) {
         //     const geometry = new PlaneGeometry(6, 6, 32, 32);
         //     this.shadeMat = new ShaderMaterial({
@@ -151,7 +144,7 @@ export default class App {
         //     this.scene.add(this.second);    
 
         // }
-        
+        //--------------- maybe needed sometime later or for other project
         this.plane = new PlaneGeometry(6,6,32,32)
         this.material = new ShaderMaterial({
             uniforms: {
@@ -189,8 +182,6 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-        // window.addEventListener('mouseover', this.onMouseOver.bind(this));
-
         //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
 
@@ -368,8 +359,6 @@ export default class App {
         this.time += 0.05;
         this.geos.rotation.x += 0.003;
         requestAnimationFrame(this.render.bind(this));
-        //this.shadeMat.uniforms.uTime.value = this.clock.getElapsedTime()
-
         this.renderer.render(this.scene, this.camera);
 
     }
