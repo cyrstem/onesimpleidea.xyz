@@ -8,8 +8,8 @@ import gsap from 'gsap';
 import fragment from './shader/fragment.glsl';
 import vertex from './shader/vertex.glsl/';
 
-// import rawVertex from './shader/rawVertex.glsl'
-// import rawFragment from './shader/rawFragment.glsl'
+import rawVert from './shader/rawVert.glsl'
+import rawFrag from './shader/rawFrag.glsl'
 
 import UI from './UI';
 
@@ -44,18 +44,17 @@ export default class App {
         this.camera.position.set(0, 0, 45);
 
 
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        //this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
         this.time = 0;
         this.clock = new Clock();
-        // console.log(this.clock.getElapsedTime())
         this.fog = new Fog(0xffffff)
         this.images = []
         this.scene.fog = new Fog(this.scene.background, 1, 500)
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
-        this.raycaster.setFromCamera(this.mouse, this.camera)
+      //  this.raycaster.setFromCamera(this.mouse, this.camera)
 
 
         this.config()
@@ -66,7 +65,7 @@ export default class App {
         this.addObjects();
         this.resize();
         this.render();
-
+        //console.log(this.second.children.scale)
 
     }
     //----------------------------------------------------
@@ -90,18 +89,19 @@ export default class App {
             });
         }
 
-        this.assets = assets
-
+        // this.assets = assets
         this.textureUrls = [
             'insta-0.jpg',
             'insta-1.jpg',
-            'insta-2.jpg'
+            'insta-2.jpg',
+            'insta-3.jpg',
+
         ];
 
         //console.log("hello", this.textureUrls)
-        this.assets.forEach((item) => {
-            this.images.push(item.url)
-        })
+        // this.assets.forEach((item) => {
+        //     this.images.push(item.url)
+        // })
     }
     //--------------------------------------------------------------
     loadTexturesAndAddToScene(textureUrls) {
@@ -118,13 +118,27 @@ export default class App {
 
         // Create a plane for each texture and add it to the scene
         for (let i = 0; i < textures.length; i++) {
-            const geometry = new PlaneGeometry(5, 5);
-            const material = new MeshBasicMaterial({ map: textures[i] });
-            const meshPlane = new Mesh(geometry, material);
-            meshPlane.position.set(i * 2.3, 0, i * 0.4);
-            this.second.add(meshPlane)
+            const geometry = new PlaneGeometry(6, 6, 32, 32);
+            this.shadeMat = new ShaderMaterial({
+                uniforms: {
+                    uTime: { value: 0.0 },
+                    uTexture: { value: textures[i] }
+                },
+                vertexShader: rawVert,
+                fragmentShader: rawFrag,
+
+                //map:textures[i],
+            })
+            // const material = new MeshBasicMaterial({ map: textures[i] });
+            const meshPlane = new Mesh(geometry, this.shadeMat);
+            meshPlane.position.set(i * 3.6, 0, 0);
             this.second.visible = false
+            this.second.add(meshPlane)
+            //this.second.position.multiplyScalar(  -0.5 );
             this.scene.add(this.second);
+
+
+
         }
     }
 
@@ -144,9 +158,10 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-
+        window.addEventListener('mouseover',this.onMouseOver.bind(this));
         //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
+
 
     }
 
@@ -174,9 +189,6 @@ export default class App {
         });
 
 
-    }
-    recast(){
-       
     }
 
     addObjects() {
@@ -231,7 +243,7 @@ export default class App {
 
         for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
-                duration: 1.5,
+                duration: 2,
                 x: (Math.random() - 0.5) * -10 * Math.random(),
                 z: (Math.random() - 0.5) * -10 * Math.random(),
                 y: (Math.random() - 0.5) * -10 * Math.random(),
@@ -239,8 +251,26 @@ export default class App {
             });
         }
 
-        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 0.4 });
+        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power2.InOut", delay: 1.5 });
     }
+    onMouseOver(e){
+
+      //  this.intersects2 = this.raycaster.intersectObjects(this.second.children, true);
+
+        // for (var i = 0; i < this.intersects.length; i++) {
+        //     gsap.to(this.intersects[i].object.position, {
+        //         duration: 2,
+        //         x: (Math.random() - 0.5) * -10 * Math.random(),
+        //         z: (Math.random() - 0.5) * -10 * Math.random(),
+        //         y: (Math.random() - 0.5) * -10 * Math.random(),
+        //         ease: "power2.out"
+        //     });
+        // }
+
+        //this.shadeMat.uniforms.uTime.value = this.clock.getElapsedTime()
+    }
+
+
 
     view() {
 
@@ -250,12 +280,15 @@ export default class App {
 
         if (this.portafolio === true) {
             this.main.visible = true;
-            gsap.to(this.geos.position, { x: 10, y: -2, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
+            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
 
-            gsap.to(this.second.position, { x: 0, y: 0, z: -10,opacity:0, ease: "power2.out", delay: 0.4, onComplete: ()=>{
-                console.log(this.second)
-            } });
-           
+            gsap.to(this.second.position, {
+                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.8, onComplete: () => {
+                    console.log(this.second)
+                }
+            });
+            //gsap.to(this.second.children.scale)
+
             this.second.visible = false
         }
         if (this.about === true) {
@@ -263,7 +296,7 @@ export default class App {
             this.main.visible = false;
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
             this.second.visible = true
-            gsap.to(this.second.position, { x: 0, y: 0, z: 2,opacity:1, ease: "power2.in", delay: 0.4, onComplete: this.recast });
+            gsap.to(this.second.position, { x: 0, y: -0.5, z: 5, ease: "power2.in", delay: 0.4, onComplete: this.recast });
 
         }
     }
@@ -278,12 +311,12 @@ export default class App {
     render() {
 
         this.time += 0.05;
-        this.controls.minDistance = 20
-        this.controls.maxDistance = 45
+        // this.controls.maxDistance = 45
+        // this.camera.minDistance = 20;
         this.geos.rotation.x += 0.003;
-        //this.mati.uniforms.uTime.value = this.time;
-        this.camera.minDistance = 20;
         requestAnimationFrame(this.render.bind(this));
+      
+        
         this.renderer.render(this.scene, this.camera);
 
     }
