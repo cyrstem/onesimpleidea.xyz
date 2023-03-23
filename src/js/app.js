@@ -91,10 +91,10 @@ export default class App {
 
         // this.assets = assets
         this.textureUrls = [
-            'insta-0.jpg',
-            'insta-1.jpg',
-            'insta-2.jpg',
-            'insta-3.jpg',
+            'insta-0.png',
+            'insta-1.png',
+            'insta-2.png',
+            'insta-3.png',
 
         ];
         this.state ={
@@ -341,7 +341,6 @@ export default class App {
     addEvents(){
         this.navItems.forEach((el, i) => {
             el.addEventListener('click', () => {
-                console.log( el.className,i)
               this.switchTextures(i);
             });
           });
