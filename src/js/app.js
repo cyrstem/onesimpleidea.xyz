@@ -31,7 +31,7 @@ export default class App {
         this.container.appendChild(this.renderer.domElement);
 
         this.camera = new PerspectiveCamera(
-            35,
+            45,
             window.innerWidth / window.innerHeight,
             0.001,
             1000
