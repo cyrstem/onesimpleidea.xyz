@@ -31,13 +31,13 @@ export default class App {
         this.container.appendChild(this.renderer.domElement);
 
         this.camera = new PerspectiveCamera(
-            45,
+            35,
             window.innerWidth / window.innerHeight,
             0.001,
             1000
         );
 
-        this.camera.position.set(0, 0, 45);
+        this.camera.position.set(0, 0, 35);
 
 
 
