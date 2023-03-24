@@ -30,8 +30,8 @@ const Portafolio = () => {
                 based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.</p>
             </article>
             <article class="info ">
-                <p>I Develop a Physical fully interactive installation with Mapping amd custom software, projected to the tallest building in Quito for the launch of the e-commerce site
-                YaEsta.com,as a mean to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attentionof the public. i was also part of the Tech team managing the platform until it was acquire by other company.</p>
+                <p>I Develop a Physical and fully interactive installation with video Mapping and custom software projected to the tallest building in Quito, for the launch of the e-commerce site
+                YaEsta.com. As a way to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attention of the public. i was also part of the Tech team managing the platform until it was acquire by other company.</p>
             </article>
         </div>
     </main>
