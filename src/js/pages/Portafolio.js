@@ -26,12 +26,12 @@ const Portafolio = () => {
                 printing</p>
             </article>
             <article class="info ">
-                <p>Custom build a Audio player for Linux and mac. on building a light and simple player for linux, 
-                based on my old love to sonique and winamp i do miss those programs when ui and ux was actually interesting and different every time this is a preview</p>
+                <p>Custom build a Audio player for Linux and Mac. Building a light and simple player for linux, 
+                based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.</p>
             </article>
             <article class="info ">
-                <p>Develop a Physical installation with Mapping and live interaction for the launch of the e-commerce site
-                YaEsta.com back in the day</p>
+                <p>I Develop a Physical fully interactive installation with Mapping amd custom software, projected to the tallest building in Quito for the launch of the e-commerce site
+                YaEsta.com,as a mean to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attentionof the public. i was also part of the Tech team managing the platform until it was acquire by other company.</p>
             </article>
         </div>
     </main>
