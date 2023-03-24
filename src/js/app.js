@@ -195,6 +195,10 @@ export default class App {
     
         this.navItems[this.state.current].classList.remove('item--current');
         this.navItems[index].classList.add('item--current');
+        
+        this.textItems[this.state.current].classList.remove('show__info');
+        this.textItems[index].classList.add('show__info');
+
         this.state.current = index;
     
         this.material.uniforms.uNextTex.value = this.textures[index];
@@ -231,15 +235,15 @@ export default class App {
     reposition() {
 
         this.elements = this.geos.children
-        //console.log(this.elements)
+        
         this.elements.forEach(element => {
-           // gsap.to(this.elements.rotation, { x: (Math.random() - 0.06) * 10 * Math.random(), y: (Math.random() - 0.06) * 10 * Math.random(), z: (Math.random() - 0.06) * 10 * Math.random(), ease: "power2.out", delay: 0.4 });
-            element.rotation.x = (Math.random() - 0.06) * 10 * Math.random();
-            element.rotation.y = (Math.random() - 0.06) * 10 * Math.random();
-            element.rotation.z = (Math.random() - 0.06) * 10 * Math.random();
+           gsap.to(element.rotation, { 
+            x: (Math.random() - 0.07) * 10 * Math.random(), 
+            y: (Math.random() - 0.07) * 10 * Math.random(), 
+            z: (Math.random() - 0.07) * 10 * Math.random(), 
+            ease: "power2.out", delay: 0.4 });
         });
        
-
     }
 
     addObjects() {
@@ -308,32 +312,25 @@ export default class App {
 
 
         this.navItems = document.querySelectorAll('.nav_item');
-
-        this.navItems.forEach((item,i) => {
-           console.log()
-         
-        })
-
-
-
+        this.textItems = document.querySelectorAll('.info')
+  
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
         if (this.portafolio === true) {
             this.main.visible = true;
             gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
             gsap.to(this.second.position, {
-                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.8, onComplete: () => {
-                    // console.log(this.second)
-                }
-            });
+                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2});
+             
             this.second.visible = false
         }
         if (this.about === true) {
             /// this.c('something new')
             this.main.visible = false;
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
-            this.second.visible = true                                                      //aqui va una parte rara del click
-            gsap.to(this.second.position, { x: 0, y: 0, z: 5, ease: "power2.in", delay: 0.4 });
+            this.second.visible = true 
+                                                               //aqui va una parte rara del click
+            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1});
             this.addEvents()
            
         }
