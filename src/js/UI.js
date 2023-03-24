@@ -52,7 +52,7 @@ export default class UI {
     effect(){
         const textElement = document.querySelector('.content');
         this.ts = new TypeShuffle(textElement);
-        this.ts.trigger('fx1');
+        this.ts.trigger('fx3');
   
         
     }
