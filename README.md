@@ -1,7 +1,7 @@
 
 ## O N E S I M P L E I D E A . X Y Z 
 
-Portafolio work thing is made with Vite, JS,  css and Threejs.  
+Portafolio work thing is made with Vite, vanilla JS,  css and Threejs.  
 
 ```
 -install : npm i
