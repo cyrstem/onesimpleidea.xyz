@@ -161,6 +161,7 @@ export default class App {
         })
         const meshPlane = new Mesh(this.plane, this.material);
         meshPlane.position.set(3.2, 0, 0);
+       // meshPlane.rotateY(-0.7)
         this.second.visible = false
         this.second.add(meshPlane)
         this.scene.add(this.second);    

@@ -16,6 +16,10 @@
 	margin: 25px;
 }
 
+.warning{
+	display:none ;
+}
+
 #content {
 
 	position: absolute;
@@ -218,5 +222,8 @@
 	#contact {
 		display: none;
 		bottom: 0vh;
+	}
+	.warning{
+		display:block ;
 	}
 }

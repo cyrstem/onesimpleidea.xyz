@@ -37,6 +37,7 @@ export default class UI {
             this.portafolio = false
             document.getElementById("terminal").innerHTML = Portafolio();
             this.about =true;
+            
             return
         }
         
@@ -52,7 +53,7 @@ export default class UI {
     effect(){
         const textElement = document.querySelector('.content');
         this.ts = new TypeShuffle(textElement);
-        this.ts.trigger('fx3');
+        this.ts.trigger('fx5');
   
         
     }
