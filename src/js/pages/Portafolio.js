@@ -1,5 +1,3 @@
-
-
 const Portafolio = () => {
     const template = `
     <main>  
@@ -31,13 +29,12 @@ const Portafolio = () => {
             </article>
             <article class="info ">
                 <p>I Develop a Physical and fully interactive installation with video Mapping and custom software projected to the tallest building in Quito, for the launch of the e-commerce site
-                YaEsta.com. As a way to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attention of the public. i was also part of the Tech team managing the platform until it was acquire by other company.</p>
-                <a href ="https://www.youtube.com/watch?v=YHZd0TxPMkY&t=1s&ab_channel=UPDRONEInteligenciaAeron%C3%A1utica" target=" _blank> case study YaEsta Pacman</a>
-                </article>
+                YaEsta.com. As a way to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attention of the public. i was also part of the Tech team managing the platform until it was acquire by other company. <a href ="https://www.youtube.com/watch?v=YHZd0TxPMkY&t=1s&ab_channel=UPDRONEInteligenciaAeron%C3%A1utica" target=" _blank">YaEsta Pacman</a></p>
+            </article>
         </div>
     </main>
     `;
     return template;
 };
-        
+
 export default Portafolio;
