@@ -219,6 +219,7 @@ export default class App {
             duration: 2,
             ease: 'expo.inOut',
           }, 0);
+          //tl.fromTo(".show__info",{alpha:1, duration:0.5});
       }
 
 
