@@ -203,6 +203,7 @@ export default class App {
         this.state.current = index;
     
         this.material.uniforms.uNextTex.value = this.textures[index];
+        
     
         const tl = gsap.timeline({
           onComplete: () => {
@@ -219,7 +220,15 @@ export default class App {
             duration: 2,
             ease: 'expo.inOut',
           }, 0);
-          //tl.fromTo(".show__info",{alpha:1, duration:0.5});
+
+        //   tl
+        //   .fromTo(this.textItems[index], {
+        //     opacity: 0
+        //   }, {
+        //     opacity: 1,
+        //     duration: 1.3,
+        //     ease: 'expo.inOut',
+        //   }, 0);
       }
 
 
@@ -253,7 +262,7 @@ export default class App {
         this.phongMat = new MeshPhongMaterial({
             color: 0x000000,
             emissive: 0x000000,
-            specular: 0xf5e5e5,
+            specular: 0x000000,
         })
 
         this.geom = new BoxGeometry(1, 1, 1);
