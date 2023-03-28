@@ -102,6 +102,7 @@ export default class App {
         const manager = new LoadingManager(() => {
             // console.log("check loading of textures",this.textures)
             this.material.uniforms.uCurrTex.value = this.textures[0];
+            
         })
 
         const loader = new TextureLoader(manager);
@@ -179,7 +180,7 @@ export default class App {
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
 
         //this allowsme to read the click from the ui dont knwon if its right but it works
-        window.addEventListener("click", this.view.bind(this))
+        window.addEventListener("click", this.view.bind(this, this.handleClick))
         window.addEventListener("onTouch",this.onTouch.bind(this));
     }
 
@@ -191,8 +192,9 @@ export default class App {
         this.navItems[this.state.current].classList.remove('item--current');
         this.navItems[index].classList.add('item--current');
 
-        // this.textItems[this.state.current].classList.remove('show__info');
-        // this.textItems[index].classList.add('show__info');
+        this.textItems[this.state.current].classList.remove('show__info');
+        this.textItems[index].classList.add('show__info');
+        console.log(this.state.current)
 
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
@@ -202,6 +204,7 @@ export default class App {
             onComplete: () => {
                 this.state.animating = false;
                 this.material.uniforms.uCurrTex.value = this.textures[index];
+                // this.c(index)
             }
         });
 
@@ -213,6 +216,7 @@ export default class App {
                 duration: 2,
                 ease: 'expo.inOut',
             }, 0);
+           
     }
 
 
@@ -239,6 +243,8 @@ export default class App {
                 ease: "power2.out", delay: 0.4
             });
         });
+
+  
 
     }
 
@@ -300,7 +306,7 @@ export default class App {
             });
         }
 
-        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power2.InOut", delay: 1.5 });
+        gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 1 });
     }
 
     onTouch(event) {
@@ -313,17 +319,23 @@ export default class App {
     view() {
         this.navItems = document.querySelectorAll('.nav_item');
         this.textItems = document.querySelectorAll('.info')
+  
 
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
 
         if (this.portafolio === true) {
             this.main.visible = true;
-            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
+            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition()});
             gsap.to(this.second.position, {
                 x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2
             });
             this.second.visible = false
+            this.material.uniforms.uNextTex.value = this.textures[0]
+            // this.textItems.forEach((item)=>{
+            //     console.log(item)
+            // })
+
         }
         
         if (this.about === true) {
@@ -333,11 +345,9 @@ export default class App {
             this.second.visible = true
             //aqui va una parte rara del click
             gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
-            this.addEvents()
-             
+            
         }
-    }
-    addEvents() {
+        
         this.navItems.forEach((el, i) => {
             el.addEventListener('click', () => {
                 this.switchTextures(i);
@@ -345,6 +355,15 @@ export default class App {
             });
         });
     }
+    handleClick(event) {
+        // Check if the clicked element is one of the nav items
+        if (event.target && event.target.matches('.nav_item')) {
+          // Get the index of the clicked nav item
+          const index = Array.from(this.navItems).indexOf(event.target);
+          // Call the "switchTextures" method with the index
+          this.switchTextures(index);
+        }
+      }
 
     update() {
         this.mesh.material.color.set(this.paramsColor.color)

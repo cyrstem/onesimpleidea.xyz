@@ -8,7 +8,7 @@ const Portafolio = () => {
             <a class="nav_item" href="#" ><h1>YaEsta.com</h1></a>
         </div>
         <div class="infoFile">
-            <article class="info show__info">
+            <article class="info">
             <p>I collaborated on developing the Virtual Experience for
                 <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
                 interactive installation/performance
