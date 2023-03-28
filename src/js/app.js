@@ -50,9 +50,6 @@ export default class App {
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
-        //      this.raycaster.setFromCamera(this.mouse, this.camera)
-
-
         this.config()
         this.env();
 
@@ -61,7 +58,7 @@ export default class App {
         this.addObjects();
         this.resize();
         this.render();
-   
+
 
     }
     //----------------------------------------------------
@@ -70,8 +67,6 @@ export default class App {
         if (this.debug.active) {
 
             this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-            // this.controls.maxDistance = 45
-            // this.camera.minDistance = 20;
             this.debugFolder = this.debug.ui.addFolder('material')
             this.paramsColor = {
                 color: "#000000",
@@ -97,17 +92,16 @@ export default class App {
             'insta-3.png',
 
         ];
-        this.state ={
-            animating :false,
-            current:0
+        this.state = {
+            animating: false,
+            current: 0
         }
     }
     //--------------------------------------------------------------
     loadTexturesAndAddToScene(textureUrls) {
         const manager = new LoadingManager(() => {
-           // console.log("check loading of textures",this.textures)
+            // console.log("check loading of textures",this.textures)
             this.material.uniforms.uCurrTex.value = this.textures[0];
-            //this.shadeMat.uniforms.uTime.value =this.clock.getElapsedTime()
         })
 
         const loader = new TextureLoader(manager);
@@ -118,8 +112,8 @@ export default class App {
         for (let i = 0; i < textureUrls.length; i++) {
             const texture = loader.load(textureUrls[i]);
             loader.crossOrigin = true
-           
             this.textures.push(texture);
+            
         }
 
         // // Create a plane for each texture and add it to the scene
@@ -135,7 +129,7 @@ export default class App {
         //         vertexShader: rawVert,
         //         fragmentShader: rawFrag,
         //     })
-           
+
         //     const meshPlane = new Mesh(geometry, this.material);
         //     meshPlane.position.set(i * 5.6, 0, 0);
         //     this.second.visible = false
@@ -145,26 +139,26 @@ export default class App {
 
         // }
         //--------------- maybe needed sometime later or for other project
-        this.plane = new PlaneGeometry(6,6,32,32)
+        this.plane = new PlaneGeometry(6, 6, 32, 32)
         this.material = new ShaderMaterial({
             uniforms: {
                 uCurrTex: { value: 0 },
                 uNextTex: { value: 0 },
-                uDisp: { value:this.textures[1] },
+                uDisp: { value: this.textures[1] },
                 uMeshSize: { value: [6, 6] },
                 uImageSize: { value: [0, 0] },
                 uTime: { value: 0 },
                 uProg: { value: 0 },
             },
-            vertexShader:gVert,
-            fragmentShader:gFrag,
+            vertexShader: gVert,
+            fragmentShader: gFrag,
         })
         const meshPlane = new Mesh(this.plane, this.material);
         meshPlane.position.set(3.2, 0, 0);
-       // meshPlane.rotateY(-0.7)
+        // meshPlane.rotateY(-0.7)
         this.second.visible = false
         this.second.add(meshPlane)
-        this.scene.add(this.second);    
+        this.scene.add(this.second);
     }
 
     env() {
@@ -183,53 +177,43 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
+
         //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
-
-
+        window.addEventListener("onTouch",this.onTouch.bind(this));
     }
 
     switchTextures(index) {
-        if(this.state.animating) return;
-    
+        if (this.state.animating) return;
+
         this.state.animating = true;
-    
+
         this.navItems[this.state.current].classList.remove('item--current');
         this.navItems[index].classList.add('item--current');
-        
-        this.textItems[this.state.current].classList.remove('show__info');
-        this.textItems[index].classList.add('show__info');
+
+        // this.textItems[this.state.current].classList.remove('show__info');
+        // this.textItems[index].classList.add('show__info');
 
         this.state.current = index;
-    
         this.material.uniforms.uNextTex.value = this.textures[index];
-        
-    
-        const tl = gsap.timeline({
-          onComplete: () => {
-            this.state.animating = false;
-            this.material.uniforms.uCurrTex.value = this.textures[index];
-          }
-        });
-    
-        tl
-          .fromTo(this.material.uniforms.uProg, {
-            value: 0
-          }, {
-            value: 1,
-            duration: 2,
-            ease: 'expo.inOut',
-          }, 0);
 
-        //   tl
-        //   .fromTo(this.textItems[index], {
-        //     opacity: 0
-        //   }, {
-        //     opacity: 1,
-        //     duration: 1.3,
-        //     ease: 'expo.inOut',
-        //   }, 0);
-      }
+
+        const tl = gsap.timeline({
+            onComplete: () => {
+                this.state.animating = false;
+                this.material.uniforms.uCurrTex.value = this.textures[index];
+            }
+        });
+
+        tl
+            .fromTo(this.material.uniforms.uProg, {
+                value: 0
+            }, {
+                value: 1,
+                duration: 2,
+                ease: 'expo.inOut',
+            }, 0);
+    }
 
 
     resize() {
@@ -246,15 +230,16 @@ export default class App {
     reposition() {
 
         this.elements = this.geos.children
-        
+
         this.elements.forEach(element => {
-           gsap.to(element.rotation, { 
-            x: (Math.random() - 0.07) * 10 * Math.random(), 
-            y: (Math.random() - 0.07) * 10 * Math.random(), 
-            z: (Math.random() - 0.07) * 10 * Math.random(), 
-            ease: "power2.out", delay: 0.4 });
+            gsap.to(element.rotation, {
+                x: (Math.random() - 0.07) * 10 * Math.random(),
+                y: (Math.random() - 0.07) * 10 * Math.random(),
+                z: (Math.random() - 0.07) * 10 * Math.random(),
+                ease: "power2.out", delay: 0.4
+            });
         });
-       
+
     }
 
     addObjects() {
@@ -318,40 +303,47 @@ export default class App {
         gsap.to(this.camera.position, { y: 0, z: 15, ease: "power2.InOut", delay: 1.5 });
     }
 
+    onTouch(event) {
+        this.touch = event.touches[0]
+        this.touchX = this.touch.clientX
+        this.touchY = this.touch.clientY
+        console.log(this.touchX, this.touchY)
+    }
 
     view() {
-
-
         this.navItems = document.querySelectorAll('.nav_item');
         this.textItems = document.querySelectorAll('.info')
-  
+
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
+
         if (this.portafolio === true) {
             this.main.visible = true;
             gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
             gsap.to(this.second.position, {
-                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2});
-             
+                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2
+            });
             this.second.visible = false
         }
+        
         if (this.about === true) {
             /// this.c('something new')
             this.main.visible = false;
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
-            this.second.visible = true 
-                                                               //aqui va una parte rara del click
-            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1});
+            this.second.visible = true
+            //aqui va una parte rara del click
+            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
             this.addEvents()
-           
+             
         }
     }
-    addEvents(){
+    addEvents() {
         this.navItems.forEach((el, i) => {
             el.addEventListener('click', () => {
-              this.switchTextures(i);
+                this.switchTextures(i);
+                
             });
-          });
+        });
     }
 
     update() {
