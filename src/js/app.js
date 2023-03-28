@@ -113,7 +113,7 @@ export default class App {
             const texture = loader.load(textureUrls[i]);
             loader.crossOrigin = true
             this.textures.push(texture);
-            
+
         }
 
         // // Create a plane for each texture and add it to the scene
@@ -177,10 +177,11 @@ export default class App {
     addListener() {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
-
         //this allowsme to read the click from the ui dont knwon if its right but it works
+        //let options = document.getElementById('ex')
         window.addEventListener("click", this.view.bind(this))
-        window.addEventListener("onTouch",this.onTouch.bind(this));
+
+        window.addEventListener("onTouch", this.onTouch.bind(this));
     }
 
     switchTextures(index) {
@@ -191,8 +192,8 @@ export default class App {
         this.navItems[this.state.current].classList.remove('item--current');
         this.navItems[index].classList.add('item--current');
 
-        // this.textItems[this.state.current].classList.remove('show__info');
-        // this.textItems[index].classList.add('show__info');
+        this.textItems[this.state.current].classList.remove('show__info');
+        this.textItems[index].classList.add('show__info');
 
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
@@ -310,9 +311,10 @@ export default class App {
         console.log(this.touchX, this.touchY)
     }
 
-    view() {
+    view( event) {
         this.navItems = document.querySelectorAll('.nav_item');
         this.textItems = document.querySelectorAll('.info')
+        this.c(event.target.id)
 
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
@@ -325,23 +327,28 @@ export default class App {
             });
             this.second.visible = false
         }
-        
+
         if (this.about === true) {
-            /// this.c('something new')
             this.main.visible = false;
-            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
+            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.2, onComplete: this.reposition() });
             this.second.visible = true
+
             //aqui va una parte rara del click
-            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
-            this.addEvents()
-             
+            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "expo.inOut", delay: 0.2,onComplete: ()=>{
+                gsap.to(".infoFile",{opacity:1})
+            } });
+            //  this.addEvents()
         }
+        
+
     }
+ 
     addEvents() {
         this.navItems.forEach((el, i) => {
-            el.addEventListener('click', () => {
+            el.addEventListener('click', (event) => {
+                event.preventDefault();
+             
                 this.switchTextures(i);
-                
             });
         });
     }

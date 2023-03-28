@@ -94,30 +94,35 @@
 
 #ex {
 	font-family: $main-font;
+	display: flex;
+	flex-direction: column	;
+	width: fit-content;
+	align-content: start;
 
-	a {
-		display: block;
-		color: black;
-		text-decoration: none;
-		cursor: pointer;
-		background:linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-		transition: 0.6s;
-	}
-	a:focus{
-		color: rgba($color: #000000, $alpha: 0.5);
-		--d: 70%;
-	}
+	// a {
+	// 	display: block;
+	// 	color: black;
+	// 	text-decoration: none;
+	// 	cursor: pointer;
+	// 	background:linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
+	// 	transition: 0.6s;
+	// }
+	// a:focus{
+	// 	color: rgba($color: #000000, $alpha: 0.5);
+	// 	--d: 70%;
+	// }
 
-	a:hover {
-		color: rgba($color: #000000, $alpha: 0.6);
-		--d: 100%;
-	}
+	// a:hover {
+	// 	color: rgba($color: #000000, $alpha: 0.6);
+	// 	--d: 100%;
+	// }
 }
 .infoFile{
 	font-family: $main-font;
 	font-size: 1.2rem;
 	width: 25vw;
-	display: flex;
+	display: block;
+	opacity: 0;
 
 	.info{
 		display: none;
