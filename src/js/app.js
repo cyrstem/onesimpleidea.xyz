@@ -180,7 +180,7 @@ export default class App {
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
 
         //this allowsme to read the click from the ui dont knwon if its right but it works
-        window.addEventListener("click", this.view.bind(this, this.handleClick))
+        window.addEventListener("click", this.view.bind(this))
         window.addEventListener("onTouch",this.onTouch.bind(this));
     }
 
@@ -194,7 +194,7 @@ export default class App {
 
         this.textItems[this.state.current].classList.remove('show__info');
         this.textItems[index].classList.add('show__info');
-        console.log(this.state.current)
+        //console.log(this.state.current)
 
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
@@ -316,7 +316,7 @@ export default class App {
         console.log(this.touchX, this.touchY)
     }
 
-    view() {
+    view(event) {
         this.navItems = document.querySelectorAll('.nav_item');
         this.textItems = document.querySelectorAll('.info')
   
@@ -347,7 +347,8 @@ export default class App {
             gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
             
         }
-        
+
+        console.log(event.target)
         this.navItems.forEach((el, i) => {
             el.addEventListener('click', () => {
                 this.switchTextures(i);
@@ -355,16 +356,7 @@ export default class App {
             });
         });
     }
-    handleClick(event) {
-        // Check if the clicked element is one of the nav items
-        if (event.target && event.target.matches('.nav_item')) {
-          // Get the index of the clicked nav item
-          const index = Array.from(this.navItems).indexOf(event.target);
-          // Call the "switchTextures" method with the index
-          this.switchTextures(index);
-        }
-      }
-
+   
     update() {
         this.mesh.material.color.set(this.paramsColor.color)
         this.mesh.material.color.set(this.paramsColor.emissive)
