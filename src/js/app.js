@@ -188,13 +188,11 @@ export default class App {
         if (this.state.animating) return;
 
         this.state.animating = true;
-
         this.navItems[this.state.current].classList.remove('item--current');
         this.navItems[index].classList.add('item--current');
 
         this.textItems[this.state.current].classList.remove('show__info');
         this.textItems[index].classList.add('show__info');
-        //console.log(this.state.current)
 
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
@@ -204,7 +202,6 @@ export default class App {
             onComplete: () => {
                 this.state.animating = false;
                 this.material.uniforms.uCurrTex.value = this.textures[index];
-                // this.c(index)
             }
         });
 
@@ -218,6 +215,41 @@ export default class App {
             }, 0);
            
     }
+
+    view(event) {
+        this.navItems = document.querySelectorAll('.nav_item');
+        this.textItems = document.querySelectorAll('.info')
+  
+        this.portafolio = this.ui.portafolio;
+        this.about = this.ui.about;
+
+        if (this.portafolio) {
+            this.main.visible = true;
+            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition()});
+            this.second.visible = false
+            this.material.uniforms.uNextTex.value = this.textures[0]
+            gsap.to(this.second.position, {
+                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2});
+        }
+        
+        if (this.about) {
+            this.main.visible = false;
+            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
+            this.second.visible = true
+            //aqui va una parte rara del click
+            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
+            
+        }
+
+
+        this.navItems.forEach((el, i) => {
+            el.addEventListener('click', () => {
+                this.switchTextures(i);
+                
+            });
+        });
+    }
+   
 
 
     resize() {
@@ -316,47 +348,7 @@ export default class App {
         console.log(this.touchX, this.touchY)
     }
 
-    view(event) {
-        this.navItems = document.querySelectorAll('.nav_item');
-        this.textItems = document.querySelectorAll('.info')
-  
-
-        this.portafolio = this.ui.portafolio;
-        this.about = this.ui.about;
-
-        if (this.portafolio === true) {
-            this.main.visible = true;
-            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition()});
-            gsap.to(this.second.position, {
-                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2
-            });
-            this.second.visible = false
-            this.material.uniforms.uNextTex.value = this.textures[0]
-            // this.textItems.forEach((item)=>{
-            //     console.log(item)
-            // })
-
-        }
-        
-        if (this.about === true) {
-            /// this.c('something new')
-            this.main.visible = false;
-            gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
-            this.second.visible = true
-            //aqui va una parte rara del click
-            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
-            
-        }
-
-        console.log(event.target)
-        this.navItems.forEach((el, i) => {
-            el.addEventListener('click', () => {
-                this.switchTextures(i);
-                
-            });
-        });
-    }
-   
+    
     update() {
         this.mesh.material.color.set(this.paramsColor.color)
         this.mesh.material.color.set(this.paramsColor.emissive)
