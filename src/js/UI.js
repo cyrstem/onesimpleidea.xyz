@@ -6,15 +6,14 @@ import { TypeShuffle } from './typeShuffle';
 
 export default class UI {
     constructor() {
-        this.links = null;
-        this.initHTML()
         this.about = false
         this.portafolio = false
+        this.initHTML()
         this.addListeners()
 
     }
     addListeners() {
-        let nav = document.getElementById('nav');
+        const nav = document.getElementById('nav');
         nav.addEventListener('click', this.onClick.bind(this))
     }
 
@@ -24,18 +23,17 @@ export default class UI {
     }
 
     onClick(event) {
-
         event.preventDefault();
-        this.links = event.target.id;
+        const id = event.target.id;
 
-        if (this.links !== 'home') {
+        if (id !== 'home') {
             this.portafolio = false
             document.getElementById("terminal").innerHTML = Portafolio();
             this.about = true;
             return
         }
 
-        if (this.links !== 'Portafolio') {
+        if (id !== 'Portafolio') {
             this.about = false;
             document.getElementById("terminal").innerHTML = About();
             this.portafolio = true;

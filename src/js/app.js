@@ -39,13 +39,10 @@ export default class App {
 
         this.camera.position.set(0, 0, 35);
 
-
-
-
         this.time = 0;
         this.clock = new Clock();
         this.fog = new Fog(0xffffff)
-        this.images = []
+        //this.images = []
         this.scene.fog = new Fog(this.scene.background, 3, 50)
         this.target = new Vector2();
         this.mouse = new Vector2();
@@ -92,6 +89,7 @@ export default class App {
             'insta-3.png',
 
         ];
+
         this.state = {
             animating: false,
             current: 0
@@ -102,7 +100,7 @@ export default class App {
         const manager = new LoadingManager(() => {
             // console.log("check loading of textures",this.textures)
             this.material.uniforms.uCurrTex.value = this.textures[0];
-            
+
         })
 
         const loader = new TextureLoader(manager);
@@ -114,7 +112,7 @@ export default class App {
             const texture = loader.load(textureUrls[i]);
             loader.crossOrigin = true
             this.textures.push(texture);
-            
+
         }
 
         // // Create a plane for each texture and add it to the scene
@@ -139,8 +137,9 @@ export default class App {
         //     this.scene.add(this.second);    
 
         // }
+        
         //--------------- maybe needed sometime later or for other project
-        this.plane = new PlaneGeometry(6, 6, 32, 32)
+        this.plane = new PlaneGeometry(6, 6, 12, 12)
         this.material = new ShaderMaterial({
             uniforms: {
                 uCurrTex: { value: 0 },
@@ -150,13 +149,13 @@ export default class App {
                 uImageSize: { value: [0, 0] },
                 uTime: { value: 0 },
                 uProg: { value: 0 },
+                animate:{value :false}
             },
             vertexShader: gVert,
             fragmentShader: gFrag,
         })
         const meshPlane = new Mesh(this.plane, this.material);
         meshPlane.position.set(3.2, 0, 0);
-        // meshPlane.rotateY(-0.7)
         this.second.visible = false
         this.second.add(meshPlane)
         this.scene.add(this.second);
@@ -181,7 +180,7 @@ export default class App {
 
         //this allowsme to read the click from the ui dont knwon if its right but it works
         window.addEventListener("click", this.view.bind(this))
-        window.addEventListener("onTouch",this.onTouch.bind(this));
+        window.addEventListener("onTouch", this.onTouch.bind(this));
     }
 
     switchTextures(index) {
@@ -196,12 +195,15 @@ export default class App {
 
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
-
+        this.material.uniforms.animate.value = true
+        
+        
 
         const tl = gsap.timeline({
             onComplete: () => {
                 this.state.animating = false;
                 this.material.uniforms.uCurrTex.value = this.textures[index];
+                this.material.uniforms.animate.value = false
             }
         });
 
@@ -213,23 +215,24 @@ export default class App {
                 duration: 2,
                 ease: 'expo.inOut',
             }, 0);
-           
+        
     }
 
     view(event) {
         this.navItems = document.querySelectorAll('.nav_item');
         this.textItems = document.querySelectorAll('.info')
-  
+
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
 
         if (this.portafolio) {
             this.main.visible = true;
-            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition()});
+            gsap.to(this.geos.position, { x: 10, y: -1, z: 0, ease: "power2.in", delay: 0.4, onComplete: this.reposition() });
             this.second.visible = false
             this.material.uniforms.uNextTex.value = this.textures[0]
             gsap.to(this.second.position, {
-                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2});
+                x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2
+            });
         }
         
         if (this.about) {
@@ -238,7 +241,7 @@ export default class App {
             this.second.visible = true
             //aqui va una parte rara del click
             gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
-            
+
         }
 
 
@@ -246,10 +249,11 @@ export default class App {
             el.addEventListener('click', () => {
                 this.switchTextures(i);
                 
+
             });
         });
     }
-   
+
 
 
     resize() {
@@ -276,7 +280,7 @@ export default class App {
             });
         });
 
-  
+
 
     }
 
@@ -313,7 +317,6 @@ export default class App {
         this.mouse.x = (event.clientX / this.width) * 2 - 1;
         this.mouse.y = -(event.clientY / this.height) * 2 + 1;
 
-        //console.log(event)
         this.target.x = (event.x - this.mouse.x) * 0.009;
         this.target.y = -(event.y - this.mouse.y) * 0.009;
 
@@ -324,7 +327,6 @@ export default class App {
         gsap.to(this.geos.rotation, { duration: 1.3, z: -1.5, yoyo: true })
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
-        // console.log(this.scene.children[3].children)
         this.cubeElements = this.scene.children[2].children //select onlycubes elements
         this.intersects = this.raycaster.intersectObjects(this.cubeElements, true);
 
@@ -345,10 +347,9 @@ export default class App {
         this.touch = event.touches[0]
         this.touchX = this.touch.clientX
         this.touchY = this.touch.clientY
-        console.log(this.touchX, this.touchY)
     }
 
-    
+
     update() {
         this.mesh.material.color.set(this.paramsColor.color)
         this.mesh.material.color.set(this.paramsColor.emissive)
@@ -357,10 +358,10 @@ export default class App {
 
 
     render() {
-
         this.time += 0.05;
         this.geos.rotation.x += 0.003;
         requestAnimationFrame(this.render.bind(this));
+        this.material.uniforms.uTime.value = this.clock.getElapsedTime();
         this.renderer.render(this.scene, this.camera);
 
     }
