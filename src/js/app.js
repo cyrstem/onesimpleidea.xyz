@@ -16,10 +16,7 @@ export default class App {
         this.debug = new Debug();
         this.ui = new UI();
         this.scene = new Scene();
-
-
         this.container = stage.dom;
-
         this.width = this.container.offsetWidth;
         this.height = this.container.offsetHeight;
 
@@ -42,7 +39,6 @@ export default class App {
         this.time = 0;
         this.clock = new Clock();
         this.fog = new Fog(0xffffff)
-        //this.images = []
         this.scene.fog = new Fog(this.scene.background, 3, 50)
         this.target = new Vector2();
         this.mouse = new Vector2();
@@ -62,7 +58,6 @@ export default class App {
     config() {
         // Debug
         if (this.debug.active) {
-
             this.controls = new OrbitControls(this.camera, this.renderer.domElement);
             this.debugFolder = this.debug.ui.addFolder('material')
             this.paramsColor = {
@@ -81,13 +76,11 @@ export default class App {
             });
         }
 
-        // this.assets = assets
         this.textureUrls = [
             'insta-0.png',
             'insta-1.png',
             'insta-2.png',
             'insta-3.png',
-
         ];
 
         this.state = {
@@ -214,7 +207,10 @@ export default class App {
                 value: 1,
                 duration: 2,
                 ease: 'expo.inOut',
-            }, 0);
+            }, 0)
+                .fromTo(this.textItems[index],{
+                opacity:0},{opacity:1,duration:0.5,ease:'power2.in'
+            },0);
         
     }
 
@@ -248,8 +244,6 @@ export default class App {
         this.navItems.forEach((el, i) => {
             el.addEventListener('click', () => {
                 this.switchTextures(i);
-                
-
             });
         });
     }
@@ -344,9 +338,9 @@ export default class App {
     }
 
     onTouch(event) {
-        this.touch = event.touches[0]
-        this.touchX = this.touch.clientX
-        this.touchY = this.touch.clientY
+        const touch = event.touches[0]
+        // const touchX = this.touch.clientX
+        // const touchY = this.touch.clientY
     }
 
 
