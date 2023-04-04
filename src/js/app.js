@@ -3,7 +3,7 @@ import { Scene, Camera, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, Sph
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
 import gsap from 'gsap';
-
+import {Howl, Howler} from 'howler';
 import gVert from './shader/gVert.glsl'
 import gFrag from './shader/gFrag.glsl'
 
@@ -94,7 +94,10 @@ export default class App {
             animating: false,
             current: 0
         }
+        this.sound = new Howl({src:['audio.mp3']})
+       //this.sound.volume(0.5)
     }
+
     //--------------------------------------------------------------
     loadTexturesAndAddToScene(textureUrls) {
         const manager = new LoadingManager(() => {
@@ -193,6 +196,7 @@ export default class App {
         this.textItems[this.state.current].classList.remove('show__info');
         this.textItems[index].classList.add('show__info');
 
+
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
         this.material.uniforms.animate.value = true
@@ -248,8 +252,6 @@ export default class App {
         this.navItems.forEach((el, i) => {
             el.addEventListener('click', () => {
                 this.switchTextures(i);
-                
-
             });
         });
     }
@@ -336,17 +338,24 @@ export default class App {
                 x: (Math.random() - 0.5) * -10 * Math.random(),
                 z: (Math.random() - 0.5) * -10 * Math.random(),
                 y: (Math.random() - 0.5) * -10 * Math.random(),
-                ease: "power2.out"
+                ease: "power2.out",
             });
+            this.sound.play()
         }
-
+        
         gsap.to(this.camera.position, { y: 0, z: 15, ease: "power3.InOut", delay: 1 });
     }
 
     onTouch(event) {
-        this.touch = event.touches[0]
-        this.touchX = this.touch.clientX
-        this.touchY = this.touch.clientY
+        const touch = event.touches[0]
+         const touchX = this.touch.clientX
+         const touchY = this.touch.clientY
+         this.raycaster.setFromCamera(Vector2((this.touchX /window.innerWidth)*2 -1, -(this.touchY /window.innerHeight)*2 +1), this.camera);
+         this.intersects = this.raycaster.intersectObjects(this.cubeElements, true);
+
+        for (var i = 0; i < this.intersects.length; i++) {
+            this.sound.play()
+        }
     }
 
 
