@@ -311,14 +311,14 @@ export default class App {
         this.mouse.x = (event.clientX / this.width) * 2 - 1;
         this.mouse.y = -(event.clientY / this.height) * 2 + 1;
 
-        this.target.x = (event.x - this.mouse.x) * 0.009;
-        this.target.y = -(event.y - this.mouse.y) * 0.009;
+        this.target.x = (event.x - this.mouse.x) * 0.003;
+        this.target.y = -(event.y - this.mouse.y) * 0.003;
 
-        this.geos.rotation.x += 0.005 * (this.target.y - this.geos.rotation.x);
-        this.geos.rotation.y += 0.005 * (this.target.x - this.geos.rotation.y);
+        this.geos.rotation.x += 0.003 * (this.target.y - this.geos.rotation.x);
+        this.geos.rotation.y += 0.003 * (this.target.x - this.geos.rotation.y);
 
 
-        gsap.to(this.geos.rotation, { duration: 1.3, z: -1.5, yoyo: true })
+        gsap.to(this.geos.rotation, { duration: 1.3, z: -1.3, yoyo: true })
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.cubeElements = this.scene.children[2].children //select onlycubes elements
@@ -327,9 +327,9 @@ export default class App {
         for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
                 duration: 2,
-                x: (Math.random() - 0.5) * -10 * Math.random(),
-                z: (Math.random() - 0.5) * -10 * Math.random(),
-                y: (Math.random() - 0.5) * -10 * Math.random(),
+                x: (Math.random() - 0.3) * -10 * Math.random(),
+                z: (Math.random() - 0.3) * -10 * Math.random(),
+                y: (Math.random() - 0.3) * -10 * Math.random(),
                 ease: "power2.out"
             });
         }
@@ -353,7 +353,7 @@ export default class App {
 
     render() {
         this.time += 0.05;
-        this.geos.rotation.x += 0.003;
+        this.geos.rotation.x += 0.002;
         requestAnimationFrame(this.render.bind(this));
         this.material.uniforms.uTime.value = this.clock.getElapsedTime();
         this.renderer.render(this.scene, this.camera);
