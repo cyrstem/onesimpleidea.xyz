@@ -171,7 +171,7 @@ export default class App {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
 
-        //this allowsme to read the click from the ui dont knwon if its right but it works
+      //read click and touchs
         window.addEventListener("click", this.view.bind(this))
         window.addEventListener("onTouch", this.onTouch.bind(this));
     }
@@ -206,7 +206,7 @@ export default class App {
             }, {
                 value: 1,
                 duration: 2,
-                ease: 'expo.inOut',
+                ease: 'expo3.out',
             }, 0)
                 .fromTo(this.textItems[index],{
                 opacity:0},{opacity:1,duration:0.5,ease:'power2.in'
@@ -236,7 +236,7 @@ export default class App {
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
             this.second.visible = true
             //aqui va una parte rara del click
-            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in", delay: 0.1 });
+            gsap.to(this.second.position, { x: -0.5, y: 0, z: 5, ease: "power2.in" });
 
         }
 
@@ -270,7 +270,7 @@ export default class App {
                 x: (Math.random() - 0.07) * 10 * Math.random(),
                 y: (Math.random() - 0.07) * 10 * Math.random(),
                 z: (Math.random() - 0.07) * 10 * Math.random(),
-                ease: "power2.out", delay: 0.4
+                ease: "power4.out",
             });
         });
 
@@ -311,14 +311,14 @@ export default class App {
         this.mouse.x = (event.clientX / this.width) * 2 - 1;
         this.mouse.y = -(event.clientY / this.height) * 2 + 1;
 
-        this.target.x = (event.x - this.mouse.x) * 0.009;
-        this.target.y = -(event.y - this.mouse.y) * 0.009;
+        this.target.x = (event.x - this.mouse.x) * 0.003;
+        this.target.y = -(event.y - this.mouse.y) * 0.003;
 
-        this.geos.rotation.x += 0.005 * (this.target.y - this.geos.rotation.x);
-        this.geos.rotation.y += 0.005 * (this.target.x - this.geos.rotation.y);
+        // this.geos.rotation.x += 0.003 * (this.target.y - this.geos.rotation.x);
+        // this.geos.rotation.y += 0.003 * (this.target.x - this.geos.rotation.y);
 
 
-        gsap.to(this.geos.rotation, { duration: 1.3, z: -1.5, yoyo: true })
+        gsap.to(this.geos.rotation, { duration: 1.3, z: -1.3, yoyo: true })
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.cubeElements = this.scene.children[2].children //select onlycubes elements
@@ -327,9 +327,9 @@ export default class App {
         for (var i = 0; i < this.intersects.length; i++) {
             gsap.to(this.intersects[i].object.position, {
                 duration: 2,
-                x: (Math.random() - 0.5) * -10 * Math.random(),
-                z: (Math.random() - 0.5) * -10 * Math.random(),
-                y: (Math.random() - 0.5) * -10 * Math.random(),
+                x: (Math.random() - 0.3) * -10 * Math.random(),
+                z: (Math.random() - 0.3) * -10 * Math.random(),
+                y: (Math.random() - 0.3) * -10 * Math.random(),
                 ease: "power2.out"
             });
         }
@@ -353,7 +353,7 @@ export default class App {
 
     render() {
         this.time += 0.05;
-        this.geos.rotation.x += 0.003;
+        this.geos.rotation.x += 0.002;
         requestAnimationFrame(this.render.bind(this));
         this.material.uniforms.uTime.value = this.clock.getElapsedTime();
         this.renderer.render(this.scene, this.camera);
