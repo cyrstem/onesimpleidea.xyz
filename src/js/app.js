@@ -43,6 +43,7 @@ export default class App {
         this.target = new Vector2();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
+
         this.config()
         this.env();
 
@@ -108,29 +109,6 @@ export default class App {
 
         }
 
-        // // Create a plane for each texture and add it to the scene
-        //--------------------------------------------------------------
-        // for (let i = 0; i < textures.length; i++) {
-        //     const geometry = new PlaneGeometry(6, 6, 32, 32);
-        //     this.shadeMat = new ShaderMaterial({
-        //         uniforms: {
-        //             uTime: { value: 0.0 },
-        //             uTexture: { value: textures[i] }
-        //         },
-
-        //         vertexShader: rawVert,
-        //         fragmentShader: rawFrag,
-        //     })
-
-        //     const meshPlane = new Mesh(geometry, this.material);
-        //     meshPlane.position.set(i * 5.6, 0, 0);
-        //     this.second.visible = false
-        //     this.second.add(meshPlane)
-        //     //this.second.position.multiplyScalar(  -0.5 );
-        //     this.scene.add(this.second);    
-
-        // }
-        
         //--------------- maybe needed sometime later or for other project
         this.plane = new PlaneGeometry(6, 6, 18, 18)
         this.material = new ShaderMaterial({
@@ -142,7 +120,7 @@ export default class App {
                 uImageSize: { value: [0, 0] },
                 uTime: { value: 0 },
                 uProg: { value: 0 },
-                animate:{value :false}
+                animate: { value: false }
             },
             vertexShader: gVert,
             fragmentShader: gFrag,
@@ -171,7 +149,7 @@ export default class App {
         window.addEventListener("resize", this.resize.bind(this));
         window.addEventListener('mousemove', this.onMouseMove.bind(this));
 
-      //read click and touchs
+        //read click and touchs
         window.addEventListener("click", this.view.bind(this))
         window.addEventListener("onTouch", this.onTouch.bind(this));
     }
@@ -189,8 +167,8 @@ export default class App {
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
         this.material.uniforms.animate.value = true
-        
-        
+
+
 
         const tl = gsap.timeline({
             onComplete: () => {
@@ -208,10 +186,12 @@ export default class App {
                 duration: 2,
                 ease: 'expo3.out',
             }, 0)
-                .fromTo(this.textItems[index],{
-                opacity:0},{opacity:1,duration:0.5,ease:'power2.in'
-            },0);
-        
+            .fromTo(this.textItems[index], {
+                opacity: 0
+            }, {
+                opacity: 1, duration: 0.5, ease: 'power2.in'
+            }, 0);
+
     }
 
     view(event) {
@@ -230,7 +210,7 @@ export default class App {
                 x: 0, y: 0, z: -10, ease: "power2.out", delay: 0.2
             });
         }
-        
+
         if (this.about) {
             this.main.visible = false;
             gsap.to(this.geos.position, { x: 0, y: 0, z: 0, ease: "power2.out", delay: 0.4, onComplete: this.reposition() });
@@ -246,6 +226,8 @@ export default class App {
                 this.switchTextures(i);
             });
         });
+
+
     }
 
 
@@ -279,18 +261,19 @@ export default class App {
     }
 
     addObjects() {
+
         this.geos = new Object3D();
         this.phongMat = new MeshPhongMaterial({
             color: 0x000000,
             emissive: 0x000000,
             specular: 0x000000,
+
         })
 
         this.geom = new BoxGeometry(1, 1, 1);
 
         for (let i = 0; i < 250; i++) {
             this.mesh = new Mesh(this.geom, this.phongMat);
-
             this.mesh.position.x = (Math.random() - 0.5) * 10 * Math.random();
             this.mesh.position.y = (Math.random() - 0.5) * 10 * Math.random();
             this.mesh.position.z = (Math.random() - 0.5) * 10 * Math.random();
