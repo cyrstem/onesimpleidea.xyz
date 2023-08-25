@@ -34,7 +34,7 @@ void main() {
   float scale = 0.7 + 0.3 * uProg;
 
   vec4 currTex = texture2D(uCurrTex, texUv + vec2(disp.r * uProg, 0.));
-  vec4 nextTex = texture2D(uNextTex, texUv * scale + vec2(0.15) * (1. - uProg));
+  vec4 nextTex = texture2D(uNextTex, texUv * scale + vec2(0.25) * (1. - uProg));
 
   vec4 finalTex = mix(currTex, nextTex, wipe);
 

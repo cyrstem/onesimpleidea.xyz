@@ -132,7 +132,7 @@ export default class App {
         // }
         
         //--------------- maybe needed sometime later or for other project
-        this.plane = new PlaneGeometry(6, 6, 12, 12)
+        this.plane = new PlaneGeometry(6, 6, 18, 18)
         this.material = new ShaderMaterial({
             uniforms: {
                 uCurrTex: { value: 0 },

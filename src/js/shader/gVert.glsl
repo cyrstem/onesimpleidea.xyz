@@ -7,9 +7,9 @@ uniform bool animate;
 
 
 
-const highp float NOISE_FREQ_LOW = 0.09;
+const highp float NOISE_FREQ_LOW = 0.12;
 const highp float NOISE_FREQ_HIGH = 0.14;
-const highp float NOISE_AMP_LOW = 0.09;
+const highp float NOISE_AMP_LOW = 0.12;
 const highp float NOISE_AMP_HIGH = 0.14;
 
 void main(){
