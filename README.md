@@ -10,3 +10,6 @@ Portafolio work thing is made with Vite, vanilla JS,  css and Threejs.
 - deploy: npm run dep
 
 ```
+#updates for 2025 
+ inprobe gpu performence and updated projects
+improbe  js implememtation 
