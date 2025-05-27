@@ -1,0 +1,24 @@
+{
+    "shaderTexts": [
+        {
+            "title": "Noizu",
+            "description": "I collaborated on developing the Virtual Experience for an interactive installation/performance created by installation artist Participation in Moving Photon can be in 5 different ways, including a Phantom performance,interactive installation, interactive performance,interactive performance with EEG and remote performance.",
+            "texture": "insta-0.png"
+        },
+        {
+            "title": "YaEsta Pacman",
+            "description": "Watch as the cubes rotate and move when new shaders appear. Each interaction creates unique patterns.",
+            "texture": "insta-1.png"
+        },
+        {
+            "title": "Moving Photon",
+            "description": "",
+            "texture": "insta-2.png"
+        },
+        {
+            "title": "Glitch Machine",
+            "description": "A custom Glitch App build for, it lets you play with a image applying different filters and export the resulting image for printing",
+            "texture": "insta-3.png"
+        }
+    ]
+} 

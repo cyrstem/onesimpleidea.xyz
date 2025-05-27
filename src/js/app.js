@@ -1,42 +1,17 @@
-import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, ShaderMaterial, Vector2, Vector3, Raycaster, Clock, Object3D, Group, PlaneGeometry, PointLight, MeshPhongMaterial, Fog, TextureLoader, LoadingManager } from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer, Mesh, BoxGeometry, ShaderMaterial, Vector2, Vector3, Raycaster, Clock, Object3D, Group, PlaneGeometry, PointLight, MeshPhongMaterial, Fog, TextureLoader, LoadingManager, Color } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
 import gsap from 'gsap';
 import { throttle } from 'lodash';
+import texts from '../data/texts.json';
 
 import gVert from './shader/gVert.glsl'
 import gFrag from './shader/gFrag.glsl'
-
 import UI from './UI';
 
 export default class App {
     constructor(stage) {
-        // Initialize core properties
-        this.container = stage.dom;
-        this.debug = new Debug();
-        this.ui = new UI();
-        this.clock = new Clock();
-        this.mouse = new Vector2();
-        this.target = new Vector2();
-        this.raycaster = new Raycaster();
-        this.textureCache = new Map();
-        
-        // Initialize state
-        this.state = {
-            animating: false,
-            current: 0,
-            width: this.container.offsetWidth,
-            height: this.container.offsetHeight
-        };
-
-        this.textureUrls = [
-            'insta-0.png',
-            'insta-1.png',
-            'insta-2.png',
-            'insta-3.png'
-        ];
-
-        // Setup scene and start rendering
+        this.init(stage);
         this.setupScene();
         this.setupLights();
         this.setupObjects();
@@ -44,12 +19,36 @@ export default class App {
         this.render();
     }
 
+    init(stage) {
+        // Core setup
+        this.container = stage.dom;
+        this.debug = new Debug();
+        this.ui = new UI();
+        this.clock = new Clock();
+        this.mouse = new Vector2();
+        this.raycaster = new Raycaster();
+        this.textureCache = new Map();
+        this.textIndex = 0;
+        this.textureIndex = 0;
+        
+        // State
+        this.state = {
+            animating: false,
+            current: 0,
+            width: this.container.offsetWidth,
+            height: this.container.offsetHeight
+        };
+
+        // Textures
+        this.textureUrls = ['insta-0.png', 'insta-1.png', 'insta-2.png', 'insta-3.png'];
+    }
+
     setupScene() {
-        // Scene setup with fog
+        // Scene
         this.scene = new Scene();
         this.scene.fog = new Fog(0xeeeeee, 3, 50);
 
-        // Optimized renderer setup
+        // Renderer
         this.renderer = new WebGLRenderer({ 
             antialias: true,
             powerPreference: 'high-performance'
@@ -59,23 +58,23 @@ export default class App {
         this.renderer.setClearColor(0xeeeeee, 1);
         this.container.appendChild(this.renderer.domElement);
 
-        // Camera setup
+        // Camera
         this.camera = new PerspectiveCamera(45, this.state.width / this.state.height, 0.001, 1000);
         this.camera.position.set(0, 0, 35);
 
-        // Debug controls
+        // Debug
         if (this.debug.active) {
             this.setupDebugControls();
         }
     }
 
     setupDebugControls() {
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+            this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.debugFolder = this.debug.ui.addFolder('material');
         this.materialParams = {
-            color: "#000000",
-            emissive: "#000000",
-            specular: "#000000"
+                color: "#000000",
+                emissive: "#000000",
+                specular: "#000000"
         };
 
         ['color', 'emissive', 'specular'].forEach(param => {
@@ -85,25 +84,26 @@ export default class App {
     }
 
     setupLights() {
-        const lights = [
-            { position: [0.2, 0, 0] },
-            { position: [0, 0, 0] }
-        ];
-
-        this.lights = lights.map(config => {
+        const lightPositions = [[0.2, 0, 0], [0, 0, 0]];
+        this.lights = lightPositions.map(pos => {
             const light = new PointLight(0xffffff, 1, 0);
-            light.position.set(...config.position);
+            light.position.set(...pos);
             this.scene.add(light);
             return light;
         });
     }
 
     setupObjects() {
-        // Create and setup cube group
+        // Cubes
+        this.setupCubes();
+        // Plane
+        this.loadTextures();
+    }
+
+    setupCubes() {
         this.geos = new Object3D();
         this.main = new Group();
 
-        // Create reusable geometry and material
         const geometry = new BoxGeometry(1, 1, 1);
         const material = new MeshPhongMaterial({
             color: 0x111111,
@@ -112,23 +112,24 @@ export default class App {
             shininess: 30
         });
 
-        // Create cube instances efficiently
-        const cubeCount = 150;
-        this.cubes = new Array(cubeCount).fill(null).map(() => {
+        this.cubes = Array(150).fill(null).map(() => {
             const mesh = new Mesh(geometry, material.clone());
+            const basePos = new Vector3(
+                (Math.random() - 0.5) * 6.8,
+                (Math.random() - 0.5) * 6.8,
+                (Math.random() - 0.5) * 6.8
+            );
+            
             mesh.userData = {
-                basePosition: new Vector3(
-                    (Math.random() - 0.5) * 6.8,
-                    (Math.random() - 0.5) * 6.8,
-                    (Math.random() - 0.5) * 6.8
-                ),
+                basePosition: basePos,
                 rotationSpeed: new Vector3(
                     (Math.random() - 0.5) * 0.01,
                     (Math.random() - 0.5) * 0.01,
                     (Math.random() - 0.5) * 0.01
                 )
             };
-            mesh.position.copy(mesh.userData.basePosition);
+            
+            mesh.position.copy(basePos);
             this.geos.add(mesh);
             return mesh;
         });
@@ -136,23 +137,18 @@ export default class App {
         this.main.add(this.geos);
         this.scene.add(this.main);
         this.main.visible = true;
-
-        // Load textures
-        this.loadTextures();
     }
 
     loadTextures() {
         const manager = new LoadingManager(() => {
             if (this.textures?.length > 0) {
-                this.material.uniforms.uCurrTex.value = this.textures[0];
+            this.material.uniforms.uCurrTex.value = this.textures[0];
             }
         });
 
         const loader = new TextureLoader(manager);
         this.textures = this.textureUrls.map(url => {
-            if (this.textureCache.has(url)) {
-                return this.textureCache.get(url);
-            }
+            if (this.textureCache.has(url)) return this.textureCache.get(url);
             const texture = loader.load(url);
             this.textureCache.set(url, texture);
             return texture;
@@ -190,102 +186,114 @@ export default class App {
     }
 
     setupEvents() {
-        // Throttled event handlers for better performance
         this.handleResize = throttle(this.resize.bind(this), 250);
         this.handleMouseMove = throttle(this.onMouseMove.bind(this), 16);
 
         window.addEventListener('resize', this.handleResize);
         window.addEventListener('mousemove', this.handleMouseMove);
         window.addEventListener('click', this.handleView.bind(this));
+        window.addEventListener('click', this.handleCubeClick.bind(this));
     }
 
-    handleView(event) {
+    handleView() {
         this.navItems = document.querySelectorAll('.nav_item');
         this.textItems = document.querySelectorAll('.info');
-
         this.portafolio = this.ui.portafolio;
         this.about = this.ui.about;
 
         if (this.portafolio) {
-            this.main.visible = true;
-            gsap.to(this.geos.position, { 
-                x: 10, 
-                y: -1, 
-                z: 0, 
-                ease: "power2.in", 
-                delay: 0.4, 
-                onComplete: () => this.repositionCubes() 
-            });
-            this.second.visible = false;
-            this.material.uniforms.uNextTex.value = this.textures[0];
-            gsap.to(this.second.position, {
-                x: 0, 
-                y: 2,
-                z: -10, 
-                ease: "power2.out", 
-                delay: 0.2
-            });
-        }
-        
-        if (this.about) {
-            this.main.visible = false;
-            gsap.to(this.geos.position, { 
-                x: 0, 
-                y: 0, 
-                z: 0, 
-                ease: "power2.out", 
-                delay: 0.4, 
-                onComplete: () => this.repositionCubes() 
-            });
-            this.second.visible = true;
-            gsap.to(this.second.position, { 
-                x: -0.5, 
-                y: 2,
-                z: 5, 
-                ease: "power2.in" 
-            });
+            this.showPortfolio();
+        } else if (this.about) {
+            this.showAbout();
         }
 
+        this.setupNavListeners();
+    }
+
+    showPortfolio() {
+        this.main.visible = true;
+        this.second.visible = false;
+        
+        gsap.to(this.geos.position, { 
+            x: 10, y: -1, z: 0, 
+            ease: "power2.in", 
+            delay: 0.4, 
+            onComplete: () => this.repositionCubes() 
+        });
+        
+        this.material.uniforms.uNextTex.value = this.textures[0];
+        gsap.to(this.second.position, {
+            x: 0, y: 2, z: -10, 
+            ease: "power2.out", 
+            delay: 0.2
+        });
+    }
+
+    showAbout() {
+        this.main.visible = false;
+        this.second.visible = true;
+        
+        gsap.to(this.geos.position, { 
+            x: 0, y: 0, z: 0, 
+            ease: "power2.out", 
+            delay: 0.4, 
+            onComplete: () => this.repositionCubes() 
+        });
+        
+        gsap.to(this.second.position, { 
+            x: -0.5, y: 2, z: 5, 
+            ease: "power2.in" 
+        });
+    }
+
+    setupNavListeners() {
         if (this.navItems) {
             this.navItems.forEach((el, i) => {
-                el.addEventListener('click', () => {
-                    this.switchTextures(i);
-                });
+                el.addEventListener('click', () => this.switchTextures(i));
             });
         }
     }
 
     switchTextures(index) {
         if (this.state.animating) return;
-
         this.state.animating = true;
         
+        this.updateNavItems(index);
+        this.updateTextItems(index);
+        this.animateTextureTransition(index);
+    }
+
+    updateNavItems(index) {
         if (this.navItems[this.state.current]) {
-            this.navItems[this.state.current].classList.remove('item--current');
-            this.navItems[index].classList.add('item--current');
+        this.navItems[this.state.current].classList.remove('item--current');
+        this.navItems[index].classList.add('item--current');
         }
+    }
 
+    updateTextItems(index) {
         if (this.textItems[this.state.current]) {
-            this.textItems[this.state.current].classList.remove('show__info');
-            this.textItems[index].classList.add('show__info');
+        this.textItems[this.state.current].classList.remove('show__info');
+        this.textItems[index].classList.add('show__info');
         }
+    }
 
+    animateTextureTransition(index) {
         this.state.current = index;
         this.material.uniforms.uNextTex.value = this.textures[index];
         this.material.uniforms.animate.value = true;
 
-        const tl = gsap.timeline({
+        gsap.timeline({
             onComplete: () => {
                 this.state.animating = false;
                 this.material.uniforms.uCurrTex.value = this.textures[index];
                 this.material.uniforms.animate.value = false;
             }
-        });
-
-        tl.fromTo(this.material.uniforms.uProg, 
+        })
+        .fromTo(this.material.uniforms.uProg, 
             { value: 0 }, 
             { value: 1, duration: 2, ease: 'expo3.out' }, 0
-        ).fromTo(this.textItems[index],
+        )
+        .fromTo(this.textItems[index],
             { opacity: 0 },
             { opacity: 1, duration: 0.5, ease: 'power2.in' }, 0
         );
@@ -303,24 +311,25 @@ export default class App {
     }
 
     onMouseMove(event) {
-        // Update mouse position
+        this.updateMousePosition(event);
+        this.updateShaderMousePosition();
+        this.handleCubeInteraction();
+    }
+
+    updateMousePosition(event) {
         this.mouse.x = (event.clientX / this.state.width) * 2 - 1;
         this.mouse.y = -(event.clientY / this.state.height) * 2 + 1;
+    }
 
+    updateShaderMousePosition() {
         if (this.material) {
-            const targetMouseX = this.mouse.x * 0.3;
-            const targetMouseY = this.mouse.y * 0.3;
-            
             gsap.to(this.material.uniforms.uMouse.value, {
-                x: targetMouseX,
-                y: targetMouseY,
+                x: this.mouse.x * 0.3,
+                y: this.mouse.y * 0.3,
                 duration: 1,
                 ease: "power2.out"
             });
         }
-
-        // Optimized cube interaction
-        this.handleCubeInteraction();
     }
 
     handleCubeInteraction() {
@@ -329,13 +338,11 @@ export default class App {
 
         if (intersects.length > 0) {
             const mouseWorldPos = new Vector2(this.mouse.x * 10, this.mouse.y * 10);
-            
             intersects.forEach(({ object }) => {
-                const cubeScreenPos = new Vector2(object.position.x, object.position.y);
-                const distanceToMouse = cubeScreenPos.distanceTo(mouseWorldPos);
-                
-                if (distanceToMouse < 5) {
-                    this.animateCubeRepulsion(object, mouseWorldPos, distanceToMouse);
+                const distance = new Vector2(object.position.x, object.position.y)
+                    .distanceTo(mouseWorldPos);
+                if (distance < 5) {
+                    this.animateCubeRepulsion(object, mouseWorldPos, distance);
                 }
             });
         }
@@ -343,19 +350,261 @@ export default class App {
 
     animateCubeRepulsion(cube, mouseWorldPos, distance) {
         const repelForce = 1 - (distance / 5);
-        const repelStrength = repelForce * 2;
-
         const direction = new Vector2(
             cube.position.x - mouseWorldPos.x,
             cube.position.y - mouseWorldPos.y
         ).normalize();
 
         gsap.to(cube.position, {
-            x: cube.userData.basePosition.x + direction.x * repelStrength,
-            y: cube.userData.basePosition.y + direction.y * repelStrength,
+            x: cube.userData.basePosition.x + direction.x * repelForce * 2,
+            y: cube.userData.basePosition.y + direction.y * repelForce * 2,
             z: cube.userData.basePosition.z + (repelForce * 0.5),
             duration: 0.8,
             ease: "power1.out"
+        });
+    }
+
+    handleCubeClick(event) {
+        // Convert mouse position to normalized device coordinates
+        const mouse = new Vector2(
+            (event.clientX / this.state.width) * 2 - 1,
+            -(event.clientY / this.state.height) * 2 + 1
+        );
+
+        this.raycaster.setFromCamera(mouse, this.camera);
+        const intersects = this.raycaster.intersectObjects(this.cubes, false);
+
+        if (intersects.length > 0) {
+            const clickedCube = intersects[0].object;
+            this.showShaderElement(clickedCube);
+        }
+    }
+
+    showShaderElement(cube) {
+        // Animate cubes when new shader is created
+        this.cubes.forEach(cube => {
+            const randomRotation = {
+                x: (Math.random() - 0.5) * Math.PI * 2,
+                y: (Math.random() - 0.5) * Math.PI * 2,
+                z: (Math.random() - 0.5) * Math.PI * 2
+            };
+            
+            gsap.to(cube.rotation, {
+                x: randomRotation.x,
+                y: randomRotation.y,
+                z: randomRotation.z,
+                duration: 1.5,
+                ease: "power2.inOut"
+            });
+
+            // Add some position movement
+            const randomOffset = {
+                x: (Math.random() - 0.5) * 2,
+                y: (Math.random() - 0.5) * 2,
+                z: (Math.random() - 0.5) * 2
+            };
+
+            gsap.to(cube.position, {
+                x: cube.userData.basePosition.x + randomOffset.x,
+                y: cube.userData.basePosition.y + randomOffset.y,
+                z: cube.userData.basePosition.z + randomOffset.z,
+                duration: 1.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // Return to base position
+                    gsap.to(cube.position, {
+                        x: cube.userData.basePosition.x,
+                        y: cube.userData.basePosition.y,
+                        z: cube.userData.basePosition.z,
+                        duration: 1,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+
+        // Create new container for each click
+        const shaderContainer = document.createElement('div');
+        const containerWidth = 600;
+        const containerHeight = 600;
+        shaderContainer.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: ${containerWidth}px;
+            height: ${containerHeight}px;
+            // background: rgba(255, 255, 255, 0.8);
+            display: none;
+            z-index: 1000;
+            overflow: hidden;
+        `;
+        document.body.appendChild(shaderContainer);
+
+        // Add help text div
+        const helpDiv = document.createElement('div');
+        helpDiv.style.cssText = `
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.0);
+            color: black;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        `;
+
+        // Get text from JSON and increment index
+        const textContent = texts.shaderTexts[this.textIndex];
+        this.textIndex = (this.textIndex + 1) % texts.shaderTexts.length;
+
+        // Get the next texture in sequence
+        const shaderTexture = this.textures[this.textureIndex];
+        this.textureIndex = (this.textureIndex + 1) % this.textures.length;
+
+        // Get the next texture for displacement
+        const nextTextureIndex = (this.textureIndex + 1) % this.textures.length;
+        const dispTexture = this.textures[nextTextureIndex];
+
+        // Create title and description elements
+        const title = document.createElement('h3');
+        title.style.cssText = `
+            margin: 0 0 8px 0;
+            font-size: 18px;
+            font-weight: bold;
+        `;
+        title.textContent = textContent.title;
+
+        const description = document.createElement('p');
+        description.style.cssText = `
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            opacity: 0.8;
+        `;
+        description.textContent = textContent.description;
+
+        helpDiv.appendChild(title);
+        helpDiv.appendChild(description);
+        shaderContainer.appendChild(helpDiv);
+
+        // Create close button
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '×';
+        closeBtn.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: black;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+        `;
+        closeBtn.onclick = () => this.hideShaderElement(shaderContainer);
+        shaderContainer.appendChild(closeBtn);
+
+        // Create canvas for shader
+        const shaderCanvas = document.createElement('canvas');
+        shaderCanvas.style.cssText = `
+            width: 100%;
+            height: 100%;
+        `;
+        shaderContainer.appendChild(shaderCanvas);
+
+        // Setup shader renderer with matching size
+        const shaderRenderer = new WebGLRenderer({
+            canvas: shaderCanvas,
+            alpha: true
+        });
+        shaderRenderer.setSize(containerWidth, containerHeight);
+
+        // Create shader scene with matching aspect ratio
+        const shaderScene = new Scene();
+        const shaderCamera = new PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
+        shaderCamera.position.z = 2;
+
+        // Create shader material with the specified texture
+        const shaderGeometry = new PlaneGeometry(2, 2 * (containerHeight / containerWidth));
+        const shaderMaterial = new ShaderMaterial({
+            uniforms: {
+                uTime: { value: 0 },
+                uMouse: { value: new Vector2(0, 0) },
+                uColor: { value: new Color(0x111111) },
+                uTexture: { value: shaderTexture },
+                uDisp: { value: dispTexture },
+                uMeshSize: { value: [containerWidth, containerHeight] },
+                uImageSize: { value: [containerWidth, containerHeight] },
+                uProg: { value: 0 },
+                animate: { value: false }
+            },
+            vertexShader: gVert,
+            fragmentShader: gFrag
+        });
+
+        // Start texture transition animation
+        gsap.to(shaderMaterial.uniforms.uProg, {
+            value: 1,
+            duration: 2,
+            ease: "power2.inOut",
+            onComplete: () => {
+                shaderMaterial.uniforms.uProg.value = 0;
+            }
+        });
+
+        const shaderMesh = new Mesh(shaderGeometry, shaderMaterial);
+        shaderScene.add(shaderMesh);
+
+        // Store shader elements for cleanup
+        shaderContainer.userData = {
+            renderer: shaderRenderer,
+            material: shaderMaterial,
+            geometry: shaderGeometry
+        };
+
+        // Check existing shaders and position accordingly
+        const existingShaders = document.querySelectorAll('.shader-container');
+        const isLeftSide = existingShaders.length % 2 === 0;
+        shaderContainer.style.left = isLeftSide ? '25%' : '75%';
+        shaderContainer.classList.add('shader-container');
+
+        // Show container with animation
+        shaderContainer.style.display = 'block';
+        shaderContainer.style.opacity = '0';
+        gsap.to(shaderContainer, {
+            opacity: 1,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+
+        // Start animation for this shader
+        const animateShader = () => {
+            if (shaderContainer.parentElement) {
+                shaderMaterial.uniforms.uTime.value = this.clock.getElapsedTime();
+                shaderMaterial.uniforms.uMouse.value = this.mouse;
+                shaderRenderer.render(shaderScene, shaderCamera);
+                requestAnimationFrame(animateShader);
+            }
+        };
+        animateShader();
+    }
+
+    hideShaderElement(container) {
+        gsap.to(container, {
+            opacity: 0,
+            duration: 0.3,
+            ease: 'power2.in',
+            onComplete: () => {
+                // Cleanup resources
+                const { renderer, material, geometry } = container.userData;
+                renderer.dispose();
+                material.dispose();
+                geometry.dispose();
+                container.remove();
+            }
         });
     }
 
@@ -375,20 +624,16 @@ export default class App {
         this.geos.rotation.x += 0.001;
         this.geos.rotation.y += 0.0005;
         
-        // Update cube positions
-        this.cubes.forEach((cube, i) => {
+        // Update cubes
+        this.cubes.forEach(cube => {
             const { basePosition, rotationSpeed } = cube.userData;
-            
-            // Smooth position updates
             cube.position.lerp(basePosition, 0.1);
-            
-            // Smooth rotation updates
             cube.rotation.x += rotationSpeed.x;
             cube.rotation.y += rotationSpeed.y;
             cube.rotation.z += rotationSpeed.z;
         });
         
-        // Update shader uniforms
+        // Update shader
         if (this.material) {
             this.material.uniforms.uTime.value = time;
         }
@@ -398,12 +643,12 @@ export default class App {
     }
 
     dispose() {
-        // Remove event listeners
+        // Remove listeners
         window.removeEventListener('resize', this.handleResize);
         window.removeEventListener('mousemove', this.handleMouseMove);
         window.removeEventListener('click', this.handleView);
 
-        // Dispose geometries and materials
+        // Cleanup resources
         this.scene.traverse(object => {
             if (object.geometry) object.geometry.dispose();
             if (object.material) {
@@ -412,12 +657,18 @@ export default class App {
             }
         });
 
-        // Clear texture cache
         this.textureCache.forEach(texture => texture.dispose());
         this.textureCache.clear();
 
-        // Dispose renderer and controls
         this.renderer.dispose();
         if (this.controls) this.controls.dispose();
+
+        document.querySelectorAll('.shader-container').forEach(container => {
+            const { renderer, material, geometry } = container.userData;
+            renderer.dispose();
+            material.dispose();
+            geometry.dispose();
+            container.remove();
+        });
     }
 }
