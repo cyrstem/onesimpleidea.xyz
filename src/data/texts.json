@@ -3,7 +3,8 @@
         {
             "title": "Noizu",
             "description": "Custom build a Audio player for Linux and Mac. Building a light and simple player for linux, based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.",
-            "texture": "insta-0.png"
+            "texture": "insta-0.png",
+            "link": "https://github.com/noizu/noizu"
         },
         {
             "title": "YaEsta Pacman",

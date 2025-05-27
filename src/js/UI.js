@@ -33,13 +33,13 @@ export default class UI {
             return
         }
 
-        // if (id !== 'Portafolio') {
-        //     this.about = false;
-        //     document.getElementById("terminal").innerHTML = About();
-        //     this.portafolio = true;
-        //     this.effect()
-        //     return
-        // }
+        if (id !== 'Portafolio') {
+            this.about = false;
+            document.getElementById("terminal").innerHTML = About();
+            this.portafolio = true;
+            this.effect()
+            return
+        }
 
     }
     effect() {
