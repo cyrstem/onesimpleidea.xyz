@@ -145,4 +145,26 @@ export default class CubeManager {
     getGeos() {
         return this.geos;
     }
+
+    makeRandomCubeBigger() {
+        const randomCube = this.cubes[Math.floor(Math.random() * this.cubes.length)];
+        const originalScale = randomCube.scale.clone();
+        
+        gsap.to(randomCube.scale, {
+            x: 2,
+            y: 2,
+            z: 2,
+            duration: 0.5,
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.to(randomCube.scale, {
+                    x: originalScale.x,
+                    y: originalScale.y,
+                    z: originalScale.z,
+                    duration: 0.5,
+                    ease: "power2.in"
+                });
+            }
+        });
+    }
 } 
