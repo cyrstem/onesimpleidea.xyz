@@ -11,5 +11,5 @@ Portafolio work thing is made with Vite, vanilla JS,  css and Threejs.
 
 ```
 #updates for 2025 
- inprobe gpu performence and updated projects
+ improbe gpu performence and updated projects
 improbe  js implememtation 

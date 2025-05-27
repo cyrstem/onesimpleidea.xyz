@@ -1,4 +1,4 @@
-import { Mesh, BoxGeometry, MeshPhongMaterial, Object3D, Group, Vector3 } from 'three';
+import { Mesh, BoxGeometry, MeshPhongMaterial, Object3D, Group, Vector3, Vector2 } from 'three';
 import gsap from 'gsap';
 
 export default class CubeManager {
@@ -6,6 +6,7 @@ export default class CubeManager {
         this.scene = scene;
         this.config = config;
         this.cubes = [];
+        this.maxDistance = this.config.CUBE_SPREAD * 1.5; // Maximum distance a cube can move from its base position
         console.log('CubeManager initialized with config:', config);
         this.setupCubes();
     }
@@ -111,7 +112,17 @@ export default class CubeManager {
     updateCubes() {
         this.cubes.forEach(cube => {
             const { basePosition, rotationSpeed } = cube.userData;
-            cube.position.lerp(basePosition, 0.1);
+            
+            // Check if cube is too far from its base position
+            const distanceFromBase = cube.position.distanceTo(basePosition);
+            if (distanceFromBase > this.maxDistance) {
+                // Reset position if too far
+                cube.position.copy(basePosition);
+            } else {
+                // Normal lerp behavior
+                cube.position.lerp(basePosition, 0.1);
+            }
+            
             cube.rotation.x += rotationSpeed.x;
             cube.rotation.y += rotationSpeed.y;
             cube.rotation.z += rotationSpeed.z;
@@ -125,13 +136,36 @@ export default class CubeManager {
             cube.position.y - mouseWorldPos.y
         ).normalize();
 
-        gsap.to(cube.position, {
-            x: cube.userData.basePosition.x + direction.x * repelForce * 2,
-            y: cube.userData.basePosition.y + direction.y * repelForce * 2,
-            z: cube.userData.basePosition.z + (repelForce * 0.8),
-            duration: 0.8,
-            ease: "power1.out"
-        });
+        // Calculate new position
+        const newX = cube.userData.basePosition.x + direction.x * repelForce * 2;
+        const newY = cube.userData.basePosition.y + direction.y * repelForce * 2;
+        const newZ = cube.userData.basePosition.z + (repelForce * 0.8);
+
+        // Check if the new position is within bounds
+        const distanceFromBase = new Vector3(
+            newX - cube.userData.basePosition.x,
+            newY - cube.userData.basePosition.y,
+            newZ - cube.userData.basePosition.z
+        ).length();
+
+        if (distanceFromBase <= this.maxDistance) {
+            gsap.to(cube.position, {
+                x: newX,
+                y: newY,
+                z: newZ,
+                duration: 0.8,
+                ease: "power1.out"
+            });
+        } else {
+            // If out of bounds, return to base position
+            gsap.to(cube.position, {
+                x: cube.userData.basePosition.x,
+                y: cube.userData.basePosition.y,
+                z: cube.userData.basePosition.z,
+                duration: 0.8,
+                ease: "power1.out"
+            });
+        }
     }
 
     getCubes() {

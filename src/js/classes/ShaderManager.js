@@ -11,10 +11,21 @@ export default class ShaderManager {
         this.textureIndex = 0;
         this.shaderContainers = new Map();
         this.texts = JSON.parse(texts);
+        this.maxActiveShaders = 3; // Maximum number of active shader containers
     }
 
     createShaderContainer(textures) {
+        // Get all active shader containers
+        const activeShaders = Array.from(document.querySelectorAll('.shader-container'));
+        
+        // If we're at the limit, remove the oldest one
+        if (activeShaders.length >= this.maxActiveShaders) {
+            const oldestShader = activeShaders[0];
+            this.hideShaderElement(oldestShader);
+        }
+
         const shaderContainer = document.createElement('div');
+        shaderContainer.className = 'shader-container';
         const { containerWidth, containerHeight } = this.getContainerDimensions();
         const { randomX, randomY } = this.calculateRandomPosition(containerWidth, containerHeight);
 
@@ -171,9 +182,27 @@ export default class ShaderManager {
     }
 
     setupShaderRenderer(container, canvas, width, height, textures) {
+        // First, try to get a WebGL context
+        const gl = canvas.getContext('webgl', {
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+        }) || canvas.getContext('experimental-webgl', {
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+        });
+
+        if (!gl) {
+            console.error('WebGL not supported');
+            return;
+        }
+
         const shaderRenderer = new WebGLRenderer({
             canvas,
-            alpha: true
+            context: gl,
+            alpha: true,
+            powerPreference: 'high-performance'
         });
         shaderRenderer.setSize(width, height);
 
@@ -199,23 +228,25 @@ export default class ShaderManager {
                 animate: { value: false }
             },
             vertexShader: gVert,
-            fragmentShader: gFrag
+            fragmentShader: gFrag,
+            transparent: true
         });
 
-        this.animateShaderTransition(shaderMaterial);
         const shaderMesh = new Mesh(shaderGeometry, shaderMaterial);
-        shaderMesh.position.y = 0.2;
         shaderScene.add(shaderMesh);
 
-        container.userData = {
+        // Store references for cleanup
+        const shaderData = {
             renderer: shaderRenderer,
+            scene: shaderScene,
+            camera: shaderCamera,
             material: shaderMaterial,
             geometry: shaderGeometry,
-            scene: shaderScene,
-            camera: shaderCamera
+            mesh: shaderMesh
         };
+        this.shaderContainers.set(container, shaderData);
 
-        container.classList.add('shader-container');
+        // Start animation
         this.startShaderAnimation(container);
     }
 
@@ -241,32 +272,84 @@ export default class ShaderManager {
     }
 
     startShaderAnimation(container) {
-        const { renderer, material, scene, camera } = container.userData;
+        const shaderData = this.shaderContainers.get(container);
+        if (!shaderData) return;
+
+        const { renderer, material, scene, camera } = shaderData;
+        let animationFrameId;
+
         const animateShader = () => {
             if (container.parentElement) {
                 material.uniforms.uTime.value = performance.now() * 0.001;
                 renderer.render(scene, camera);
-                requestAnimationFrame(animateShader);
+                animationFrameId = requestAnimationFrame(animateShader);
             }
         };
+
         animateShader();
+
+        // Store the animation frame ID for cleanup
+        shaderData.animationFrameId = animationFrameId;
     }
 
     hideShaderElement(container) {
+        if (!container) return;
+        
+        // Remove from DOM immediately to prevent visual overlap
+        container.style.display = 'none';
+        
         gsap.to(container, {
             opacity: 0,
             duration: 0.3,
-            ease: 'power2.in',
-            onComplete: () => this.cleanupShaderResources(container)
+            ease: "power2.in",
+            onComplete: () => {
+                this.cleanupShaderResources(container);
+                container.remove();
+            }
         });
     }
 
     cleanupShaderResources(container) {
-        const { renderer, material, geometry } = container.userData;
-        renderer.dispose();
-        material.dispose();
-        geometry.dispose();
-        container.remove();
+        const shaderData = this.shaderContainers.get(container);
+        if (!shaderData) return;
+
+        // Cancel animation frame
+        if (shaderData.animationFrameId) {
+            cancelAnimationFrame(shaderData.animationFrameId);
+        }
+
+        // Dispose of Three.js resources
+        if (shaderData.renderer) {
+            shaderData.renderer.dispose();
+        }
+        if (shaderData.material) {
+            shaderData.material.dispose();
+        }
+        if (shaderData.geometry) {
+            shaderData.geometry.dispose();
+        }
+        if (shaderData.mesh) {
+            shaderData.mesh.geometry.dispose();
+            shaderData.mesh.material.dispose();
+        }
+
+        // Dispose of WebGL context
+        const canvas = container.querySelector('canvas');
+        if (canvas) {
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl) {
+                const ext = gl.getExtension('WEBGL_lose_context');
+                if (ext) {
+                    ext.loseContext();
+                }
+            }
+        }
+
+        // Remove from our tracking map
+        this.shaderContainers.delete(container);
+
+        // Log the number of remaining shaders
+        console.log('Active shaders remaining:', this.shaderContainers.size);
     }
 
     updateShaderMousePosition(mouse, material) {
