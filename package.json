@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite serve --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "sync-docs": "node sync-docs.js"
   },
   "repository": {
     "type": "git",
