@@ -131,6 +131,12 @@ export default class App {
         window.addEventListener('mousemove', this.handleMouseMove);
         window.addEventListener('click', this.handleView.bind(this));
         window.addEventListener('click', this.handleCubeClick.bind(this));
+
+        // Add bottom text hover events
+        const bottomText = document.getElementById('bottom-text');
+        if (bottomText) {
+            bottomText.addEventListener('mouseenter', this.handleBottomTextHover.bind(this));
+        }
     }
 
     handleView() {
@@ -275,6 +281,12 @@ export default class App {
         
         this.cubeManager.animateCubesOnShaderCreate();
         this.shaderManager.createShaderContainer(this.textures);
+    }
+
+    handleBottomTextHover() {
+        if (this.cubeManager) {
+            this.cubeManager.makeRandomCubeBigger();
+        }
     }
 
     resize() {
