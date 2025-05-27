@@ -4,10 +4,17 @@ const About = () => {
         <div id="content" class="content">
           <h3 class="warning">Full experience on Desktop</h3>
           <p>I'm <b>Jacob</b> a <b>Creative Developer</b> and <b>Front-End Developer</b> based in Quito - Ecuador, specialized in building custom digital or physical experiences.</p> 
-          <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently curious about <b>Machine Learning.</b></p>
+          <p><b>Self-taught</b> developer, <b>fast learner</b> that works with<b> WebGL, JS, C++, OpenGL, GLSL </b>and recently working with <b>Machine Learning , Computational
+Thinking, AI and Unreal Engine</p>
             <div>
               <p>I have collaborated with:</p>
               <ul id ="sites">
+              <li>
+              <a href="https://thegardeninthemachine.com/" target="_blank">
+                <span>the Garden in the machine</span> 
+                <span> -- Creative Developer </span>
+              </a>
+            </li>
               <li>
               <a href="https://activetheory.net/" target="_blank">
                 <span>Active Theory</span> 
