@@ -4,22 +4,25 @@
             "title": "Noizu",
             "description": "Custom build a Audio player for Linux and Mac. Building a light and simple player for linux, based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.",
             "texture": "insta-0.png",
-            "link": "https://github.com/noizu/noizu"
+            "link": "https://github.com/cyrstem/Noizu"
         },
         {
             "title": "YaEsta Pacman",
             "description": "Watch as the cubes rotate and move when new shaders appear. Each interaction creates unique patterns.",
-            "texture": "insta-1.png"
+            "texture": "insta-1.png",
+            "link": "https://www.youtube.com/watch?v=YHZd0TxPMkY&t=1s&ab_channel=UPDRONEInteligenciaAeron%C3%A1utica"
         },
         {
             "title": "Moving Photon",
             "description": "I collaborated on developing the Virtual Experience for an interactive installation/performance created by installation artist Participation in Moving Photon can be in 5 different ways, including a Phantom performance,interactive installation, interactive performance,interactive performance with EEG and remote performance.",
-            "texture": "insta-2.png"
+            "texture": "insta-2.png",
+            "link": "https://friendred.studio/2021/10/07/moving-photon/"
         },
         {
             "title": "Glitch Machine",
             "description": "A custom Glitch App build for, it lets you play with a image applying different filters and export the resulting image for printing",
-            "texture": "insta-3.png"
+            "texture": "insta-3.png",
+            "link": "https://www.instagram.com/jenna___marsh/"
         }
     ]
-} 
+}   
