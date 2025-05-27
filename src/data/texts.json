@@ -2,7 +2,7 @@
     "shaderTexts": [
         {
             "title": "Noizu",
-            "description": "I collaborated on developing the Virtual Experience for an interactive installation/performance created by installation artist Participation in Moving Photon can be in 5 different ways, including a Phantom performance,interactive installation, interactive performance,interactive performance with EEG and remote performance.",
+            "description": "Custom build a Audio player for Linux and Mac. Building a light and simple player for linux, based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.",
             "texture": "insta-0.png"
         },
         {
@@ -12,7 +12,7 @@
         },
         {
             "title": "Moving Photon",
-            "description": "",
+            "description": "I collaborated on developing the Virtual Experience for an interactive installation/performance created by installation artist Participation in Moving Photon can be in 5 different ways, including a Phantom performance,interactive installation, interactive performance,interactive performance with EEG and remote performance.",
             "texture": "insta-2.png"
         },
         {

@@ -60,7 +60,7 @@ export default class App {
 
         // Camera
         this.camera = new PerspectiveCamera(45, this.state.width / this.state.height, 0.001, 1000);
-        this.camera.position.set(0, 0, 35);
+        this.camera.position.set(0, 0, 30);
 
         // Debug
         if (this.debug.active) {
@@ -104,7 +104,7 @@ export default class App {
         this.geos = new Object3D();
         this.main = new Group();
 
-        const geometry = new BoxGeometry(1, 1, 1);
+        const geometry = new BoxGeometry(1.5, 1.5, 1.5);
         const material = new MeshPhongMaterial({
             color: 0x111111,
             emissive: 0x000000,
@@ -115,9 +115,9 @@ export default class App {
         this.cubes = Array(150).fill(null).map(() => {
             const mesh = new Mesh(geometry, material.clone());
             const basePos = new Vector3(
-                (Math.random() - 0.5) * 6.8,
-                (Math.random() - 0.5) * 6.8,
-                (Math.random() - 0.5) * 6.8
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 8,
+                (Math.random() - 0.5) * 8
             );
             
             mesh.userData = {
@@ -136,13 +136,26 @@ export default class App {
 
         this.main.add(this.geos);
         this.scene.add(this.main);
-        this.main.visible = true;
+        this.main.visible = false;
     }
 
     loadTextures() {
         const manager = new LoadingManager(() => {
             if (this.textures?.length > 0) {
             this.material.uniforms.uCurrTex.value = this.textures[0];
+                // Show cubes after textures are loaded
+                this.main.visible = true;
+                // Animate cubes in
+                this.cubes.forEach(cube => {
+                    gsap.from(cube.position, {
+                        x: cube.userData.basePosition.x * 2,
+                        y: cube.userData.basePosition.y * 2,
+                        z: cube.userData.basePosition.z * 2,
+                        duration: 1.5,
+                        ease: "power2.out",
+                        delay: Math.random() * 0.5
+                    });
+                });
             }
         });
 
@@ -337,11 +350,11 @@ export default class App {
         const intersects = this.raycaster.intersectObjects(this.cubes, false);
 
         if (intersects.length > 0) {
-            const mouseWorldPos = new Vector2(this.mouse.x * 10, this.mouse.y * 10);
+            const mouseWorldPos = new Vector2(this.mouse.x * 15, this.mouse.y * 15);
             intersects.forEach(({ object }) => {
                 const distance = new Vector2(object.position.x, object.position.y)
                     .distanceTo(mouseWorldPos);
-                if (distance < 5) {
+                if (distance < 8) {
                     this.animateCubeRepulsion(object, mouseWorldPos, distance);
                 }
             });
@@ -349,7 +362,7 @@ export default class App {
     }
 
     animateCubeRepulsion(cube, mouseWorldPos, distance) {
-        const repelForce = 1 - (distance / 5);
+        const repelForce = 1 - (distance / 8);
         const direction = new Vector2(
             cube.position.x - mouseWorldPos.x,
             cube.position.y - mouseWorldPos.y
@@ -358,7 +371,7 @@ export default class App {
         gsap.to(cube.position, {
             x: cube.userData.basePosition.x + direction.x * repelForce * 2,
             y: cube.userData.basePosition.y + direction.y * repelForce * 2,
-            z: cube.userData.basePosition.z + (repelForce * 0.5),
+            z: cube.userData.basePosition.z + (repelForce * 0.8),
             duration: 0.8,
             ease: "power1.out"
         });
@@ -381,6 +394,13 @@ export default class App {
     }
 
     showShaderElement(cube) {
+        // Check for existing shaders and close the oldest if there are already two
+        const existingShaders = document.querySelectorAll('.shader-container');
+        if (existingShaders.length >= 2) {
+            // Close the oldest shader (first one in the DOM)
+            this.hideShaderElement(existingShaders[0]);
+        }
+
         // Animate cubes when new shader is created
         this.cubes.forEach(cube => {
             const randomRotation = {
@@ -427,17 +447,23 @@ export default class App {
         const shaderContainer = document.createElement('div');
         const containerWidth = 600;
         const containerHeight = 600;
+        
+        // Calculate random position within safe bounds
+        const maxX = window.innerWidth - containerWidth;
+        const maxY = window.innerHeight - containerHeight;
+        const randomX = Math.random() * maxX;
+        const randomY = Math.random() * maxY;
+
         shaderContainer.style.cssText = `
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: ${randomY}px;
+            left: ${randomX}px;
             width: ${containerWidth}px;
             height: ${containerHeight}px;
-            // background: rgba(255, 255, 255, 0.8);
             display: none;
             z-index: 1000;
             overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         `;
         document.body.appendChild(shaderContainer);
 
@@ -448,9 +474,10 @@ export default class App {
             bottom: 0;
             left: 0;
             right: 0;
+            top:12px
             padding: 15px;
-            background: rgba(0, 0, 0, 0.0);
-            color: black;
+            background: rgba(49, 37, 37, 0.69);
+            color: white;
             font-family: Arial, sans-serif;
             text-align: center;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -471,7 +498,7 @@ export default class App {
         // Create title and description elements
         const title = document.createElement('h3');
         title.style.cssText = `
-            margin: 0 0 8px 0;
+            margin: 8px 0 8px 0;
             font-size: 18px;
             font-weight: bold;
         `;
@@ -482,7 +509,7 @@ export default class App {
             margin: 0;
             font-size: 14px;
             line-height: 1.4;
-            opacity: 0.8;
+            opacity: 0.9;
         `;
         description.textContent = textContent.description;
 
@@ -565,10 +592,6 @@ export default class App {
             geometry: shaderGeometry
         };
 
-        // Check existing shaders and position accordingly
-        const existingShaders = document.querySelectorAll('.shader-container');
-        const isLeftSide = existingShaders.length % 2 === 0;
-        shaderContainer.style.left = isLeftSide ? '25%' : '75%';
         shaderContainer.classList.add('shader-container');
 
         // Show container with animation
@@ -593,6 +616,24 @@ export default class App {
     }
 
     hideShaderElement(container) {
+        // Add camera wiggle animation with more pronounced movement
+        gsap.to(this.camera.position, {
+            x: this.camera.position.x + (Math.random() - 0.5) * 2,
+            y: this.camera.position.y + (Math.random() - 0.5) * 2,
+            z: this.camera.position.z + (Math.random() - 0.5) * 2,
+            duration: 0.4,
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.to(this.camera.position, {
+                    x: 0,
+                    y: 0,
+                    z: 30,
+                    duration: 0.8,
+                    ease: "power2.inOut"
+                });
+            }
+        });
+
         gsap.to(container, {
             opacity: 0,
             duration: 0.3,
