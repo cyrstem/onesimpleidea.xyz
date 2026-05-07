@@ -58,11 +58,14 @@ export default class UI {
     if (!aboutRoot) return;
 
     if (this.aboutOpen) {
+      document.dispatchEvent(new CustomEvent("portfolio:closeDetail"));
       aboutRoot.hidden = false;
       aboutRoot.innerHTML = About();
+      document.body.classList.add("about-is-open");
     } else {
       aboutRoot.hidden = true;
       aboutRoot.innerHTML = "";
+      document.body.classList.remove("about-is-open");
     }
   }
 
