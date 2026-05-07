@@ -348,8 +348,6 @@ export default class ShaderManager {
         // Remove from our tracking map
         this.shaderContainers.delete(container);
 
-        // Log the number of remaining shaders
-        console.log('Active shaders remaining:', this.shaderContainers.size);
     }
 
     updateShaderMousePosition(mouse, material) {

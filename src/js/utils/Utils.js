@@ -1,19 +1,29 @@
+const throttle = (fn, wait = 100) => {
+  let timeoutId = null;
+  let lastRun = 0;
 
-const check =() =>{
-    console.log('something')
-}
-// Preload images
-const preloadFonts = id => {
-    return new Promise((resolve) => {
-        WebFont.load({
-            typekit: {
-                id: id
-            },
-            active: resolve
-        });
-    });
+  return (...args) => {
+    const now = Date.now();
+    const remaining = wait - (now - lastRun);
+
+    if (remaining <= 0) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = null;
+      }
+      lastRun = now;
+      fn(...args);
+      return;
+    }
+
+    if (!timeoutId) {
+      timeoutId = setTimeout(() => {
+        lastRun = Date.now();
+        timeoutId = null;
+        fn(...args);
+      }, remaining);
+    }
+  };
 };
 
-const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-
-export { check, preloadFonts, randomNumber  }
+export { throttle };

@@ -1,7 +1,7 @@
-const Navbar =()=>{
+const Navbar = () => {
     const template = `
-        <nav id="nav">
-            <button id="home">About</button>
+        <nav id="nav" aria-label="Primary navigation">
+            <button type="button" data-view="about" aria-pressed="false">About</button>
         </nav> 
     `;
     return template;

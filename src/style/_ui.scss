@@ -1,6 +1,6 @@
 // here goes interface buttons  and links
 //buttons and access
-@import "_vars";
+@use "_vars" as *;
 
 button {
 	display: inline-block;
@@ -26,8 +26,22 @@ button:focus {
 	--d: 100%;
 }
 
+button:focus-visible {
+	outline: 2px solid black;
+	outline-offset: 3px;
+}
+
 button:hover {
 	color: rgba($color: #000000, $alpha: 0.6);
+	--d: 100%;
+}
+
+#nav {
+	display: flex;
+	gap: 0.7rem;
+}
+
+#nav .is-active {
 	--d: 100%;
 }
 

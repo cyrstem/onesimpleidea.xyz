@@ -3,9 +3,9 @@ const Contact = () => {
 	const template = `
 
         <ul id="links">
-            <a href ="https://www.instagram.com/cyrstem/"target="_blank"><img src="insta.png"></a>
-                <a href ="http://ec.linkedin.com/in/jacobohz" target="_blank"><img src="in.png"></a>
-            <a href ="https://github.com/cyrstem/" target="_blank"><img src="git.png"></a>
+            <li><a href="https://www.instagram.com/cyrstem/" target="_blank" rel="noopener noreferrer"><img src="insta.png" alt="Instagram"></a></li>
+            <li><a href="https://ec.linkedin.com/in/jacobohz" target="_blank" rel="noopener noreferrer"><img src="in.png" alt="LinkedIn"></a></li>
+            <li><a href="https://github.com/cyrstem/" target="_blank" rel="noopener noreferrer"><img src="git.png" alt="GitHub"></a></li>
         </ul>
     `;
 	return template;

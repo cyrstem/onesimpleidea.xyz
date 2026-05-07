@@ -10,31 +10,31 @@ Thinking, AI and Unreal Engine</p>
               <p>I have collaborated with:</p>
               <ul id ="sites">
               <li>
-              <a href="https://thegardeninthemachine.com/" target="_blank">
+              <a href="https://thegardeninthemachine.com/" target="_blank" rel="noopener noreferrer">
                 <span>the Garden in the machine</span> 
                 <span> -- Creative Developer </span>
               </a>
             </li>
               <li>
-              <a href="https://activetheory.net/" target="_blank">
+              <a href="https://activetheory.net/" target="_blank" rel="noopener noreferrer">
                 <span>Active Theory</span> 
                 <span> -- WebGL Developer</span>
               </a>
             </li>
               <li>
-              <a href="https://visualgoodness.com/" target="_blank">
+              <a href="https://visualgoodness.com/" target="_blank" rel="noopener noreferrer">
                 <span>Visual Goodness </span> 
                 <span> -- WebGL Developer</span>
               </a>
               </li>
               <li>
-              <a href="https://smartco.com.ec" target="_blank"> 
+              <a href="https://smartco.com.ec" target="_blank" rel="noopener noreferrer"> 
                 <span>Smartco </span>
                 <span> -- Unity Developer</span>
               </a>
             </li>
               <li>
-                <a href="https://www.yaesta.com" target="_blank">
+                <a href="https://www.yaesta.com" target="_blank" rel="noopener noreferrer">
                   <span> YaEsta </span>
                   <span> -- Front-end  & Designer</span> 
                 </a>

@@ -6,7 +6,9 @@
     "dev": "vite serve --host",
     "build": "vite build",
     "preview": "vite preview",
-    "sync-docs": "node sync-docs.js"
+    "sync-docs": "node sync-docs.js",
+    "build:docs": "npm run build && npm run sync-docs",
+    "check": "npm run build"
   },
   "repository": {
     "type": "git",

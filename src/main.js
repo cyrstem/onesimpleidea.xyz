@@ -1,9 +1,9 @@
 
 import "./style/main.scss";
 import simpleSign from './js/utils/Sign'
-import App from './js/app'
 
-window.onload = (e) => {
+window.onload = async () => {
+	const { default: App } = await import('./js/app');
 	new App(
 		{
 			dom: document.getElementById('container')
