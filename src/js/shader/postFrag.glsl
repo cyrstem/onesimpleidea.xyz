@@ -13,9 +13,9 @@ uniform float uActive;
 uniform float uAboutTransition;
 uniform float uAboutOpen;
 uniform float uAboutMorphing;
-uniform vec2 uRevealPointer;
 uniform float uRevealActive;
-uniform float uRevealRadius;
+uniform sampler2D uFluidMask;
+uniform sampler2D uSceneBackdrop;
 uniform vec2 uAreaCenter;
 uniform vec2 uAreaRadius;
 
@@ -47,8 +47,23 @@ vec3 samplePortfolio(vec2 uv, float pick) {
 void main() {
   vec3 hiddenBg = vec3(0.93);
 
+  // About: same fluid X-ray on the panel fill — holes show live grid (see App backdrop pass).
   if (uAboutOpen > 0.5) {
-    gl_FragColor = vec4(texture2D(uScene, vUv).rgb, 1.0);
+    vec3 sceneCol = texture2D(uScene, vUv).rgb;
+    vec3 backdropCol = texture2D(uSceneBackdrop, vUv).rgb;
+    vec3 paper = vec3(0.9372549);
+
+    float distPaper = distance(sceneCol, paper);
+    float onPaper = 1.0 - smoothstep(0.03, 0.12, distPaper);
+
+    vec3 outCol = sceneCol;
+    if (uRevealActive > 0.5) {
+      float maskSample = texture2D(uFluidMask, vUv).r;
+      float reveal = smoothstep(0.02, 0.98, 1.0 - maskSample);
+      vec3 fluidPaper = mix(sceneCol, backdropCol, reveal);
+      outCol = mix(sceneCol, fluidPaper, onPaper);
+    }
+    gl_FragColor = vec4(outCol, 1.0);
     return;
   }
 
@@ -114,15 +129,13 @@ void main() {
   finalColor = mix(finalColor, bg, dissolve * 0.9);
   finalColor = mix(finalColor, bg, smoothstep(0.78, 1.0, morph));
 
-  // Circular mask around pointer when the grid has been revealed by movement.
+  // Fluid trail mask: white = hidden bg, black (after sim) = reveal grid (Codrops fluid X-ray).
   vec3 outCol = finalColor;
   if (uRevealActive > 0.5) {
-    vec2 pd = vUv - uRevealPointer;
-    float asp = uResolution.x / max(uResolution.y, 1.0);
-    pd.x *= asp;
-    float rd = length(pd);
-    float rm = 1.0 - smoothstep(uRevealRadius * 0.68, uRevealRadius * 1.12, rd);
-    outCol = mix(hiddenBg, finalColor, rm);
+    float maskSample = texture2D(uFluidMask, vUv).r;
+    float reveal = 1.0 - maskSample;
+    reveal = smoothstep(0.02, 0.98, reveal);
+    outCol = mix(hiddenBg, finalColor, reveal);
   }
 
   gl_FragColor = vec4(outCol, 1.0);

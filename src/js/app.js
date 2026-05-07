@@ -27,6 +27,8 @@ import UI from "./UI";
 import { throttle } from "./utils/Utils";
 import postVert from "./shader/postVert.glsl";
 import postFrag from "./shader/postFrag.glsl";
+import MouseTrail from "./classes/MouseTrail";
+import FluidSim from "./classes/FluidSim";
 
 export default class App {
   constructor(stage) {
@@ -111,6 +113,31 @@ export default class App {
     this.renderer.setClearColor(0xc8c8c8, 1);
     this.container.appendChild(this.renderer.domElement);
     this.setupPostProcessing();
+    this.setupFluidReveal();
+  }
+
+  setupFluidReveal() {
+    const dpr = Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO);
+    const fw = Math.max(8, Math.floor(this.state.width * dpr * 0.5));
+    const fh = Math.max(8, Math.floor(this.state.height * dpr * 0.5));
+
+    this.mouseTrail = new MouseTrail(fw, fh);
+    this.fluidSim = new FluidSim(this.renderer, fw, fh);
+    if (this.postMaterial) {
+      this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
+    }
+  }
+
+  resizeFluidReveal() {
+    if (!this.mouseTrail || !this.fluidSim) return;
+    const dpr = Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO);
+    const fw = Math.max(8, Math.floor(this.state.width * dpr * 0.5));
+    const fh = Math.max(8, Math.floor(this.state.height * dpr * 0.5));
+    this.mouseTrail.resize(fw, fh);
+    this.fluidSim.setSize(fw, fh);
+    if (this.postMaterial && !this.state.pointerRevealActive) {
+      this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
+    }
   }
 
   setupPostProcessing() {
@@ -122,13 +149,28 @@ export default class App {
       format: RGBAFormat
     });
 
+    this.aboutBackdropTarget = new WebGLRenderTarget(this.state.width, this.state.height, {
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      format: RGBAFormat
+    });
+
     const ph = new Uint8Array([240, 240, 240, 255]);
     this.portfolioPlaceholderTex = new DataTexture(ph, 1, 1, RGBAFormat);
     this.portfolioPlaceholderTex.needsUpdate = true;
 
+    const wm = new Uint8Array([255, 255, 255, 255]);
+    this.whiteFluidMaskTex = new DataTexture(wm, 1, 1, RGBAFormat);
+    this.whiteFluidMaskTex.needsUpdate = true;
+
+    const bd = new Uint8Array([200, 200, 200, 255]);
+    this.aboutBackdropPlaceholderTex = new DataTexture(bd, 1, 1, RGBAFormat);
+    this.aboutBackdropPlaceholderTex.needsUpdate = true;
+
     this.postMaterial = new ShaderMaterial({
       uniforms: {
         uScene: { value: null },
+        uSceneBackdrop: { value: this.aboutBackdropPlaceholderTex },
         uTime: { value: 0 },
         uResolution: { value: new Vector2(this.state.width, this.state.height) },
         uIntensity: { value: this.isLowPowerDevice ? 0.3 : 0.51 },
@@ -136,9 +178,8 @@ export default class App {
         uAboutTransition: { value: 0 },
         uAboutOpen: { value: 0 },
         uAboutMorphing: { value: 0 },
-        uRevealPointer: { value: new Vector2(0.5, 0.5) },
         uRevealActive: { value: 0 },
-        uRevealRadius: { value: 0.26 },
+        uFluidMask: { value: this.whiteFluidMaskTex },
         uAreaCenter: { value: new Vector2(0.5, 0.5) },
         uAreaRadius: { value: new Vector2(0.36, 0.3) },
         uPort0: { value: this.portfolioPlaceholderTex },
@@ -307,7 +348,10 @@ export default class App {
     this.state.pointerRevealActive = false;
     if (this.postMaterial) {
       this.postMaterial.uniforms.uRevealActive.value = 0;
+      this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
     }
+    this.mouseTrail?.clear();
+    this.fluidSim?.clearTargets();
   }
 
   showAbout() {
@@ -455,13 +499,19 @@ export default class App {
   }
 
   handlePointerMove(event) {
-    if (this.state.aboutOpen) return;
+    if (this.state.aboutOpen) {
+      this.updateMousePosition(event);
+      return;
+    }
     this.updateMousePosition(event);
     this.handleGridInteraction();
   }
 
   onMouseMove(event) {
-    if (this.state.aboutOpen) return;
+    if (this.state.aboutOpen) {
+      this.updateMousePosition(event);
+      return;
+    }
     this.updateMousePosition(event);
     this.handleGridInteraction();
   }
@@ -495,6 +545,7 @@ export default class App {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO));
     this.renderer.setSize(w, h);
     if (this.renderTarget) this.renderTarget.setSize(w, h);
+    if (this.aboutBackdropTarget) this.aboutBackdropTarget.setSize(w, h);
     if (this.postMaterial) {
       this.postMaterial.uniforms.uResolution.value.set(this.state.width, this.state.height);
     }
@@ -503,6 +554,7 @@ export default class App {
     }
     this.fitGeneticGridToViewport();
     this.updateAboutPanelLayout();
+    this.resizeFluidReveal();
   }
 
   /**
@@ -530,7 +582,7 @@ export default class App {
 
     this.state.frameTick += 1;
     const shouldUpdate = !this.isLowPowerDevice || this.state.frameTick % 2 === 0;
-    if (shouldUpdate && !this.state.aboutOpen) {
+    if (shouldUpdate) {
       const t = performance.now() * 0.001;
       this.geneticGrid.update(t, this.state.aboutTransitioning);
     }
@@ -546,15 +598,42 @@ export default class App {
     }
 
     const now = performance.now();
-    this.postMaterial.uniforms.uTime.value = now * 0.001;
+    const timeSec = now * 0.001;
+    this.postMaterial.uniforms.uTime.value = timeSec;
     const aboutMorph = this.state.aboutTransitioning ? this.state.aboutTransition : 0;
     this.postMaterial.uniforms.uAboutTransition.value = aboutMorph;
     this.postMaterial.uniforms.uAboutOpen.value = this.state.aboutOpen ? 1 : 0;
     this.postMaterial.uniforms.uAboutMorphing.value = this.state.aboutTransitioning ? 1 : 0;
-    this.postMaterial.uniforms.uRevealPointer.value.copy(this.pointerUv);
     this.postMaterial.uniforms.uRevealActive.value = this.state.pointerRevealActive ? 1 : 0;
+
+    if (this.mouseTrail && this.fluidSim) {
+      if (this.state.pointerRevealActive) {
+        const nyCanvas = 1 - this.pointerUv.y;
+        this.mouseTrail.update(this.pointerUv.x, nyCanvas);
+        this.fluidSim.update(this.mouseTrail.texture, timeSec);
+        this.postMaterial.uniforms.uFluidMask.value = this.fluidSim.getMaskTexture();
+      } else {
+        this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
+      }
+    }
     this.updateGlitchState(now);
     this.updateGridAreaMask();
+
+    if (this.state.aboutOpen && this.aboutBackdropTarget && this.aboutMesh && this.geneticGrid) {
+      const cam = this.cameraManager.getCamera();
+      const saveAbout = this.aboutMesh.visible;
+      const saveGrid = this.geneticGrid.getMain().visible;
+      this.aboutMesh.visible = false;
+      this.geneticGrid.getMain().visible = true;
+      this.renderer.setRenderTarget(this.aboutBackdropTarget);
+      this.renderer.render(this.scene, cam);
+      this.aboutMesh.visible = saveAbout;
+      this.geneticGrid.getMain().visible = saveGrid;
+      this.renderer.setRenderTarget(null);
+      this.postMaterial.uniforms.uSceneBackdrop.value = this.aboutBackdropTarget.texture;
+    } else if (this.postMaterial.uniforms.uSceneBackdrop) {
+      this.postMaterial.uniforms.uSceneBackdrop.value = this.aboutBackdropPlaceholderTex;
+    }
 
     this.renderer.setRenderTarget(this.renderTarget);
     this.renderer.render(this.scene, this.cameraManager.getCamera());
@@ -634,9 +713,14 @@ export default class App {
     this.renderer.dispose();
     if (this.controls) this.controls.dispose();
     if (this.renderTarget) this.renderTarget.dispose();
+    if (this.aboutBackdropTarget) this.aboutBackdropTarget.dispose();
+    if (this.aboutBackdropPlaceholderTex) this.aboutBackdropPlaceholderTex.dispose();
     if (this.postQuad?.geometry) this.postQuad.geometry.dispose();
     if (this.postMaterial) this.postMaterial.dispose();
     if (this.portfolioPlaceholderTex) this.portfolioPlaceholderTex.dispose();
+    if (this.whiteFluidMaskTex) this.whiteFluidMaskTex.dispose();
+    if (this.mouseTrail) this.mouseTrail.dispose();
+    if (this.fluidSim) this.fluidSim.dispose();
     if (this.aboutTexture) this.aboutTexture.dispose();
     if (this.aboutMesh?.geometry) this.aboutMesh.geometry.dispose();
     if (this.aboutMaterial) this.aboutMaterial.dispose();

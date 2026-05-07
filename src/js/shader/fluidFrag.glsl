@@ -1,54 +1,65 @@
 precision highp float;
 
+uniform sampler2D uPrev;
+uniform sampler2D uTrail;
+uniform vec2 uResolution;
+uniform float uTime;
+
 varying vec2 vUv;
 
-uniform sampler2D uPrev;
-uniform sampler2D uInput;
-uniform float uFade;
-
 float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
 }
 
-float vnoise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(
-        mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
-        mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x),
-        u.y
-    );
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  float a = hash(i);
+  float b = hash(i + vec2(1.0, 0.0));
+  float c = hash(i + vec2(0.0, 1.0));
+  float d = hash(i + vec2(1.0, 1.0));
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
 }
 
 float fbm(vec2 p) {
-    float v = 0.0;
-    float a = 0.5;
-    for (int i = 0; i < 4; i++) {
-        v += a * vnoise(p);
-        p *= 2.0;
-        a *= 0.5;
-    }
-    return v;
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 4; i++) {
+    v += a * noise(p);
+    p *= 2.0;
+    a *= 0.5;
+  }
+  return v;
 }
 
-vec3 darken(vec3 a, vec3 b) {
-    return min(a, b);
+vec3 blendDarken(vec3 base, vec3 blend) {
+  return min(blend, base);
 }
 
 void main() {
-    // Tiny noise-driven offset gives the spread a turbulent, uneven look.
-    vec2 disp = (vec2(fbm(vUv * 20.0), fbm(vUv * 20.0 + 17.0)) - 0.5) * 0.02;
+  vec2 uv = vUv;
+  float aspect = uResolution.y / max(uResolution.x, 1.0);
+  vec2 aspectVec = uResolution.x < uResolution.y ? vec2(1.0, aspect) : vec2(1.0 / max(aspect, 0.001), 1.0);
 
-    vec3 c = texture2D(uPrev, vUv).rgb;
-    c = darken(c, texture2D(uPrev, vec2(vUv.x + disp.x, vUv.y)).rgb);
-    c = darken(c, texture2D(uPrev, vec2(vUv.x - disp.x, vUv.y)).rgb);
-    c = darken(c, texture2D(uPrev, vec2(vUv.x, vUv.y + disp.y)).rgb);
-    c = darken(c, texture2D(uPrev, vec2(vUv.x, vUv.y - disp.y)).rgb);
+  vec2 disp = fbm(uv * 20.0 + uTime * 0.12) * 0.007 * aspectVec;
 
-    vec3 trail = texture2D(uInput, vUv).rgb;
-    c = darken(c, trail);
+  vec3 texel = texture2D(uPrev, uv).rgb;
+  vec3 t2 = texture2D(uPrev, uv + vec2(disp.x, 0.0)).rgb;
+  vec3 t3 = texture2D(uPrev, uv - vec2(disp.x, 0.0)).rgb;
+  vec3 t4 = texture2D(uPrev, uv + vec2(0.0, disp.y)).rgb;
+  vec3 t5 = texture2D(uPrev, uv - vec2(0.0, disp.y)).rgb;
 
-    // Drift back toward white. ~1s for a fully-black pixel at 60fps with uFade=0.015.
-    gl_FragColor = vec4(min(vec3(1.0), c + vec3(uFade)), 1.0);
+  vec3 flood = texel;
+  flood = blendDarken(flood, t2);
+  flood = blendDarken(flood, t3);
+  flood = blendDarken(flood, t4);
+  flood = blendDarken(flood, t5);
+
+  vec2 trailUv = vec2(uv.x, 1.0 - uv.y);
+  vec3 trail = texture2D(uTrail, trailUv).rgb;
+  vec3 combined = blendDarken(flood, trail);
+
+  vec3 outRgb = min(vec3(1.0), combined + vec3(0.018));
+  gl_FragColor = vec4(outRgb, 1.0);
 }
