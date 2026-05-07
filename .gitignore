@@ -13,6 +13,7 @@ Thumbs.db
 node_modules/*
 .cache/*
 .cache
+dist/
 
 
 # Files staff #

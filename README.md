@@ -1,15 +1,15 @@
+# O N E S I M P L E I D E A . X Y Z
 
-## O N E S I M P L E I D E A . X Y Z 
-
-Portafolio work thing is made with Vite, vanilla JS,  css and Threejs.  
-
-```
--install : npm i
-- dev: yarn run dev
-- build: yarn run prod
-- deploy: npm run dep
+Portfolio site built with Vite, vanilla JS, SCSS and Three.js.
 
 ```
-#updates for 2025 
- improbe gpu performence and updated projects
-improbe  js implememtation 
+install : npm install
+dev     : npm run dev
+build   : npm run build
+preview : npm run preview
+```
+
+## 2025 updates
+
+- Improved GPU performance and updated projects.
+- Cleaned up JS implementation.

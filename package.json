@@ -21,13 +21,15 @@
   "homepage": "https://github.com/cyrstem/onesimpleidea.xyz#readme",
   "dependencies": {
     "@dogstudio/highway": "^2.2.1",
+    "animejs": "^4.4.1",
     "gsap": "^3.11.1",
     "howler": "^2.2.3",
+    "three": "^0.144.0"
+  },
+  "devDependencies": {
     "lil-gui": "^0.18.1",
     "sass": "^1.53.0",
-    "splitting": "^1.0.6",
-    "three": "^0.144.0",
-    "vite": "^2.9.13",
-    "vite-plugin-glsl": "^0.2.0"
+    "vite": "^8.0.10",
+    "vite-plugin-glsl": "^1.6.0"
   }
 }
