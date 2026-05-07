@@ -68,6 +68,49 @@ export default class CubeManager {
         console.log('Cubes visibility set to:', this.main.visible);
     }
 
+    hideCubes() {
+        this.main.visible = false;
+    }
+
+    animateDissolveAscent(durationSec) {
+        this.cubes.forEach(cube => {
+            gsap.killTweensOf(cube.position);
+            gsap.killTweensOf(cube.rotation);
+        });
+        this.cubes.forEach(cube => {
+            const base = cube.userData.basePosition;
+            const spread = this.config.CUBE_SPREAD;
+            const rise = spread * (0.75 + Math.random() * 0.85);
+            const sway = spread * 0.15;
+            const delay = Math.random() * 0.14;
+            gsap.to(cube.position, {
+                y: base.y + rise,
+                x: base.x + (Math.random() - 0.5) * sway * 2,
+                z: base.z + (Math.random() - 0.5) * sway,
+                duration: durationSec,
+                ease: "power2.in",
+                delay
+            });
+            gsap.to(cube.rotation, {
+                x: cube.rotation.x + (Math.random() - 0.5) * Math.PI,
+                y: cube.rotation.y + (Math.random() - 0.5) * Math.PI,
+                z: cube.rotation.z + (Math.random() > 0.5 ? 1 : -1) * Math.PI * (1.8 + Math.random()),
+                duration: durationSec,
+                ease: "power3.inOut",
+                delay
+            });
+        });
+    }
+
+    restoreCubeLayout() {
+        this.cubes.forEach(cube => {
+            gsap.killTweensOf(cube.position);
+            gsap.killTweensOf(cube.rotation);
+            cube.position.copy(cube.userData.basePosition);
+            cube.scale.set(1, 1, 1);
+        });
+    }
+
     animateCubesOnShaderCreate() {
         this.cubes.forEach(cube => {
             const randomRotation = {

@@ -6,6 +6,7 @@ export default class UI {
   constructor({ onAboutToggle } = {}) {
     this.onAboutToggle = onAboutToggle;
     this.aboutOpen = false;
+    this.transitioning = false;
     this.initHTML();
     this.addListeners();
     this.render();
@@ -25,16 +26,23 @@ export default class UI {
     this.nav.addEventListener("click", this.handleNavClickBound);
   }
 
-  handleNavClick(event) {
+  async handleNavClick(event) {
     const btn = event.target.closest("[data-view='about']");
     if (!btn) return;
     event.preventDefault();
-    this.aboutOpen = !this.aboutOpen;
+    if (this.transitioning) return;
+
+    const nextAboutState = !this.aboutOpen;
+
+    if (typeof this.onAboutToggle === "function") {
+      this.transitioning = true;
+      await this.onAboutToggle(nextAboutState);
+      this.transitioning = false;
+    }
+
+    this.aboutOpen = nextAboutState;
     this.updateNavState();
     this.render();
-    if (typeof this.onAboutToggle === "function") {
-      this.onAboutToggle(this.aboutOpen);
-    }
   }
 
   updateNavState() {

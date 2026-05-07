@@ -31,7 +31,7 @@ void main() {
   vec4 disp = texture2D(uDisp, uv);
 
   float wipe = step(1.0 - uv.x, uProg);
-  float scale = 0.7 + 0.3 * uProg;
+  float scale = 0.6 + 0.3 * uProg;
 
   vec4 currTex = texture2D(uCurrTex, texUv + vec2(disp.r * uProg, 0.));
   vec4 nextTex = texture2D(uNextTex, texUv * scale + vec2(0.15) * (1. - uProg));

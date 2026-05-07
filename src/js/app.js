@@ -2,17 +2,32 @@ import {
   Scene,
   WebGLRenderer,
   Vector2,
+  Vector3,
   Raycaster,
   Fog,
+  WebGLRenderTarget,
+  OrthographicCamera,
+  PlaneGeometry,
+  Mesh,
+  ShaderMaterial,
+  MeshBasicMaterial,
+  CanvasTexture,
+  DoubleSide,
+  LinearFilter,
+  RGBAFormat,
+  DataTexture,
   TextureLoader,
   LoadingManager,
-  PointLight
+  PointLight,
+  RepeatWrapping
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Debug from "./utils/Debug";
 import gsap from "gsap";
 import UI from "./UI";
 import { throttle } from "./utils/Utils";
+import postVert from "./shader/postVert.glsl";
+import postFrag from "./shader/postFrag.glsl";
 
 export default class App {
   constructor(stage) {
@@ -30,13 +45,20 @@ export default class App {
     this.mouse = new Vector2();
     this.raycaster = new Raycaster();
     this.textureCache = new Map();
+    this.tempVecA = new Vector3();
+    this.tempVecB = new Vector3();
+    this.tempVecC = new Vector3();
 
     this.state = {
       animating: false,
       width: this.container.offsetWidth,
       height: this.container.offsetHeight,
       frameTick: 0,
-      aboutOpen: false
+      aboutOpen: false,
+      aboutTransition: 0,
+      aboutTransitioning: false,
+      glitchStrength: 0,
+      glitchUntil: 0
     };
 
     this.ui = new UI({
@@ -52,6 +74,9 @@ export default class App {
     this.bottomText = null;
     this.managersReady = false;
     this.shaderManager = null;
+    this.aboutCanvas = null;
+    this.aboutTexture = null;
+    this.aboutMesh = null;
 
     this.config = {
       CUBE_COUNT: this.isLowPowerDevice ? 80 : 150,
@@ -83,6 +108,44 @@ export default class App {
     this.renderer.setSize(this.state.width, this.state.height);
     this.renderer.setClearColor(0xeeeeee, 1);
     this.container.appendChild(this.renderer.domElement);
+    this.setupPostProcessing();
+  }
+
+  setupPostProcessing() {
+    this.postScene = new Scene();
+    this.postCamera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    this.renderTarget = new WebGLRenderTarget(this.state.width, this.state.height, {
+      minFilter: LinearFilter,
+      magFilter: LinearFilter,
+      format: RGBAFormat
+    });
+
+    const ph = new Uint8Array([240, 240, 240, 255]);
+    this.portfolioPlaceholderTex = new DataTexture(ph, 1, 1, RGBAFormat);
+    this.portfolioPlaceholderTex.needsUpdate = true;
+
+    this.postMaterial = new ShaderMaterial({
+      uniforms: {
+        uScene: { value: null },
+        uTime: { value: 0 },
+        uResolution: { value: new Vector2(this.state.width, this.state.height) },
+        uIntensity: { value: this.isLowPowerDevice ? 0.3 : 0.51 },
+        uActive: { value: 0 },
+        uAboutTransition: { value: 0 },
+        uAboutTransitioning: { value: 0 },
+        uAreaCenter: { value: new Vector2(0.5, 0.5) },
+        uAreaRadius: { value: new Vector2(0.36, 0.3) },
+        uPort0: { value: this.portfolioPlaceholderTex },
+        uPort1: { value: this.portfolioPlaceholderTex },
+        uPort2: { value: this.portfolioPlaceholderTex },
+        uPort3: { value: this.portfolioPlaceholderTex }
+      },
+      vertexShader: postVert,
+      fragmentShader: postFrag
+    });
+
+    this.postQuad = new Mesh(new PlaneGeometry(2, 2), this.postMaterial);
+    this.postScene.add(this.postQuad);
   }
 
   setupLights() {
@@ -106,6 +169,7 @@ export default class App {
 
     this.cameraManager = new CameraManager(this.config);
     this.cubeManager = new CubeManager(this.scene, this.config);
+    this.setupAboutPanel();
     this.loadTextures();
     this.managersReady = true;
 
@@ -145,13 +209,25 @@ export default class App {
   }
 
   loadTextures() {
-    const manager = new LoadingManager(() => {});
+    const manager = new LoadingManager(() => this.assignPortfolioTexturesToPostShader());
     const loader = new TextureLoader(manager);
     this.textures = this.config.TEXTURE_URLS.map(url => {
       if (this.textureCache.has(url)) return this.textureCache.get(url);
       const texture = loader.load(url);
       this.textureCache.set(url, texture);
       return texture;
+    });
+    setTimeout(() => this.assignPortfolioTexturesToPostShader(), 0);
+  }
+
+  assignPortfolioTexturesToPostShader() {
+    if (!this.postMaterial?.uniforms || !this.textures?.length) return;
+    this.textures.forEach((tex, i) => {
+      if (!tex || i > 3) return;
+      tex.wrapS = tex.wrapT = RepeatWrapping;
+      tex.minFilter = tex.magFilter = LinearFilter;
+      const u = this.postMaterial.uniforms[`uPort${i}`];
+      if (u) u.value = tex;
     });
   }
 
@@ -173,17 +249,49 @@ export default class App {
     }
   }
 
-  handleAboutToggle(isOpen) {
-    this.state.aboutOpen = isOpen;
+  async handleAboutToggle(isOpen) {
     if (isOpen) {
+      this.state.glitchUntil = 0;
+      this.cubeManager.animateDissolveAscent(0.95);
+      await this.playAboutTransition();
+      this.state.aboutOpen = true;
       this.showAbout();
       return;
+    }
+
+    this.state.aboutOpen = false;
+    this.state.aboutTransition = 0;
+    if (this.postMaterial) {
+      this.postMaterial.uniforms.uAboutTransition.value = 0;
     }
     this.showIntro();
   }
 
+  playAboutTransition() {
+    if (this.state.aboutTransitioning) {
+      return Promise.resolve();
+    }
+
+    this.state.aboutTransitioning = true;
+    this.state.aboutTransition = 0;
+
+    return new Promise(resolve => {
+      gsap.to(this.state, {
+        aboutTransition: 1,
+        duration: 0.95,
+        ease: "power2.inOut",
+        onComplete: () => {
+          this.state.aboutTransitioning = false;
+          resolve();
+        }
+      });
+    });
+  }
+
   showIntro() {
     if (!this.cubeManager) return;
+    if (this.aboutMesh) this.aboutMesh.visible = false;
+    this.cubeManager.restoreCubeLayout();
     this.cubeManager.getMain().visible = true;
     this.cubeManager.getGeos().position.set(0, 0, 0);
     this.cubeManager.showCubes();
@@ -192,7 +300,146 @@ export default class App {
 
   showAbout() {
     if (!this.cubeManager) return;
-    this.cubeManager.getMain().visible = false;
+    this.cubeManager.hideCubes();
+    if (this.aboutMesh) {
+      this.aboutMesh.visible = true;
+      this.drawAboutCanvas();
+      if (this.aboutTexture) this.aboutTexture.needsUpdate = true;
+    }
+  }
+
+  setupAboutPanel() {
+    this.aboutCanvas = document.createElement("canvas");
+    this.aboutCanvas.width = 2048;
+    this.aboutCanvas.height = 1365;
+    this.drawAboutCanvas();
+
+    this.aboutTexture = new CanvasTexture(this.aboutCanvas);
+    this.aboutTexture.needsUpdate = true;
+
+    this.aboutMaterial = new MeshBasicMaterial({
+      map: this.aboutTexture,
+      transparent: false,
+      fog: false,
+      depthTest: false,
+      depthWrite: false,
+      side: DoubleSide
+    });
+
+    this.aboutMesh = new Mesh(new PlaneGeometry(20, 13), this.aboutMaterial);
+    this.aboutMesh.position.set(0, -0.15, 0.4);
+    this.aboutMesh.renderOrder = 20;
+    this.aboutMesh.visible = false;
+    this.scene.add(this.aboutMesh);
+    this.updateAboutPanelLayout();
+
+    if (document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        this.drawAboutCanvas();
+        if (this.aboutTexture) this.aboutTexture.needsUpdate = true;
+      });
+    }
+  }
+
+  drawAboutCanvas() {
+    if (!this.aboutCanvas) return;
+    const ctx = this.aboutCanvas.getContext("2d");
+    if (!ctx) return;
+
+    const { width, height } = this.aboutCanvas;
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = "rgba(239,239,239,0.97)";
+    ctx.fillRect(0, 0, width, height);
+
+    const marginX = 260;
+    let y = 180;
+    const maxWidth = Math.min(1320, width - marginX * 2);
+
+    ctx.fillStyle = "#111111";
+    ctx.font = "700 58px Rajdhani, sans-serif";
+    ctx.fillText("About", marginX, y);
+    y += 88;
+
+    ctx.fillStyle = "#202020";
+    ctx.font = "500 46px Rajdhani, sans-serif";
+    y = this.drawWrappedText(
+      ctx,
+      "I'm Jacob, a Creative Developer and Front-End Developer based in Quito - Ecuador, specialized in building custom digital or physical experiences.",
+      marginX,
+      y,
+      maxWidth,
+      62
+    );
+    y += 26;
+
+    y = this.drawWrappedText(
+      ctx,
+      "Self-taught developer, fast learner that works with WebGL, JS, C++, OpenGL, GLSL and recently working with Machine Learning, Computational Thinking, AI and Unreal Engine.",
+      marginX,
+      y,
+      maxWidth,
+      62
+    );
+    y += 36;
+
+    ctx.fillStyle = "#131313";
+    ctx.font = "700 52px Rajdhani, sans-serif";
+    ctx.fillText("I have collaborated with:", marginX, y);
+    y += 84;
+
+    const items = [
+      "the Garden in the machine -- Creative Developer",
+      "Active Theory -- WebGL Developer",
+      "Visual Goodness -- WebGL Developer",
+      "Smartco -- Unity Developer",
+      "YaEsta -- Front-end & Designer"
+    ];
+
+    ctx.fillStyle = "#202020";
+    ctx.font = "500 44px Rajdhani, sans-serif";
+    items.forEach(item => {
+      ctx.fillText(`• ${item}`, marginX + 24, y);
+      y += 72;
+    });
+
+    y += 28;
+    ctx.fillStyle = "#141414";
+    ctx.font = "600 48px Rajdhani, sans-serif";
+    ctx.fillText("Contact me at cyrstem[at]gmail[dot]com", marginX, y);
+  }
+
+  drawWrappedText(ctx, text, x, y, maxWidth, lineHeight) {
+    const words = text.split(" ");
+    let line = "";
+    let cursorY = y;
+
+    words.forEach(word => {
+      const testLine = `${line}${word} `;
+      const metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && line !== "") {
+        ctx.fillText(line.trimEnd(), x, cursorY);
+        line = `${word} `;
+        cursorY += lineHeight;
+      } else {
+        line = testLine;
+      }
+    });
+
+    if (line) {
+      ctx.fillText(line.trimEnd(), x, cursorY);
+      cursorY += lineHeight;
+    }
+
+    return cursorY;
+  }
+
+  updateAboutPanelLayout() {
+    if (!this.aboutMesh || !this.cameraManager) return;
+    const camera = this.cameraManager.getCamera();
+    const distance = camera.position.z - this.aboutMesh.position.z;
+    const visibleHeight = 2 * Math.tan((camera.fov * Math.PI) / 360) * distance;
+    const visibleWidth = visibleHeight * camera.aspect;
+    this.aboutMesh.scale.set(visibleWidth * 0.95, visibleHeight * 0.92, 1);
   }
 
   repositionCubes() {
@@ -245,8 +492,13 @@ export default class App {
     const intersects = this.raycaster.intersectObjects(this.cubeManager.getCubes(), false);
     if (intersects.length === 0) return;
 
+    this.activateGlitchPulse();
     this.cameraManager.animateWiggle();
     await this.showShaderElement();
+  }
+
+  activateGlitchPulse() {
+    this.state.glitchUntil = performance.now() + 1400;
   }
 
   async showShaderElement() {
@@ -269,9 +521,14 @@ export default class App {
     this.state.width = this.container.offsetWidth;
     this.state.height = this.container.offsetHeight;
     this.renderer.setSize(this.state.width, this.state.height);
+    if (this.renderTarget) this.renderTarget.setSize(this.state.width, this.state.height);
+    if (this.postMaterial) {
+      this.postMaterial.uniforms.uResolution.value.set(this.state.width, this.state.height);
+    }
     if (this.cameraManager) {
       this.cameraManager.resize(this.state.width, this.state.height);
     }
+    this.updateAboutPanelLayout();
   }
 
   render() {
@@ -281,11 +538,65 @@ export default class App {
     const shouldUpdate = !this.isLowPowerDevice || this.state.frameTick % 2 === 0;
     if (shouldUpdate && !this.state.aboutOpen) {
       this.updateAnimations();
-      this.cubeManager.updateCubes();
+      if (!this.state.aboutTransitioning) {
+        this.cubeManager.updateCubes();
+      }
     }
 
     this.frameId = requestAnimationFrame(this.render);
+    this.renderWithPostProcessing();
+  }
+
+  renderWithPostProcessing() {
+    if (!this.renderTarget || !this.postMaterial) {
+      this.renderer.render(this.scene, this.cameraManager.getCamera());
+      return;
+    }
+
+    if (this.state.aboutOpen) {
+      this.renderer.render(this.scene, this.cameraManager.getCamera());
+      return;
+    }
+
+    const now = performance.now();
+    this.postMaterial.uniforms.uTime.value = now * 0.001;
+    this.postMaterial.uniforms.uAboutTransition.value = this.state.aboutTransition;
+    this.postMaterial.uniforms.uAboutTransitioning.value = this.state.aboutTransitioning ? 1 : 0;
+    this.updateGlitchState(now);
+    this.updateCubeAreaMask();
+
+    this.renderer.setRenderTarget(this.renderTarget);
     this.renderer.render(this.scene, this.cameraManager.getCamera());
+
+    this.postMaterial.uniforms.uScene.value = this.renderTarget.texture;
+    this.renderer.setRenderTarget(null);
+    this.renderer.render(this.postScene, this.postCamera);
+  }
+
+  updateGlitchState(now) {
+    const target = !this.state.aboutOpen && now < this.state.glitchUntil ? 1 : 0;
+    this.state.glitchStrength += (target - this.state.glitchStrength) * 0.12;
+    this.postMaterial.uniforms.uActive.value = this.state.glitchStrength;
+  }
+
+  updateCubeAreaMask() {
+    if (!this.cubeManager || !this.cameraManager || !this.postMaterial) return;
+
+    const geos = this.cubeManager.getGeos();
+    const camera = this.cameraManager.getCamera();
+
+    const center = geos.getWorldPosition(this.tempVecA).clone().project(camera);
+    const xEdge = geos.localToWorld(this.tempVecB.set(this.config.CUBE_SPREAD * 0.8, 0, 0)).clone().project(camera);
+    const yEdge = geos.localToWorld(this.tempVecC.set(0, this.config.CUBE_SPREAD * 0.8, 0)).clone().project(camera);
+
+    const centerUvX = center.x * 0.5 + 0.5;
+    const centerUvY = center.y * -0.5 + 0.5;
+
+    const radiusX = Math.max(0.12, Math.min(0.55, Math.abs(xEdge.x - center.x) * 1.05));
+    const radiusY = Math.max(0.12, Math.min(0.55, Math.abs(yEdge.y - center.y) * 1.15));
+
+    this.postMaterial.uniforms.uAreaCenter.value.set(centerUvX, centerUvY);
+    this.postMaterial.uniforms.uAreaRadius.value.set(radiusX, radiusY);
   }
 
   updateAnimations() {
@@ -327,6 +638,13 @@ export default class App {
 
     this.renderer.dispose();
     if (this.controls) this.controls.dispose();
+    if (this.renderTarget) this.renderTarget.dispose();
+    if (this.postQuad?.geometry) this.postQuad.geometry.dispose();
+    if (this.postMaterial) this.postMaterial.dispose();
+    if (this.portfolioPlaceholderTex) this.portfolioPlaceholderTex.dispose();
+    if (this.aboutTexture) this.aboutTexture.dispose();
+    if (this.aboutMesh?.geometry) this.aboutMesh.geometry.dispose();
+    if (this.aboutMaterial) this.aboutMaterial.dispose();
 
     if (this.shaderManager) {
       document.querySelectorAll(".shader-container").forEach(container => {

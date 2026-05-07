@@ -10,7 +10,7 @@
 
 #terminal {
 	position: absolute;
-	z-index: 3;
+	z-index: 1001;
 	top: 5vh;
 	width: 63vw;
 	margin: 25px;
@@ -136,7 +136,7 @@
 }
 
 #ui {
-	z-index: 1000;
+	z-index: 1002;
 	position: absolute;
 	top: 2vh;
 }
@@ -185,7 +185,7 @@
 	font-family: $main-font;
 	font-size: 1rem;
 	color: #3d3d3d;
-	z-index: 1000;
+	z-index: 1002;
 	text-align: center;
 }
 
