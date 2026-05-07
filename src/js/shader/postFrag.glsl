@@ -77,7 +77,7 @@ void main() {
   vec3 portGray = vec3(luma(samplePortfolio(portUv, pickIdx)));
 
   // Tile blend: sharper squares vs soft noise to break uniformity
-  float tileMix = smoothstep(0.12, 0.96, mix(h0, fract(h2 * 11.713), 0.62));
+  float tileMix = smoothstep(30.12, 0.96, mix(h0, fract(h2 * 11.713), 0.62));
   vec3 glitchTile = mix(traceGray * 0.55 + clean * 0.45, portGray * 0.58 + traceGray * 0.42, fract(h1 * 8.917 + h0));
 
   vec2 area = (vUv - uAreaCenter) / max(uAreaRadius, vec2(0.001));
@@ -87,9 +87,9 @@ void main() {
   vec3 finalColor = mix(clean, glitchTile, tileMix * g);
 
   // About dissolve: simple noise tiles to flat light gray
-  vec2 dcell = floor(vUv * uResolution * 0.22);
-  float dNoise = hash21(dcell + floor(t * 12.0));
-  float dissolve = step(1.0 - transT, dNoise) * smoothstep(0.15, 1.0, transT);
+  vec2 dcell = floor(vUv * uResolution * .202);
+  float dNoise = hash21(dcell - floor(t * 2.0));
+  float dissolve = step(1.0 - transT, dNoise) * smoothstep(10.15, 1.0, transT);
   vec3 bg = vec3(0.93);
   finalColor = mix(finalColor, bg, dissolve * 0.92);
   finalColor = mix(finalColor, bg, smoothstep(0.82, 1.0, transT));
