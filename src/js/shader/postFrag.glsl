@@ -12,6 +12,10 @@ uniform float uIntensity;
 uniform float uActive;
 uniform float uAboutTransition;
 uniform float uAboutOpen;
+uniform float uAboutMorphing;
+uniform vec2 uRevealPointer;
+uniform float uRevealActive;
+uniform float uRevealRadius;
 uniform vec2 uAreaCenter;
 uniform vec2 uAreaRadius;
 
@@ -41,8 +45,16 @@ vec3 samplePortfolio(vec2 uv, float pick) {
 }
 
 void main() {
+  vec3 hiddenBg = vec3(0.93);
+
   if (uAboutOpen > 0.5) {
     gl_FragColor = vec4(texture2D(uScene, vUv).rgb, 1.0);
+    return;
+  }
+
+  // No pointer yet: flat background — unless About dissolve is animating (needs full pipeline).
+  if (uRevealActive < 0.5 && uAboutMorphing < 0.5) {
+    gl_FragColor = vec4(hiddenBg, 1.0);
     return;
   }
 
@@ -102,5 +114,16 @@ void main() {
   finalColor = mix(finalColor, bg, dissolve * 0.9);
   finalColor = mix(finalColor, bg, smoothstep(0.78, 1.0, morph));
 
-  gl_FragColor = vec4(finalColor, 1.0);
+  // Circular mask around pointer when the grid has been revealed by movement.
+  vec3 outCol = finalColor;
+  if (uRevealActive > 0.5) {
+    vec2 pd = vUv - uRevealPointer;
+    float asp = uResolution.x / max(uResolution.y, 1.0);
+    pd.x *= asp;
+    float rd = length(pd);
+    float rm = 1.0 - smoothstep(uRevealRadius * 0.68, uRevealRadius * 1.12, rd);
+    outCol = mix(hiddenBg, finalColor, rm);
+  }
+
+  gl_FragColor = vec4(outCol, 1.0);
 }

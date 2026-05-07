@@ -17,6 +17,7 @@
 	display: flex;
 	flex-direction: column;
 	min-height: 0;
+	overflow: visible;
 }
 
 body.about-is-open #portfolio-root.portfolio-root {
@@ -78,26 +79,38 @@ body.about-is-open #portfolio-root.portfolio-root {
 	min-height: 0;
 	display: flex;
 	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
+	justify-content: center;
 	align-items: center;
-	align-content: center;
 	width: 100%;
-	gap: clamp(0.75rem, 2vw, 1.35rem);
 	padding: 0.5rem clamp(1rem, 3vw, 2.5rem) max(2vh, 5rem);
 	box-sizing: border-box;
 	pointer-events: none;
 	overflow-x: auto;
-	overflow-y: hidden;
+	overflow-y: visible;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
+}
+
+.portfolio-float-track {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	gap: clamp(0.75rem, 2vw, 1.35rem);
+	width: max-content;
+	max-width: none;
+	margin-inline: auto;
+	position: relative;
+	isolation: isolate;
+	min-height: min(30vw, 260px);
 }
 
 .portfolio-card {
 	position: relative;
 	flex-shrink: 0;
 	align-self: center;
-	// Moderate squares — horizontal strip + scroll (between tiny & 3× blow-up)
+	z-index: 2;
 	width: min(30vw, 260px);
 	max-width: none;
 	aspect-ratio: 1;
@@ -114,7 +127,8 @@ body.about-is-open #portfolio-root.portfolio-root {
 	text-align: center;
 	font-family: $main-font;
 	scroll-snap-align: center;
-	transition: transform 0.32s ease, box-shadow 0.32s ease;
+	transform-origin: center center;
+	transition: transform 0.38s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.32s ease, opacity 0.25s ease;
 
 	&:hover,
 	&:focus,
@@ -124,21 +138,21 @@ body.about-is-open #portfolio-root.portfolio-root {
 		color: #111;
 	}
 
-	&:hover,
-	&:focus-visible {
+	&:hover:not(.portfolio-card--active),
+	&:focus-visible:not(.portfolio-card--active) {
 		transform: scale(1.06);
 		box-shadow: 0 10px 36px rgba(0, 0, 0, 0.14);
 		outline: none;
 	}
 
-	&:focus-visible {
+	&:focus-visible:not(.portfolio-card--active) {
 		box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.35);
 	}
 
 	&.portfolio-card--active {
-		z-index: 2;
-		box-shadow: 0 24px 56px rgba(0, 0, 0, 0.2);
-		transform: scale(1.28);
+		z-index: 40;
+		box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
+		transform: scale(3);
 	}
 
 	&.portfolio-card--active:hover,
@@ -147,8 +161,8 @@ body.about-is-open #portfolio-root.portfolio-root {
 	&.portfolio-card--active:active {
 		filter: none;
 		color: #111;
-		transform: scale(1.28);
-		box-shadow: 0 24px 56px rgba(0, 0, 0, 0.2);
+		transform: scale(3);
+		box-shadow: 0 28px 64px rgba(0, 0, 0, 0.35);
 	}
 
 	img {
@@ -159,6 +173,12 @@ body.about-is-open #portfolio-root.portfolio-root {
 		height: 100%;
 		object-fit: cover;
 	}
+}
+
+.portfolio-float-track:has(.portfolio-card--active) .portfolio-card:not(.portfolio-card--active) {
+	z-index: 1;
+	opacity: 0.72;
+	pointer-events: auto;
 }
 
 .portfolio-detail {
@@ -196,18 +216,26 @@ body.about-is-open #portfolio-root.portfolio-root {
 		height: 2rem;
 		border: none;
 		border-radius: 0;
-		background: rgba(240, 240, 240, 0.95);
-		box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+		background: transparent;
+		box-shadow: none;
 		font-size: 1.5rem;
 		line-height: 1;
 		cursor: pointer;
-		color: #222;
+		color: rgba(0, 0, 0, 0.38);
 		padding: 0;
 		font-family: inherit;
+		filter: none;
 
-		&:hover {
-			color: #000;
-			background: #eee;
+		&:hover,
+		&:focus {
+			filter: none;
+			color: rgba(0, 0, 0, 0.62);
+			background: transparent;
+		}
+
+		&:focus-visible {
+			outline: 2px solid rgba(0, 0, 0, 0.25);
+			outline-offset: 2px;
 		}
 	}
 
@@ -516,22 +544,26 @@ body.portfolio-detail-open #bottom-text {
 
 	.portfolio-float-layer {
 		padding-inline: 1rem;
-		gap: clamp(1rem, 3vw, 2rem);
-		scroll-snap-type: x mandatory;
+		overflow-y: visible;
+	}
+
+	.portfolio-float-track {
+		gap: clamp(0.65rem, 2vw, 1rem);
+		min-height: min(44vw, 200px);
 	}
 
 	.portfolio-card {
 		width: min(44vw, 200px);
 
 		&.portfolio-card--active {
-			transform: scale(1.22);
+			transform: scale(2.35);
 		}
 
 		&.portfolio-card--active:hover,
 		&.portfolio-card--active:focus,
 		&.portfolio-card--active:focus-visible,
 		&.portfolio-card--active:active {
-			transform: scale(1.22);
+			transform: scale(2.35);
 		}
 	}
 

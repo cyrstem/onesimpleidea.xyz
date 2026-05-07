@@ -37,6 +37,9 @@ export default class PortfolioOverlay {
     this.layerEl = document.createElement("div");
     this.layerEl.className = "portfolio-float-layer";
 
+    const trackEl = document.createElement("div");
+    trackEl.className = "portfolio-float-track";
+
     PORTFOLIO_ITEMS.forEach(item => {
       const card = document.createElement("button");
       card.type = "button";
@@ -52,8 +55,10 @@ export default class PortfolioOverlay {
       card.appendChild(img);
 
       card.addEventListener("click", () => this.openDetail(item));
-      this.layerEl.appendChild(card);
+      trackEl.appendChild(card);
     });
+
+    this.layerEl.appendChild(trackEl);
 
     this.detailEl = document.createElement("div");
     this.detailEl.className = "portfolio-detail";

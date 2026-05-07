@@ -41,6 +41,7 @@ export default class App {
     this.container = stage.dom;
     this.debug = new Debug();
     this.mouse = new Vector2();
+    this.pointerUv = new Vector2(0.5, 0.5);
     this.textureCache = new Map();
     this.tempVecA = new Vector3();
     this.tempVecB = new Vector3();
@@ -55,7 +56,8 @@ export default class App {
       aboutTransition: 0,
       aboutTransitioning: false,
       glitchStrength: 0,
-      glitchUntil: 0
+      glitchUntil: 0,
+      pointerRevealActive: false
     };
 
     this.ui = new UI({
@@ -133,6 +135,10 @@ export default class App {
         uActive: { value: 0 },
         uAboutTransition: { value: 0 },
         uAboutOpen: { value: 0 },
+        uAboutMorphing: { value: 0 },
+        uRevealPointer: { value: new Vector2(0.5, 0.5) },
+        uRevealActive: { value: 0 },
+        uRevealRadius: { value: 0.26 },
         uAreaCenter: { value: new Vector2(0.5, 0.5) },
         uAreaRadius: { value: new Vector2(0.36, 0.3) },
         uPort0: { value: this.portfolioPlaceholderTex },
@@ -233,6 +239,10 @@ export default class App {
     }
     if (!this.isLowPowerDevice) {
       window.addEventListener("mousemove", this.handleMouseMove);
+    } else if (this.container) {
+      this.handlePointerMoveBound = this.handlePointerMove.bind(this);
+      this.container.addEventListener("pointermove", this.handlePointerMoveBound);
+      this.container.addEventListener("pointerdown", this.handlePointerMoveBound);
     }
 
     this.bottomText = document.getElementById("bottom-text");
@@ -294,6 +304,10 @@ export default class App {
     this.geneticGrid.getGeos().position.set(0, 0, 0);
     this.geneticGrid.getGeos().rotation.set(0, 0, 0);
     this.geneticGrid.showGrid();
+    this.state.pointerRevealActive = false;
+    if (this.postMaterial) {
+      this.postMaterial.uniforms.uRevealActive.value = 0;
+    }
   }
 
   showAbout() {
@@ -440,6 +454,12 @@ export default class App {
     this.aboutMesh.scale.set(visibleWidth * 0.95, visibleHeight * 0.92, 1);
   }
 
+  handlePointerMove(event) {
+    if (this.state.aboutOpen) return;
+    this.updateMousePosition(event);
+    this.handleGridInteraction();
+  }
+
   onMouseMove(event) {
     if (this.state.aboutOpen) return;
     this.updateMousePosition(event);
@@ -447,8 +467,15 @@ export default class App {
   }
 
   updateMousePosition(event) {
-    this.mouse.x = (event.clientX / this.state.width) * 2 - 1;
-    this.mouse.y = -(event.clientY / this.state.height) * 2 + 1;
+    const r = this.container.getBoundingClientRect();
+    const nx = (event.clientX - r.left) / Math.max(r.width, 1);
+    const ny = (event.clientY - r.top) / Math.max(r.height, 1);
+    this.mouse.x = nx * 2 - 1;
+    this.mouse.y = -(ny * 2 - 1);
+    this.pointerUv.set(nx, 1 - ny);
+    if (!this.state.pointerRevealActive) {
+      this.state.pointerRevealActive = true;
+    }
   }
 
   handleGridInteraction() {
@@ -523,6 +550,9 @@ export default class App {
     const aboutMorph = this.state.aboutTransitioning ? this.state.aboutTransition : 0;
     this.postMaterial.uniforms.uAboutTransition.value = aboutMorph;
     this.postMaterial.uniforms.uAboutOpen.value = this.state.aboutOpen ? 1 : 0;
+    this.postMaterial.uniforms.uAboutMorphing.value = this.state.aboutTransitioning ? 1 : 0;
+    this.postMaterial.uniforms.uRevealPointer.value.copy(this.pointerUv);
+    this.postMaterial.uniforms.uRevealActive.value = this.state.pointerRevealActive ? 1 : 0;
     this.updateGlitchState(now);
     this.updateGridAreaMask();
 
@@ -574,6 +604,10 @@ export default class App {
       this._resizeObserver.unobserve(this.container);
       this._resizeObserver.disconnect();
       this._resizeObserver = null;
+    }
+    if (this.isLowPowerDevice && this.container && this.handlePointerMoveBound) {
+      this.container.removeEventListener("pointermove", this.handlePointerMoveBound);
+      this.container.removeEventListener("pointerdown", this.handlePointerMoveBound);
     }
     if (!this.isLowPowerDevice) {
       window.removeEventListener("mousemove", this.handleMouseMove);
