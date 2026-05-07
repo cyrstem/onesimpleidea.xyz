@@ -16,6 +16,10 @@
 	margin: 25px;
 }
 
+.about-root main {
+	margin: 0;
+}
+
 .warning{
 	display:none ;
 }
@@ -139,27 +143,44 @@
 	z-index: 1002;
 	position: absolute;
 	top: 2vh;
+	left: 2vw;
+	right: auto;
+	margin: 0;
 }
 
 #contact {
 	z-index: 1000;
 	position: absolute;
-	text-align: center;
-	left: 2vw;
-	top: 50%;
-	transform: translateY(-50%);
+	right: 2vw;
+	bottom: 2vh;
+	left: auto;
+	top: auto;
+	transform: none;
+	text-align: right;
 
 	#links {
-		padding: 0px;
-		margin: 0px;
+		padding: 0;
+		margin: 0;
 		list-style: none;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		flex-wrap: nowrap;
+		align-items: flex-end;
+		justify-content: flex-end;
+		gap: 0;
+		row-gap: 0;
+		line-height: 0;
+
+		li {
+			margin: 0;
+			padding: 0;
+			line-height: 0;
+		}
 	}
 
 	a {
-		padding: 0.4rem;
+		padding: 0;
+		margin: -0.14rem 0;
 		background:
 			linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
 		transition: 0.6s;
@@ -173,7 +194,10 @@
 	}
 
 	img {
-		width: 3.1rem;
+		width: 1.35rem;
+		height: auto;
+		display: block;
+		padding: 0;
 	}
 }
 
@@ -191,6 +215,11 @@
 
 // @media all and (min-width: 480px) and (max-width: 768px) { }
 @media all and (max-width: 480px) {
+
+	#ui {
+		top: 1.5vh;
+		left: 1.5vw;
+	}
 
 	main {
 		overflow: hidden;
@@ -239,8 +268,17 @@
 	}
 
 	#contact {
-		display: none;
-		bottom: 0vh;
+		right: 1.5vw;
+		bottom: 1.5vh;
+
+		a {
+			margin: -0.1rem 0;
+		}
+
+		img {
+			width: 1.15rem;
+			padding: 0;
+		}
 	}
 	.warning{
 		display:block ;

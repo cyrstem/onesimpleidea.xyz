@@ -54,9 +54,16 @@ export default class UI {
   }
 
   render() {
-    const terminal = document.getElementById("terminal");
-    if (!terminal) return;
-    terminal.innerHTML = this.aboutOpen ? About() : "";
+    const aboutRoot = document.getElementById("about-root");
+    if (!aboutRoot) return;
+
+    if (this.aboutOpen) {
+      aboutRoot.hidden = false;
+      aboutRoot.innerHTML = About();
+    } else {
+      aboutRoot.hidden = true;
+      aboutRoot.innerHTML = "";
+    }
   }
 
   destroy() {

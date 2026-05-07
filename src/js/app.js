@@ -3,7 +3,6 @@ import {
   WebGLRenderer,
   Vector2,
   Vector3,
-  Raycaster,
   Fog,
   WebGLRenderTarget,
   OrthographicCamera,
@@ -32,7 +31,6 @@ import postFrag from "./shader/postFrag.glsl";
 export default class App {
   constructor(stage) {
     this.render = this.render.bind(this);
-    this.handleCubeClick = this.handleCubeClick.bind(this);
     this.init(stage);
     this.setupScene();
     this.setupLights();
@@ -43,7 +41,6 @@ export default class App {
     this.container = stage.dom;
     this.debug = new Debug();
     this.mouse = new Vector2();
-    this.raycaster = new Raycaster();
     this.textureCache = new Map();
     this.tempVecA = new Vector3();
     this.tempVecB = new Vector3();
@@ -73,15 +70,18 @@ export default class App {
     this.frameId = null;
     this.bottomText = null;
     this.managersReady = false;
-    this.shaderManager = null;
     this.aboutCanvas = null;
     this.aboutTexture = null;
     this.aboutMesh = null;
 
     this.config = {
-      CUBE_COUNT: this.isLowPowerDevice ? 80 : 150,
-      CUBE_SIZE: this.isLowPowerDevice ? 1.25 : 1.5,
-      CUBE_SPREAD: this.isLowPowerDevice ? 7 : 8,
+      GRID_COLS: this.isLowPowerDevice ? 32 : 46,
+      GRID_ROWS: this.isLowPowerDevice ? 20 : 30,
+      GRID_SPREAD: this.isLowPowerDevice ? 0.38 : 0.34,
+      GRID_POINT_SIZE: this.isLowPowerDevice ? 0.2 : 0.14,
+      GRID_GENE_AMPLITUDE: 2.35,
+      GRID_MUTATION: 0.24,
+      GRID_GA_PASSES_PER_FRAME: this.isLowPowerDevice ? 120 : 260,
       CAMERA_DISTANCE: 30,
       SHADER_CONTAINER_SIZE: this.isLowPowerDevice ? 360 : 600,
       MAX_PIXEL_RATIO: this.isLowPowerDevice ? 1.25 : 2,
@@ -162,13 +162,15 @@ export default class App {
   }
 
   async setupManagers() {
-    const [{ default: CubeManager }, { default: CameraManager }] = await Promise.all([
-      import("./classes/CubeManager"),
+    const [{ default: GeneticGrid }, { default: CameraManager }] = await Promise.all([
+      import("./classes/GeneticGrid"),
       import("./classes/CameraManager")
     ]);
 
     this.cameraManager = new CameraManager(this.config);
-    this.cubeManager = new CubeManager(this.scene, this.config);
+    this.cameraManager.resize(this.state.width, this.state.height);
+    this.geneticGrid = new GeneticGrid(this.scene, this.config);
+    this.fitGeneticGridToViewport();
     this.setupAboutPanel();
     this.loadTextures();
     this.managersReady = true;
@@ -178,33 +180,21 @@ export default class App {
     }
   }
 
-  async ensureShaderManager() {
-    if (this.shaderManager) return this.shaderManager;
-    const module = await import("./classes/ShaderManager");
-    this.shaderManager = new module.default(this.config);
-    return this.shaderManager;
-  }
-
   setupDebugControls() {
     this.controls = new OrbitControls(this.cameraManager.getCamera(), this.renderer.domElement);
     this.debugFolder = this.debug.ui.addFolder("material");
     this.materialParams = {
-      color: "#111111",
-      emissive: "#000000",
-      specular: "#111111"
+      color: "#000000"
     };
 
-    ["color", "emissive", "specular"].forEach(param => {
-      this.debugFolder.addColor(this.materialParams, param).onChange(() => this.updateMaterials());
-    });
+    this.debugFolder.addColor(this.materialParams, "color").onChange(() => this.updateMaterials());
   }
 
   updateMaterials() {
-    const cubes = this.cubeManager?.getCubes() || [];
-    cubes.forEach(cube => {
-      cube.material.color.set(this.materialParams.color);
-      cube.material.emissive.set(this.materialParams.emissive);
-      cube.material.specular.set(this.materialParams.specular);
+    const c = this.materialParams.color;
+    const meshes = this.geneticGrid?.getPickMeshes() || [];
+    meshes.forEach(mesh => {
+      if (mesh.material?.color) mesh.material.color.set(c);
     });
   }
 
@@ -237,8 +227,6 @@ export default class App {
     this.handleBottomTextHoverBound = this.handleBottomTextHover.bind(this);
 
     window.addEventListener("resize", this.handleResize);
-    window.addEventListener("click", this.handleCubeClick);
-
     if (!this.isLowPowerDevice) {
       window.addEventListener("mousemove", this.handleMouseMove);
     }
@@ -252,7 +240,7 @@ export default class App {
   async handleAboutToggle(isOpen) {
     if (isOpen) {
       this.state.glitchUntil = 0;
-      this.cubeManager.animateDissolveAscent(0.95);
+      this.geneticGrid.animateDissolveAscent(0.95);
       await this.playAboutTransition();
       this.state.aboutOpen = true;
       this.showAbout();
@@ -289,18 +277,18 @@ export default class App {
   }
 
   showIntro() {
-    if (!this.cubeManager) return;
+    if (!this.geneticGrid) return;
     if (this.aboutMesh) this.aboutMesh.visible = false;
-    this.cubeManager.restoreCubeLayout();
-    this.cubeManager.getMain().visible = true;
-    this.cubeManager.getGeos().position.set(0, 0, 0);
-    this.cubeManager.showCubes();
-    this.repositionCubes();
+    this.geneticGrid.restoreLayout();
+    this.geneticGrid.getMain().visible = true;
+    this.geneticGrid.getGeos().position.set(0, 0, 0);
+    this.geneticGrid.getGeos().rotation.set(0, 0, 0);
+    this.geneticGrid.showGrid();
   }
 
   showAbout() {
-    if (!this.cubeManager) return;
-    this.cubeManager.hideCubes();
+    if (!this.geneticGrid) return;
+    this.geneticGrid.hideGrid();
     if (this.aboutMesh) {
       this.aboutMesh.visible = true;
       this.drawAboutCanvas();
@@ -442,21 +430,10 @@ export default class App {
     this.aboutMesh.scale.set(visibleWidth * 0.95, visibleHeight * 0.92, 1);
   }
 
-  repositionCubes() {
-    this.cubeManager.getCubes().forEach(cube => {
-      gsap.to(cube.rotation, {
-        x: (Math.random() - 0.07) * 10 * Math.random(),
-        y: (Math.random() - 0.07) * 10 * Math.random(),
-        z: (Math.random() - 0.07) * 10 * Math.random(),
-        ease: "power4.out"
-      });
-    });
-  }
-
   onMouseMove(event) {
     if (this.state.aboutOpen) return;
     this.updateMousePosition(event);
-    this.handleCubeInteraction();
+    this.handleGridInteraction();
   }
 
   updateMousePosition(event) {
@@ -464,57 +441,12 @@ export default class App {
     this.mouse.y = -(event.clientY / this.state.height) * 2 + 1;
   }
 
-  handleCubeInteraction() {
-    this.raycaster.setFromCamera(this.mouse, this.cameraManager.getCamera());
-    const intersects = this.raycaster.intersectObjects(this.cubeManager.getCubes(), false);
-
-    if (intersects.length > 0) {
-      const mouseWorldPos = new Vector2(this.mouse.x * 15, this.mouse.y * 15);
-      intersects.forEach(({ object }) => {
-        const distance = new Vector2(object.position.x, object.position.y).distanceTo(mouseWorldPos);
-        if (distance < 8) {
-          this.cubeManager.animateCubeRepulsion(object, mouseWorldPos, distance);
-        }
-      });
-    }
-  }
-
-  async handleCubeClick(event) {
-    if (this.state.aboutOpen) return;
-    if (event.target.closest("a, button, #ui, #terminal, #contact, .shader-container")) return;
-
-    const mouse = new Vector2(
-      (event.clientX / this.state.width) * 2 - 1,
-      -(event.clientY / this.state.height) * 2 + 1
-    );
-
-    this.raycaster.setFromCamera(mouse, this.cameraManager.getCamera());
-    const intersects = this.raycaster.intersectObjects(this.cubeManager.getCubes(), false);
-    if (intersects.length === 0) return;
-
-    this.activateGlitchPulse();
-    this.cameraManager.animateWiggle();
-    await this.showShaderElement();
-  }
-
-  activateGlitchPulse() {
-    this.state.glitchUntil = performance.now() + 1400;
-  }
-
-  async showShaderElement() {
-    const shaderManager = await this.ensureShaderManager();
-    const existingShaders = document.querySelectorAll(".shader-container");
-    if (existingShaders.length >= 2) {
-      shaderManager.hideShaderElement(existingShaders[0]);
-    }
-    this.cubeManager.animateCubesOnShaderCreate();
-    shaderManager.createShaderContainer(this.textures);
+  handleGridInteraction() {
+    this.geneticGrid.setMouseWorld(this.mouse.x * 14, this.mouse.y * 11, 1);
   }
 
   handleBottomTextHover() {
-    if (this.cubeManager) {
-      this.cubeManager.makeRandomCubeBigger();
-    }
+    this.geneticGrid?.pulseRandomDot();
   }
 
   resize() {
@@ -528,7 +460,28 @@ export default class App {
     if (this.cameraManager) {
       this.cameraManager.resize(this.state.width, this.state.height);
     }
+    this.fitGeneticGridToViewport();
     this.updateAboutPanelLayout();
+  }
+
+  /**
+   * Scales the grid so its XY extent fills the perspective frustum at z≈0.
+   * Scene is rendered into {@link renderTarget} at full viewport size before the post pass.
+   */
+  fitGeneticGridToViewport() {
+    if (!this.geneticGrid || !this.cameraManager) return;
+    const camera = this.cameraManager.getCamera();
+    const geos = this.geneticGrid.getGeos();
+    const d = Math.abs(camera.position.z);
+    const vFOV = (camera.fov * Math.PI) / 180;
+    const halfVisibleH = d * Math.tan(vFOV / 2);
+    const halfVisibleW = halfVisibleH * camera.aspect;
+
+    const halfW = ((this.config.GRID_COLS - 1) * this.config.GRID_SPREAD) / 2;
+    const halfH = ((this.config.GRID_ROWS - 1) * this.config.GRID_SPREAD) / 2;
+    const margin = 0.99;
+    const s = margin * Math.min(halfVisibleW / Math.max(halfW, 1e-5), halfVisibleH / Math.max(halfH, 1e-5));
+    geos.scale.setScalar(s);
   }
 
   render() {
@@ -537,9 +490,9 @@ export default class App {
     this.state.frameTick += 1;
     const shouldUpdate = !this.isLowPowerDevice || this.state.frameTick % 2 === 0;
     if (shouldUpdate && !this.state.aboutOpen) {
-      this.updateAnimations();
       if (!this.state.aboutTransitioning) {
-        this.cubeManager.updateCubes();
+        const t = performance.now() * 0.001;
+        this.geneticGrid.update(t);
       }
     }
 
@@ -563,7 +516,7 @@ export default class App {
     this.postMaterial.uniforms.uAboutTransition.value = this.state.aboutTransition;
     this.postMaterial.uniforms.uAboutTransitioning.value = this.state.aboutTransitioning ? 1 : 0;
     this.updateGlitchState(now);
-    this.updateCubeAreaMask();
+    this.updateGridAreaMask();
 
     this.renderer.setRenderTarget(this.renderTarget);
     this.renderer.render(this.scene, this.cameraManager.getCamera());
@@ -579,15 +532,17 @@ export default class App {
     this.postMaterial.uniforms.uActive.value = this.state.glitchStrength;
   }
 
-  updateCubeAreaMask() {
-    if (!this.cubeManager || !this.cameraManager || !this.postMaterial) return;
+  updateGridAreaMask() {
+    if (!this.geneticGrid || !this.cameraManager || !this.postMaterial) return;
 
-    const geos = this.cubeManager.getGeos();
+    const geos = this.geneticGrid.getGeos();
     const camera = this.cameraManager.getCamera();
+    const halfW = ((this.config.GRID_COLS - 1) * this.config.GRID_SPREAD) / 2;
+    const halfH = ((this.config.GRID_ROWS - 1) * this.config.GRID_SPREAD) / 2;
 
     const center = geos.getWorldPosition(this.tempVecA).clone().project(camera);
-    const xEdge = geos.localToWorld(this.tempVecB.set(this.config.CUBE_SPREAD * 0.8, 0, 0)).clone().project(camera);
-    const yEdge = geos.localToWorld(this.tempVecC.set(0, this.config.CUBE_SPREAD * 0.8, 0)).clone().project(camera);
+    const xEdge = geos.localToWorld(this.tempVecB.set(halfW * 0.92, 0, 0)).clone().project(camera);
+    const yEdge = geos.localToWorld(this.tempVecC.set(0, halfH * 0.92, 0)).clone().project(camera);
 
     const centerUvX = center.x * 0.5 + 0.5;
     const centerUvY = center.y * -0.5 + 0.5;
@@ -599,12 +554,6 @@ export default class App {
     this.postMaterial.uniforms.uAreaRadius.value.set(radiusX, radiusY);
   }
 
-  updateAnimations() {
-    const geos = this.cubeManager.getGeos();
-    geos.rotation.x += 0.001;
-    geos.rotation.y += 0.0005;
-  }
-
   dispose() {
     this.removeEventListeners();
     this.cleanupResources();
@@ -613,7 +562,6 @@ export default class App {
 
   removeEventListeners() {
     window.removeEventListener("resize", this.handleResize);
-    window.removeEventListener("click", this.handleCubeClick);
     if (!this.isLowPowerDevice) {
       window.removeEventListener("mousemove", this.handleMouseMove);
     }
@@ -646,10 +594,5 @@ export default class App {
     if (this.aboutMesh?.geometry) this.aboutMesh.geometry.dispose();
     if (this.aboutMaterial) this.aboutMaterial.dispose();
 
-    if (this.shaderManager) {
-      document.querySelectorAll(".shader-container").forEach(container => {
-        this.shaderManager.cleanupShaderResources(container);
-      });
-    }
   }
 }
