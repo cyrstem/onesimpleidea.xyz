@@ -48,8 +48,8 @@ export default class App {
 
     this.state = {
       animating: false,
-      width: this.container.offsetWidth,
-      height: this.container.offsetHeight,
+      width: Math.max(1, Math.floor(this.container.clientWidth)),
+      height: Math.max(1, Math.floor(this.container.clientHeight)),
       frameTick: 0,
       aboutOpen: false,
       aboutTransition: 0,
@@ -98,7 +98,7 @@ export default class App {
 
   setupScene() {
     this.scene = new Scene();
-    this.scene.fog = new Fog(0xeeeeee, 3, 50);
+    this.scene.fog = new Fog(0xc6c6c6, 4, 52);
 
     this.renderer = new WebGLRenderer({
       antialias: !this.isLowPowerDevice,
@@ -106,7 +106,7 @@ export default class App {
     });
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO));
     this.renderer.setSize(this.state.width, this.state.height);
-    this.renderer.setClearColor(0xeeeeee, 1);
+    this.renderer.setClearColor(0xc8c8c8, 1);
     this.container.appendChild(this.renderer.domElement);
     this.setupPostProcessing();
   }
@@ -132,7 +132,7 @@ export default class App {
         uIntensity: { value: this.isLowPowerDevice ? 0.3 : 0.51 },
         uActive: { value: 0 },
         uAboutTransition: { value: 0 },
-        uAboutTransitioning: { value: 0 },
+        uAboutOpen: { value: 0 },
         uAreaCenter: { value: new Vector2(0.5, 0.5) },
         uAreaRadius: { value: new Vector2(0.36, 0.3) },
         uPort0: { value: this.portfolioPlaceholderTex },
@@ -222,11 +222,15 @@ export default class App {
   }
 
   setupEvents() {
-    this.handleResize = throttle(this.resize.bind(this), 250);
+    this.handleResize = throttle(this.resize.bind(this), 100);
     this.handleMouseMove = throttle(this.onMouseMove.bind(this), 16);
     this.handleBottomTextHoverBound = this.handleBottomTextHover.bind(this);
 
     window.addEventListener("resize", this.handleResize);
+    if (typeof ResizeObserver !== "undefined" && this.container) {
+      this._resizeObserver = new ResizeObserver(() => this.handleResize());
+      this._resizeObserver.observe(this.container);
+    }
     if (!this.isLowPowerDevice) {
       window.addEventListener("mousemove", this.handleMouseMove);
     }
@@ -235,6 +239,8 @@ export default class App {
     if (this.bottomText && !this.isLowPowerDevice) {
       this.bottomText.addEventListener("mouseenter", this.handleBottomTextHoverBound);
     }
+
+    requestAnimationFrame(() => this.resize());
   }
 
   async handleAboutToggle(isOpen) {
@@ -270,6 +276,10 @@ export default class App {
         ease: "power2.inOut",
         onComplete: () => {
           this.state.aboutTransitioning = false;
+          this.state.aboutTransition = 0;
+          if (this.postMaterial) {
+            this.postMaterial.uniforms.uAboutTransition.value = 0;
+          }
           resolve();
         }
       });
@@ -450,10 +460,14 @@ export default class App {
   }
 
   resize() {
-    this.state.width = this.container.offsetWidth;
-    this.state.height = this.container.offsetHeight;
-    this.renderer.setSize(this.state.width, this.state.height);
-    if (this.renderTarget) this.renderTarget.setSize(this.state.width, this.state.height);
+    const w = Math.max(1, Math.floor(this.container.clientWidth));
+    const h = Math.max(1, Math.floor(this.container.clientHeight));
+    this.state.width = w;
+    this.state.height = h;
+
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO));
+    this.renderer.setSize(w, h);
+    if (this.renderTarget) this.renderTarget.setSize(w, h);
     if (this.postMaterial) {
       this.postMaterial.uniforms.uResolution.value.set(this.state.width, this.state.height);
     }
@@ -490,10 +504,8 @@ export default class App {
     this.state.frameTick += 1;
     const shouldUpdate = !this.isLowPowerDevice || this.state.frameTick % 2 === 0;
     if (shouldUpdate && !this.state.aboutOpen) {
-      if (!this.state.aboutTransitioning) {
-        const t = performance.now() * 0.001;
-        this.geneticGrid.update(t);
-      }
+      const t = performance.now() * 0.001;
+      this.geneticGrid.update(t, this.state.aboutTransitioning);
     }
 
     this.frameId = requestAnimationFrame(this.render);
@@ -506,15 +518,11 @@ export default class App {
       return;
     }
 
-    if (this.state.aboutOpen) {
-      this.renderer.render(this.scene, this.cameraManager.getCamera());
-      return;
-    }
-
     const now = performance.now();
     this.postMaterial.uniforms.uTime.value = now * 0.001;
-    this.postMaterial.uniforms.uAboutTransition.value = this.state.aboutTransition;
-    this.postMaterial.uniforms.uAboutTransitioning.value = this.state.aboutTransitioning ? 1 : 0;
+    const aboutMorph = this.state.aboutTransitioning ? this.state.aboutTransition : 0;
+    this.postMaterial.uniforms.uAboutTransition.value = aboutMorph;
+    this.postMaterial.uniforms.uAboutOpen.value = this.state.aboutOpen ? 1 : 0;
     this.updateGlitchState(now);
     this.updateGridAreaMask();
 
@@ -562,6 +570,11 @@ export default class App {
 
   removeEventListeners() {
     window.removeEventListener("resize", this.handleResize);
+    if (this._resizeObserver && this.container) {
+      this._resizeObserver.unobserve(this.container);
+      this._resizeObserver.disconnect();
+      this._resizeObserver = null;
+    }
     if (!this.isLowPowerDevice) {
       window.removeEventListener("mousemove", this.handleMouseMove);
     }

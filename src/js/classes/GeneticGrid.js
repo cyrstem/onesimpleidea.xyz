@@ -29,9 +29,9 @@ function buildGlyphAtlas(chars) {
   canvas.height = h;
   const ctx = canvas.getContext("2d");
   if (!ctx) return { texture: null, count: 1 };
-  ctx.fillStyle = "#f6f6f6";
+  ctx.fillStyle = "#d8d8d8";
   ctx.fillRect(0, 0, w, h);
-  ctx.fillStyle = "#0a0a0a";
+  ctx.fillStyle = "#000000";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.font = `600 ${cell * 0.72}px ui-monospace, Menlo, Monaco, monospace`;
@@ -53,8 +53,9 @@ const MAP_FRAGMENT_REPLACE = `
 	vec4 texel = texture2D( map, atlasUv );
 	float luma = dot(texel.rgb, vec3(0.299, 0.587, 0.114));
 	float ink = clamp(1.0 - luma, 0.0, 1.0);
+	ink = pow(ink, 1.22);
 	diffuseColor.rgb = vec3(0.0);
-	diffuseColor.a *= smoothstep(0.08, 0.92, ink);
+	diffuseColor.a *= smoothstep(0.18, 0.98, ink);
 #endif
 `;
 
@@ -170,7 +171,8 @@ export default class GeneticGrid {
       transparent: true,
       opacity: 1,
       depthWrite: true,
-      side: DoubleSide
+      side: DoubleSide,
+      toneMapped: false
     });
     hookLetterAtlasShader(letterMat, this._atlasCount);
     letterMat.needsUpdate = true;
@@ -184,7 +186,8 @@ export default class GeneticGrid {
       color: 0x000000,
       transparent: false,
       opacity: 1,
-      depthWrite: true
+      depthWrite: true,
+      toneMapped: false
     });
     this.dotMesh = new InstancedMesh(dotGeom, dotMat, this.dotGridIndices.length);
     this.dotMesh.instanceMatrix.setUsage(DynamicDrawUsage);
@@ -350,10 +353,12 @@ export default class GeneticGrid {
     this.dotMesh.instanceMatrix.needsUpdate = true;
   }
 
-  update(t) {
+  update(t, layoutOnly = false) {
     this._time = t;
     this.mouseWorld.active *= 0.968;
-    this.evolveStep(t);
+    if (!layoutOnly) {
+      this.evolveStep(t);
+    }
     this.syncInstancesFromGenes(t);
   }
 

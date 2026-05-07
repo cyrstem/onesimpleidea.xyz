@@ -11,7 +11,7 @@ uniform vec2 uResolution;
 uniform float uIntensity;
 uniform float uActive;
 uniform float uAboutTransition;
-uniform float uAboutTransitioning;
+uniform float uAboutOpen;
 uniform vec2 uAreaCenter;
 uniform vec2 uAreaRadius;
 
@@ -41,10 +41,18 @@ vec3 samplePortfolio(vec2 uv, float pick) {
 }
 
 void main() {
-  float t = uTime;
-  float transT = clamp(uAboutTransition, 0.0, 1.0) * uAboutTransitioning;
+  if (uAboutOpen > 0.5) {
+    gl_FragColor = vec4(texture2D(uScene, vUv).rgb, 1.0);
+    return;
+  }
 
-  vec3 raw = texture2D(uScene, vUv).rgb;
+  float t = uTime;
+  // 0 outside the about click transition; 0→1 during GSAP only (see App.renderWithPostProcessing).
+  float morph = clamp(uAboutTransition, 0.0, 1.0);
+  float lift = morph * 0.38;
+  vec2 sceneUv = clamp(vUv + vec2(0.0, -lift), vec2(0.002), vec2(0.998));
+
+  vec3 raw = texture2D(uScene, sceneUv).rgb;
   vec3 clean = vec3(luma(raw));
 
   float aspect = uResolution.x / max(uResolution.y, 1.0);
@@ -64,7 +72,7 @@ void main() {
     sin(h0 * 6.2831853 + t * 6.0) * 0.042,
     -fract(h1 + t * 2.1) * 0.075
   ) * uIntensity;
-  vec2 traceUv = clamp(vUv + traceOff * uActive, vec2(0.002), vec2(0.998));
+  vec2 traceUv = clamp(sceneUv + traceOff * uActive, vec2(0.002), vec2(0.998));
   vec3 traceGray = vec3(luma(texture2D(uScene, traceUv).rgb));
 
   // Portfolio scraps inside each tile
@@ -86,13 +94,13 @@ void main() {
 
   vec3 finalColor = mix(clean, glitchTile, tileMix * g);
 
-  // About dissolve: simple noise tiles to flat light gray
-  vec2 dcell = floor(vUv * uResolution * .202);
+  // About open: FBO drifts up (sceneUv) then tile-noise dissolves toward panel gray
+  vec2 dcell = floor(vUv * uResolution * 0.202);
   float dNoise = hash21(dcell - floor(t * 2.0));
-  float dissolve = step(1.0 - transT, dNoise) * smoothstep(10.15, 1.0, transT);
+  float dissolve = step(1.0 - morph, dNoise) * smoothstep(0.06, 0.92, morph);
   vec3 bg = vec3(0.93);
-  finalColor = mix(finalColor, bg, dissolve * 0.92);
-  finalColor = mix(finalColor, bg, smoothstep(0.82, 1.0, transT));
+  finalColor = mix(finalColor, bg, dissolve * 0.9);
+  finalColor = mix(finalColor, bg, smoothstep(0.78, 1.0, morph));
 
   gl_FragColor = vec4(finalColor, 1.0);
 }
