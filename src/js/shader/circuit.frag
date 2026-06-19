@@ -2,6 +2,7 @@ precision highp float;
 
 uniform float uProgress;
 uniform float uAlpha;
+uniform float uFade;
 uniform float uTime;
 uniform vec3 uColor;
 
@@ -12,7 +13,7 @@ void main() {
     // Progressive "draw on": only reveal the part of the trace the tip has reached.
     if (vDist > uProgress) discard;
 
-    float a = uAlpha;
+    float a = uAlpha * uFade;
 
     // Node squares gently pulse; line segments stay solid.
     float pulse = 0.6 + 0.4 * sin(uTime * 2.5 + vDist * 28.0);

@@ -6,10 +6,12 @@ import fragment from '../shader/circuit.frag';
 const rand = (min = 0, max = 1) => min + Math.random() * (max - min);
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
-// Builds and animates "circuit board" traces: thin black Manhattan (right-angle)
-// lines capped with small square nodes, rendered as a single triangle program.
+// Builds and animates "circuit board" forms in the right half of the viewport.
+// A form is a set of line segments + square nodes, each carrying a `reveal`
+// threshold in [0,1]. As the shared uProgress sweeps 0->1, sections pop in from
+// different areas (scattered reveal) so the board appears to populate itself.
 // Positions are normalized [0,1] (y up); thickness / node size are pixel values
-// applied in the vertex shader, so nothing needs rebuilding on resize.
+// applied in the vertex shader, so nothing rebuilds on resize.
 export default class CircuitManager {
     constructor(gl, { resolution } = {}) {
         this.gl = gl;
@@ -22,141 +24,218 @@ export default class CircuitManager {
         this.uAlpha = { value: 1 };
 
         this.thickness = 2;       // line width in CSS px
-        this.nodeSize = 14;       // terminal node square size in CSS px
-        this.jointSize = 8;       // intermediate joint square size in CSS px
-        this.maxTraces = 40;
+        this.nodeSize = 13;       // terminal / pad square size in CSS px
+        this.jointSize = 7;       // small joint square size in CSS px
+
+        // Forms live in the right half of the viewport.
+        this.xRange = [0.54, 0.96];
+        this.yRange = [0.12, 0.88];
 
         this.traces = [];
-
-        // Idle auto-spawn cadence (seconds).
-        this._spawnEvery = 2.2;
-        this._spawnTimer = 0;
-
-        this.generateInitial();
     }
 
-    generateInitial(count = 14) {
-        for (let i = 0; i < count; i++) {
-            this.createTrace(this.antennaPath(), {
-                duration: rand(0.9, 1.8),
-                delay: rand(0, 1.2)
-            });
-        }
+    get activeCount() {
+        return this.traces.length;
     }
 
-    // Vertical "antenna" traces concentrated on the right side (matches the
-    // reference image): rising from near the baseline with optional jogs.
-    antennaPath() {
-        const points = [];
-        let x = rand(0.5, 0.97);
-        let y = rand(0, 0.12);
-        points.push({ x, y });
+    // ---- Form generators. Each returns { segments, nodes, center }. ----
+    // segment: { x1, y1, x2, y2, r0, r1 }  node: { x, y, size, r }
 
-        if (Math.random() < 0.5) {
-            x = clamp(x + rand(-0.12, 0.12), 0.3, 0.99);
-            points.push({ x, y });
-        }
+    // A square boundary recursively subdivided into sections, populated with
+    // pads and short stub traces. Reveal is scattered so areas grow independently.
+    boardForm(cx, cy, half) {
+        const segments = [];
+        const nodes = [];
+        const seg = (x1, y1, x2, y2, r) => segments.push({ x1, y1, x2, y2, r0: r, r1: r });
+        const addRect = (ax, ay, bx, by, r) => {
+            seg(ax, ay, bx, ay, r);
+            seg(bx, ay, bx, by, r);
+            seg(bx, by, ax, by, r);
+            seg(ax, by, ax, ay, r);
+        };
 
-        const height = rand(0.25, 0.85);
-        const steps = 1 + Math.floor(Math.random() * 2);
-        for (let i = 0; i < steps; i++) {
-            y = clamp(y + height / steps, 0, 0.96);
-            points.push({ x, y });
-            if (i < steps - 1 && Math.random() < 0.5) {
-                x = clamp(x + rand(-0.12, 0.12), 0.3, 0.99);
-                points.push({ x, y });
+        const x0 = cx - half;
+        const y0 = cy - half;
+        const x1 = cx + half;
+        const y1 = cy + half;
+
+        addRect(x0, y0, x1, y1, rand(0, 0.12));
+        nodes.push({ x: x0, y: y1, size: this.nodeSize, r: 0.05 });
+        nodes.push({ x: x1, y: y1, size: this.nodeSize, r: 0.05 });
+
+        const maxDepth = 4;
+        const subdivide = (ax, ay, bx, by, depth) => {
+            const w = bx - ax;
+            const h = by - ay;
+            const small = Math.min(w, h);
+
+            // Leaf: drop a pad and an optional stub trace toward a wall.
+            if (depth <= 0 || small < 0.028 || Math.random() < 0.22) {
+                if (Math.random() < 0.65) {
+                    const px = ax + w * rand(0.3, 0.7);
+                    const py = ay + h * rand(0.3, 0.7);
+                    const r = clamp(0.2 + Math.random() * 0.75, 0, 1);
+                    nodes.push({ x: px, y: py, size: this.jointSize, r });
+                    if (Math.random() < 0.7) {
+                        const horiz = Math.random() < 0.5;
+                        if (horiz) seg(px, py, Math.random() < 0.5 ? ax : bx, py, r);
+                        else seg(px, py, px, Math.random() < 0.5 ? ay : by, r);
+                    }
+                }
+                return;
             }
-        }
-        return points;
-    }
 
-    // Random Manhattan walk starting from an arbitrary point (used on click).
-    pathFrom(px, py) {
-        const points = [{ x: px, y: py }];
-        let x = px;
-        let y = py;
-        let horizontal = Math.random() < 0.5;
-        const segs = 3 + Math.floor(Math.random() * 3);
-
-        for (let i = 0; i < segs; i++) {
-            const len = rand(0.05, 0.22);
-            const dir = Math.random() < 0.5 ? -1 : 1;
-            if (horizontal) {
-                x = clamp(x + dir * len, 0.02, 0.98);
+            const r = clamp(0.12 + (1 - depth / maxDepth) * 0.4 + Math.random() * 0.35, 0, 1);
+            if (Math.random() < 0.5) {
+                const sx = ax + w * rand(0.32, 0.68);
+                seg(sx, ay, sx, by, r);
+                subdivide(ax, ay, sx, by, depth - 1);
+                subdivide(sx, ay, bx, by, depth - 1);
             } else {
-                y = clamp(y + dir * len, 0.02, 0.98);
+                const sy = ay + h * rand(0.32, 0.68);
+                seg(ax, sy, bx, sy, r);
+                subdivide(ax, ay, bx, sy, depth - 1);
+                subdivide(ax, sy, bx, by, depth - 1);
             }
-            points.push({ x, y });
-            horizontal = !horizontal;
-        }
-        return points;
+        };
+        subdivide(x0, y0, x1, y1, maxDepth);
+
+        return { segments, nodes, center: [cx, cy] };
     }
 
-    spawnFrom(px, py) {
-        this.createTrace(this.pathFrom(px, py), {
-            duration: rand(0.6, 1.1),
-            delay: 0
-        });
-    }
-
-    buildGeometryData(points) {
-        // Cumulative normalized distance along the path (drives the reveal).
+    // Outline shapes (triangle / circle / branching walk) drawn as a single
+    // path that reveals progressively along its length.
+    outlineForm(points, center) {
         const cum = [0];
         let total = 0;
         for (let i = 1; i < points.length; i++) {
             total += Math.hypot(points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
             cum.push(total);
         }
-        const dist = cum.map((c) => (total > 0 ? c / total : 0));
+        const reveal = cum.map((c) => (total > 0 ? c / total : 0));
 
+        const segments = [];
+        for (let i = 0; i < points.length - 1; i++) {
+            segments.push({
+                x1: points[i].x, y1: points[i].y,
+                x2: points[i + 1].x, y2: points[i + 1].y,
+                r0: reveal[i], r1: reveal[i + 1]
+            });
+        }
+        const nodes = [];
+        for (let i = 1; i < points.length; i++) {
+            const isEnd = i === points.length - 1;
+            nodes.push({ x: points[i].x, y: points[i].y, size: isEnd ? this.nodeSize : this.jointSize, r: reveal[i] });
+        }
+        return { segments, nodes, center };
+    }
+
+    trianglePath(cx, cy, r) {
+        const pts = [];
+        for (let i = 0; i < 3; i++) {
+            const a = -Math.PI / 2 + (i * Math.PI * 2) / 3;
+            pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
+        }
+        pts.push({ ...pts[0] });
+        return pts;
+    }
+
+    circlePath(cx, cy, r, segments = 28) {
+        const pts = [];
+        for (let i = 0; i <= segments; i++) {
+            const a = (i / segments) * Math.PI * 2;
+            pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
+        }
+        return pts;
+    }
+
+    pathFrom(px, py) {
+        const points = [{ x: px, y: py }];
+        let x = px;
+        let y = py;
+        let horizontal = Math.random() < 0.5;
+        const segs = 3 + Math.floor(Math.random() * 3);
+        for (let i = 0; i < segs; i++) {
+            const len = rand(0.05, 0.2);
+            const dir = Math.random() < 0.5 ? -1 : 1;
+            if (horizontal) x = clamp(x + dir * len, this.xRange[0], this.xRange[1]);
+            else y = clamp(y + dir * len, this.yRange[0], this.yRange[1]);
+            points.push({ x, y });
+            horizontal = !horizontal;
+        }
+        return points;
+    }
+
+    // ---- Public spawn API ----
+
+    spawnForm({ type, x, y, radius } = {}) {
+        const pick = () => {
+            const r = Math.random();
+            if (r < 0.55) return 'board';
+            if (r < 0.75) return 'circle';
+            if (r < 0.9) return 'triangle';
+            return 'walk';
+        };
+        const kind = type || pick();
+        const r = radius ?? rand(0.06, 0.13);
+        const cx = clamp(x ?? rand(this.xRange[0] + r, this.xRange[1] - r), this.xRange[0] + r, this.xRange[1] - r);
+        const cy = clamp(y ?? rand(this.yRange[0] + r, this.yRange[1] - r), this.yRange[0] + r, this.yRange[1] - r);
+
+        let form;
+        switch (kind) {
+            case 'board':
+                form = this.boardForm(cx, cy, r);
+                break;
+            case 'triangle':
+                form = this.outlineForm(this.trianglePath(cx, cy, r), [cx, cy]);
+                break;
+            case 'circle':
+                form = this.outlineForm(this.circlePath(cx, cy, r), [cx, cy]);
+                break;
+            default:
+                form = this.outlineForm(this.pathFrom(cx, cy), [cx, cy]);
+        }
+
+        return this.createTrace(form);
+    }
+
+    buildGeometryData({ segments, nodes }) {
         const aBase = [];
         const aOffset = [];
         const aDist = [];
         const aNode = [];
         const index = [];
 
-        const pushQuad = (cx, cy, offsets, d, node) => {
-            const base = aDist.length; // current vertex count
-            for (let k = 0; k < 4; k++) {
-                aBase.push(cx, cy);
-                aOffset.push(offsets[k][0], offsets[k][1]);
-                aDist.push(d);
-                aNode.push(node);
-            }
-            index.push(base, base + 1, base + 2, base + 2, base + 1, base + 3);
-        };
-
         const h = this.thickness * 0.5;
 
-        // Line segments (axis-aligned -> perpendicular is a pure axis).
-        for (let i = 0; i < points.length - 1; i++) {
-            const p1 = points[i];
-            const p2 = points[i + 1];
-            const dx = p2.x - p1.x;
-            const dy = p2.y - p1.y;
-            const nx = Math.abs(dx) >= Math.abs(dy) ? 0 : h;
-            const ny = Math.abs(dx) >= Math.abs(dy) ? h : 0;
+        for (const s of segments) {
+            let dx = s.x2 - s.x1;
+            let dy = s.y2 - s.y1;
+            const len = Math.hypot(dx, dy) || 1;
+            dx /= len;
+            dy /= len;
+            const nx = -dy * h;
+            const ny = dx * h;
 
             const base = aDist.length;
-            // v0,v1 at p1 ; v2,v3 at p2
-            aBase.push(p1.x, p1.y, p1.x, p1.y, p2.x, p2.y, p2.x, p2.y);
+            aBase.push(s.x1, s.y1, s.x1, s.y1, s.x2, s.y2, s.x2, s.y2);
             aOffset.push(nx, ny, -nx, -ny, nx, ny, -nx, -ny);
-            aDist.push(dist[i], dist[i], dist[i + 1], dist[i + 1]);
+            aDist.push(s.r0, s.r0, s.r1, s.r1);
             aNode.push(0, 0, 0, 0);
             index.push(base, base + 1, base + 2, base + 2, base + 1, base + 3);
         }
 
-        // Square nodes: a big one at the terminal point, smaller at interior joints.
-        for (let i = 1; i < points.length; i++) {
-            const isEnd = i === points.length - 1;
-            const s = (isEnd ? this.nodeSize : this.jointSize) * 0.5;
-            const offsets = [
-                [s, s],
-                [-s, s],
-                [s, -s],
-                [-s, -s]
-            ];
-            pushQuad(points[i].x, points[i].y, offsets, dist[i], 1);
+        for (const n of nodes) {
+            const s = n.size * 0.5;
+            const offsets = [[s, s], [-s, s], [s, -s], [-s, -s]];
+            const base = aDist.length;
+            for (let k = 0; k < 4; k++) {
+                aBase.push(n.x, n.y);
+                aOffset.push(offsets[k][0], offsets[k][1]);
+                aDist.push(n.r);
+                aNode.push(1);
+            }
+            index.push(base, base + 1, base + 2, base + 2, base + 1, base + 3);
         }
 
         return {
@@ -168,10 +247,10 @@ export default class CircuitManager {
         };
     }
 
-    createTrace(points, { duration = 1, delay = 0 } = {}) {
-        if (points.length < 2) return;
+    createTrace(form) {
+        if (!form || form.segments.length === 0) return null;
 
-        const data = this.buildGeometryData(points);
+        const data = this.buildGeometryData(form);
         const geometry = new Geometry(this.gl, {
             aBase: { size: 2, data: data.aBase },
             aOffset: { size: 2, data: data.aOffset },
@@ -179,6 +258,11 @@ export default class CircuitManager {
             aNode: { size: 1, data: data.aNode },
             index: { data: data.index }
         });
+
+        const uProgress = { value: 0 };
+        const uFade = { value: 1 };
+        const uScale = { value: 1 };
+        const uCenter = { value: [form.center[0], form.center[1]] };
 
         const program = new Program(this.gl, {
             vertex,
@@ -188,7 +272,10 @@ export default class CircuitManager {
                 uTime: this.uTime,
                 uColor: this.uColor,
                 uAlpha: this.uAlpha,
-                uProgress: { value: 0 }
+                uProgress,
+                uFade,
+                uScale,
+                uCenter
             },
             transparent: true,
             depthTest: false,
@@ -199,24 +286,17 @@ export default class CircuitManager {
         mesh.frustumCulled = false;
         mesh.setParent(this.scene);
 
-        const trace = { geometry, program, mesh };
+        const trace = { geometry, program, mesh, uProgress, uFade, uScale };
         this.traces.push(trace);
 
-        gsap.to(program.uniforms.uProgress, {
-            value: 1,
-            duration,
-            delay,
-            ease: 'power2.out'
-        });
+        // Lifecycle: populate (uProgress) -> hold with a subtle pulse -> fade -> remove.
+        const tl = gsap.timeline({ onComplete: () => this.removeTrace(trace) });
+        tl.to(uProgress, { value: 1, duration: rand(1.1, 1.8), ease: 'power1.inOut' });
+        tl.to(uScale, { value: 1.05, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, '+=0.1');
+        tl.to(uFade, { value: 0, duration: 0.7, ease: 'power2.in' }, '+=0.4');
+        trace.timeline = tl;
 
-        this.enforceLimit();
         return trace;
-    }
-
-    enforceLimit() {
-        while (this.traces.length > this.maxTraces) {
-            this.removeTrace(this.traces[0]);
-        }
     }
 
     removeTrace(trace) {
@@ -224,7 +304,7 @@ export default class CircuitManager {
         if (i === -1) return;
         this.traces.splice(i, 1);
 
-        gsap.killTweensOf(trace.program.uniforms.uProgress);
+        if (trace.timeline) trace.timeline.kill();
         trace.mesh.setParent(null);
         if (trace.geometry.remove) trace.geometry.remove();
         if (trace.program.remove) trace.program.remove();
@@ -236,15 +316,6 @@ export default class CircuitManager {
 
     update(time) {
         this.uTime.value = time;
-
-        // Keep things alive while idle by occasionally adding a right-side trace.
-        const dt = this._lastTime === undefined ? 0 : time - this._lastTime;
-        this._lastTime = time;
-        this._spawnTimer += dt;
-        if (this._spawnTimer >= this._spawnEvery) {
-            this._spawnTimer = 0;
-            this.createTrace(this.antennaPath(), { duration: rand(0.8, 1.5), delay: 0 });
-        }
     }
 
     resize(width, height) {

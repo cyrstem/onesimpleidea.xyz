@@ -40,8 +40,8 @@ export default class PostFX {
         this.post.resize();
     }
 
-    render(scene) {
+    render(texture) {
         this.uTime.value = performance.now() * 0.001;
-        this.post.render({ scene });
+        this.post.render({ texture });
     }
 }
