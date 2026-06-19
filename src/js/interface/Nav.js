@@ -1,8 +1,10 @@
-const Navbar =()=>{
+const Navbar = () => {
     const template = `
         <nav id="nav">
-            <button id="home">About</button>
-        </nav> 
+            <a class="nav-link" href="#/" data-route="/">Home</a>
+            <a class="nav-link" href="#/about" data-route="/about">About</a>
+            <a class="nav-link" href="#/portfolio" data-route="/portfolio">Work</a>
+        </nav>
     `;
     return template;
 }

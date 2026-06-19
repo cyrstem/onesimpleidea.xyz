@@ -1,22 +1,31 @@
-import { Mesh, BoxGeometry, MeshPhongMaterial, Object3D, Group, Vector3, Vector2 } from 'three';
+import { InstancedMesh, BoxGeometry, MeshPhongMaterial, Object3D, Group, Vector3, Vector2, DynamicDrawUsage } from 'three';
 import gsap from 'gsap';
 
 export default class CubeManager {
     constructor(scene, config) {
         this.scene = scene;
         this.config = config;
-        this.cubes = [];
-        this.maxDistance = this.config.CUBE_SPREAD * 1.5; // Maximum distance a cube can move from its base position
-        console.log('CubeManager initialized with config:', config);
+        this.count = config.CUBE_COUNT;
+        // Maximum distance an instance can drift from its base position.
+        this.maxDistance = config.CUBE_SPREAD * 1.5;
+
+        // Reusable scratch objects to avoid per-frame allocations.
+        this.dummy = new Object3D();
+        this._tmpVec = new Vector3();
+
+        // Per-instance state (animated by GSAP, composed into matrices each frame).
+        this.instances = [];
+
         this.setupCubes();
     }
 
     setupCubes() {
-        console.log('Setting up cubes...');
+        // `geos` is the rotating wrapper, `main` toggles overall visibility.
         this.geos = new Object3D();
         this.main = new Group();
 
         const geometry = new BoxGeometry(this.config.CUBE_SIZE, this.config.CUBE_SIZE, this.config.CUBE_SIZE);
+        // A single shared material for every instance.
         const material = new MeshPhongMaterial({
             color: 0x111111,
             emissive: 0x000000,
@@ -24,62 +33,72 @@ export default class CubeManager {
             shininess: 30
         });
 
-        this.cubes = Array(this.config.CUBE_COUNT).fill(null).map(() => {
-            const mesh = new Mesh(geometry, material.clone());
-            const basePos = new Vector3(
+        this.mesh = new InstancedMesh(geometry, material, this.count);
+        this.mesh.instanceMatrix.setUsage(DynamicDrawUsage);
+        // Instances move around, so skip per-instance frustum culling.
+        this.mesh.frustumCulled = false;
+
+        for (let i = 0; i < this.count; i++) {
+            const basePosition = new Vector3(
                 (Math.random() - 0.5) * this.config.CUBE_SPREAD,
                 (Math.random() - 0.5) * this.config.CUBE_SPREAD,
                 (Math.random() - 0.5) * this.config.CUBE_SPREAD
             );
-            
-            mesh.userData = {
-                basePosition: basePos,
+
+            this.instances.push({
+                basePosition,
+                position: basePosition.clone(),
+                rotation: new Vector3(0, 0, 0),
+                scale: new Vector3(1, 1, 1),
                 rotationSpeed: new Vector3(
                     (Math.random() - 0.5) * 0.01,
                     (Math.random() - 0.5) * 0.01,
                     (Math.random() - 0.5) * 0.01
                 )
-            };
-            
-            mesh.position.copy(basePos);
-            this.geos.add(mesh);
-            return mesh;
-        });
+            });
+        }
 
+        for (let i = 0; i < this.count; i++) {
+            this.writeMatrix(i);
+        }
+        this.mesh.instanceMatrix.needsUpdate = true;
+
+        this.geos.add(this.mesh);
         this.main.add(this.geos);
         this.scene.add(this.main);
         this.main.visible = false;
-        console.log('Cubes setup complete. Cube count:', this.cubes.length);
+    }
+
+    writeMatrix(index) {
+        const inst = this.instances[index];
+        this.dummy.position.copy(inst.position);
+        this.dummy.rotation.set(inst.rotation.x, inst.rotation.y, inst.rotation.z);
+        this.dummy.scale.copy(inst.scale);
+        this.dummy.updateMatrix();
+        this.mesh.setMatrixAt(index, this.dummy.matrix);
     }
 
     showCubes() {
-        console.log('Showing cubes...');
         this.main.visible = true;
-        this.cubes.forEach(cube => {
-            gsap.from(cube.position, {
-                x: cube.userData.basePosition.x * 2,
-                y: cube.userData.basePosition.y * 2,
-                z: cube.userData.basePosition.z * 2,
+        this.instances.forEach((inst) => {
+            // Animate in from an exploded position toward the base position.
+            gsap.from(inst.position, {
+                x: inst.basePosition.x * 2,
+                y: inst.basePosition.y * 2,
+                z: inst.basePosition.z * 2,
                 duration: 1.5,
                 ease: "power2.out",
                 delay: Math.random() * 0.5
             });
         });
-        console.log('Cubes visibility set to:', this.main.visible);
     }
 
     animateCubesOnShaderCreate() {
-        this.cubes.forEach(cube => {
-            const randomRotation = {
+        this.instances.forEach((inst) => {
+            gsap.to(inst.rotation, {
                 x: (Math.random() - 0.5) * Math.PI * 2,
                 y: (Math.random() - 0.5) * Math.PI * 2,
-                z: (Math.random() - 0.5) * Math.PI * 2
-            };
-            
-            gsap.to(cube.rotation, {
-                x: randomRotation.x,
-                y: randomRotation.y,
-                z: randomRotation.z,
+                z: (Math.random() - 0.5) * Math.PI * 2,
                 duration: 1.5,
                 ease: "power2.inOut"
             });
@@ -90,17 +109,17 @@ export default class CubeManager {
                 z: (Math.random() - 0.5) * 2
             };
 
-            gsap.to(cube.position, {
-                x: cube.userData.basePosition.x + randomOffset.x,
-                y: cube.userData.basePosition.y + randomOffset.y,
-                z: cube.userData.basePosition.z + randomOffset.z,
+            gsap.to(inst.position, {
+                x: inst.basePosition.x + randomOffset.x,
+                y: inst.basePosition.y + randomOffset.y,
+                z: inst.basePosition.z + randomOffset.z,
                 duration: 1.5,
                 ease: "power2.inOut",
                 onComplete: () => {
-                    gsap.to(cube.position, {
-                        x: cube.userData.basePosition.x,
-                        y: cube.userData.basePosition.y,
-                        z: cube.userData.basePosition.z,
+                    gsap.to(inst.position, {
+                        x: inst.basePosition.x,
+                        y: inst.basePosition.y,
+                        z: inst.basePosition.z,
                         duration: 1,
                         ease: "power2.out"
                     });
@@ -109,47 +128,58 @@ export default class CubeManager {
         });
     }
 
-    updateCubes() {
-        this.cubes.forEach(cube => {
-            const { basePosition, rotationSpeed } = cube.userData;
-            
-            // Check if cube is too far from its base position
-            const distanceFromBase = cube.position.distanceTo(basePosition);
-            if (distanceFromBase > this.maxDistance) {
-                // Reset position if too far
-                cube.position.copy(basePosition);
-            } else {
-                // Normal lerp behavior
-                cube.position.lerp(basePosition, 0.1);
-            }
-            
-            cube.rotation.x += rotationSpeed.x;
-            cube.rotation.y += rotationSpeed.y;
-            cube.rotation.z += rotationSpeed.z;
+    repositionCubes() {
+        this.instances.forEach((inst) => {
+            gsap.to(inst.rotation, {
+                x: (Math.random() - 0.07) * 10 * Math.random(),
+                y: (Math.random() - 0.07) * 10 * Math.random(),
+                z: (Math.random() - 0.07) * 10 * Math.random(),
+                ease: "power4.out"
+            });
         });
     }
 
-    animateCubeRepulsion(cube, mouseWorldPos, distance) {
+    updateCubes() {
+        for (let i = 0; i < this.count; i++) {
+            const inst = this.instances[i];
+            const { basePosition, position, rotation, rotationSpeed } = inst;
+
+            const distanceFromBase = position.distanceTo(basePosition);
+            if (distanceFromBase > this.maxDistance) {
+                position.copy(basePosition);
+            } else {
+                position.lerp(basePosition, 0.1);
+            }
+
+            rotation.x += rotationSpeed.x;
+            rotation.y += rotationSpeed.y;
+            rotation.z += rotationSpeed.z;
+
+            this.writeMatrix(i);
+        }
+        this.mesh.instanceMatrix.needsUpdate = true;
+    }
+
+    animateCubeRepulsion(index, mouseWorldPos, distance) {
+        const inst = this.instances[index];
         const repelForce = 1 - (distance / 8);
         const direction = new Vector2(
-            cube.position.x - mouseWorldPos.x,
-            cube.position.y - mouseWorldPos.y
+            inst.position.x - mouseWorldPos.x,
+            inst.position.y - mouseWorldPos.y
         ).normalize();
 
-        // Calculate new position
-        const newX = cube.userData.basePosition.x + direction.x * repelForce * 2;
-        const newY = cube.userData.basePosition.y + direction.y * repelForce * 2;
-        const newZ = cube.userData.basePosition.z + (repelForce * 0.8);
+        const newX = inst.basePosition.x + direction.x * repelForce * 2;
+        const newY = inst.basePosition.y + direction.y * repelForce * 2;
+        const newZ = inst.basePosition.z + (repelForce * 0.8);
 
-        // Check if the new position is within bounds
-        const distanceFromBase = new Vector3(
-            newX - cube.userData.basePosition.x,
-            newY - cube.userData.basePosition.y,
-            newZ - cube.userData.basePosition.z
+        const distanceFromBase = this._tmpVec.set(
+            newX - inst.basePosition.x,
+            newY - inst.basePosition.y,
+            newZ - inst.basePosition.z
         ).length();
 
         if (distanceFromBase <= this.maxDistance) {
-            gsap.to(cube.position, {
+            gsap.to(inst.position, {
                 x: newX,
                 y: newY,
                 z: newZ,
@@ -157,19 +187,44 @@ export default class CubeManager {
                 ease: "power1.out"
             });
         } else {
-            // If out of bounds, return to base position
-            gsap.to(cube.position, {
-                x: cube.userData.basePosition.x,
-                y: cube.userData.basePosition.y,
-                z: cube.userData.basePosition.z,
+            gsap.to(inst.position, {
+                x: inst.basePosition.x,
+                y: inst.basePosition.y,
+                z: inst.basePosition.z,
                 duration: 0.8,
                 ease: "power1.out"
             });
         }
     }
 
-    getCubes() {
-        return this.cubes;
+    makeRandomCubeBigger() {
+        const inst = this.instances[Math.floor(Math.random() * this.instances.length)];
+        if (!inst) return;
+
+        gsap.to(inst.scale, {
+            x: 2,
+            y: 2,
+            z: 2,
+            duration: 0.5,
+            ease: "power2.out",
+            onComplete: () => {
+                gsap.to(inst.scale, {
+                    x: 1,
+                    y: 1,
+                    z: 1,
+                    duration: 0.5,
+                    ease: "power2.in"
+                });
+            }
+        });
+    }
+
+    getMesh() {
+        return this.mesh;
+    }
+
+    getInstanceBasePosition(index) {
+        return this.instances[index]?.basePosition;
     }
 
     getMain() {
@@ -180,25 +235,11 @@ export default class CubeManager {
         return this.geos;
     }
 
-    makeRandomCubeBigger() {
-        const randomCube = this.cubes[Math.floor(Math.random() * this.cubes.length)];
-        const originalScale = randomCube.scale.clone();
-        
-        gsap.to(randomCube.scale, {
-            x: 2,
-            y: 2,
-            z: 2,
-            duration: 0.5,
-            ease: "power2.out",
-            onComplete: () => {
-                gsap.to(randomCube.scale, {
-                    x: originalScale.x,
-                    y: originalScale.y,
-                    z: originalScale.z,
-                    duration: 0.5,
-                    ease: "power2.in"
-                });
-            }
-        });
+    dispose() {
+        if (this.mesh) {
+            this.mesh.geometry.dispose();
+            this.mesh.material.dispose();
+            if (this.mesh.parent) this.mesh.parent.remove(this.mesh);
+        }
     }
-} 
+}

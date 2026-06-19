@@ -1,34 +1,35 @@
-import { Scene, WebGLRenderer, Vector2, Raycaster, Clock, Group, Fog, TextureLoader, LoadingManager, PointLight } from 'three';
+import { Scene, WebGLRenderer, Vector2, Raycaster, Clock, Fog, TextureLoader, LoadingManager, PointLight } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import Debug from './utils/Debug';
 import gsap from 'gsap';
-import { throttle } from 'lodash';
-import UI from './UI';
+import { throttle } from './utils/Utils';
 import CubeManager from './classes/CubeManager';
 import ShaderManager from './classes/ShaderManager';
 import CameraManager from './classes/CameraManager';
 
 export default class App {
-    constructor(stage) {
+    constructor(stage, bus) {
+        this.bus = bus;
+
         this.init(stage);
         this.setupScene();
         this.setupLights();
         this.setupManagers();
+        this.setupDebugControls();
         this.setupEvents();
-        this.render();
+        this.subscribeToBus();
+        this.start();
     }
 
     init(stage) {
-        // Core setup
         this.container = stage.dom;
         this.debug = new Debug();
-        this.ui = new UI();
         this.clock = new Clock();
         this.mouse = new Vector2();
         this.raycaster = new Raycaster();
         this.textureCache = new Map();
-        
-        // State
+        this._raf = null;
+
         this.state = {
             animating: false,
             current: 0,
@@ -36,7 +37,6 @@ export default class App {
             height: this.container.offsetHeight
         };
 
-        // Constants
         this.config = {
             CUBE_COUNT: 150,
             CUBE_SIZE: 1.5,
@@ -51,7 +51,7 @@ export default class App {
         this.scene = new Scene();
         this.scene.fog = new Fog(0xeeeeee, 3, 50);
 
-        this.renderer = new WebGLRenderer({ 
+        this.renderer = new WebGLRenderer({
             antialias: true,
             powerPreference: 'high-performance'
         });
@@ -59,25 +59,6 @@ export default class App {
         this.renderer.setSize(this.state.width, this.state.height);
         this.renderer.setClearColor(0xeeeeee, 1);
         this.container.appendChild(this.renderer.domElement);
-
-        if (this.debug.active) {
-            this.setupDebugControls();
-        }
-    }
-
-    setupDebugControls() {
-        this.controls = new OrbitControls(this.cameraManager.getCamera(), this.renderer.domElement);
-        this.debugFolder = this.debug.ui.addFolder('material');
-        this.materialParams = {
-            color: "#000000",
-            emissive: "#000000",
-            specular: "#000000"
-        };
-
-        ['color', 'emissive', 'specular'].forEach(param => {
-            this.debugFolder.addColor(this.materialParams, param)
-                .onChange(() => this.updateMaterials());
-        });
     }
 
     setupLights() {
@@ -97,20 +78,40 @@ export default class App {
         this.loadTextures();
     }
 
+    setupDebugControls() {
+        if (!this.debug.active) return;
+
+        this.controls = new OrbitControls(this.cameraManager.getCamera(), this.renderer.domElement);
+        this.debugFolder = this.debug.ui.addFolder('material');
+        this.materialParams = {
+            color: "#000000",
+            emissive: "#000000",
+            specular: "#000000"
+        };
+
+        ['color', 'emissive', 'specular'].forEach(param => {
+            this.debugFolder.addColor(this.materialParams, param)
+                .onChange(() => this.updateMaterials());
+        });
+    }
+
+    updateMaterials() {
+        const material = this.cubeManager.getMesh().material;
+        material.color.set(this.materialParams.color);
+        material.emissive.set(this.materialParams.emissive);
+        material.specular.set(this.materialParams.specular);
+    }
+
     loadTextures() {
-        console.log('Starting texture loading...');
         const manager = new LoadingManager(() => {
-            console.log('All textures loaded:', this.textures?.length);
             if (this.textures?.length > 0) {
-                this.showCubes();
+                this.cubeManager.showCubes();
             }
         });
 
         const loader = new TextureLoader(manager);
         this.textures = this.config.TEXTURE_URLS.map(url => {
-            console.log('Loading texture:', url);
             if (this.textureCache.has(url)) {
-                console.log('Using cached texture:', url);
                 return this.textureCache.get(url);
             }
             const texture = loader.load(url);
@@ -119,115 +120,47 @@ export default class App {
         });
     }
 
-    showCubes() {
-        this.cubeManager.showCubes();
-    }
-
     setupEvents() {
-        this.handleResize = throttle(this.resize.bind(this), 250);
-        this.handleMouseMove = throttle(this.onMouseMove.bind(this), 16);
+        // Bound handlers stored as fields so removeEventListener works.
+        this._onResize = throttle(this.resize.bind(this), 250);
+        this._onMouseMove = throttle(this.onMouseMove.bind(this), 16);
+        this._onClick = this.handleCubeClick.bind(this);
+        this._onBottomTextHover = this.handleBottomTextHover.bind(this);
 
-        window.addEventListener('resize', this.handleResize);
-        window.addEventListener('mousemove', this.handleMouseMove);
-        window.addEventListener('click', this.handleView.bind(this));
-        window.addEventListener('click', this.handleCubeClick.bind(this));
+        window.addEventListener('resize', this._onResize);
+        window.addEventListener('mousemove', this._onMouseMove);
+        window.addEventListener('click', this._onClick);
 
-        // Add bottom text hover events
         const bottomText = document.getElementById('bottom-text');
         if (bottomText) {
-            bottomText.addEventListener('mouseenter', this.handleBottomTextHover.bind(this));
+            bottomText.addEventListener('mouseenter', this._onBottomTextHover);
         }
     }
 
-    handleView() {
-        this.navItems = document.querySelectorAll('.nav_item');
-        this.textItems = document.querySelectorAll('.info');
-        this.portafolio = this.ui.portafolio;
-        this.about = this.ui.about;
+    subscribeToBus() {
+        if (!this.bus) return;
 
-        if (this.portafolio) {
-            this.showPortfolio();
-        } else if (this.about) {
-            this.showAbout();
-        }
+        this._onRouteChange = ({ name }) => this.handleRouteChange(name);
+        this._onPortfolioSelect = () => this.cubeManager.repositionCubes();
 
-        this.setupNavListeners();
+        this.bus.on('route:change', this._onRouteChange);
+        this.bus.on('portfolio:select', this._onPortfolioSelect);
     }
 
-    showPortfolio() {
-        this.cubeManager.getMain().visible = true;
-        
-        gsap.to(this.cubeManager.getGeos().position, { 
-            x: 10, y: -1, z: 0, 
-            ease: "power2.in", 
-            delay: 0.4, 
-            onComplete: () => this.repositionCubes() 
-        });
-    }
+    handleRouteChange(name) {
+        const views = {
+            home: { visible: true, x: 0, y: 0, ease: "power2.out", delay: 0.2 },
+            portfolio: { visible: true, x: 10, y: -1, ease: "power2.in", delay: 0.4 },
+            about: { visible: false, x: 0, y: 0, ease: "power2.out", delay: 0.4 }
+        };
+        const view = views[name] || views.home;
 
-    showAbout() {
-        this.cubeManager.getMain().visible = false;
-        
-        gsap.to(this.cubeManager.getGeos().position, { 
-            x: 0, y: 0, z: 0, 
-            ease: "power2.out", 
-            delay: 0.4, 
-            onComplete: () => this.repositionCubes() 
-        });
-    }
-
-    setupNavListeners() {
-        if (this.navItems) {
-            this.navItems.forEach((el, i) => {
-                el.addEventListener('click', () => this.switchTextures(i));
-            });
-        }
-    }
-
-    switchTextures(index) {
-        if (this.state.animating) return;
-        this.state.animating = true;
-        
-        this.updateNavItems(index);
-        this.updateTextItems(index);
-        this.animateTextureTransition(index);
-    }
-
-    updateNavItems(index) {
-        if (this.navItems[this.state.current]) {
-            this.navItems[this.state.current].classList.remove('item--current');
-            this.navItems[index].classList.add('item--current');
-        }
-    }
-
-    updateTextItems(index) {
-        if (this.textItems[this.state.current]) {
-            this.textItems[this.state.current].classList.remove('show__info');
-            this.textItems[index].classList.add('show__info');
-        }
-    }
-
-    animateTextureTransition(index) {
-        this.state.current = index;
-        gsap.timeline({
-            onComplete: () => {
-                this.state.animating = false;
-            }
-        })
-        .fromTo(this.textItems[index],
-            { opacity: 0 },
-            { opacity: 1, duration: 0.5, ease: 'power2.in' }, 0
-        );
-    }
-
-    repositionCubes() {
-        this.cubeManager.getCubes().forEach(cube => {
-            gsap.to(cube.rotation, {
-                x: (Math.random() - 0.07) * 10 * Math.random(),
-                y: (Math.random() - 0.07) * 10 * Math.random(),
-                z: (Math.random() - 0.07) * 10 * Math.random(),
-                ease: "power4.out",
-            });
+        this.cubeManager.getMain().visible = view.visible;
+        gsap.to(this.cubeManager.getGeos().position, {
+            x: view.x, y: view.y, z: 0,
+            ease: view.ease,
+            delay: view.delay,
+            onComplete: () => this.cubeManager.repositionCubes()
         });
     }
 
@@ -242,43 +175,47 @@ export default class App {
     }
 
     handleCubeInteraction() {
-        this.raycaster.setFromCamera(this.mouse, this.cameraManager.getCamera());
-        const intersects = this.raycaster.intersectObjects(this.cubeManager.getCubes(), false);
+        if (!this.cubeManager.getMain().visible) return;
 
-        if (intersects.length > 0) {
-            const mouseWorldPos = new Vector2(this.mouse.x * 15, this.mouse.y * 15);
-            intersects.forEach(({ object }) => {
-                const distance = new Vector2(object.position.x, object.position.y)
-                    .distanceTo(mouseWorldPos);
-                if (distance < 8) {
-                    this.cubeManager.animateCubeRepulsion(object, mouseWorldPos, distance);
-                }
-            });
-        }
+        this.raycaster.setFromCamera(this.mouse, this.cameraManager.getCamera());
+        const intersects = this.raycaster.intersectObject(this.cubeManager.getMesh(), false);
+        if (intersects.length === 0) return;
+
+        const mouseWorldPos = new Vector2(this.mouse.x * 15, this.mouse.y * 15);
+        const handled = new Set();
+
+        intersects.forEach(({ instanceId }) => {
+            if (instanceId === undefined || handled.has(instanceId)) return;
+            handled.add(instanceId);
+
+            const basePosition = this.cubeManager.getInstanceBasePosition(instanceId);
+            if (!basePosition) return;
+
+            const distance = new Vector2(basePosition.x, basePosition.y).distanceTo(mouseWorldPos);
+            if (distance < 8) {
+                this.cubeManager.animateCubeRepulsion(instanceId, mouseWorldPos, distance);
+            }
+        });
     }
 
     handleCubeClick(event) {
+        if (!this.cubeManager.getMain().visible) return;
+
         const mouse = new Vector2(
             (event.clientX / this.state.width) * 2 - 1,
             -(event.clientY / this.state.height) * 2 + 1
         );
 
         this.raycaster.setFromCamera(mouse, this.cameraManager.getCamera());
-        const intersects = this.raycaster.intersectObjects(this.cubeManager.getCubes(), false);
+        const intersects = this.raycaster.intersectObject(this.cubeManager.getMesh(), false);
 
         if (intersects.length > 0) {
-            const clickedCube = intersects[0].object;
             this.cameraManager.animateWiggle();
-            this.showShaderElement(clickedCube);
+            this.showShaderElement();
         }
     }
 
-    showShaderElement(cube) {
-        const existingShaders = document.querySelectorAll('.shader-container');
-        if (existingShaders.length >= 2) {
-            this.shaderManager.hideShaderElement(existingShaders[0]);
-        }
-        
+    showShaderElement() {
         this.cubeManager.animateCubesOnShaderCreate();
         this.shaderManager.createShaderContainer(this.textures);
     }
@@ -292,19 +229,22 @@ export default class App {
     resize() {
         this.state.width = this.container.offsetWidth;
         this.state.height = this.container.offsetHeight;
-        
+
         this.renderer.setSize(this.state.width, this.state.height);
         this.cameraManager.resize(this.state.width, this.state.height);
+        this.shaderManager.resize();
     }
 
-    render() {
-        const time = this.clock.getElapsedTime();
-        
-        this.updateAnimations();
-        this.cubeManager.updateCubes();
-        
-        requestAnimationFrame(this.render.bind(this));
-        this.renderer.render(this.scene, this.cameraManager.getCamera());
+    start() {
+        const loop = () => {
+            this.updateAnimations();
+            this.cubeManager.updateCubes();
+            if (this.controls) this.controls.update();
+
+            this.renderer.render(this.scene, this.cameraManager.getCamera());
+            this._raf = requestAnimationFrame(loop);
+        };
+        this._raf = requestAnimationFrame(loop);
     }
 
     updateAnimations() {
@@ -313,33 +253,41 @@ export default class App {
     }
 
     dispose() {
+        if (this._raf !== null) {
+            cancelAnimationFrame(this._raf);
+            this._raf = null;
+        }
         this.removeEventListeners();
         this.cleanupResources();
     }
 
     removeEventListeners() {
-        window.removeEventListener('resize', this.handleResize);
-        window.removeEventListener('mousemove', this.handleMouseMove);
-        window.removeEventListener('click', this.handleView);
+        if (this._onResize?.cancel) this._onResize.cancel();
+        if (this._onMouseMove?.cancel) this._onMouseMove.cancel();
+
+        window.removeEventListener('resize', this._onResize);
+        window.removeEventListener('mousemove', this._onMouseMove);
+        window.removeEventListener('click', this._onClick);
+
+        const bottomText = document.getElementById('bottom-text');
+        if (bottomText && this._onBottomTextHover) {
+            bottomText.removeEventListener('mouseenter', this._onBottomTextHover);
+        }
+
+        if (this.bus) {
+            this.bus.off('route:change', this._onRouteChange);
+            this.bus.off('portfolio:select', this._onPortfolioSelect);
+        }
     }
 
     cleanupResources() {
-        this.scene.traverse(object => {
-            if (object.geometry) object.geometry.dispose();
-            if (object.material) {
-                if (object.material.map) object.material.map.dispose();
-                object.material.dispose();
-            }
-        });
+        this.cubeManager.dispose();
+        this.shaderManager.dispose();
 
         this.textureCache.forEach(texture => texture.dispose());
         this.textureCache.clear();
 
         this.renderer.dispose();
         if (this.controls) this.controls.dispose();
-
-        document.querySelectorAll('.shader-container').forEach(container => {
-            this.shaderManager.cleanupShaderResources(container);
-        });
     }
 }

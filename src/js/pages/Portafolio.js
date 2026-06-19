@@ -1,5 +1,6 @@
-const Portafolio = () => {
-    const template = `
+import gsap from 'gsap';
+
+const template = `
     <main>  
         <div id="ex">
             <a class="nav_item" href="#"><h1>Moving Photon</h1></a>
@@ -34,7 +35,37 @@ const Portafolio = () => {
         </div>
     </main>
     `;
-    return template;
-};
 
-export default Portafolio;
+export default {
+    name: 'portfolio',
+    render: () => template,
+    onEnter: ({ bus }) => {
+        const items = Array.from(document.querySelectorAll('#ex .nav_item'));
+        const infos = Array.from(document.querySelectorAll('.infoFile .info'));
+        let current = 0;
+
+        // Show the first project by default.
+        items[0]?.classList.add('item--current');
+        infos[0]?.classList.add('show__info');
+
+        items.forEach((el, index) => {
+            el.addEventListener('click', (event) => {
+                event.preventDefault();
+                if (index === current) return;
+
+                items[current]?.classList.remove('item--current');
+                infos[current]?.classList.remove('show__info');
+
+                el.classList.add('item--current');
+                const info = infos[index];
+                if (info) {
+                    info.classList.add('show__info');
+                    gsap.fromTo(info, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.in' });
+                }
+
+                current = index;
+                bus.emit('portfolio:select', { index });
+            });
+        });
+    }
+};

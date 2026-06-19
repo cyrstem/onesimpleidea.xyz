@@ -1,5 +1,6 @@
-const About = () => {
-      const template = `
+import { TypeShuffle } from '../typeShuffle';
+
+const template = `
       <main>
         <div id="content" class="content">
           <h3 class="warning">Full experience on Desktop</h3>
@@ -45,7 +46,14 @@ Thinking, AI and Unreal Engine</p>
     </div>
     </main>
       `;
-      return template;
-  };
 
-  export default About;
+export default {
+    name: 'about',
+    render: () => template,
+    onEnter: () => {
+        const textElement = document.querySelector('.content');
+        if (textElement) {
+            new TypeShuffle(textElement).trigger('fx2');
+        }
+    }
+};
