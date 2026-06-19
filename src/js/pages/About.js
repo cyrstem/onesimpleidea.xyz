@@ -12,26 +12,26 @@ const About = () => {
               <ul id="sites">
               <li>
               <a href="https://activetheory.net/" target="_blank" rel="noopener noreferrer">
-                <span>Active Theory</span>
-                <span> — WebGL Developer</span>
+                <span>Active Theory //## WebGL Developer </span>
+                <span> </span>
               </a>
             </li>
               <li>
               <a href="https://visualgoodness.com/" target="_blank" rel="noopener noreferrer">
-                <span>Visual Goodness</span>
-                <span> — WebGL Developer</span>
+                <span>Visual Goodness //## WebGL Developer</span>
+                <span> </span>
               </a>
               </li>
               <li>
               <a href="https://smartco.com.ec" target="_blank" rel="noopener noreferrer">
-                <span>Smartco</span>
-                <span> — Unity Developer</span>
+                <span>Smartco //## Unity Developer </span>
+                <span> </span>
               </a>
             </li>
               <li>
                 <a href="https://www.yaesta.com" target="_blank" rel="noopener noreferrer">
-                  <span>YaEsta</span>
-                  <span> — Front-end Developer &amp; Designer</span>
+                  <span>YaEsta  //## Front-end & Designer</span>
+                  <span> </span>
                 </a>
               </li>
               </ul>

@@ -24,7 +24,7 @@ float noise(vec2 p) {
 
 float fbm(vec2 p) {
   float v = 0.0;
-  float a = 0.5;
+  float a = 0.8;
   for (int i = 0; i < 4; i++) {
     v += a * noise(p);
     p *= 2.0;
@@ -40,9 +40,9 @@ vec3 blendDarken(vec3 base, vec3 blend) {
 void main() {
   vec2 uv = vUv;
   float aspect = uResolution.y / max(uResolution.x, 1.0);
-  vec2 aspectVec = uResolution.x < uResolution.y ? vec2(1.0, aspect) : vec2(1.0 / max(aspect, 0.001), 1.0);
+  vec2 aspectVec = uResolution.x < uResolution.y ? vec2(1.0, aspect) : vec2(1.0 / max(aspect, 0.08), 1.0);
 
-  vec2 disp = fbm(uv * 20.0 + uTime * 0.12) * 0.007 * aspectVec;
+  vec2 disp = fbm(uv * 100.0 + uTime * 12.12) * 0.003 * aspectVec;
 
   vec3 texel = texture2D(uPrev, uv).rgb;
   vec3 t2 = texture2D(uPrev, uv + vec2(disp.x, 0.0)).rgb;

@@ -20,15 +20,17 @@ import {
   PointLight,
   RepeatWrapping
 } from "three";
+import { getFrustum, getFullscreenTriangle, ticker, tween, clearTween } from "@alienkitty/space.js/three";
+import { Wobble } from "@alienkitty/alien.js/three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Debug from "./utils/Debug";
-import gsap from "gsap";
 import UI from "./UI";
 import { throttle } from "./utils/Utils";
 import postVert from "./shader/postVert.glsl";
 import postFrag from "./shader/postFrag.glsl";
-import MouseTrail from "./classes/MouseTrail";
-import FluidSim from "./classes/FluidSim";
+import AppModel from "./model/AppModel";
+import PortfolioFlowScene from "./classes/PortfolioFlowScene";
+import { PORTFOLIO_ITEMS } from "./data/portfolioItems";
 
 export default class App {
   constructor(stage) {
@@ -41,35 +43,22 @@ export default class App {
 
   init(stage) {
     this.container = stage.dom;
+    this.model = new AppModel(this.container);
     this.debug = new Debug();
-    this.mouse = new Vector2();
-    this.pointerUv = new Vector2(0.5, 0.5);
+    this.mouse = this.model.mouse;
+    this.pointerUv = this.model.pointerUv;
     this.textureCache = new Map();
     this.tempVecA = new Vector3();
     this.tempVecB = new Vector3();
     this.tempVecC = new Vector3();
 
-    this.state = {
-      animating: false,
-      width: Math.max(1, Math.floor(this.container.clientWidth)),
-      height: Math.max(1, Math.floor(this.container.clientHeight)),
-      frameTick: 0,
-      aboutOpen: false,
-      aboutTransition: 0,
-      aboutTransitioning: false,
-      glitchStrength: 0,
-      glitchUntil: 0,
-      pointerRevealActive: false
-    };
+    this.state = this.model.state;
+    this.config = this.model.config;
+    this.isLowPowerDevice = this.model.isLowPowerDevice;
 
     this.ui = new UI({
       onAboutToggle: this.handleAboutToggle.bind(this)
     });
-
-    this.isLowPowerDevice =
-      window.matchMedia("(max-width: 900px)").matches ||
-      window.matchMedia("(pointer: coarse)").matches ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     this.frameId = null;
     this.bottomText = null;
@@ -77,27 +66,17 @@ export default class App {
     this.aboutCanvas = null;
     this.aboutTexture = null;
     this.aboutMesh = null;
+    this.cameraWobble = null;
+    this.portfolioScene = null;
+    this.portfolioFlowScene = null;
 
-    this.config = {
-      GRID_COLS: this.isLowPowerDevice ? 32 : 46,
-      GRID_ROWS: this.isLowPowerDevice ? 20 : 30,
-      GRID_SPREAD: this.isLowPowerDevice ? 0.38 : 0.34,
-      GRID_POINT_SIZE: this.isLowPowerDevice ? 0.2 : 0.14,
-      GRID_GENE_AMPLITUDE: 2.35,
-      GRID_MUTATION: 0.24,
-      GRID_GA_PASSES_PER_FRAME: this.isLowPowerDevice ? 120 : 260,
-      CAMERA_DISTANCE: 30,
-      SHADER_CONTAINER_SIZE: this.isLowPowerDevice ? 360 : 600,
-      MAX_PIXEL_RATIO: this.isLowPowerDevice ? 1.25 : 2,
-      TEXTURE_URLS: ["insta-0.png", "insta-1.png", "insta-2.png", "insta-3.png"]
-    };
   }
 
   async bootstrap() {
     await this.setupManagers();
     this.setupEvents();
     this.showIntro();
-    this.render();
+    ticker.add(this.render);
   }
 
   setupScene() {
@@ -113,31 +92,6 @@ export default class App {
     this.renderer.setClearColor(0xc8c8c8, 1);
     this.container.appendChild(this.renderer.domElement);
     this.setupPostProcessing();
-    this.setupFluidReveal();
-  }
-
-  setupFluidReveal() {
-    const dpr = Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO);
-    const fw = Math.max(8, Math.floor(this.state.width * dpr * 0.5));
-    const fh = Math.max(8, Math.floor(this.state.height * dpr * 0.5));
-
-    this.mouseTrail = new MouseTrail(fw, fh);
-    this.fluidSim = new FluidSim(this.renderer, fw, fh);
-    if (this.postMaterial) {
-      this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
-    }
-  }
-
-  resizeFluidReveal() {
-    if (!this.mouseTrail || !this.fluidSim) return;
-    const dpr = Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO);
-    const fw = Math.max(8, Math.floor(this.state.width * dpr * 0.5));
-    const fh = Math.max(8, Math.floor(this.state.height * dpr * 0.5));
-    this.mouseTrail.resize(fw, fh);
-    this.fluidSim.setSize(fw, fh);
-    if (this.postMaterial && !this.state.pointerRevealActive) {
-      this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
-    }
   }
 
   setupPostProcessing() {
@@ -191,7 +145,8 @@ export default class App {
       fragmentShader: postFrag
     });
 
-    this.postQuad = new Mesh(new PlaneGeometry(2, 2), this.postMaterial);
+    this.postQuad = new Mesh(getFullscreenTriangle(), this.postMaterial);
+    this.postQuad.frustumCulled = false;
     this.postScene.add(this.postQuad);
   }
 
@@ -216,7 +171,23 @@ export default class App {
 
     this.cameraManager = new CameraManager(this.config);
     this.cameraManager.resize(this.state.width, this.state.height);
+    this.cameraWobble = new Wobble(this.cameraManager.getCamera().position);
+    this.cameraWobble.frequency.set(0.72, 0.46, 0.31);
+    this.cameraWobble.amplitude.set(0.16, 0.12, 0.04);
+    this.cameraWobble.scale = this.isLowPowerDevice ? 0.35 : 1;
+    this.cameraWobble.lerpSpeed = 0.025;
     this.geneticGrid = new GeneticGrid(this.scene, this.config);
+    this.portfolioScene = new Scene();
+    this.portfolioFlowScene = new PortfolioFlowScene({
+      renderer: this.renderer,
+      items: PORTFOLIO_ITEMS,
+      isLowPowerDevice: this.isLowPowerDevice,
+      onSelect: item => document.dispatchEvent(new CustomEvent("portfolio:openDetail", { detail: { id: item.id } }))
+    });
+    this.portfolioScene.add(this.portfolioFlowScene);
+    await this.portfolioFlowScene.ready();
+    this.portfolioFlowScene.layout(this.state.width, this.state.height);
+    document.body.classList.add("portfolio-webgl-active");
     this.fitGeneticGridToViewport();
     this.setupAboutPanel();
     this.loadTextures();
@@ -272,6 +243,8 @@ export default class App {
     this.handleResize = throttle(this.resize.bind(this), 100);
     this.handleMouseMove = throttle(this.onMouseMove.bind(this), 16);
     this.handleBottomTextHoverBound = this.handleBottomTextHover.bind(this);
+    this.handleSceneClickBound = this.handleSceneClick.bind(this);
+    this.handlePortfolioDetailClosedBound = this.handlePortfolioDetailClosed.bind(this);
 
     window.addEventListener("resize", this.handleResize);
     if (typeof ResizeObserver !== "undefined" && this.container) {
@@ -285,6 +258,8 @@ export default class App {
       this.container.addEventListener("pointermove", this.handlePointerMoveBound);
       this.container.addEventListener("pointerdown", this.handlePointerMoveBound);
     }
+    this.container.addEventListener("click", this.handleSceneClickBound);
+    document.addEventListener("portfolio:detailClosed", this.handlePortfolioDetailClosedBound);
 
     this.bottomText = document.getElementById("bottom-text");
     if (this.bottomText && !this.isLowPowerDevice) {
@@ -320,20 +295,14 @@ export default class App {
     this.state.aboutTransitioning = true;
     this.state.aboutTransition = 0;
 
-    return new Promise(resolve => {
-      gsap.to(this.state, {
-        aboutTransition: 1,
-        duration: 0.95,
-        ease: "power2.inOut",
-        onComplete: () => {
-          this.state.aboutTransitioning = false;
-          this.state.aboutTransition = 0;
-          if (this.postMaterial) {
-            this.postMaterial.uniforms.uAboutTransition.value = 0;
-          }
-          resolve();
-        }
-      });
+    clearTween(this.state);
+
+    return tween(this.state, { aboutTransition: 1 }, 950, "easeInOutCubic").then(() => {
+      this.state.aboutTransitioning = false;
+      this.state.aboutTransition = 0;
+      if (this.postMaterial) {
+        this.postMaterial.uniforms.uAboutTransition.value = 0;
+      }
     });
   }
 
@@ -345,18 +314,18 @@ export default class App {
     this.geneticGrid.getGeos().position.set(0, 0, 0);
     this.geneticGrid.getGeos().rotation.set(0, 0, 0);
     this.geneticGrid.showGrid();
+    if (this.portfolioFlowScene) this.portfolioFlowScene.visible = true;
     this.state.pointerRevealActive = false;
     if (this.postMaterial) {
       this.postMaterial.uniforms.uRevealActive.value = 0;
       this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
     }
-    this.mouseTrail?.clear();
-    this.fluidSim?.clearTargets();
   }
 
   showAbout() {
     if (!this.geneticGrid) return;
     this.geneticGrid.hideGrid();
+    if (this.portfolioFlowScene) this.portfolioFlowScene.visible = false;
     if (this.aboutMesh) {
       this.aboutMesh.visible = true;
       this.drawAboutCanvas();
@@ -492,9 +461,7 @@ export default class App {
   updateAboutPanelLayout() {
     if (!this.aboutMesh || !this.cameraManager) return;
     const camera = this.cameraManager.getCamera();
-    const distance = camera.position.z - this.aboutMesh.position.z;
-    const visibleHeight = 2 * Math.tan((camera.fov * Math.PI) / 360) * distance;
-    const visibleWidth = visibleHeight * camera.aspect;
+    const { width: visibleWidth, height: visibleHeight } = getFrustum(camera, this.aboutMesh.position.z);
     this.aboutMesh.scale.set(visibleWidth * 0.95, visibleHeight * 0.92, 1);
   }
 
@@ -517,19 +484,21 @@ export default class App {
   }
 
   updateMousePosition(event) {
-    const r = this.container.getBoundingClientRect();
-    const nx = (event.clientX - r.left) / Math.max(r.width, 1);
-    const ny = (event.clientY - r.top) / Math.max(r.height, 1);
-    this.mouse.x = nx * 2 - 1;
-    this.mouse.y = -(ny * 2 - 1);
-    this.pointerUv.set(nx, 1 - ny);
-    if (!this.state.pointerRevealActive) {
-      this.state.pointerRevealActive = true;
-    }
+    this.model.setPointerFromEvent(event);
+    this.state.pointerRevealActive = false;
+    this.portfolioFlowScene?.handlePointerMove(event, this.cameraManager.getCamera(), this.container);
   }
 
   handleGridInteraction() {
     this.geneticGrid.setMouseWorld(this.mouse.x * 14, this.mouse.y * 11, 1);
+  }
+
+  handleSceneClick(event) {
+    this.portfolioFlowScene?.handleClick(event, this.cameraManager.getCamera(), this.container);
+  }
+
+  handlePortfolioDetailClosed() {
+    this.portfolioFlowScene?.clearFocus();
   }
 
   handleBottomTextHover() {
@@ -539,8 +508,7 @@ export default class App {
   resize() {
     const w = Math.max(1, Math.floor(this.container.clientWidth));
     const h = Math.max(1, Math.floor(this.container.clientHeight));
-    this.state.width = w;
-    this.state.height = h;
+    this.model.setViewport(w, h);
 
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, this.config.MAX_PIXEL_RATIO));
     this.renderer.setSize(w, h);
@@ -553,8 +521,8 @@ export default class App {
       this.cameraManager.resize(this.state.width, this.state.height);
     }
     this.fitGeneticGridToViewport();
+    this.portfolioFlowScene?.layout(w, h);
     this.updateAboutPanelLayout();
-    this.resizeFluidReveal();
   }
 
   /**
@@ -565,10 +533,9 @@ export default class App {
     if (!this.geneticGrid || !this.cameraManager) return;
     const camera = this.cameraManager.getCamera();
     const geos = this.geneticGrid.getGeos();
-    const d = Math.abs(camera.position.z);
-    const vFOV = (camera.fov * Math.PI) / 180;
-    const halfVisibleH = d * Math.tan(vFOV / 2);
-    const halfVisibleW = halfVisibleH * camera.aspect;
+    const frustum = getFrustum(camera, 0);
+    const halfVisibleH = frustum.height * 0.5;
+    const halfVisibleW = frustum.width * 0.5;
 
     const halfW = ((this.config.GRID_COLS - 1) * this.config.GRID_SPREAD) / 2;
     const halfH = ((this.config.GRID_ROWS - 1) * this.config.GRID_SPREAD) / 2;
@@ -577,28 +544,27 @@ export default class App {
     geos.scale.setScalar(s);
   }
 
-  render() {
+  render(timeSec = performance.now() * 0.001) {
     if (!this.managersReady) return;
 
     this.state.frameTick += 1;
     const shouldUpdate = !this.isLowPowerDevice || this.state.frameTick % 2 === 0;
     if (shouldUpdate) {
-      const t = performance.now() * 0.001;
-      this.geneticGrid.update(t, this.state.aboutTransitioning);
+      this.cameraWobble?.update(timeSec * 0.35);
+      this.geneticGrid.update(timeSec, this.state.aboutTransitioning);
+      this.portfolioFlowScene?.update(timeSec);
     }
 
-    this.frameId = requestAnimationFrame(this.render);
-    this.renderWithPostProcessing();
+    this.renderWithPostProcessing(timeSec);
   }
 
-  renderWithPostProcessing() {
+  renderWithPostProcessing(timeSec = performance.now() * 0.001) {
     if (!this.renderTarget || !this.postMaterial) {
       this.renderer.render(this.scene, this.cameraManager.getCamera());
       return;
     }
 
     const now = performance.now();
-    const timeSec = now * 0.001;
     this.postMaterial.uniforms.uTime.value = timeSec;
     const aboutMorph = this.state.aboutTransitioning ? this.state.aboutTransition : 0;
     this.postMaterial.uniforms.uAboutTransition.value = aboutMorph;
@@ -606,16 +572,6 @@ export default class App {
     this.postMaterial.uniforms.uAboutMorphing.value = this.state.aboutTransitioning ? 1 : 0;
     this.postMaterial.uniforms.uRevealActive.value = this.state.pointerRevealActive ? 1 : 0;
 
-    if (this.mouseTrail && this.fluidSim) {
-      if (this.state.pointerRevealActive) {
-        const nyCanvas = 1 - this.pointerUv.y;
-        this.mouseTrail.update(this.pointerUv.x, nyCanvas);
-        this.fluidSim.update(this.mouseTrail.texture, timeSec);
-        this.postMaterial.uniforms.uFluidMask.value = this.fluidSim.getMaskTexture();
-      } else {
-        this.postMaterial.uniforms.uFluidMask.value = this.whiteFluidMaskTex;
-      }
-    }
     this.updateGlitchState(now);
     this.updateGridAreaMask();
 
@@ -641,6 +597,17 @@ export default class App {
     this.postMaterial.uniforms.uScene.value = this.renderTarget.texture;
     this.renderer.setRenderTarget(null);
     this.renderer.render(this.postScene, this.postCamera);
+    this.renderPortfolioLayer();
+  }
+
+  renderPortfolioLayer() {
+    if (!this.portfolioScene || !this.portfolioFlowScene || this.state.aboutOpen) return;
+
+    const previousAutoClear = this.renderer.autoClear;
+    this.renderer.autoClear = false;
+    this.renderer.clearDepth();
+    this.renderer.render(this.portfolioScene, this.cameraManager.getCamera());
+    this.renderer.autoClear = previousAutoClear;
   }
 
   updateGlitchState(now) {
@@ -674,6 +641,7 @@ export default class App {
   dispose() {
     this.removeEventListeners();
     this.cleanupResources();
+    ticker.remove(this.render);
     this.ui.destroy();
   }
 
@@ -688,6 +656,12 @@ export default class App {
       this.container.removeEventListener("pointermove", this.handlePointerMoveBound);
       this.container.removeEventListener("pointerdown", this.handlePointerMoveBound);
     }
+    if (this.container && this.handleSceneClickBound) {
+      this.container.removeEventListener("click", this.handleSceneClickBound);
+    }
+    if (this.handlePortfolioDetailClosedBound) {
+      document.removeEventListener("portfolio:detailClosed", this.handlePortfolioDetailClosedBound);
+    }
     if (!this.isLowPowerDevice) {
       window.removeEventListener("mousemove", this.handleMouseMove);
     }
@@ -697,7 +671,7 @@ export default class App {
   }
 
   cleanupResources() {
-    if (this.frameId) cancelAnimationFrame(this.frameId);
+    clearTween(this.state);
 
     this.scene.traverse(object => {
       if (object.geometry) object.geometry.dispose();
@@ -719,11 +693,12 @@ export default class App {
     if (this.postMaterial) this.postMaterial.dispose();
     if (this.portfolioPlaceholderTex) this.portfolioPlaceholderTex.dispose();
     if (this.whiteFluidMaskTex) this.whiteFluidMaskTex.dispose();
-    if (this.mouseTrail) this.mouseTrail.dispose();
-    if (this.fluidSim) this.fluidSim.dispose();
     if (this.aboutTexture) this.aboutTexture.dispose();
     if (this.aboutMesh?.geometry) this.aboutMesh.geometry.dispose();
     if (this.aboutMaterial) this.aboutMaterial.dispose();
+    if (this.portfolioFlowScene) this.portfolioFlowScene.dispose();
+    if (this.model) this.model.destroy();
+    document.body.classList.remove("portfolio-webgl-active");
 
   }
 }

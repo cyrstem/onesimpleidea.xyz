@@ -1,7 +1,6 @@
 import {
   Scene,
   OrthographicCamera,
-  PlaneGeometry,
   Mesh,
   ShaderMaterial,
   WebGLRenderTarget,
@@ -10,6 +9,7 @@ import {
   Color,
   Vector2
 } from "three";
+import { getFullscreenTriangle } from "@alienkitty/space.js/three";
 import fluidVert from "../shader/fluidVert.glsl";
 import fluidFrag from "../shader/fluidFrag.glsl";
 
@@ -33,7 +33,8 @@ export default class FluidSim {
       depthTest: false,
       depthWrite: false
     });
-    this.quad = new Mesh(new PlaneGeometry(2, 2), this.material);
+    this.quad = new Mesh(getFullscreenTriangle(), this.material);
+    this.quad.frustumCulled = false;
     this.scene.add(this.quad);
 
     this.targetA = null;

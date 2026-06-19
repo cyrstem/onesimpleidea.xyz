@@ -22,6 +22,8 @@
   },
   "homepage": "https://github.com/cyrstem/onesimpleidea.xyz#readme",
   "dependencies": {
+    "@alienkitty/alien.js": "^1.2.0",
+    "@alienkitty/space.js": "^1.2.0",
     "@dogstudio/highway": "^2.2.1",
     "animejs": "^4.4.1",
     "gsap": "^3.11.1",

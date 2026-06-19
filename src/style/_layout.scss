@@ -91,6 +91,10 @@ body.about-is-open #portfolio-root.portfolio-root {
 	-webkit-overflow-scrolling: touch;
 }
 
+body.portfolio-webgl-active .portfolio-float-layer {
+	display: none;
+}
+
 .portfolio-float-track {
 	display: flex;
 	flex-direction: row;
@@ -189,11 +193,12 @@ body.about-is-open #portfolio-root.portfolio-root {
 
 .portfolio-detail {
 	position: fixed;
-	left: 50%;
-	bottom: max(10vh, 5.5rem);
-	transform: translateX(-50%);
-	width: min(94vw, 520px);
-	max-height: min(44vh, 400px);
+	left: clamp(1.2rem, 4.5vw, 4.5rem);
+	top: clamp(5.5rem, 20vh, 11rem);
+	bottom: auto;
+	transform: none;
+	width: min(36vw, 520px);
+	max-height: min(68vh, 620px);
 	overflow: auto;
 	z-index: 1005;
 	pointer-events: auto;
@@ -204,30 +209,31 @@ body.about-is-open #portfolio-root.portfolio-root {
 
 	&__inner {
 		position: relative;
-		padding: 1rem 1.15rem 1.15rem;
-		padding-right: 2.35rem;
-		overflow: hidden;
-		background: rgba(252, 252, 252, 0.98);
-		border: 1px solid rgba(0, 0, 0, 0.08);
-		box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.15);
+		padding: 0;
+		padding-right: 2.5rem;
+		overflow: visible;
+		background: transparent;
+		border: none;
+		box-shadow: none;
+		backdrop-filter: none;
 		border-radius: 0;
 	}
 
 	&__close {
 		position: absolute;
-		top: 0.5rem;
-		right: 0.5rem;
+		top: 0.2rem;
+		right: 0;
 		z-index: 2;
-		width: 2rem;
-		height: 2rem;
+		width: 1.75rem;
+		height: 1.75rem;
 		border: none;
 		border-radius: 0;
 		background: transparent;
 		box-shadow: none;
-		font-size: 1.5rem;
+		font-size: 1rem;
 		line-height: 1;
 		cursor: pointer;
-		color: rgba(0, 0, 0, 0.38);
+		color: rgba(0, 0, 0, 0.55);
 		padding: 0;
 		font-family: inherit;
 		filter: none;
@@ -246,17 +252,19 @@ body.about-is-open #portfolio-root.portfolio-root {
 	}
 
 	&__title {
-		margin: 0 0 0.65rem;
+		margin: 0 0 1rem;
 		padding-right: 0.25rem;
-		font-size: 1.15rem;
-		font-weight: 700;
+		font-size: clamp(1.8rem, 3.6vw, 3.6rem);
+		font-weight: 500;
+		letter-spacing: -0.035em;
+		line-height: 0.95;
 		color: #111;
 	}
 
 	&__body {
-		font-size: 0.92rem;
-		line-height: 1.45;
-		color: #252525;
+		font-size: clamp(0.96rem, 1.15vw, 1.12rem);
+		line-height: 1.5;
+		color: rgba(0, 0, 0, 0.72);
 
 		p {
 			margin: 0;
@@ -264,8 +272,9 @@ body.about-is-open #portfolio-root.portfolio-root {
 
 		a {
 			color: #000;
-			text-decoration: underline;
-			text-underline-offset: 2px;
+			text-decoration: none;
+			border-bottom: 1px solid currentColor;
+			text-underline-offset: 0;
 		}
 
 		a:hover {
@@ -274,9 +283,40 @@ body.about-is-open #portfolio-root.portfolio-root {
 	}
 }
 
+.portfolio-detail:not([hidden]) {
+	animation: portfolio-detail-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+// While splitting / zeroing chars, hide title+body so full text never flashes.
+.portfolio-detail.portfolio-detail--typing-prep {
+	.portfolio-detail__title,
+	.portfolio-detail__body {
+		visibility: hidden;
+	}
+}
+
 body.portfolio-detail-open #bottom-text {
 	opacity: 0.15;
 	pointer-events: none;
+}
+
+body.portfolio-detail-open .portfolio-title-strip {
+	opacity: 0.16;
+	filter: blur(2px);
+	transition: opacity 0.35s ease, filter 0.35s ease;
+}
+
+@keyframes portfolio-detail-in {
+	from {
+		opacity: 0;
+		transform: translate3d(-1.4rem, 0.8rem, 0);
+		filter: blur(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+		filter: blur(0);
+	}
 }
 
 #terminal {

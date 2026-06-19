@@ -29,7 +29,10 @@ main {
 	display: contents;
 	z-index: 2;
 }
-
+span{
+	display: block;	
+	padding: 0.2rem;
+}
 @keyframes pulse {
 	0% {
 		opacity: 0;

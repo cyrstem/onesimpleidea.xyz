@@ -1,5 +1,9 @@
 import { PORTFOLIO_ITEMS } from "./data/portfolioItems";
 
+function formatProjectTitle(title) {
+  return `# ${title.replace(/\s+/g, "_")}`;
+}
+
 export default class PortfolioOverlay {
   constructor(root) {
     this.root = root;
@@ -8,12 +12,19 @@ export default class PortfolioOverlay {
     this.titleStripEl = null;
     this._onKeyDown = this._onKeyDown.bind(this);
     this._onCloseFromUi = () => this.closeDetail();
+    this._onOpenFromScene = event => {
+      const item = PORTFOLIO_ITEMS.find(entry => entry.id === event.detail?.id);
+      if (item) this.openDetail(item);
+    };
+    /** @type {object|null} */
+    this._detailTypingAnim = null;
 
     if (!this.root) return;
 
     this._build();
     document.addEventListener("keydown", this._onKeyDown);
     document.addEventListener("portfolio:closeDetail", this._onCloseFromUi);
+    document.addEventListener("portfolio:openDetail", this._onOpenFromScene);
   }
 
   _build() {
@@ -83,6 +94,11 @@ export default class PortfolioOverlay {
     this.root.appendChild(this.detailEl);
   }
 
+  _abortDetailTyping() {
+    this.detailEl?.classList.remove("portfolio-detail--typing-prep");
+    this._detailTypingAnim = null;
+  }
+
   _clearActive() {
     this.layerEl?.querySelectorAll(".portfolio-card--active").forEach(c => c.classList.remove("portfolio-card--active"));
     this.titleStripEl?.querySelectorAll(".portfolio-title-item--active").forEach(el => el.classList.remove("portfolio-title-item--active"));
@@ -91,14 +107,16 @@ export default class PortfolioOverlay {
   openDetail(item) {
     if (!this.detailEl) return;
     this._clearActive();
+    this._abortDetailTyping();
 
     this.layerEl?.querySelector(`.portfolio-card[data-portfolio-id="${item.id}"]`)?.classList.add("portfolio-card--active");
     this.titleStripEl?.querySelector(`.portfolio-title-item[data-portfolio-id="${item.id}"]`)?.classList.add("portfolio-title-item--active");
 
-    const title = this.detailEl.querySelector(".portfolio-detail__title");
-    const body = this.detailEl.querySelector(".portfolio-detail__body");
-    title.textContent = item.title;
-    body.innerHTML = item.html;
+    const titleEl = this.detailEl.querySelector(".portfolio-detail__title");
+    const bodyEl = this.detailEl.querySelector(".portfolio-detail__body");
+
+    titleEl.textContent = formatProjectTitle(item.title);
+    bodyEl.innerHTML = item.html;
     this.detailEl.hidden = false;
     document.body.classList.add("portfolio-detail-open");
     this.detailEl.querySelector(".portfolio-detail__close")?.focus();
@@ -106,9 +124,11 @@ export default class PortfolioOverlay {
 
   closeDetail() {
     if (!this.detailEl) return;
+    this._abortDetailTyping();
     this._clearActive();
     this.detailEl.hidden = true;
     document.body.classList.remove("portfolio-detail-open");
+    document.dispatchEvent(new CustomEvent("portfolio:detailClosed"));
   }
 
   _onKeyDown(e) {
@@ -118,8 +138,10 @@ export default class PortfolioOverlay {
   }
 
   destroy() {
+    this._abortDetailTyping();
     document.removeEventListener("keydown", this._onKeyDown);
     document.removeEventListener("portfolio:closeDetail", this._onCloseFromUi);
+    document.removeEventListener("portfolio:openDetail", this._onOpenFromScene);
     if (this.root) {
       this.root.innerHTML = "";
       this.root.classList.remove("portfolio-root");
