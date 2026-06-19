@@ -32,6 +32,9 @@ export default class CircuitManager {
         this.yRange = [0.12, 0.88];
 
         this.traces = [];
+        // Centre of the most recently spawned form (normalized, y up). Used as the
+        // collision target for nav connectors. Defaults to the right-half middle.
+        this.lastCenter = [0.75, 0.5];
     }
 
     get activeCount() {
@@ -196,7 +199,60 @@ export default class CircuitManager {
                 form = this.outlineForm(this.pathFrom(cx, cy), [cx, cy]);
         }
 
+        this.lastCenter = [form.center[0], form.center[1]];
         return this.createTrace(form);
+    }
+
+    // Orthogonal "aleatory walk" from (x0,y0) to (x1,y1): alternating H/V steps
+    // that mostly head toward the target but occasionally wander, always finishing
+    // with axis-aligned moves so the path reliably collides with the target.
+    walkTo(x0, y0, x1, y1) {
+        const points = [{ x: x0, y: y0 }];
+        let x = x0;
+        let y = y0;
+        let horizontal = Math.abs(x1 - x0) >= Math.abs(y1 - y0);
+        const eps = 0.018;
+        const maxSteps = 26;
+
+        for (let i = 0; i < maxSteps; i++) {
+            if (Math.abs(x - x1) <= eps && Math.abs(y - y1) <= eps) break;
+
+            if (horizontal) {
+                const remaining = x1 - x;
+                const toward = remaining >= 0 ? 1 : -1;
+                const dir = Math.random() < 0.78 ? toward : -toward;
+                let len = rand(0.03, 0.14);
+                if (dir === toward) len = Math.min(len, Math.abs(remaining));
+                x = clamp(x + dir * len, 0.04, 0.98);
+            } else {
+                const remaining = y1 - y;
+                const toward = remaining >= 0 ? 1 : -1;
+                const dir = Math.random() < 0.78 ? toward : -toward;
+                let len = rand(0.03, 0.14);
+                if (dir === toward) len = Math.min(len, Math.abs(remaining));
+                y = clamp(y + dir * len, 0.05, 0.95);
+            }
+            points.push({ x, y });
+            horizontal = !horizontal;
+        }
+
+        if (Math.abs(x - x1) > 1e-4) { x = x1; points.push({ x, y }); }
+        if (Math.abs(y - y1) > 1e-4) { y = y1; points.push({ x, y }); }
+        return points;
+    }
+
+    // A line+dot that grows from (fromX,fromY) and walks to (toX,toY), colliding
+    // with whatever shape lives there. onArrive fires once the tip lands.
+    spawnConnector(fromX, fromY, toX, toY, onArrive) {
+        const points = this.walkTo(fromX, fromY, toX, toY);
+        if (points.length < 2) return null;
+
+        const form = this.outlineForm(points, [toX, toY]);
+        // Emphasise the colliding tip so the impact reads clearly.
+        if (form.nodes.length) {
+            form.nodes[form.nodes.length - 1].size = this.nodeSize * 1.5;
+        }
+        return this.createConnectorTrace(form, onArrive);
     }
 
     buildGeometryData({ segments, nodes }) {
@@ -247,9 +303,9 @@ export default class CircuitManager {
         };
     }
 
-    createTrace(form) {
-        if (!form || form.segments.length === 0) return null;
-
+    // Builds the GPU objects for a form (no animation attached). Centre drives the
+    // uScale pulse origin.
+    buildTrace(form, center) {
         const data = this.buildGeometryData(form);
         const geometry = new Geometry(this.gl, {
             aBase: { size: 2, data: data.aBase },
@@ -262,7 +318,7 @@ export default class CircuitManager {
         const uProgress = { value: 0 };
         const uFade = { value: 1 };
         const uScale = { value: 1 };
-        const uCenter = { value: [form.center[0], form.center[1]] };
+        const uCenter = { value: [center[0], center[1]] };
 
         const program = new Program(this.gl, {
             vertex,
@@ -288,12 +344,41 @@ export default class CircuitManager {
 
         const trace = { geometry, program, mesh, uProgress, uFade, uScale };
         this.traces.push(trace);
+        return trace;
+    }
+
+    createTrace(form) {
+        if (!form || form.segments.length === 0) return null;
+
+        const trace = this.buildTrace(form, form.center);
 
         // Lifecycle: populate (uProgress) -> hold with a subtle pulse -> fade -> remove.
         const tl = gsap.timeline({ onComplete: () => this.removeTrace(trace) });
-        tl.to(uProgress, { value: 1, duration: rand(1.1, 1.8), ease: 'power1.inOut' });
-        tl.to(uScale, { value: 1.05, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, '+=0.1');
-        tl.to(uFade, { value: 0, duration: 0.7, ease: 'power2.in' }, '+=0.4');
+        tl.to(trace.uProgress, { value: 1, duration: rand(1.1, 1.8), ease: 'power1.inOut' });
+        tl.to(trace.uScale, { value: 1.05, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, '+=0.1');
+        tl.to(trace.uFade, { value: 0, duration: 0.7, ease: 'power2.in' }, '+=0.4');
+        trace.timeline = tl;
+
+        return trace;
+    }
+
+    // Connector lifecycle: draw the tip along the walk (grow from the menu) ->
+    // recoil on impact (uScale pulse centred on the colliding tip) -> fade.
+    createConnectorTrace(form, onArrive) {
+        if (!form || form.segments.length === 0) return null;
+
+        const trace = this.buildTrace(form, form.center);
+
+        let fired = false;
+        const arrive = () => {
+            if (fired) return;
+            fired = true;
+            if (typeof onArrive === 'function') onArrive();
+        };
+
+        const tl = gsap.timeline({ onComplete: () => this.removeTrace(trace) });
+        tl.to(trace.uProgress, { value: 1, duration: rand(0.7, 1.0), ease: 'power2.out', onComplete: arrive });
+        tl.to(trace.uFade, { value: 0, duration: 0.6, ease: 'power2.in' }, '+=0.7');
         trace.timeline = tl;
 
         return trace;

@@ -4,7 +4,6 @@ import EventBus from './js/core/EventBus';
 import App from './js/app';
 import UI from './js/UI';
 import Router from './js/router/Router';
-import Home from './js/pages/Home';
 import About from './js/pages/About';
 import Portfolio from './js/pages/Portafolio';
 
@@ -25,8 +24,7 @@ window.onload = () => {
 		bus,
 		outlet: document.getElementById('terminal'),
 		routes: {
-			'/': Home,
-			'/about': About,
+			'/': About,
 			'/portfolio': Portfolio
 		}
 	});

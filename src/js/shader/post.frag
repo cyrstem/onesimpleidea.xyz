@@ -7,6 +7,7 @@ precision highp float;
 uniform sampler2D tMap;
 uniform float uTime;
 uniform float uGlitch;
+uniform vec2 uShakeOffset;
 uniform vec3 uBgColorA;
 uniform vec3 uBgColorB;
 
@@ -18,6 +19,10 @@ void main() {
     // Hook for a horizontal glitch displacement (disabled: * 0.0).
     float g = uGlitch * 0.0;
     uv.x += g;
+
+    // Camera-style shake. The offset (in UV units) is computed on the CPU so the
+    // exact same vector can also be applied to the DOM overlay, keeping them in sync.
+    uv = clamp(uv + uShakeOffset, 0.0, 1.0);
 
     vec4 tex = texture2D(tMap, uv);
 

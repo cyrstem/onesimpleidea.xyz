@@ -1,8 +1,7 @@
 const Navbar = () => {
     const template = `
         <nav id="nav">
-            <a class="nav-link" href="#/" data-route="/">Home</a>
-            <a class="nav-link" href="#/about" data-route="/about">About</a>
+            <a class="nav-link" href="#/" data-route="/">About</a>
             <a class="nav-link" href="#/portfolio" data-route="/portfolio">Work</a>
         </nav>
     `;

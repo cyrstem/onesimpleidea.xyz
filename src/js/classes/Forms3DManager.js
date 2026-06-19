@@ -1,10 +1,11 @@
-import { Geometry, Program, Mesh, Transform, Camera } from 'ogl';
+import { Geometry, Program, Mesh, Transform, Camera, Vec3 } from 'ogl';
 import gsap from 'gsap';
 import vertex from '../shader/solid.vert';
 import fragment from '../shader/solid.frag';
 import pointVertex from '../shader/point.vert';
 
 const rand = (min = 0, max = 1) => min + Math.random() * (max - min);
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2];
 
 const FACES = [
@@ -48,6 +49,17 @@ export default class Forms3DManager {
         this.uSize = { value: 8 * (gl.renderer?.dpr || 1) };
 
         this.forms = [];
+        // Viewport position (normalized, y up) of the most recently spawned form,
+        // used as a collision target for nav connectors.
+        this.lastCenter = [0.78, 0.5];
+        this._tmpVec = new Vec3();
+    }
+
+    // Projects a world-space position to normalized viewport coords (y up).
+    projectToViewport(pos) {
+        this.camera.updateMatrixWorld();
+        const v = this._tmpVec.set(pos.x, pos.y, pos.z).applyMatrix4(this.camera.projectionViewMatrix);
+        return [clamp((v.x + 1) * 0.5, 0.02, 0.98), clamp((v.y + 1) * 0.5, 0.02, 0.98)];
     }
 
     get activeCount() {
@@ -163,6 +175,8 @@ export default class Forms3DManager {
         mesh.rotation.set(rand(0, Math.PI), rand(0, Math.PI), 0);
         mesh.scale.set(0.001);
         mesh.setParent(this.scene);
+
+        this.lastCenter = this.projectToViewport(mesh.position);
 
         // Square pads at each vertex (inherit the shell's transform as a child).
         const dotGeometry = this.buildDotGeometry(built.dots, built.scale);

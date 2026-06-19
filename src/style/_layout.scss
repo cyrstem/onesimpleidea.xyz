@@ -26,7 +26,8 @@
 	font-family: $main-font;
 	font-size: 1.5rem;
 	color: #3d3d3d;
-	padding: 2.3rem;
+	// Extra top room clears the MSDF heading rendered into the WebGL scene.
+	padding: 9vh 2.3rem 2.3rem;
 
 	b {
 		color: black;
@@ -131,7 +132,9 @@
 #ui {
 	z-index: 1000;
 	position: absolute;
-	top: 2vh;
+	left: 2vw;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 #contact {
@@ -139,14 +142,13 @@
 	position: absolute;
 	text-align: center;
 	left: 2vw;
-	top: 50%;
-	transform: translateY(-50%);
+	bottom: 2vh;
 
 	#links {
 		padding: 0px;
 		margin: 0px;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		gap: 0.5rem;
 	}
 
@@ -169,18 +171,6 @@
 	}
 }
 
-#bottom-text {
-	position: absolute;
-	bottom: 2vh;
-	left: 50%;
-	transform: translateX(-50%);
-	font-family: $main-font;
-	font-size: 1rem;
-	color: #3d3d3d;
-	z-index: 1000;
-	text-align: center;
-}
-
 // @media all and (min-width: 480px) and (max-width: 768px) { }
 @media all and (max-width: 480px) {
 
@@ -193,7 +183,6 @@
 	}
 
 	#content {
-		background-color: red;
 		position: fixed;
 		font-family: $main-font;
 		font-size: 1.1rem;
@@ -203,6 +192,8 @@
 		color: #3d3d3d;
 		scroll-behavior: smooth;
 		overflow-y: scroll;
+		// Heading is hidden on small screens, so drop the desktop top padding.
+		padding: 1.5rem;
 
 		b {
 			color: black;
