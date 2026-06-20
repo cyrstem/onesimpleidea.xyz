@@ -56,7 +56,6 @@ export default class PlaneManager {
         this.camera = new Camera(gl, { fov: 45, near: 0.1, far: 100, aspect });
         this.camera.position.z = 5;
 
-        this.visible = false;
         this.imageAspect = 1;
 
         // Fraction of the frustum the plane region occupies; anchorFrac centres it
@@ -65,7 +64,7 @@ export default class PlaneManager {
         this.regionHeightFrac = 0.72;
         this.anchorFrac = 0.24;
 
-        this.uAlpha = { value: 0 };
+        this.uAlpha = { value: 1 };
 
         // 1x1 white placeholder so a missing/late image never renders black.
         this.texture = new Texture(gl, {
@@ -106,6 +105,8 @@ export default class PlaneManager {
     }
 
     // Fit the plane inside the right-side region, preserving the image aspect.
+    // The plane is parked at its Work-room anchor; the world pan moves the camera
+    // (not the mesh) so it slides in from the right as you navigate to Work.
     layout() {
         const { vW, vH } = this.frustum();
         const regionW = vW * this.regionWidthFrac;
@@ -123,10 +124,15 @@ export default class PlaneManager {
         }
 
         this.mesh.scale.set(planeW, planeH, 1);
-        this._anchorX = vW * this.anchorFrac;
-        this._offscreenX = vW * 0.5 + planeW;
-        // Keep the resting/offscreen positions in sync with visibility state.
-        this.mesh.position.x = this.visible ? this._anchorX : this._offscreenX;
+        this.mesh.position.x = vW * this.anchorFrac;
+    }
+
+    // World offset 0 (About) .. 1 (Work). At 1 the camera sits at the plane's
+    // room so it reads centred-right; at 0 the camera is one screen left, so the
+    // plane sits off the right edge.
+    panTo(world) {
+        const { vW } = this.frustum();
+        this.camera.position.x = (world - 1) * vW;
     }
 
     // Loads the image and swaps it in. `onReady` fires once the texture is
@@ -151,27 +157,7 @@ export default class PlaneManager {
         img.src = url;
     }
 
-    show() {
-        if (this.visible) return;
-        this.visible = true;
-        gsap.killTweensOf(this.mesh.position);
-        gsap.killTweensOf(this.uAlpha);
-        this.mesh.position.x = this._offscreenX;
-        gsap.to(this.mesh.position, { x: this._anchorX, duration: 1.0, ease: 'power3.out' });
-        gsap.to(this.uAlpha, { value: 1, duration: 0.8, ease: 'power2.out' });
-    }
-
-    hide() {
-        if (!this.visible) return;
-        this.visible = false;
-        gsap.killTweensOf(this.mesh.position);
-        gsap.killTweensOf(this.uAlpha);
-        gsap.to(this.mesh.position, { x: this._offscreenX, duration: 0.7, ease: 'power3.in' });
-        gsap.to(this.uAlpha, { value: 0, duration: 0.5, ease: 'power2.in' });
-    }
-
     render(target) {
-        if (this.uAlpha.value <= 0.001 && !this.visible) return;
         this.gl.renderer.render({
             scene: this.scene,
             camera: this.camera,

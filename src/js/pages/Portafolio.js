@@ -39,9 +39,9 @@ let revealOff = null;
 export default {
     name: 'portfolio',
     render: () => template,
-    onEnter: async ({ bus, outlet }) => {
-        const list = outlet.querySelector('#ex');
-        const copy = outlet.querySelector('#portfolio-copy');
+    onEnter: async ({ bus, root }) => {
+        const list = root.querySelector('#ex');
+        const copy = root.querySelector('#portfolio-copy');
         if (!list || !copy) return;
 
         const projects = await loadProjects();

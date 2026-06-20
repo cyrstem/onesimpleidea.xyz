@@ -61,17 +61,26 @@ const FONT_JSON = 'fonts/Rajdhani-SemiBold.json';
 const FONT_PNG = 'fonts/Rajdhani-SemiBold.png';
 
 export default class TextManager {
-    constructor(gl, { text = 'about me', aspect = 1, size = 0.45 } = {}) {
+    constructor(gl, { aboutText = 'about me', aspect = 1, size = 0.45 } = {}) {
         this.gl = gl;
-        this.text = text;
         this.size = size;
         this.scene = new Transform();
         this.camera = new Camera(gl, { fov: 45, near: 0.1, far: 100, aspect });
         this.camera.position.z = 7;
 
         this.uAlpha = { value: 1 };
-        this.visible = false;
-        this.mesh = null;
+
+        // Two headings, one per room: the About heading (room 0) and the Work
+        // project title (room 1). They share a camera that pans with the world
+        // offset, so each stays put in its room.
+        this.aboutText = aboutText;
+        this.workText = '';
+        this.aboutMesh = null;
+        this.workMesh = null;
+
+        this.wide = true;        // hidden on narrow screens (no room for copy)
+        this._workVisible = false; // gated until the project image has loaded
+        this._roomSpacing = 0;   // distance between rooms in world units (= frustum width)
 
         this.load();
     }
@@ -105,17 +114,19 @@ export default class TextManager {
             depthWrite: false
         });
 
-        this.build();
+        this.aboutMesh = this._buildMesh(this.aboutText, this.aboutMesh);
+        if (this.workText) this.workMesh = this._buildMesh(this.workText, this.workMesh);
+        this.place();
+        this._applyVisibility();
     }
 
-    // Builds (or rebuilds) the mesh geometry for the current text. Safe to call
-    // repeatedly; the previous geometry is released first.
-    build() {
-        if (!this.font || !this.program) return;
+    // Builds (or rebuilds) a mesh for `text`, releasing the previous geometry.
+    _buildMesh(text, existing) {
+        if (!this.font || !this.program) return existing;
 
         const layout = new Text({
             font: this.font,
-            text: this.text,
+            text,
             align: 'left',
             size: this.size,
             letterSpacing: -0.03,
@@ -129,49 +140,71 @@ export default class TextManager {
             index: { data: layout.buffers.index }
         });
 
-        if (this.mesh) {
-            if (this.mesh.geometry?.remove) this.mesh.geometry.remove();
-            this.mesh.geometry = geometry;
+        let mesh = existing;
+        if (mesh) {
+            if (mesh.geometry?.remove) mesh.geometry.remove();
+            mesh.geometry = geometry;
         } else {
-            this.mesh = new Mesh(this.gl, { geometry, program: this.program });
-            this.mesh.frustumCulled = false;
-            this.mesh.setParent(this.scene);
+            mesh = new Mesh(this.gl, { geometry, program: this.program });
+            mesh.frustumCulled = false;
+            mesh.setParent(this.scene);
         }
+        return mesh;
+    }
 
-        this.layout = layout;
-        this.mesh.visible = this.visible;
+    setWorkTitle(text) {
+        if (text === this.workText) return;
+        this.workText = text;
+        this.workMesh = this._buildMesh(text, this.workMesh);
         this.place();
+        this._applyVisibility();
     }
 
-    setText(text) {
-        if (text === this.text) return;
-        this.text = text;
-        this.build();
+    setWide(value) {
+        this.wide = value;
+        this._applyVisibility();
     }
 
-    // Anchor the heading near the upper-left of the viewport. OGL text grows to
-    // the right from x=0 and downward from y=0, so we offset by the frustum size.
+    setWorkVisible(value) {
+        this._workVisible = value;
+        this._applyVisibility();
+    }
+
+    _applyVisibility() {
+        if (this.aboutMesh) this.aboutMesh.visible = this.wide;
+        if (this.workMesh) this.workMesh.visible = this.wide && this._workVisible;
+    }
+
+    // Anchor each heading near the upper-left of its room. OGL text grows right
+    // from x=0 and downward from y=0, so we offset by the frustum size. Rooms are
+    // one frustum-width apart, matching the world pan and the DOM strip.
     place() {
-        if (!this.mesh) return;
         const dist = this.camera.position.z;
         const vH = 2 * dist * Math.tan((this.camera.fov * Math.PI) / 180 / 2);
         const vW = vH * this.camera.aspect;
+        this._roomSpacing = vW;
+
         const margin = 0.07;
-        this.mesh.position.x = -vW / 2 + vW * margin;
-        this.mesh.position.y = vH / 2 - vH * margin;
+        const x = -vW / 2 + vW * margin;
+        const y = vH / 2 - vH * margin;
+
+        if (this.aboutMesh) {
+            this.aboutMesh.position.x = x;
+            this.aboutMesh.position.y = y;
+        }
+        if (this.workMesh) {
+            this.workMesh.position.x = x + this._roomSpacing;
+            this.workMesh.position.y = y;
+        }
     }
 
-    setVisible(value) {
-        this.visible = value;
-        if (this.mesh) this.mesh.visible = value;
-    }
-
-    setAlpha(value) {
-        this.uAlpha.value = value;
+    // World offset 0 (About room) .. 1 (Work room).
+    panTo(world) {
+        this.camera.position.x = world * this._roomSpacing;
     }
 
     render(target) {
-        if (!this.mesh || !this.visible) return;
+        if (!this.wide || (!this.aboutMesh && !this.workMesh)) return;
         this.gl.renderer.render({
             scene: this.scene,
             camera: this.camera,
@@ -185,11 +218,17 @@ export default class TextManager {
         this.place();
     }
 
+    _disposeMesh(mesh) {
+        if (!mesh) return;
+        mesh.setParent(null);
+        if (mesh.geometry?.remove) mesh.geometry.remove();
+    }
+
     dispose() {
-        if (!this.mesh) return;
-        this.mesh.setParent(null);
-        if (this.mesh.geometry?.remove) this.mesh.geometry.remove();
-        if (this.mesh.program?.remove) this.mesh.program.remove();
-        this.mesh = null;
+        this._disposeMesh(this.aboutMesh);
+        this._disposeMesh(this.workMesh);
+        if (this.program?.remove) this.program.remove();
+        this.aboutMesh = null;
+        this.workMesh = null;
     }
 }

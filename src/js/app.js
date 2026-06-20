@@ -24,7 +24,11 @@ export default class App {
         this._maxForms = 3;
         this._lastTime = undefined;
         this._idle = true;
-        this._portfolioTitleReady = false;
+
+        // Shared world offset (0 = About room, 1 = Work room). Every layer and the
+        // DOM strip read from this so navigation pans the whole space as one.
+        this._nav = { x: 0 };
+        this._navStarted = false;
 
         // Viewport target (normalized, y up) of the latest shape; nav connectors
         // walk toward it and collide.
@@ -75,6 +79,12 @@ export default class App {
             aspect: this.size.width / this.size.height
         });
         this.post = new PostFX(this.gl);
+
+        // The field (forms + circuit) lives in the About room; dim it a touch so
+        // the copy stays legible. It pans away when navigating to Work.
+        this.circuit.uAlpha.value = 0.45;
+        this.forms3D.uAlpha.value = 0.45;
+        this.text.setWide(window.innerWidth > 480);
     }
 
     measure() {
@@ -94,38 +104,26 @@ export default class App {
 
     subscribeToBus() {
         if (!this.bus) return;
-        this._onRouteChange = ({ name }) => this.handleRouteChange(name);
+        this._onRouteChange = (detail) => this.handleRouteChange(detail);
         this._onPortfolioActive = (detail) => this.handlePortfolioActive(detail);
         this.bus.on('route:change', this._onRouteChange);
         this.bus.on('portfolio:active', this._onPortfolioActive);
     }
 
-    handleRouteChange(name) {
+    // Navigation just animates the shared world offset toward the room index; the
+    // render loop applies it to every layer and the DOM strip in lockstep.
+    handleRouteChange({ name, index } = {}) {
         this._routeName = name;
+        this._idle = name !== 'portfolio';
 
-        if (name === 'portfolio') {
-            // Pan the 3D camera right, slide the circuit off to the left and fade
-            // both out, then bring in the project plane from the right.
-            this._idle = false;
-            gsap.to(this.forms3D.camera.position, { x: 1.6, duration: 1.0, ease: 'power3.inOut' });
-            this.forms3D.setAlpha(0);
-            this.circuit.setShift(-2.4);
-            this.circuit.setAlpha(0);
-            this.plane.show();
+        if (!this._navStarted) {
+            // Snap on first load so we don't pan in from the wrong room.
+            this._navStarted = true;
+            gsap.killTweensOf(this._nav);
+            this._nav.x = index;
         } else {
-            // Restore the field for the text-heavy views (About dims it for legibility).
-            this._idle = true;
-            this._portfolioTitleReady = false;
-            const value = name === 'about' ? 0.35 : 1;
-            gsap.to(this.forms3D.camera.position, { x: 0, duration: 1.0, ease: 'power3.inOut' });
-            this.forms3D.setAlpha(value);
-            this.circuit.setShift(0);
-            this.circuit.setAlpha(value);
-            this.plane.hide();
-            this.text.setText('about me');
+            gsap.to(this._nav, { x: index, duration: 1.1, ease: 'power3.inOut' });
         }
-
-        this.updateTextVisibility();
     }
 
     // Swap the plane texture for the freshly selected project. The MSDF title and
@@ -134,8 +132,7 @@ export default class App {
         if (!project) return;
 
         // Hide the current title while the new image loads.
-        this._portfolioTitleReady = false;
-        this.updateTextVisibility();
+        this.text.setWorkVisible(false);
 
         const token = (this._activeToken || 0) + 1;
         this._activeToken = token;
@@ -143,22 +140,23 @@ export default class App {
         this.plane.setTexture(project.image, () => {
             // Ignore stale loads if the user already picked another project.
             if (token !== this._activeToken) return;
-            this.text.setText(project.title);
-            this._portfolioTitleReady = true;
-            this.updateTextVisibility();
+            this.text.setWorkTitle(project.title);
+            this.text.setWorkVisible(true);
             if (this.bus) this.bus.emit('portfolio:reveal', { index });
         });
     }
 
-    // The MSDF heading shows on About ("about me") and on Work (the project
-    // title, once it has loaded), only on wider screens with room for the copy.
-    updateTextVisibility() {
-        const wide = window.innerWidth > 480;
-        const show = wide && (
-            this._routeName === 'about' ||
-            (this._routeName === 'portfolio' && this._portfolioTitleReady)
-        );
-        this.text.setVisible(show);
+    // Drive every layer and the DOM strip from the single world offset so the
+    // scene, plane, headings, and HTML rooms all pan together as one space.
+    applyWorld() {
+        const x = this._nav.x;
+        this.forms3D.panTo(x);
+        this.circuit.panTo(x);
+        this.plane.panTo(x);
+        this.text.panTo(x);
+
+        if (!this._strip) this._strip = document.getElementById('strip');
+        if (this._strip) this._strip.style.transform = `translateX(${-x * 100}vw)`;
     }
 
     handleClick(event) {
@@ -171,6 +169,9 @@ export default class App {
 
         // Let other real UI (links, buttons) behave normally without spawning.
         if (event.target.closest && event.target.closest('a, button')) return;
+
+        // Only seed the ambient field while in the About room.
+        if (!this._idle) return;
 
         const x = event.clientX / this.size.width;
         const y = 1 - event.clientY / this.size.height;
@@ -238,7 +239,7 @@ export default class App {
         this.text.resize(this.size.width, this.size.height);
         this.plane.resize(this.size.width, this.size.height);
         this.post.resize();
-        this.updateTextVisibility();
+        this.text.setWide(window.innerWidth > 480);
     }
 
     start() {
@@ -250,6 +251,7 @@ export default class App {
             this.director(dt);
             this.forms3D.update(t);
             this.circuit.update(t);
+            this.applyWorld();
             this.applyShake(t);
 
             // Composite 3D (depth) then 2D (overlay) into one target.

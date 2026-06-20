@@ -8,15 +8,52 @@
 	height: 100vh;
 }
 
+// Full-viewport clip window. The shake transform is applied here; the rooms
+// live in #strip inside, so navigation (strip translate) and shake never fight.
 #terminal {
 	position: absolute;
 	z-index: 3;
-	top: 5vh;
-	// A narrow copy column, sitting clear of the left nav rail (#ui at 2vw).
-	left: 8vw;
-	width: 600px;
-	max-width: 80vw;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 	margin: 0;
+}
+
+// Horizontal strip holding one room per route, side by side. App pans this in
+// lockstep with the 3D world offset so it reads as one continuous space.
+#strip {
+	display: flex;
+	flex-direction: row;
+	width: 200vw;
+	height: 100%;
+	will-change: transform;
+}
+
+.room {
+	position: relative;
+	flex: 0 0 100vw;
+	width: 100vw;
+	height: 100%;
+
+	// The copy column, sitting clear of the left nav rail (#ui at 2vw).
+	// `display: block` overrides the global `main { display: contents }`, which
+	// would otherwise drop main's box and let the copy span the whole room.
+	> main {
+		display: block;
+		position: absolute;
+		top: 5vh;
+		left: 8vw;
+		width: 600px;
+		max-width: 80vw;
+	}
+
+	// Work copy is a wider left column so the list + description clear the plane.
+	> main#work {
+		width: 48vw;
+		max-width: 48vw;
+	}
 }
 
 .warning{
@@ -254,16 +291,26 @@
 		display: none;
 	}
 
+	// Rooms must size to themselves (100vw), not the transformed 200vw strip, so
+	// fixed positioning is swapped for absolute room-relative positioning.
+	.room > main,
+	.room > main#work {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		max-width: 100%;
+		height: 100vh;
+		overflow-y: scroll;
+		scroll-behavior: smooth;
+	}
+
 	#content {
-		position: fixed;
+		position: static;
 		font-family: $main-font;
 		font-size: 1.1rem;
 		width: 100%;
-		top: 0vh;
-		height: 100vh;
 		color: #3d3d3d;
-		scroll-behavior: smooth;
-		overflow-y: scroll;
 		// Heading is hidden on small screens, so drop the desktop top padding.
 		padding: 1.5rem;
 
@@ -275,8 +322,7 @@
 	#terminal {
 		width: 100%;
 		max-width: 100%;
-		// overflow-y: scroll;
-		top: 1vh;
+		top: 0;
 		left: 0;
 	}
 

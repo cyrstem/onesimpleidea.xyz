@@ -22,11 +22,11 @@ window.onload = () => {
 
 	const router = new Router({
 		bus,
-		outlet: document.getElementById('terminal'),
-		routes: {
-			'/': About,
-			'/portfolio': Portfolio
-		}
+		mount: document.getElementById('terminal'),
+		routes: [
+			{ path: '/', view: About },
+			{ path: '/portfolio', view: Portfolio }
+		]
 	});
 	router.start();
 

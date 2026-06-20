@@ -240,6 +240,15 @@ export default class Forms3DManager {
         gsap.to(this.uAlpha, { value, duration, ease: 'power2.out' });
     }
 
+    // World offset 0 (About) .. 1 (Work). Pan the camera right by one frustum
+    // width per room so the forms slide one screen to the left as you advance.
+    panTo(world) {
+        const dist = this.camera.position.z;
+        const vH = 2 * dist * Math.tan((this.camera.fov * Math.PI) / 180 / 2);
+        const vW = vH * this.camera.aspect;
+        this.camera.position.x = world * vW;
+    }
+
     update(time) {
         const dt = this._last === undefined ? 0 : time - this._last;
         this._last = time;

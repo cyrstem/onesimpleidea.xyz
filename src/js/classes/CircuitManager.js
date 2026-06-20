@@ -408,6 +408,12 @@ export default class CircuitManager {
         gsap.to(this.uShift.value, { 0: x, 1: y, duration, ease });
     }
 
+    // World offset 0 (About) .. 1 (Work). Clip space is 2 units wide, so one room
+    // = a shift of -2, pushing the circuit exactly one screen to the left.
+    panTo(world) {
+        this.uShift.value[0] = -world * 2.0;
+    }
+
     update(time) {
         this.uTime.value = time;
     }
