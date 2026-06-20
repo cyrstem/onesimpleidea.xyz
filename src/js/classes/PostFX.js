@@ -1,4 +1,4 @@
-import { Post } from 'ogl';
+import { Post, Texture } from 'ogl';
 import gsap from 'gsap';
 import fragment from '../shader/post.frag';
 
@@ -33,6 +33,19 @@ export default class PostFX {
         this.uBlockRandomness = { value: 0.12 };
         this.uBlockAmount = { value: 1.0 };
 
+        // Portfolio images revealed inside active glitch blocks over empty
+        // (white) areas, so the tear is visible where there is no scene content.
+        // 1x1 white placeholder until the real images load.
+        this.placeholder = new Texture(gl, {
+            image: new Uint8Array([255, 255, 255, 255]),
+            width: 1,
+            height: 1,
+            generateMipmaps: false
+        });
+        this.uGlitchTex = { value: this.placeholder };
+        this.uBlockReveal = { value: 0.65 };
+        this.glitchTextures = [];
+
         this.pass = this.post.addPass({
             fragment,
             uniforms: {
@@ -46,8 +59,30 @@ export default class PostFX {
                 uBlockSeed: this.uBlockSeed,
                 uBlockSize: this.uBlockSize,
                 uBlockRandomness: this.uBlockRandomness,
-                uBlockAmount: this.uBlockAmount
+                uBlockAmount: this.uBlockAmount,
+                tGlitchTex: this.uGlitchTex,
+                uBlockReveal: this.uBlockReveal
             }
+        });
+    }
+
+    // Preload portfolio images as glitch-reveal sources. Each loads async; the
+    // first becomes the active source as soon as it is ready.
+    loadGlitchImages(urls = []) {
+        urls.forEach((url) => {
+            if (!url) return;
+            const tex = new Texture(this.gl, {
+                generateMipmaps: false,
+                wrapS: this.gl.CLAMP_TO_EDGE,
+                wrapT: this.gl.CLAMP_TO_EDGE
+            });
+            const img = new Image();
+            img.onload = () => {
+                tex.image = img;
+                if (this.uGlitchTex.value === this.placeholder) this.uGlitchTex.value = tex;
+            };
+            img.src = url;
+            this.glitchTextures.push(tex);
         });
     }
 
@@ -63,6 +98,13 @@ export default class PostFX {
             this.uBlockDir.value[1] = dy / len;
         }
         this.uBlockSeed.value = Math.random();
+
+        // Drift the revealed image with the field: pick a fresh portfolio image
+        // (only among those that have actually loaded, to avoid empty blocks).
+        const ready = this.glitchTextures.filter((t) => t.image);
+        if (ready.length) {
+            this.uGlitchTex.value = ready[Math.floor(Math.random() * ready.length)];
+        }
     }
 
     // Fast screen-shake burst (camera wiggle), e.g. when a connector collides.

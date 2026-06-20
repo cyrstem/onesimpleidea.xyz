@@ -20,6 +20,9 @@ uniform float uBlockSize;       // sub-quad shrink factor (~0.5)
 uniform float uBlockRandomness; // subdivision gate (small => few big blocks)
 uniform float uBlockAmount;     // displacement scale (kept tiny for subtlety)
 
+uniform sampler2D tGlitchTex;   // portfolio image revealed inside white blocks
+uniform float uBlockReveal;     // how strongly the image shows through (0..1)
+
 varying vec2 vUv;
 
 float uvrand(vec2 uv) {
@@ -70,6 +73,16 @@ void main() {
     float cg = texture2D(tMap, uv).g;
     float cb = texture2D(tMap, clamp(uv - split, 0.0, 1.0)).b;
     vec4 tex = vec4(cr, cg, cb, texture2D(tMap, uv).a);
+
+    // Reveal a portfolio image inside active blocks, but only over empty (white)
+    // areas, so the header / traces keep their displaced look while the blank
+    // background tears into image fragments instead of staying invisibly white.
+    float lum = min(tex.r, min(tex.g, tex.b));
+    float white = smoothstep(0.85, 1.0, lum);
+    vec2 guv = clamp(uv + sl * 1.5, 0.0, 1.0);
+    vec3 gimg = texture2D(tGlitchTex, guv).rgb;
+    float reveal = active * white * uBlockReveal;
+    tex.rgb = mix(tex.rgb, gimg, reveal);
 
     // Pre-wired (disabled) hooks for a future tintable background / time effects.
     vec3 bg = mix(uBgColorA, uBgColorB, vUv.y) * 0.0;

@@ -88,6 +88,8 @@ export default class App {
             aspect: this.size.width / this.size.height
         });
         this.post = new PostFX(this.gl);
+        // Portfolio images used as glitch-reveal sources in empty (white) areas.
+        this.post.loadGlitchImages(['/insta-0.png', '/insta-1.png', '/insta-2.png', '/insta-3.png']);
 
         // The field (forms + circuit) lives in the About room; dim it a touch so
         // the copy stays legible. It pans away when navigating to Work.
