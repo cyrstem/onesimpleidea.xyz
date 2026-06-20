@@ -3,56 +3,80 @@ import gsap from 'gsap';
 import vertex from '../shader/solid.vert';
 import fragment from '../shader/solid.frag';
 import pointVertex from '../shader/point.vert';
+import { decode } from '../circuit/genome';
+import CircuitGA from '../circuit/CircuitGA';
+import { buildForm } from './impossibleForms';
 
 const rand = (min = 0, max = 1) => min + Math.random() * (max - min);
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-const mid = (a, b) => [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2];
 
-const FACES = [
-    { axis: 0, sign: 1 }, { axis: 0, sign: -1 },
-    { axis: 1, sign: 1 }, { axis: 1, sign: -1 },
-    { axis: 2, sign: 1 }, { axis: 2, sign: -1 }
-];
+// GA traces are decoded into this unit square, then mapped onto each beam face.
+const UNIT_REGION = { x0: 0, y0: 0, x1: 1, y1: 1 };
 
-const CUBE = {
-    verts: [
-        [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-        [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]
-    ],
-    edges: [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]],
-    scale: 0.55
-};
-const TETRA = {
-    verts: [[1, 1, 1], [-1, -1, 1], [-1, 1, -1], [1, -1, -1]],
-    edges: [[0, 1], [0, 2], [0, 3], [1, 2], [1, 3], [2, 3]],
-    scale: 0.7
-};
-const OCTA = {
-    verts: [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]],
-    edges: [[0, 2], [0, 3], [0, 4], [0, 5], [1, 2], [1, 3], [1, 4], [1, 5], [2, 4], [2, 5], [3, 4], [3, 5]],
-    scale: 0.8
-};
-
-// Spawns rotating 3D "circuit" solids on the right half of the viewport: a
-// wireframe shell populated with internal traces and (for the cube) face grids.
-// Edges grow in via per-edge reveal + uProgress, then the form holds, rotates,
-// and fades out.
+// Spawns rotating impossible figures (Penrose tribars) on the right half of the
+// viewport. Each figure is honest 3D geometry whose isometric "magic" viewpoint
+// is baked in (see impossibleForms.js), so the illusion reads when the form is
+// locked flat to the camera. Beam faces are detailed with circuit traces pulled
+// from the same genetic algorithm that drives the 2D circuits.
+//
+// Hybrid motion: a form grows in at a random orientation, its edges populate via
+// uProgress, it eases ("locks") into the impossible alignment, holds, then fades.
+// An orthographic camera is required: the illusion relies on the projected beam
+// endpoints coinciding, which perspective foreshortening would pull apart.
 export default class Forms3DManager {
     constructor(gl, { aspect = 1 } = {}) {
         this.gl = gl;
         this.scene = new Transform();
-        this.camera = new Camera(gl, { fov: 45, near: 0.1, far: 100, aspect });
-        this.camera.position.z = 4;
+
+        this.viewSize = 1.2; // half-height of the orthographic frustum (world units)
+        this.aspect = aspect;
+        this.camera = new Camera(gl, { near: 0.1, far: 100 });
+        this.camera.position.z = 10;
+        this._applyOrtho();
 
         this.uColor = { value: [0, 0, 0] };
         this.uAlpha = { value: 1 };
-        this.uSize = { value: 8 * (gl.renderer?.dpr || 1) };
+        this.uSize = { value: 7 * (gl.renderer?.dpr || 1) };
 
         this.forms = [];
         // Viewport position (normalized, y up) of the most recently spawned form,
         // used as a collision target for nav connectors.
         this.lastCenter = [0.78, 0.5];
         this._tmpVec = new Vec3();
+
+        // Live genetic algorithm shared in spirit with CircuitManager: warm-started
+        // from public/circuits.json by loadLibrary. Until then it stays random and
+        // figures fall back to undetailed wireframes.
+        this.ga = new CircuitGA();
+        this.gaReady = false;
+        this.gaTarget = [0.78, 0.5];
+    }
+
+    _applyOrtho() {
+        const h = this.viewSize;
+        const w = h * this.aspect;
+        this.camera.orthographic({ left: -w, right: w, bottom: -h, top: h, near: 0.1, far: 100 });
+    }
+
+    // Fetch the evolved circuit library and warm-start the GA. Missing/invalid
+    // library is non-fatal: figures simply render without circuit detailing.
+    async loadLibrary(url = '/circuits.json') {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const data = await res.json();
+            if (!Array.isArray(data.forms)) return;
+            const genomes = data.forms.map((f) => f.genome).filter(Boolean);
+            if (!genomes.length) return;
+            this.ga.seed(genomes);
+            this.gaReady = true;
+        } catch (e) {
+            // Keep the plain wireframes when the library can't be loaded.
+        }
+    }
+
+    setEvolveTarget(target) {
+        if (target && target.length === 2) this.gaTarget = target;
     }
 
     // Projects a world-space position to normalized viewport coords (y up).
@@ -66,54 +90,33 @@ export default class Forms3DManager {
         return this.forms.length;
     }
 
-    // Grid lines across a cube face, each with a scattered reveal threshold.
-    addFaceGrid(face, divisions, segs) {
-        const free = [0, 1, 2].filter((a) => a !== face.axis);
-        const [u, v] = free;
-        const pt = (uv, vv) => {
-            const p = [0, 0, 0];
-            p[face.axis] = face.sign;
-            p[u] = uv;
-            p[v] = vv;
-            return p;
-        };
-        for (let i = 1; i < divisions; i++) {
-            const t = -1 + (2 * i) / divisions;
-            segs.push({ a: pt(-1, t), b: pt(1, t), r: rand(0.15, 1) });
-            segs.push({ a: pt(t, -1), b: pt(t, 1), r: rand(0.15, 1) });
+    // Detail one beam face with an evolved circuit board: pull a genome, decode it
+    // into the unit square, then map every trace point onto the face plane
+    // (origin + s*u + t*v) so the board wraps the impossible figure in 3D.
+    detailFace(face, segs, dots) {
+        const form = decode(this.ga.nextGenome(this.gaTarget), { region: UNIT_REGION });
+        const { origin, u, v } = face;
+        const at = (s, t) => [
+            origin[0] + u[0] * s + v[0] * t,
+            origin[1] + u[1] * s + v[1] * t,
+            origin[2] + u[2] * s + v[2] * t
+        ];
+        for (const s of form.segments) {
+            segs.push({ a: at(s.x1, s.y1), b: at(s.x2, s.y2), r0: s.r0, r1: s.r1 });
+        }
+        for (const n of form.nodes) {
+            dots.push({ p: at(n.x, n.y), r: n.r });
         }
     }
 
-    cubeCircuit() {
-        const segs = [];
-        CUBE.edges.forEach((e) => segs.push({ a: CUBE.verts[e[0]], b: CUBE.verts[e[1]], r: rand(0, 0.12) }));
-        FACES.forEach((f) => this.addFaceGrid(f, 3, segs));
-        // A few internal wires from the centre to random corners.
-        for (let i = 0; i < 4; i++) {
-            const c = CUBE.verts[Math.floor(Math.random() * CUBE.verts.length)];
-            segs.push({ a: [0, 0, 0], b: c, r: rand(0.3, 1) });
-        }
-        return { segs, scale: CUBE.scale, dots: CUBE.verts };
-    }
-
-    shapeCircuit(shape) {
-        const segs = [];
-        shape.edges.forEach((e) => segs.push({ a: shape.verts[e[0]], b: shape.verts[e[1]], r: rand(0, 0.12) }));
-        // Internal lattice: vertices and edge midpoints wired to the centre.
-        shape.verts.forEach((v) => segs.push({ a: v, b: [0, 0, 0], r: rand(0.2, 1) }));
-        shape.edges.forEach((e) => segs.push({ a: mid(shape.verts[e[0]], shape.verts[e[1]]), b: [0, 0, 0], r: rand(0.3, 1) }));
-        return { segs, scale: shape.scale, dots: shape.verts };
-    }
-
-    // Square pad geometry (gl.POINTS) at each shape vertex; dots appear with the shell.
     buildDotGeometry(dots, scale) {
         const position = new Float32Array(dots.length * 3);
         const aReveal = new Float32Array(dots.length);
         dots.forEach((d, i) => {
-            position[i * 3] = d[0] * scale;
-            position[i * 3 + 1] = d[1] * scale;
-            position[i * 3 + 2] = d[2] * scale;
-            aReveal[i] = rand(0, 0.14);
+            position[i * 3] = d.p[0] * scale;
+            position[i * 3 + 1] = d.p[1] * scale;
+            position[i * 3 + 2] = d.p[2] * scale;
+            aReveal[i] = d.r;
         });
         return new Geometry(this.gl, {
             position: { size: 3, data: position },
@@ -121,7 +124,8 @@ export default class Forms3DManager {
         });
     }
 
-    buildGeometry({ segs, scale }) {
+    // segs: [{ a:[x,y,z], b:[x,y,z], r0?, r1?, r? }] -> gl.LINES geometry.
+    buildGeometry(segs, scale) {
         const position = new Float32Array(segs.length * 2 * 3);
         const aReveal = new Float32Array(segs.length * 2);
         segs.forEach((s, i) => {
@@ -132,8 +136,8 @@ export default class Forms3DManager {
             position[o + 3] = s.b[0] * scale;
             position[o + 4] = s.b[1] * scale;
             position[o + 5] = s.b[2] * scale;
-            aReveal[i * 2] = s.r;
-            aReveal[i * 2 + 1] = s.r;
+            aReveal[i * 2] = s.r0 ?? s.r ?? 0;
+            aReveal[i * 2 + 1] = s.r1 ?? s.r ?? 0;
         });
         return new Geometry(this.gl, {
             position: { size: 3, data: position },
@@ -141,29 +145,23 @@ export default class Forms3DManager {
         });
     }
 
-    spawnForm(type) {
-        const builders = {
-            cube: () => this.cubeCircuit(),
-            tetra: () => this.shapeCircuit(TETRA),
-            octa: () => this.shapeCircuit(OCTA)
-        };
-        const keys = Object.keys(builders);
-        const key = type && builders[type] ? type : keys[Math.floor(Math.random() * keys.length)];
+    spawnForm() {
+        const figure = buildForm();
 
-        const built = builders[key]();
-        const geometry = this.buildGeometry(built);
+        const segs = figure.segs.map((s) => ({ a: s.a, b: s.b, r: s.r }));
+        const dots = figure.dots.map((d) => ({ p: d.p, r: d.r }));
+        if (this.gaReady) {
+            figure.faces.forEach((face) => this.detailFace(face, segs, dots));
+        }
+
+        const geometry = this.buildGeometry(segs, figure.scale);
         const uFade = { value: 1 };
         const uProgress = { value: 0 };
 
         const program = new Program(this.gl, {
             vertex,
             fragment,
-            uniforms: {
-                uColor: this.uColor,
-                uAlpha: this.uAlpha,
-                uFade,
-                uProgress
-            },
+            uniforms: { uColor: this.uColor, uAlpha: this.uAlpha, uFade, uProgress },
             transparent: true,
             depthTest: true,
             depthWrite: false
@@ -171,25 +169,21 @@ export default class Forms3DManager {
 
         const mesh = new Mesh(this.gl, { geometry, program, mode: this.gl.LINES });
         mesh.frustumCulled = false;
-        mesh.position.set(rand(0.5, 1.5), rand(-1.1, 1.1), rand(-0.5, 0.5));
-        mesh.rotation.set(rand(0, Math.PI), rand(0, Math.PI), 0);
+        // Keep figures in the right half, inset from the edges so they don't clip.
+        const hw = this.viewSize * this.aspect;
+        mesh.position.set(rand(0.18 * hw, 0.55 * hw), rand(-0.5, 0.5) * this.viewSize, 0);
+        // Start tilted: impossible figures ease to lockRot; platonic solids spin.
+        mesh.rotation.set(rand(-0.9, 0.9), rand(-1.3, 1.3), rand(-0.5, 0.5));
         mesh.scale.set(0.001);
         mesh.setParent(this.scene);
 
         this.lastCenter = this.projectToViewport(mesh.position);
 
-        // Square pads at each vertex (inherit the shell's transform as a child).
-        const dotGeometry = this.buildDotGeometry(built.dots, built.scale);
+        const dotGeometry = this.buildDotGeometry(dots, figure.scale);
         const dotProgram = new Program(this.gl, {
             vertex: pointVertex,
             fragment,
-            uniforms: {
-                uColor: this.uColor,
-                uAlpha: this.uAlpha,
-                uSize: this.uSize,
-                uFade,
-                uProgress
-            },
+            uniforms: { uColor: this.uColor, uAlpha: this.uAlpha, uSize: this.uSize, uFade, uProgress },
             transparent: true,
             depthTest: true,
             depthWrite: false
@@ -198,25 +192,26 @@ export default class Forms3DManager {
         dotMesh.frustumCulled = false;
         dotMesh.setParent(mesh);
 
-        const target = rand(0.6, 1.0);
+        const target = rand(0.62, 0.82);
+        const lock = figure.lockRot || { x: 0, y: 0, z: 0 };
+        const free = !!figure.free;
         const form = {
-            mesh,
-            geometry,
-            program,
-            dotMesh,
-            dotGeometry,
-            dotProgram,
-            uFade,
-            uProgress,
-            speedX: rand(-0.5, 0.5),
-            speedY: rand(0.3, 0.9)
+            mesh, geometry, program, dotMesh, dotGeometry, dotProgram, uFade, uProgress,
+            free,
+            speedX: free ? rand(-0.5, 0.5) : 0,
+            speedY: free ? rand(0.3, 0.9) : 0
         };
         this.forms.push(form);
 
         const tl = gsap.timeline({ onComplete: () => this.removeForm(form) });
         tl.to(mesh.scale, { x: target, y: target, z: target, duration: 0.8, ease: 'back.out(1.5)' }, 0);
-        tl.to(uProgress, { value: 1, duration: 1.5, ease: 'power1.inOut' }, 0);
-        tl.to(uFade, { value: 0, duration: 0.8, ease: 'power2.in' }, '+=1.6');
+        // Impossible figures rotate ("lock") into alignment while populating;
+        // platonic solids skip the lock tween and free-spin in update() instead.
+        if (!free) {
+            tl.to(mesh.rotation, { x: lock.x, y: lock.y, z: lock.z, duration: 2.2, ease: 'power3.inOut' }, 0);
+        }
+        tl.to(uProgress, { value: 1, duration: 1.5, ease: 'power1.inOut' }, 0.2);
+        tl.to(uFade, { value: 0, duration: 0.8, ease: 'power2.in' }, '+=1.3');
         form.timeline = tl;
 
         return form;
@@ -240,27 +235,27 @@ export default class Forms3DManager {
         gsap.to(this.uAlpha, { value, duration, ease: 'power2.out' });
     }
 
-    // World offset 0 (About) .. 1 (Work). Pan the camera right by one frustum
+    // World offset 0 (About) .. 1 (Work). Pan the camera right by one viewport
     // width per room so the forms slide one screen to the left as you advance.
     panTo(world) {
-        const dist = this.camera.position.z;
-        const vH = 2 * dist * Math.tan((this.camera.fov * Math.PI) / 180 / 2);
-        const vW = vH * this.camera.aspect;
-        this.camera.position.x = world * vW;
+        this.camera.position.x = world * (2 * this.viewSize * this.aspect);
     }
 
+    // Impossible figures' rotation is owned by their lock timeline; platonic
+    // solids (free) spin continuously here.
     update(time) {
         const dt = this._last === undefined ? 0 : time - this._last;
         this._last = time;
-
-        this.forms.forEach((form) => {
+        for (const form of this.forms) {
+            if (!form.free) continue;
             form.mesh.rotation.x += form.speedX * dt;
             form.mesh.rotation.y += form.speedY * dt;
-        });
+        }
     }
 
     resize(width, height) {
-        this.camera.perspective({ aspect: width / height });
+        this.aspect = width / height;
+        this._applyOrtho();
     }
 
     dispose() {

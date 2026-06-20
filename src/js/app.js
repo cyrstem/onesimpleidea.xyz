@@ -79,6 +79,8 @@ export default class App {
         this.forms3D = new Forms3DManager(this.gl, {
             aspect: this.size.width / this.size.height
         });
+        // Detail the impossible figures' beam faces with the same evolved library.
+        this.forms3D.loadLibrary();
         this.text = new TextManager(this.gl, {
             aspect: this.size.width / this.size.height
         });

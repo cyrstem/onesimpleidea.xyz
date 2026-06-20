@@ -397,11 +397,10 @@ export default class CircuitManager {
 
         const trace = this.buildTrace(form, form.center);
 
-        // Lifecycle: populate (uProgress) -> hold with a subtle pulse -> fade -> remove.
+        // Lifecycle: populate (uProgress) -> hold -> fade -> remove.
         const tl = gsap.timeline({ onComplete: () => this.removeTrace(trace) });
         tl.to(trace.uProgress, { value: 1, duration: rand(1.1, 1.8), ease: 'power1.inOut' });
-        tl.to(trace.uScale, { value: 1.05, duration: 0.9, ease: 'sine.inOut', yoyo: true, repeat: 1 }, '+=0.1');
-        tl.to(trace.uFade, { value: 0, duration: 0.7, ease: 'power2.in' }, '+=0.4');
+        tl.to(trace.uFade, { value: 0, duration: 0.7, ease: 'power2.in' }, '+=0.5');
         trace.timeline = tl;
 
         return trace;

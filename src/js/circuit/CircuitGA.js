@@ -66,9 +66,9 @@ export default class CircuitGA {
             .sort((a, b) => b.f - a.f);
     }
 
-    // Return a decoded form for the next spawn. Advances the generation counter
-    // and evolves one generation whenever evolveEvery spawns have elapsed.
-    nextForm(target) {
+    // Tournament-selected genome for the next spawn. Advances the generation
+    // counter and evolves one generation whenever evolveEvery selections elapse.
+    nextGenome(target) {
         this.setTarget(target);
 
         if (++this.spawnsSinceGen >= this.evolveEvery) {
@@ -77,7 +77,12 @@ export default class CircuitGA {
         }
         if (!this.ranked.length) this._rank();
 
-        return decode(tournament(this.ranked, this.rng));
+        return tournament(this.ranked, this.rng);
+    }
+
+    // Return a decoded form (default region) for the next spawn.
+    nextForm(target) {
+        return decode(this.nextGenome(target));
     }
 
     // One generation against the current target: keep elites, add a few random
