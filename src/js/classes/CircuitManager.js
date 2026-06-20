@@ -2,6 +2,8 @@ import { Geometry, Program, Mesh, Transform } from 'ogl';
 import gsap from 'gsap';
 import vertex from '../shader/circuit.vert';
 import fragment from '../shader/circuit.frag';
+import { translateForm } from '../circuit/genome';
+import CircuitGA from '../circuit/CircuitGA';
 
 const rand = (min = 0, max = 1) => min + Math.random() * (max - min);
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -37,6 +39,39 @@ export default class CircuitManager {
         // Centre of the most recently spawned form (normalized, y up). Used as the
         // collision target for nav connectors. Defaults to the right-half middle.
         this.lastCenter = [0.75, 0.5];
+
+        // Live, in-browser genetic algorithm. Its population evolves as the page
+        // runs and is warm-started from public/circuits.json by loadLibrary.
+        // gaReady gates whether spawnForm offers evolved forms at all, so the
+        // procedural mix is untouched until (and unless) the library loads.
+        this.ga = new CircuitGA();
+        this.gaReady = false;
+        // Fitness target the live GA evolves toward (normalized, y up). Updated by
+        // the app to follow the last place the user interacted.
+        this.gaTarget = [0.75, 0.5];
+    }
+
+    // Fetch the evolved circuit library and warm-start the live GA population from
+    // the stored champion genomes. Missing/invalid library is non-fatal: the GA
+    // simply keeps its random population and gaReady stays false.
+    async loadLibrary(url = '/circuits.json') {
+        try {
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const data = await res.json();
+            if (!Array.isArray(data.forms)) return;
+            const genomes = data.forms.map((f) => f.genome).filter(Boolean);
+            if (!genomes.length) return;
+            this.ga.seed(genomes);
+            this.gaReady = true;
+        } catch (e) {
+            // Keep the procedural forms when the library can't be loaded.
+        }
+    }
+
+    // Point the live GA's fitness target at (x,y) (normalized, y up).
+    setEvolveTarget(target) {
+        if (target && target.length === 2) this.gaTarget = target;
     }
 
     get activeCount() {
@@ -171,11 +206,28 @@ export default class CircuitManager {
         return points;
     }
 
+    // Pull the next form from the live GA (which may evolve a generation) and
+    // translate it so its centroid lands on (cx,cy).
+    evolvedForm(cx, cy) {
+        const form = this.ga.nextForm(this.gaTarget);
+        return translateForm(form, cx, cy);
+    }
+
     // ---- Public spawn API ----
 
     spawnForm({ type, x, y, radius } = {}) {
         const pick = () => {
             const r = Math.random();
+            // Once the live GA is warm-started, favour evolved forms while keeping
+            // the procedural shapes for variety.
+            if (this.gaReady) {
+                if (r < 0.5) return 'evolved';
+                if (r < 0.72) return 'board';
+                if (r < 0.84) return 'circle';
+                if (r < 0.93) return 'triangle';
+                return 'walk';
+            }
+            // Original procedural mix when the GA library isn't available.
             if (r < 0.55) return 'board';
             if (r < 0.75) return 'circle';
             if (r < 0.9) return 'triangle';
@@ -188,6 +240,9 @@ export default class CircuitManager {
 
         let form;
         switch (kind) {
+            case 'evolved':
+                form = this.evolvedForm(cx, cy);
+                break;
             case 'board':
                 form = this.boardForm(cx, cy, r);
                 break;
@@ -306,8 +361,9 @@ export default class CircuitManager {
     }
 
     // Builds the GPU objects for a form (no animation attached). Centre drives the
-    // uScale pulse origin.
-    buildTrace(form, center) {
+    // uScale pulse origin. `overrides` can swap the shared shift/alpha uniforms for
+    // per-trace ones (e.g. a connector that stays fixed while the field pans).
+    buildTrace(form, center, overrides = {}) {
         const data = this.buildGeometryData(form);
         const geometry = new Geometry(this.gl, {
             aBase: { size: 2, data: data.aBase },
@@ -329,8 +385,8 @@ export default class CircuitManager {
                 uResolution: this.uResolution,
                 uTime: this.uTime,
                 uColor: this.uColor,
-                uAlpha: this.uAlpha,
-                uShift: this.uShift,
+                uAlpha: overrides.uAlpha || this.uAlpha,
+                uShift: overrides.uShift || this.uShift,
                 uProgress,
                 uFade,
                 uScale,
@@ -382,6 +438,46 @@ export default class CircuitManager {
         const tl = gsap.timeline({ onComplete: () => this.removeTrace(trace) });
         tl.to(trace.uProgress, { value: 1, duration: rand(0.7, 1.0), ease: 'power2.out', onComplete: arrive });
         tl.to(trace.uFade, { value: 0, duration: 0.6, ease: 'power2.in' }, '+=0.7');
+        trace.timeline = tl;
+
+        return trace;
+    }
+
+    // Connector that grows toward the portfolio image plane and collides with it.
+    // Unlike ambient traces it stays fixed in screen space (uShift [0,0]) at full
+    // opacity, so it draws across the room transition rather than panning away,
+    // and vanishes the moment its tip reaches the image.
+    spawnPlaneConnector(fromX, fromY, toX, toY, onArrive) {
+        const points = this.walkTo(fromX, fromY, toX, toY);
+        if (points.length < 2) return null;
+
+        const form = this.outlineForm(points, [toX, toY]);
+        if (form.nodes.length) {
+            form.nodes[form.nodes.length - 1].size = this.nodeSize * 1.6;
+        }
+        return this.createPlaneConnector(form, onArrive);
+    }
+
+    createPlaneConnector(form, onArrive) {
+        if (!form || form.segments.length === 0) return null;
+
+        const trace = this.buildTrace(form, form.center, {
+            uShift: { value: [0, 0] },
+            uAlpha: { value: 1 }
+        });
+
+        let fired = false;
+        const arrive = () => {
+            if (fired) return;
+            fired = true;
+            if (typeof onArrive === 'function') onArrive();
+        };
+
+        const tl = gsap.timeline({ onComplete: () => this.removeTrace(trace) });
+        // Grow across the room transition so the tip lands as the image settles.
+        tl.to(trace.uProgress, { value: 1, duration: 1.15, ease: 'power2.inOut', onComplete: arrive });
+        // Collide and disappear.
+        tl.to(trace.uFade, { value: 0, duration: 0.3, ease: 'power2.in' });
         trace.timeline = tl;
 
         return trace;

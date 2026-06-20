@@ -6,6 +6,7 @@
     "dev": "vite serve --host",
     "build": "vite build",
     "preview": "vite preview",
+    "evolve": "node tools/evolve.mjs",
     "sync-docs": "node sync-docs.js"
   },
   "repository": {

@@ -1,6 +1,8 @@
 import { Plane, Texture, Program, Mesh, Camera, Transform } from 'ogl';
 import gsap from 'gsap';
 
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
 // A single textured plane that lives on the right half of the viewport and
 // carries the active project image. Rendered into the shared FBO so it inherits
 // the post-processing shake. Sizing fits the image (aspect-preserved) inside the
@@ -133,6 +135,17 @@ export default class PlaneManager {
     panTo(world) {
         const { vW } = this.frustum();
         this.camera.position.x = (world - 1) * vW;
+    }
+
+    // Normalized viewport coords (y up) of a point inside the plane's left half,
+    // as it rests when the Work room is fully in view. A nav connector grows
+    // toward this point and collides with the incoming image there. Sitting
+    // halfway to the left edge keeps it on the image for any aspect ratio.
+    connectTarget() {
+        const { vW } = this.frustum();
+        const cx = 0.5 + this.mesh.position.x / vW; // camera x = 0 at world = 1 (Work)
+        const halfW = (this.mesh.scale.x * 0.5) / vW;
+        return [clamp(cx - halfW * 0.5, 0.02, 0.98), 0.5];
     }
 
     // Loads the image and swaps it in. `onReady` fires once the texture is

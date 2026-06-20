@@ -69,6 +69,8 @@ export default class App {
         this.circuit = new CircuitManager(this.gl, {
             resolution: [this.size.width, this.size.height]
         });
+        // Pull in the GA-evolved circuit library (async, non-blocking).
+        this.circuit.loadLibrary();
         this.forms3D = new Forms3DManager(this.gl, {
             aspect: this.size.width / this.size.height
         });
@@ -178,6 +180,7 @@ export default class App {
 
         this.circuit.spawnForm({ x, y });
         this._lastTarget = this.circuit.lastCenter;
+        this.circuit.setEvolveTarget(this._lastTarget);
         this.post.triggerShake();
     }
 
@@ -202,13 +205,31 @@ export default class App {
     }
 
     // Grow a line+dot from the menu item's edge that random-walks across the
-    // viewport and collides with the most recently spawned shape.
+    // viewport and collides with a target shape. The Work link aims at the
+    // portfolio image plane (and vanishes on impact); others hit the last shape.
     shootConnector(link) {
         const rect = link.getBoundingClientRect();
         const fromX = clamp((rect.left + rect.width) / this.size.width, 0, 1);
         const fromY = clamp(1 - (rect.top + rect.height * 0.5) / this.size.height, 0, 1);
-        const [toX, toY] = this._lastTarget || [0.78, 0.5];
 
+        const route = link.getAttribute('data-route');
+
+        // Work: grow from the menu toward the portfolio image and collide with it.
+        if (route === '/portfolio') {
+            const [toX, toY] = this.plane.connectTarget();
+            this.circuit.spawnPlaneConnector(fromX, fromY, toX, toY, () => this.post.triggerShake());
+            return;
+        }
+
+        // About, coming back from Work: grow from the image across to the About
+        // side (the clicked menu item), so the line clearly reaches About.
+        if (route === '/' && this._routeName === 'portfolio') {
+            const [imgX, imgY] = this.plane.connectTarget();
+            this.circuit.spawnPlaneConnector(imgX, imgY, fromX, fromY, () => this.post.triggerShake());
+            return;
+        }
+
+        const [toX, toY] = this._lastTarget || [0.78, 0.5];
         this.circuit.spawnConnector(fromX, fromY, toX, toY, () => this.post.triggerShake());
     }
 
@@ -228,6 +249,8 @@ export default class App {
             this.circuit.spawnForm();
             this._lastTarget = this.circuit.lastCenter;
         }
+        // Steer the live circuit GA toward wherever the field last grew.
+        this.circuit.setEvolveTarget(this._lastTarget);
     }
 
     resize() {

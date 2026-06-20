@@ -60,8 +60,12 @@ const fragment300 = /* glsl */ `#version 300 es
 const FONT_JSON = 'fonts/Rajdhani-SemiBold.json';
 const FONT_PNG = 'fonts/Rajdhani-SemiBold.png';
 
+// Subtle random yaw so each heading leans slightly left or right in perspective.
+const TILT_YAW = 0.1;
+const TILT_PITCH = 0.035;
+
 export default class TextManager {
-    constructor(gl, { aboutText = 'about me', aspect = 1, size = 0.45 } = {}) {
+    constructor(gl, { aboutText = 'about me', aspect = 1, size = 0.36 } = {}) {
         this.gl = gl;
         this.size = size;
         this.scene = new Transform();
@@ -102,22 +106,38 @@ export default class TextManager {
         }
 
         this.font = font;
-        this.program = new Program(this.gl, {
-            vertex: renderer.isWebgl2 ? vertex300 : vertex100,
-            fragment: renderer.isWebgl2 ? fragment300 : fragment100,
-            uniforms: {
-                tMap: { value: texture },
-                uAlpha: this.uAlpha
-            },
-            transparent: true,
-            cullFace: false,
-            depthWrite: false
-        });
 
-        this.aboutMesh = this._buildMesh(this.aboutText, this.aboutMesh);
-        if (this.workText) this.workMesh = this._buildMesh(this.workText, this.workMesh);
-        this.place();
-        this._applyVisibility();
+        const buildMeshes = () => {
+            this.program = new Program(this.gl, {
+                vertex: renderer.isWebgl2 ? vertex300 : vertex100,
+                fragment: renderer.isWebgl2 ? fragment300 : fragment100,
+                uniforms: {
+                    tMap: { value: texture },
+                    uAlpha: this.uAlpha
+                },
+                transparent: true,
+                cullFace: false,
+                // Rendered with its own camera into a target that already holds a
+                // depth buffer from the 3D pass — depthTest must stay off or the
+                // headings fail the test and disappear.
+                depthTest: false,
+                depthWrite: false
+            });
+
+            this.aboutMesh = this._buildMesh(this.aboutText, this.aboutMesh);
+            if (this.workText) this.workMesh = this._buildMesh(this.workText, this.workMesh);
+            this.place();
+            this._applyVisibility();
+        };
+
+        if (texture.image) {
+            buildMeshes();
+        } else {
+            img.onload = () => {
+                texture.image = img;
+                buildMeshes();
+            };
+        }
     }
 
     // Builds (or rebuilds) a mesh for `text`, releasing the previous geometry.
@@ -149,7 +169,18 @@ export default class TextManager {
             mesh.frustumCulled = false;
             mesh.setParent(this.scene);
         }
+
+        this._applyPerspective(mesh);
         return mesh;
+    }
+
+    // Small random euler tilt — reads as the heading being pushed a touch left or right.
+    _applyPerspective(mesh) {
+        if (!mesh) return;
+        const sign = Math.random() < 0.5 ? -1 : 1;
+        mesh.rotation.y = sign * (0.45 + Math.random() * 0.55) * TILT_YAW;
+        mesh.rotation.x = (Math.random() * 2 - 1) * TILT_PITCH;
+        mesh.rotation.z = 0;
     }
 
     setWorkTitle(text) {
