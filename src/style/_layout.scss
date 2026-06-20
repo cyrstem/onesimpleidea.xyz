@@ -49,10 +49,11 @@
 		max-width: 80vw;
 	}
 
-	// Work copy is a wider left column so the list + description clear the plane.
+	// Work view spans the room so the title row can right-align over the plane
+	// while the description column stays at its own width on the left.
 	> main#work {
-		width: 48vw;
-		max-width: 48vw;
+		width: 84vw;
+		max-width: 84vw;
 	}
 }
 
@@ -146,12 +147,14 @@
 
 }
 
-// Work view: project titles sit in a row across the top.
+// Work view: project titles sit in a row at the top, now right-aligned so the
+// list sits on the right (over the image side) instead of the left.
 #ex {
 	font-family: $main-font;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	justify-content: flex-end;
 	gap: 1.4rem;
 	width: 100%;
 
@@ -348,7 +351,9 @@
 			font-size: 1.1rem;
 		}
 
+		// Left-aligned row on small screens (no plane beside it).
 		#ex {
+			justify-content: flex-start;
 			gap: 0.8rem 1.2rem;
 
 			h1 {
