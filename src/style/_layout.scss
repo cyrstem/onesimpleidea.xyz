@@ -109,20 +109,33 @@
 
 }
 
+// Work view: project titles sit in a row across the top.
 #ex {
 	font-family: $main-font;
-	width: fit-content;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 1.4rem;
+	width: 100%;
+
+	h1 {
+		margin: 0;
+		font-size: 1.3rem;
+		font-weight: 600;
+	}
+
 	a {
-		display: block;
+		display: inline-block;
 		color: black;
 		text-decoration: none;
 		cursor: pointer;
 		background:linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
 		transition: 0.6s;
 	}
-	a:focus{
-		color: rgba($color: #000000, $alpha: 0.5);
-		--d: 70%;
+
+	a.item--current {
+		color: rgba($color: #000000, $alpha: 0.6);
+		--d: 100%;
 	}
 
 	a:hover {
@@ -130,10 +143,14 @@
 		--d: 100%;
 	}
 }
+
+// Left description column, styled like the About copy.
 .infoFile{
 	font-family: $main-font;
-	font-size: 1.2rem;
-	width: 25vw;
+	font-size: 1.4rem;
+	width: 40vw;
+	margin-top: 9vh;
+	color: #3d3d3d;
 	display:block;
 
 	.info{
@@ -142,6 +159,30 @@
 
 	.show__info{
 		display: block;
+	}
+
+	b {
+		color: black;
+	}
+
+	a {
+		color: black;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		transition: 0.4s;
+	}
+
+	a:hover {
+		color: rgba($color: #000000, $alpha: 0.55);
+	}
+
+	.project-links {
+		margin-top: 1.4rem;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0.6rem 1.2rem;
+		font-size: 1rem;
 	}
 }
 
@@ -251,6 +292,22 @@
 
 			width: 70%;
 			height: 50%;
+		}
+	}
+
+	#work {
+		.infoFile {
+			width: 100%;
+			margin-top: 1rem;
+			font-size: 1.1rem;
+		}
+
+		#ex {
+			gap: 0.8rem 1.2rem;
+
+			h1 {
+				font-size: 1.1rem;
+			}
 		}
 	}
 

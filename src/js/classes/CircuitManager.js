@@ -22,6 +22,8 @@ export default class CircuitManager {
         this.uTime = { value: 0 };
         this.uColor = { value: [0, 0, 0] };
         this.uAlpha = { value: 1 };
+        // Shared clip-space offset; animated to slide the circuit off-screen.
+        this.uShift = { value: [0, 0] };
 
         this.thickness = 2;       // line width in CSS px
         this.nodeSize = 13;       // terminal / pad square size in CSS px
@@ -328,6 +330,7 @@ export default class CircuitManager {
                 uTime: this.uTime,
                 uColor: this.uColor,
                 uAlpha: this.uAlpha,
+                uShift: this.uShift,
                 uProgress,
                 uFade,
                 uScale,
@@ -397,6 +400,12 @@ export default class CircuitManager {
 
     setAlpha(value, duration = 0.6) {
         gsap.to(this.uAlpha, { value, duration, ease: 'power2.out' });
+    }
+
+    // Slide the whole circuit in clip space (x,y). Used to push it off the left
+    // edge during the Work-view transition.
+    setShift(x, y = 0, duration = 0.9, ease = 'power3.inOut') {
+        gsap.to(this.uShift.value, { 0: x, 1: y, duration, ease });
     }
 
     update(time) {

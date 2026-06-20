@@ -10,6 +10,9 @@ attribute float aNode;
 uniform vec2 uResolution;
 uniform vec2 uCenter;
 uniform float uScale;
+// Clip-space translation (x,y) used to slide the whole circuit off-screen during
+// the Work-view transition. Defaults to 0 so normal rendering is unaffected.
+uniform vec2 uShift;
 
 varying float vDist;
 varying float vNode;
@@ -22,5 +25,5 @@ void main() {
     vDist = aDist;
     vNode = aNode;
 
-    gl_Position = vec4(clip + off, 0.0, 1.0);
+    gl_Position = vec4(clip + off + uShift, 0.0, 1.0);
 }

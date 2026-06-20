@@ -1,8 +1,10 @@
 import { Renderer, RenderTarget } from 'ogl';
+import gsap from 'gsap';
 import { throttle } from './utils/Utils';
 import CircuitManager from './classes/CircuitManager';
 import Forms3DManager from './classes/Forms3DManager';
 import TextManager from './classes/TextManager';
+import PlaneManager from './classes/PlaneManager';
 import PostFX from './classes/PostFX';
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -16,11 +18,13 @@ export default class App {
         this.container = stage.dom;
         this._raf = null;
 
-        // Idle director state.
+        // Idle director state. Paused while the Work view is active.
         this._spawnEvery = 1.4;
         this._spawnTimer = 0;
         this._maxForms = 3;
         this._lastTime = undefined;
+        this._idle = true;
+        this._portfolioTitleReady = false;
 
         // Viewport target (normalized, y up) of the latest shape; nav connectors
         // walk toward it and collide.
@@ -67,6 +71,9 @@ export default class App {
         this.text = new TextManager(this.gl, {
             aspect: this.size.width / this.size.height
         });
+        this.plane = new PlaneManager(this.gl, {
+            aspect: this.size.width / this.size.height
+        });
         this.post = new PostFX(this.gl);
     }
 
@@ -88,24 +95,69 @@ export default class App {
     subscribeToBus() {
         if (!this.bus) return;
         this._onRouteChange = ({ name }) => this.handleRouteChange(name);
+        this._onPortfolioActive = (detail) => this.handlePortfolioActive(detail);
         this.bus.on('route:change', this._onRouteChange);
+        this.bus.on('portfolio:active', this._onPortfolioActive);
     }
 
     handleRouteChange(name) {
-        // Dim the field behind text-heavy views so copy stays readable.
-        const alpha = { home: 1, portfolio: 0.4, about: 0.35 };
-        const value = alpha[name] ?? 1;
-        this.circuit.setAlpha(value);
-        this.forms3D.setAlpha(value);
-
         this._routeName = name;
+
+        if (name === 'portfolio') {
+            // Pan the 3D camera right, slide the circuit off to the left and fade
+            // both out, then bring in the project plane from the right.
+            this._idle = false;
+            gsap.to(this.forms3D.camera.position, { x: 1.6, duration: 1.0, ease: 'power3.inOut' });
+            this.forms3D.setAlpha(0);
+            this.circuit.setShift(-2.4);
+            this.circuit.setAlpha(0);
+            this.plane.show();
+        } else {
+            // Restore the field for the text-heavy views (About dims it for legibility).
+            this._idle = true;
+            this._portfolioTitleReady = false;
+            const value = name === 'about' ? 0.35 : 1;
+            gsap.to(this.forms3D.camera.position, { x: 0, duration: 1.0, ease: 'power3.inOut' });
+            this.forms3D.setAlpha(value);
+            this.circuit.setShift(0);
+            this.circuit.setAlpha(value);
+            this.plane.hide();
+            this.text.setText('about me');
+        }
+
         this.updateTextVisibility();
     }
 
-    // The MSDF heading only shows on About, and only on wider screens where the
-    // copy layout has room for it.
+    // Swap the plane texture for the freshly selected project. The MSDF title and
+    // the DOM copy are only revealed once the image has actually loaded.
+    handlePortfolioActive({ index, project } = {}) {
+        if (!project) return;
+
+        // Hide the current title while the new image loads.
+        this._portfolioTitleReady = false;
+        this.updateTextVisibility();
+
+        const token = (this._activeToken || 0) + 1;
+        this._activeToken = token;
+
+        this.plane.setTexture(project.image, () => {
+            // Ignore stale loads if the user already picked another project.
+            if (token !== this._activeToken) return;
+            this.text.setText(project.title);
+            this._portfolioTitleReady = true;
+            this.updateTextVisibility();
+            if (this.bus) this.bus.emit('portfolio:reveal', { index });
+        });
+    }
+
+    // The MSDF heading shows on About ("about me") and on Work (the project
+    // title, once it has loaded), only on wider screens with room for the copy.
     updateTextVisibility() {
-        const show = this._routeName === 'about' && window.innerWidth > 480;
+        const wide = window.innerWidth > 480;
+        const show = wide && (
+            this._routeName === 'about' ||
+            (this._routeName === 'portfolio' && this._portfolioTitleReady)
+        );
         this.text.setVisible(show);
     }
 
@@ -160,6 +212,7 @@ export default class App {
     }
 
     director(dt) {
+        if (!this._idle) return;
         this._spawnTimer += dt;
         if (this._spawnTimer < this._spawnEvery) return;
         this._spawnTimer = 0;
@@ -183,6 +236,7 @@ export default class App {
         this.circuit.resize(this.size.width, this.size.height);
         this.forms3D.resize(this.size.width, this.size.height);
         this.text.resize(this.size.width, this.size.height);
+        this.plane.resize(this.size.width, this.size.height);
         this.post.resize();
         this.updateTextVisibility();
     }
@@ -210,6 +264,7 @@ export default class App {
                 target: this.sceneRT,
                 clear: false
             });
+            this.plane.render(this.sceneRT);
             this.text.render(this.sceneRT);
 
             this.post.render(this.sceneRT.texture);
@@ -229,11 +284,15 @@ export default class App {
         window.removeEventListener('resize', this._onResize);
         window.removeEventListener('click', this._onClick);
 
-        if (this.bus) this.bus.off('route:change', this._onRouteChange);
+        if (this.bus) {
+            this.bus.off('route:change', this._onRouteChange);
+            this.bus.off('portfolio:active', this._onPortfolioActive);
+        }
 
         this.circuit.dispose();
         this.forms3D.dispose();
         this.text.dispose();
+        this.plane.dispose();
 
         if (this.gl.canvas.parentNode) {
             this.gl.canvas.parentNode.removeChild(this.gl.canvas);

@@ -1,71 +1,95 @@
 import gsap from 'gsap';
 
+// The project list (top) and the active description (left) are built from
+// projects.json at runtime. Selecting a project updates the left copy and emits
+// `portfolio:active`, which the 3D app uses to swap the plane texture and the
+// MSDF title. The image itself is rendered as a WebGL plane (see PlaneManager).
 const template = `
-    <main>  
-        <div id="ex">
-            <a class="nav_item" href="#"><h1>Moving Photon</h1></a>
-            <a class="nav_item" href="#"><h1>Glitch Machine</h1></a>
-            <a class="nav_item" href="#"> <h1>Noizu</h1></a>
-            <a class="nav_item" href="#"><h1>YaEsta.com</h1></a>
-        </div>
+    <main id="work">
+        <nav id="ex" class="project-list"></nav>
         <div class="infoFile">
-            <article class="info">
-            <p>I collaborated on developing the Virtual Experience for
-                <a href="https://friendred.studio/2021/10/07/moving-photon/" target="_blank">Moving Photon</a> an
-                interactive installation/performance
-                created by installation artist<a href="https://friendred.studio" target="_blank"> Friendred Peng.</a>
-                Participation in Moving Photon can be in 5 different ways, including a Phantom performance,
-                interactive installation, interactive performance,interactive performance with EEG and a <a
-                    href="https://movingphoton.friendred.studio/" target="_blank"> remote performance.</a>
-            </p>
-            </article>
-            <article class="info ">
-                <p>A custom Glitch App build for<a href="https://www.instagram.com/jenna___marsh/" target=" _blank">  Jenna
-                Marsh</a>, it lets you play with a image applying different filters and export the resulting image for
-                printing</p>
-            </article>
-            <article class="info ">
-                <p>Custom build a Audio player for Linux and Mac. Building a light and simple player for linux, 
-                based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.</p>
-            </article>
-            <article class="info ">
-                <p>I Develop a Physical and fully interactive installation with video Mapping and custom software projected to the tallest building in Quito, for the launch of the e-commerce site
-                YaEsta.com. As a way to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attention of the public. i was also part of the Tech team managing the platform until it was acquire by other company. <a href ="https://www.youtube.com/watch?v=YHZd0TxPMkY&t=1s&ab_channel=UPDRONEInteligenciaAeron%C3%A1utica" target=" _blank">YaEsta Pacman</a></p>
-            </article>
+            <article class="info show__info" id="portfolio-copy"></article>
         </div>
     </main>
+`;
+
+async function loadProjects() {
+    try {
+        const res = await fetch('projects.json');
+        return await res.json();
+    } catch (e) {
+        // No data file: leave the list empty rather than breaking the route.
+        return [];
+    }
+}
+
+function renderCopy(container, project) {
+    const links = (project.links || [])
+        .map((l) => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`)
+        .join('');
+    container.innerHTML = `
+        <p>${project.description}</p>
+        ${links ? `<div class="project-links">${links}</div>` : ''}
     `;
+}
+
+// Unsubscribe handle for the `portfolio:reveal` listener, cleared on route leave.
+let revealOff = null;
 
 export default {
     name: 'portfolio',
     render: () => template,
-    onEnter: ({ bus }) => {
-        const items = Array.from(document.querySelectorAll('#ex .nav_item'));
-        const infos = Array.from(document.querySelectorAll('.infoFile .info'));
-        let current = 0;
+    onEnter: async ({ bus, outlet }) => {
+        const list = outlet.querySelector('#ex');
+        const copy = outlet.querySelector('#portfolio-copy');
+        if (!list || !copy) return;
 
-        // Show the first project by default.
-        items[0]?.classList.add('item--current');
-        infos[0]?.classList.add('show__info');
+        const projects = await loadProjects();
+        // The router may have navigated away while the JSON was loading.
+        if (!projects.length || !document.body.contains(list)) return;
 
-        items.forEach((el, index) => {
+        // The copy is revealed only once the matching image has loaded (the app
+        // emits `portfolio:reveal` from the plane's texture onload).
+        if (bus) {
+            revealOff?.();
+            revealOff = bus.on('portfolio:reveal', () => {
+                gsap.fromTo(copy, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.in' });
+            });
+        }
+
+        let current = -1;
+
+        const select = (index) => {
+            if (index === current) return;
+            const items = Array.from(list.querySelectorAll('.nav_item'));
+            items[current]?.classList.remove('item--current');
+            items[index]?.classList.add('item--current');
+
+            const project = projects[index];
+            renderCopy(copy, project);
+            // Hide until the image is ready; the reveal handler fades it in.
+            gsap.set(copy, { opacity: 0 });
+
+            current = index;
+            bus?.emit('portfolio:active', { index, project });
+        };
+
+        list.innerHTML = projects
+            .map((p, i) => `<a class="nav_item" href="#" data-index="${i}"><h1>${p.title}</h1></a>`)
+            .join('');
+
+        list.querySelectorAll('.nav_item').forEach((el) => {
             el.addEventListener('click', (event) => {
                 event.preventDefault();
-                if (index === current) return;
-
-                items[current]?.classList.remove('item--current');
-                infos[current]?.classList.remove('show__info');
-
-                el.classList.add('item--current');
-                const info = infos[index];
-                if (info) {
-                    info.classList.add('show__info');
-                    gsap.fromTo(info, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.in' });
-                }
-
-                current = index;
-                bus.emit('portfolio:select', { index });
+                select(Number(el.dataset.index));
             });
         });
+
+        // Show the first project by default.
+        select(0);
+    },
+    onLeave: () => {
+        revealOff?.();
+        revealOff = null;
     }
 };

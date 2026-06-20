@@ -92,7 +92,8 @@ export default class TextManager {
             return;
         }
 
-        const program = new Program(this.gl, {
+        this.font = font;
+        this.program = new Program(this.gl, {
             vertex: renderer.isWebgl2 ? vertex300 : vertex100,
             fragment: renderer.isWebgl2 ? fragment300 : fragment100,
             uniforms: {
@@ -104,8 +105,16 @@ export default class TextManager {
             depthWrite: false
         });
 
+        this.build();
+    }
+
+    // Builds (or rebuilds) the mesh geometry for the current text. Safe to call
+    // repeatedly; the previous geometry is released first.
+    build() {
+        if (!this.font || !this.program) return;
+
         const layout = new Text({
-            font,
+            font: this.font,
             text: this.text,
             align: 'left',
             size: this.size,
@@ -120,13 +129,24 @@ export default class TextManager {
             index: { data: layout.buffers.index }
         });
 
-        this.layout = layout;
-        this.mesh = new Mesh(this.gl, { geometry, program });
-        this.mesh.frustumCulled = false;
-        this.mesh.visible = this.visible;
-        this.mesh.setParent(this.scene);
+        if (this.mesh) {
+            if (this.mesh.geometry?.remove) this.mesh.geometry.remove();
+            this.mesh.geometry = geometry;
+        } else {
+            this.mesh = new Mesh(this.gl, { geometry, program: this.program });
+            this.mesh.frustumCulled = false;
+            this.mesh.setParent(this.scene);
+        }
 
+        this.layout = layout;
+        this.mesh.visible = this.visible;
         this.place();
+    }
+
+    setText(text) {
+        if (text === this.text) return;
+        this.text = text;
+        this.build();
     }
 
     // Anchor the heading near the upper-left of the viewport. OGL text grows to
