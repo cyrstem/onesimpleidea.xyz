@@ -10,10 +10,13 @@ export default defineConfig({
     build: {
         outDir: '../dist',
         emptyOutDir: true,
-        sourcemap: true,
+        sourcemap: false,
         rollupOptions: {
             input: {
                 main: path.resolve(__dirname, 'src/index.html'),
+            },
+            output: {
+                banner: '/*! ->> created by cyrstem */',
             },
         }
     },
