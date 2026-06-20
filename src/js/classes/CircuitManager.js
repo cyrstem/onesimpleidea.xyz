@@ -143,7 +143,7 @@ export default class CircuitManager {
         return { segments, nodes, center: [cx, cy] };
     }
 
-    // Outline shapes (triangle / circle / branching walk) drawn as a single
+    // Outline shapes (triangle / branching walk) drawn as a single
     // path that reveals progressively along its length.
     outlineForm(points, center) {
         const cum = [0];
@@ -180,15 +180,6 @@ export default class CircuitManager {
         return pts;
     }
 
-    circlePath(cx, cy, r, segments = 28) {
-        const pts = [];
-        for (let i = 0; i <= segments; i++) {
-            const a = (i / segments) * Math.PI * 2;
-            pts.push({ x: cx + Math.cos(a) * r, y: cy + Math.sin(a) * r });
-        }
-        return pts;
-    }
-
     pathFrom(px, py) {
         const points = [{ x: px, y: py }];
         let x = px;
@@ -222,15 +213,13 @@ export default class CircuitManager {
             // the procedural shapes for variety.
             if (this.gaReady) {
                 if (r < 0.5) return 'evolved';
-                if (r < 0.72) return 'board';
-                if (r < 0.84) return 'circle';
-                if (r < 0.93) return 'triangle';
+                if (r < 0.74) return 'board';
+                if (r < 0.9) return 'triangle';
                 return 'walk';
             }
             // Original procedural mix when the GA library isn't available.
-            if (r < 0.55) return 'board';
-            if (r < 0.75) return 'circle';
-            if (r < 0.9) return 'triangle';
+            if (r < 0.6) return 'board';
+            if (r < 0.85) return 'triangle';
             return 'walk';
         };
         const kind = type || pick();
@@ -248,9 +237,6 @@ export default class CircuitManager {
                 break;
             case 'triangle':
                 form = this.outlineForm(this.trianglePath(cx, cy, r), [cx, cy]);
-                break;
-            case 'circle':
-                form = this.outlineForm(this.circlePath(cx, cy, r), [cx, cy]);
                 break;
             default:
                 form = this.outlineForm(this.pathFrom(cx, cy), [cx, cy]);
