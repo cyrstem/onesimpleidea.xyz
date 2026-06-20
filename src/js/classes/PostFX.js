@@ -23,6 +23,16 @@ export default class PostFX {
         this.uBgColorA = { value: [1, 1, 1] };
         this.uBgColorB = { value: [1, 1, 1] };
 
+        // Ambient block-fracture glitch (ported from the Cinder blockss shader).
+        // Kept deliberately subtle and always-on; the circuit GA re-seeds the
+        // direction/seed each spawn so the pattern drifts with the field.
+        this.uResolution = { value: [1, 1] };
+        this.uBlockDir = { value: [1, 0] };
+        this.uBlockSeed = { value: 0 };
+        this.uBlockSize = { value: 0.5 };
+        this.uBlockRandomness = { value: 0.12 };
+        this.uBlockAmount = { value: 1.0 };
+
         this.pass = this.post.addPass({
             fragment,
             uniforms: {
@@ -30,9 +40,29 @@ export default class PostFX {
                 uGlitch: this.uGlitch,
                 uShakeOffset: this.uShakeOffset,
                 uBgColorA: this.uBgColorA,
-                uBgColorB: this.uBgColorB
+                uBgColorB: this.uBgColorB,
+                uResolution: this.uResolution,
+                uBlockDir: this.uBlockDir,
+                uBlockSeed: this.uBlockSeed,
+                uBlockSize: this.uBlockSize,
+                uBlockRandomness: this.uBlockRandomness,
+                uBlockAmount: this.uBlockAmount
             }
         });
+    }
+
+    // Re-seed the ambient glitch from a freshly spawned/evolved form. The slide
+    // direction points from screen centre toward the form's centre (normalized,
+    // y up), and the seed jumps so the block layout reshuffles.
+    reseed(center) {
+        if (center && center.length === 2) {
+            const dx = center[0] - 0.5;
+            const dy = center[1] - 0.5;
+            const len = Math.hypot(dx, dy) || 1;
+            this.uBlockDir.value[0] = dx / len;
+            this.uBlockDir.value[1] = dy / len;
+        }
+        this.uBlockSeed.value = Math.random();
     }
 
     // Fast screen-shake burst (camera wiggle), e.g. when a connector collides.
@@ -56,6 +86,8 @@ export default class PostFX {
 
     render(texture) {
         this.uTime.value = performance.now() * 0.001;
+        this.uResolution.value[0] = this.gl.drawingBufferWidth;
+        this.uResolution.value[1] = this.gl.drawingBufferHeight;
         this.post.render({ texture });
     }
 }

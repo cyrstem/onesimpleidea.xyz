@@ -181,6 +181,7 @@ export default class App {
         this.circuit.spawnForm({ x, y });
         this._lastTarget = this.circuit.lastCenter;
         this.circuit.setEvolveTarget(this._lastTarget);
+        this.post.reseed(this._lastTarget);
         this.post.triggerShake();
     }
 
@@ -249,8 +250,10 @@ export default class App {
             this.circuit.spawnForm();
             this._lastTarget = this.circuit.lastCenter;
         }
-        // Steer the live circuit GA toward wherever the field last grew.
+        // Steer the live circuit GA toward wherever the field last grew, and
+        // re-seed the ambient block glitch so it drifts with the evolving field.
         this.circuit.setEvolveTarget(this._lastTarget);
+        this.post.reseed(this._lastTarget);
     }
 
     resize() {
