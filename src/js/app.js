@@ -41,6 +41,11 @@ export default class App {
     }
 
     init() {
+        // On phones we drop the horizontal "spatial" navigation: routing becomes
+        // vertical scroll (CSS shows one room at a time) and the world offset is
+        // kept at 0 so the circuits stay live behind both pages.
+        this.isMobile = window.matchMedia('(max-width: 600px)').matches;
+
         this.dpr = Math.min(window.devicePixelRatio, 2);
         this.renderer = new Renderer({
             antialias: true,
@@ -118,6 +123,15 @@ export default class App {
         this._routeName = name;
         this._idle = name !== 'portfolio';
 
+        // Mobile: no horizontal pan. Keep the world at the About room so the
+        // circuits stay centred behind the (vertically scrolling) content and
+        // the off-screen image plane never slides in.
+        if (this.isMobile) {
+            gsap.killTweensOf(this._nav);
+            this._nav.x = 0;
+            return;
+        }
+
         if (!this._navStarted) {
             // Snap on first load so we don't pan in from the wrong room.
             this._navStarted = true;
@@ -157,11 +171,18 @@ export default class App {
         this.plane.panTo(x);
         this.text.panTo(x);
 
+        // Mobile stacks/scrolls rooms via CSS, so skip the horizontal strip pan.
+        if (this.isMobile) return;
+
         if (!this._strip) this._strip = document.getElementById('strip');
         if (this._strip) this._strip.style.transform = `translateX(${-x * 100}vw)`;
     }
 
     handleClick(event) {
+        // Mobile: taps are for scrolling and following links. Don't spawn forms or
+        // shoot connectors; nav links still route via their href (hashchange).
+        if (this.isMobile) return;
+
         // Nav links shoot a connector from the menu toward the latest shape.
         const navLink = event.target.closest && event.target.closest('#nav [data-route]');
         if (navLink) {

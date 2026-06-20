@@ -30,5 +30,24 @@ window.onload = () => {
 	});
 	router.start();
 
+	// Mobile: the bottom social bar only reveals once the active page is scrolled
+	// to its end. Each room's <main> is the scroll container (see _layout.scss).
+	const contact = document.getElementById('contact');
+	const atEnd = (el) => el.scrollTop + el.clientHeight >= el.scrollHeight - 4;
+	const reveal = (el) => {
+		if (contact && el) contact.classList.toggle('contact--visible', atEnd(el));
+	};
+	document.addEventListener('scroll', (event) => {
+		const el = event.target;
+		if (el && el.matches && el.matches('.room > main')) reveal(el);
+	}, true);
+	bus.on('route:change', () => {
+		requestAnimationFrame(() => {
+			const main = document.querySelector('.room--current > main');
+			if (main) reveal(main);
+			else if (contact) contact.classList.remove('contact--visible');
+		});
+	});
+
 	simpleSign();
 };

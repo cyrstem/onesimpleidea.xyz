@@ -33,6 +33,30 @@ function renderCopy(container, project) {
     `;
 }
 
+// Mobile Work view: every project stacked as image-then-text, vertically
+// scrollable. No WebGL plane / MSDF title here; the live circuits stay behind.
+function renderMobileList(main, projects) {
+    main.innerHTML = `
+        <div class="work-list">
+            ${projects
+                .map((p) => {
+                    const links = (p.links || [])
+                        .map((l) => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`)
+                        .join('');
+                    return `
+                        <article class="project-card">
+                            <img src="${p.image}" alt="${p.title}" loading="lazy">
+                            <h2>${p.title}</h2>
+                            <p>${p.description}</p>
+                            ${links ? `<div class="project-links">${links}</div>` : ''}
+                        </article>
+                    `;
+                })
+                .join('')}
+        </div>
+    `;
+}
+
 // Unsubscribe handle for the `portfolio:reveal` listener, cleared on route leave.
 let revealOff = null;
 
@@ -40,6 +64,19 @@ export default {
     name: 'portfolio',
     render: () => template,
     onEnter: async ({ bus, root }) => {
+        const isMobile = window.matchMedia('(max-width: 600px)').matches;
+
+        // Mobile: render a simple stacked DOM list (image + text per project) and
+        // skip the WebGL plane / title wiring entirely.
+        if (isMobile) {
+            const main = root.querySelector('#work');
+            if (!main) return;
+            const projects = await loadProjects();
+            if (!projects.length || !document.body.contains(main)) return;
+            renderMobileList(main, projects);
+            return;
+        }
+
         const list = root.querySelector('#ex');
         const copy = root.querySelector('#portfolio-copy');
         if (!list || !copy) return;

@@ -1,372 +1,470 @@
-@import "_ui";
-@import "_vars";
+	@import "_ui";
+	@import "_vars";
 
-#container {
-	z-index: 0;
-	position: absolute;
-	width: 100vw;
-	height: 100vh;
-}
-
-// Full-viewport clip window. The shake transform is applied here; the rooms
-// live in #strip inside, so navigation (strip translate) and shake never fight.
-#terminal {
-	position: absolute;
-	z-index: 3;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
-	margin: 0;
-}
-
-// Horizontal strip holding one room per route, side by side. App pans this in
-// lockstep with the 3D world offset so it reads as one continuous space.
-#strip {
-	display: flex;
-	flex-direction: row;
-	width: 200vw;
-	height: 100%;
-	will-change: transform;
-}
-
-.room {
-	position: relative;
-	flex: 0 0 100vw;
-	width: 100vw;
-	height: 100%;
-
-	// The copy column, sitting clear of the left nav rail (#ui at 2vw).
-	// `display: block` overrides the global `main { display: contents }`, which
-	// would otherwise drop main's box and let the copy span the whole room.
-	> main {
-		display: block;
+	#container {
+		z-index: 0;
 		position: absolute;
-		top: 5vh;
-		left: 8vw;
-		width: 600px;
-		max-width: 80vw;
+		width: 100vw;
+		height: 100vh;
 	}
 
-	// Work view spans the room so the title row can right-align over the plane
-	// while the description column stays at its own width on the left.
-	> main#work {
-		width: 84vw;
-		max-width: 84vw;
-	}
-}
-
-.warning{
-	display:none ;
-}
-
-#content {
-
-	position: absolute;
-	width: 100%;
-	font-family: $main-font;
-	font-size: 1.5rem;
-	color: #3d3d3d;
-	// Extra top room clears the MSDF heading; no left padding so the text starts
-	// flush at the column edge (aligned with the nav menu).
-	padding: 7vh 2.3rem 2.3rem 0;
-
-	b {
-		color: black;
-	}
-
-	a {
-		color: black;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		transition: 0.4s;
-	}
-
-	a:hover {
-		color: rgba($color: #000000, $alpha: 0.55);
-	}
-}
-
-#sites {
-	text-align: left;
-
-	ul {
-		list-style-type: none;
-		padding: 0.3rem;
-	}
-
-	a {
-		display: flex;
-		text-decoration: none;
-		padding: 5px;
-		width: fit-content;
-	}
-
-	span {
-		&first-child {
-			margin: 3px;
-			padding: 2px;
-		}
-
-		&:nth-child(2) {
-			padding-left: 2px;
-			flex-grow: 1;
-		}
-	}
-
-	a {
-		color: black;
-	}
-
-	a:hover {
-		background-color: rgba($color: #000000, $alpha: 1);
-		text-decoration: none;
-		color: rgba($color: #ffffff, $alpha: 1);
-	}
-
-	#links {
-		a:hover {
-
-			text-decoration: none;
-			background-color: transparent;
-
-		}
-	}
-}
-
-#links {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-	align-items: flex-start;
-
-	img {
-		padding: 0.9rem;
-	}
-
-}
-
-// Work view: project titles sit in a row at the top, now right-aligned so the
-// list sits on the right (over the image side) instead of the left.
-#ex {
-	font-family: $main-font;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	justify-content: flex-end;
-	gap: 1.4rem;
-	width: 100%;
-
-	h1 {
-		margin: 0;
-		font-size: 1rem;
-		font-weight: 600;
-	}
-
-	a {
-		display: inline-block;
-		color: black;
-		text-decoration: none;
-		cursor: pointer;
-		background:linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-		transition: 0.6s;
-	}
-
-	a.item--current {
-		color: rgba($color: #000000, $alpha: 0.6);
-		--d: 100%;
-	}
-
-	a:hover {
-		color: rgba($color: #000000, $alpha: 0.6);
-		--d: 100%;
-	}
-}
-
-// Left description column, styled like the About copy.
-.infoFile{
-	font-family: $main-font;
-	font-size: 1.4rem;
-	width: 40vw;
-	margin-top: 9vh;
-	color: #3d3d3d;
-	display:block;
-
-	.info{
-		display: none;
-	}
-
-	.show__info{
-		display: block;
-	}
-
-	b {
-		color: black;
-	}
-
-	a {
-		color: black;
-		text-decoration: underline;
-		text-underline-offset: 3px;
-		transition: 0.4s;
-	}
-
-	a:hover {
-		color: rgba($color: #000000, $alpha: 0.55);
-	}
-
-	.project-links {
-		margin-top: 1.4rem;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		gap: 0.6rem 1.2rem;
-		font-size: 1rem;
-	}
-}
-
-#ui {
-	z-index: 1000;
-	position: absolute;
-	left: 2vw;
-	top: 50%;
-	transform: translateY(-50%);
-}
-
-#contact {
-	z-index: 1000;
-	position: absolute;
-	text-align: center;
-	left: 2vw;
-	bottom: 2vh;
-
-	#links {
-		padding: 0px;
-		margin: 0px;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	a {
-		padding: -0.4rem;
-		background:
-			linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-		transition: 0.6s;
-	}
-
-	a:hover {
-		filter: brightness(0.25);
-		color: black;
-		text-decoration: none;
-		--d: 100%;
-	}
-
-	img {
-		width: 3.1rem;
-	}
-}
-
-#contact-info {
-	position: fixed;
-	right: 2vw;
-	bottom: 2vh;
-	z-index: 1001;
-	font-family: $main-font;
-	font-size: 1.2rem;
-	color: #3d3d3d;
-	text-align: right;
-
-	b {
-		color: black;
-	}
-}
-
-// @media all and (min-width: 480px) and (max-width: 768px) { }
-@media all and (max-width: 480px) {
-
-	main {
-		overflow: hidden;
-	}
-
-	#experiment {
-		display: none;
-	}
-
-	// Rooms must size to themselves (100vw), not the transformed 200vw strip, so
-	// fixed positioning is swapped for absolute room-relative positioning.
-	.room > main,
-	.room > main#work {
+	// Full-viewport clip window. The shake transform is applied here; the rooms
+	// live in #strip inside, so navigation (strip translate) and shake never fight.
+	#terminal {
 		position: absolute;
+		z-index: 3;
 		top: 0;
 		left: 0;
-		width: 100%;
-		max-width: 100%;
+		width: 100vw;
 		height: 100vh;
-		overflow-y: scroll;
-		scroll-behavior: smooth;
+		overflow: hidden;
+		margin: 0;
+	}
+
+	// Horizontal strip holding one room per route, side by side. App pans this in
+	// lockstep with the 3D world offset so it reads as one continuous space.
+	#strip {
+		display: flex;
+		flex-direction: row;
+		width: 200vw;
+		height: 100%;
+		will-change: transform;
+	}
+
+	.room {
+		position: relative;
+		flex: 0 0 100vw;
+		width: 100vw;
+		height: 100%;
+
+		// The copy column, sitting clear of the left nav rail (#ui at 2vw).
+		// `display: block` overrides the global `main { display: contents }`, which
+		// would otherwise drop main's box and let the copy span the whole room.
+		> main {
+			display: block;
+			position: absolute;
+			top: 5vh;
+			left: 8vw;
+			width: 600px;
+			max-width: 80vw;
+		}
+
+		// Work view spans the room so the title row can right-align over the plane
+		// while the description column stays at its own width on the left.
+		> main#work {
+			width: 84vw;
+			max-width: 84vw;
+		}
+	}
+
+	.warning{
+		display:none ;
 	}
 
 	#content {
-		position: static;
-		font-family: $main-font;
-		font-size: 1.1rem;
+
+		position: absolute;
 		width: 100%;
+		font-family: $main-font;
+		font-size: 1.5rem;
 		color: #3d3d3d;
-		// Heading is hidden on small screens, so drop the desktop top padding.
-		padding: 1.5rem;
+		// Extra top room clears the MSDF heading; no left padding so the text starts
+		// flush at the column edge (aligned with the nav menu).
+		padding: 7vh 2.3rem 2.3rem 0;
+
+		b {
+			color: black;
+		}
+
+		a {
+			color: black;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+			transition: 0.4s;
+		}
+
+		a:hover {
+			color: rgba($color: #000000, $alpha: 0.55);
+		}
+	}
+
+	#sites {
+		text-align: left;
+
+		ul {
+			list-style-type: none;
+			padding: 0.3rem;
+		}
+
+		a {
+			display: flex;
+			text-decoration: none;
+			padding: 5px;
+			width: fit-content;
+		}
+
+		span {
+			&first-child {
+				margin: 3px;
+				padding: 2px;
+			}
+
+			&:nth-child(2) {
+				padding-left: 2px;
+				flex-grow: 1;
+			}
+		}
+
+		a {
+			color: black;
+		}
+
+		a:hover {
+			background-color: rgba($color: #000000, $alpha: 1);
+			text-decoration: none;
+			color: rgba($color: #ffffff, $alpha: 1);
+		}
+
+		#links {
+			a:hover {
+
+				text-decoration: none;
+				background-color: transparent;
+
+			}
+		}
+	}
+
+	#links {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		align-items: flex-start;
+
+		img {
+			padding: 0.9rem;
+		}
+
+	}
+
+	// Work view: project titles sit in a row at the top, now right-aligned so the
+	// list sits on the right (over the image side) instead of the left.
+	#ex {
+		font-family: $main-font;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 1.4rem;
+		width: 100%;
+
+		h1 {
+			margin: 0;
+			font-size: 1rem;
+			font-weight: 600;
+		}
+
+		a {
+			display: inline-block;
+			color: black;
+			text-decoration: none;
+			cursor: pointer;
+			background:linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
+			transition: 0.6s;
+		}
+
+		a.item--current {
+			color: rgba($color: #000000, $alpha: 0.6);
+			--d: 100%;
+		}
+
+		a:hover {
+			color: rgba($color: #000000, $alpha: 0.6);
+			--d: 100%;
+		}
+	}
+
+	// Left description column, styled like the About copy.
+	.infoFile{
+		font-family: $main-font;
+		font-size: 1.4rem;
+		width: 40vw;
+		margin-top: 9vh;
+		color: #3d3d3d;
+		display:block;
+
+		.info{
+			display: none;
+		}
+
+		.show__info{
+			display: block;
+		}
+
+		b {
+			color: black;
+		}
+
+		a {
+			color: black;
+			text-decoration: underline;
+			text-underline-offset: 3px;
+			transition: 0.4s;
+		}
+
+		a:hover {
+			color: rgba($color: #000000, $alpha: 0.55);
+		}
+
+		.project-links {
+			margin-top: 1.4rem;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 0.6rem 1.2rem;
+			font-size: 1rem;
+		}
+	}
+
+	#ui {
+		z-index: 1000;
+		position: absolute;
+		left: 2vw;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
+	#contact {
+		z-index: 1000;
+		position: absolute;
+		text-align: center;
+		left: 2vw;
+		bottom: 2vh;
+
+		#links {
+			padding: 0px;
+			margin: 0px;
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+
+		a {
+			padding: -0.4rem;
+			background:
+				linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
+			transition: 0.6s;
+		}
+
+		a:hover {
+			filter: brightness(0.25);
+			color: black;
+			text-decoration: none;
+			--d: 100%;
+		}
+
+		img {
+			width: 3.1rem;
+		}
+	}
+
+	#contact-info {
+		position: fixed;
+		right: 2vw;
+		bottom: 2vh;
+		z-index: 1001;
+		font-family: $main-font;
+		font-size: 1.2rem;
+		color: #3d3d3d;
+		text-align: right;
 
 		b {
 			color: black;
 		}
 	}
 
-	#terminal {
-		width: 100%;
-		max-width: 100%;
-		top: 0;
-		left: 0;
-	}
+	// Mobile (iPhone 13 mini / 375px and up, portrait): the desktop horizontal
+	// world-pan is bypassed (see app.js / Router.js). Navigation shows one room at a
+	// time and each room scrolls vertically over the live WebGL circuit background.
+	@media all and (max-width: 600px) {
 
-	#portafolio {
-		top: 4vh;
-		width: 100vh;
-		display: grid;
-		grid-template-columns: auto;
-		grid-gap: 20px;
-		overflow-x: hidden;
-
-		img {
-
-			width: 70%;
-			height: 50%;
+		// The "Full experience on Desktop" notice is no longer needed: this is a
+		// first-class mobile layout now.
+		.warning {
+			display: none;
 		}
-	}
 
-	#work {
-		.infoFile {
+		main {
+			overflow: hidden;
+		}
+
+		#experiment {
+			display: none;
+		}
+
+		#terminal {
 			width: 100%;
-			margin-top: 1rem;
-			font-size: 1.1rem;
+			max-width: 100%;
+			top: 0;
+			left: 0;
 		}
 
-		// Left-aligned row on small screens (no plane beside it).
-		#ex {
-			justify-content: flex-start;
-			gap: 0.8rem 1.2rem;
+		// No horizontal strip: stack to a single column and show only the active room
+		// (app.js no longer applies the translateX pan on mobile).
+		#strip {
+			width: 100vw;
+			flex-direction: column;
+			transform: none;
+		}
 
-			h1 {
-				font-size: 0.95rem;
+		.room {
+			flex: none;
+			width: 100vw;
+			min-height: 100vh;
+			display: none;
+		}
+
+		.room--current {
+			display: block;
+		}
+
+		// Each room's content is the scroll container, full height, clearing the
+		// fixed top nav and the fixed bottom social bar.
+		.room > main,
+		.room > main#work {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			max-width: 100%;
+			height: 100vh;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+			scroll-behavior: smooth;
+			padding: 4.5rem 0 8rem;
+		}
+
+		// About copy scrolls directly over the circuits (no opaque background).
+		#content {
+			position: static;
+			font-family: $main-font;
+			font-size: 1.1rem;
+			width: 100%;
+			color: #3d3d3d;
+			padding: 0 1.4rem;
+
+			b {
+				color: black;
 			}
 		}
-	}
 
-	#contact {
-		display: none;
-		bottom: 0vh;
+		// Work: projects stacked image-then-text, one under another.
+		#work {
+			.work-list {
+				display: flex;
+				flex-direction: column;
+				gap: 2.5rem;
+				padding: 0 1.4rem;
+			}
+
+			.project-card {
+				display: flex;
+				flex-direction: column;
+
+				img {
+					width: 100%;
+					height: auto;
+					display: block;
+				}
+
+				h2 {
+					font-family: $main-font;
+					font-size: 1.3rem;
+					font-weight: 600;
+					margin: 0.9rem 0 0.4rem;
+					color: black;
+				}
+
+				p {
+					font-family: $main-font;
+					font-size: 1.05rem;
+					color: #3d3d3d;
+					margin: 0;
+				}
+
+				b {
+					color: black;
+				}
+
+				a {
+					color: black;
+					text-decoration: underline;
+					text-underline-offset: 3px;
+				}
+
+				.project-links {
+					margin-top: 0.9rem;
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+					gap: 0.5rem 1.1rem;
+					font-size: 0.95rem;
+				}
+			}
+		}
+
+		// Top-center nav, pinned while content scrolls.
+		#ui {
+			left: 50%;
+			top: 0;
+			transform: translateX(-50%);
+			padding: 0.7rem 1.2rem;
+			background: rgba(255, 255, 255, 0.7);
+			backdrop-filter: blur(6px);
+			border-radius: 0 0 0.6rem 0.6rem;
+		}
+
+		#nav {
+			flex-direction: row;
+			gap: 1.6rem;
+		}
+
+		// Social links: styled like the top nav (translucent blurred pill) but pinned
+		// to the bottom center, and only revealed once the page is scrolled to its end
+		// (see main.js). Hidden + slid down by default.
+		#contact {
+			display: block;
+			left: 50%;
+			right: auto;
+			bottom: 0;
+			padding: 0.7rem 1.6rem;
+			background: rgba(255, 255, 255, 0.7);
+			backdrop-filter: blur(6px);
+			border-radius: 0.6rem 0.6rem 0 0;
+			opacity: 0;
+			pointer-events: none;
+			transform: translateX(-50%) translateY(120%);
+			transition: transform 0.45s ease, opacity 0.45s ease;
+
+			#links {
+				flex-direction: row;
+				gap: 1.1rem;
+			}
+
+			// ~2x the previous icon size.
+			img {
+				width: 2.8rem;
+			}
+		}
+
+		#contact.contact--visible {
+			opacity: 1;
+			pointer-events: auto;
+			transform: translateX(-50%) translateY(0);
+		}
+
+		// Avoid clutter: the bottom social bar is the contact affordance on mobile.
+		#contact-info {
+			display: none;
+		}
 	}
-	.warning{
-		display:block ;
-	}
-}

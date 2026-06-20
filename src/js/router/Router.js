@@ -80,5 +80,12 @@ export default class Router {
             const isActive = el.getAttribute('data-route') === path;
             el.classList.toggle('item--current', isActive);
         });
+
+        // Mark the active room so mobile CSS can show only the current page
+        // (desktop ignores this class and relies on the horizontal strip pan).
+        this.rooms.forEach((room) => {
+            const isActive = room.getAttribute('data-route') === path;
+            room.classList.toggle('room--current', isActive);
+        });
     }
 }
