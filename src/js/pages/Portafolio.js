@@ -1,5 +1,7 @@
 import gsap from 'gsap';
 
+const INSTAGRAM_URL = 'https://www.instagram.com/cyrstem/';
+
 // The project list (top) and the active description (left) are built from
 // projects.json at runtime. Selecting a project updates the left copy and emits
 // `portfolio:active`, which the 3D app uses to swap the plane texture and the
@@ -53,6 +55,9 @@ function renderMobileList(main, projects) {
                     `;
                 })
                 .join('')}
+            <article class="project-card">
+                <h2><a href="${INSTAGRAM_URL}" target="_blank" rel="noopener">More Work</a></h2>
+            </article>
         </div>
     `;
 }
@@ -111,11 +116,13 @@ export default {
             bus?.emit('portfolio:active', { index, project });
         };
 
-        list.innerHTML = projects
-            .map((p, i) => `<a class="nav_item" href="#" data-index="${i}"><h1>${p.title}</h1></a>`)
-            .join('');
+        list.innerHTML =
+            projects
+                .map((p, i) => `<a class="nav_item" href="#" data-index="${i}"><h1>${p.title}</h1></a>`)
+                .join('') +
+            `<a class="nav_item" href="${INSTAGRAM_URL}" target="_blank" rel="noopener"><h1>More Work</h1></a>`;
 
-        list.querySelectorAll('.nav_item').forEach((el) => {
+        list.querySelectorAll('.nav_item[data-index]').forEach((el) => {
             el.addEventListener('click', (event) => {
                 event.preventDefault();
                 select(Number(el.dataset.index));
