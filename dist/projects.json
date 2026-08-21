@@ -1,5 +1,14 @@
 [
     {
+        "id": "soundtrack-of-my-life",
+        "title": "Soundtrack of My Life",
+        "image": "insta-4.png",
+        "description": "A data viz experiment in self-exploration — years of collected listening turned into a living map of taste, memory, and time. Orbit through decades of music and watch the archive rearrange itself into shapes that feel like a diary you can navigate.",
+        "links": [
+            { "label": "Soundtrack of My Life", "url": "https://soundtrack-self.vercel.app/" }
+        ]
+    },
+    {
         "id": "moving-photon",
         "title": "Moving Photon",
         "image": "insta-0.png",
