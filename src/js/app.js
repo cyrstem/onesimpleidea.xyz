@@ -1,38 +1,25 @@
 import { Renderer, RenderTarget } from 'ogl';
-import gsap from 'gsap';
 import { throttle } from './utils/Utils';
-import CircuitManager from './classes/CircuitManager';
 import Forms3DManager from './classes/Forms3DManager';
 import TextManager from './classes/TextManager';
 import PlaneManager from './classes/PlaneManager';
 import PostFX from './classes/PostFX';
 
-const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-
-// Lightweight OGL app. A 3D wireframe scene and a 2D circuit scene are rendered
-// into one RenderTarget (white background), then sent through the Post FBO.
-// An idle director keeps spawning forms on the right half; clicking adds one.
+// Lightweight OGL app for the single-page portfolio. 3D impossible figures stay
+// as a subdued background. 2D circuits / connectors are intentionally disabled
+// (CircuitManager is left in the codebase for later restoration).
 export default class App {
     constructor(stage, bus) {
         this.bus = bus;
         this.container = stage.dom;
         this._raf = null;
 
-        // Idle director state. Paused while the Work view is active.
-        this._spawnEvery = 1.4;
+        // Idle director: sparse ambient 3D forms only.
+        this._spawnEvery = 3.2;
         this._spawnTimer = 0;
-        this._maxForms = 3;
+        this._maxForms = 2;
         this._lastTime = undefined;
         this._idle = true;
-
-        // Shared world offset (0 = About room, 1 = Work room). Every layer and the
-        // DOM strip read from this so navigation pans the whole space as one.
-        this._nav = { x: 0 };
-        this._navStarted = false;
-
-        // Viewport target (normalized, y up) of the latest shape; nav connectors
-        // walk toward it and collide.
-        this._lastTarget = [0.78, 0.5];
 
         this.init();
         this.setupEvents();
@@ -41,9 +28,6 @@ export default class App {
     }
 
     init() {
-        // On phones we drop the horizontal "spatial" navigation: routing becomes
-        // vertical scroll (CSS shows one room at a time) and the world offset is
-        // kept at 0 so the circuits stay live behind both pages.
         this.isMobile = window.matchMedia('(max-width: 600px)').matches;
 
         this.dpr = Math.min(window.devicePixelRatio, 2);
@@ -53,47 +37,47 @@ export default class App {
             dpr: this.dpr
         });
         this.gl = this.renderer.gl;
-        this.gl.clearColor(1, 1, 1, 1);
+        this.gl.clearColor(0.9646, 0.9647, 0.9650, 1);
         this.container.appendChild(this.gl.canvas);
 
-        // DOM overlay that shakes in lockstep with the FBO (holds the routed copy).
         this.overlay = document.getElementById('terminal');
 
         this.size = this.measure();
         this.renderer.setSize(this.size.width, this.size.height);
 
-        // NEAREST keeps the crisp circuit strokes sharp through the FBO composite
-        // (LINEAR sampling softens the thin lines).
+        // LINEAR sampling so soft dissolve edges aren't stair-stepped.
         this.sceneRT = new RenderTarget(this.gl, {
             width: this.size.width * this.dpr,
             height: this.size.height * this.dpr,
-            minFilter: this.gl.NEAREST,
-            magFilter: this.gl.NEAREST
+            minFilter: this.gl.LINEAR,
+            magFilter: this.gl.LINEAR
         });
 
-        this.circuit = new CircuitManager(this.gl, {
-            resolution: [this.size.width, this.size.height]
-        });
-        // Pull in the GA-evolved circuit library (async, non-blocking).
-        this.circuit.loadLibrary();
         this.forms3D = new Forms3DManager(this.gl, {
-            aspect: this.size.width / this.size.height
+            aspect: this.size.width / this.size.height,
+            bus: this.bus
         });
-        // Detail the impossible figures' beam faces with the same evolved library.
         this.forms3D.loadLibrary();
+
+        // MSDF headings are retired in favour of DOM typography; keep the
+        // manager constructed so dispose paths stay simple, but never show it.
         this.text = new TextManager(this.gl, {
             aspect: this.size.width / this.size.height
         });
+        this.text.setWide(false);
+
         this.plane = new PlaneManager(this.gl, {
             aspect: this.size.width / this.size.height
         });
-        this.post = new PostFX(this.gl);
+        // Hide the WebGL plane on mobile — thumbs live in the DOM list.
+        this.plane.uAlpha.value = this.isMobile ? 0 : 1;
 
-        // The field (forms + circuit) lives in the About room; dim it a touch so
-        // the copy stays legible. It pans away when navigating to Work.
-        this.circuit.uAlpha.value = 0.45;
-        this.forms3D.uAlpha.value = 0.45;
-        this.text.setWide(window.innerWidth > 480);
+        this.post = new PostFX(this.gl);
+        // Quiet the ambient block glitch so grain dissolve reads cleanly.
+        this.post.uBlockAmount.value = 0.08;
+        this.post.uBlockRandomness.value = 0.04;
+
+        this.forms3D.uAlpha.value = 0.22;
     }
 
     measure() {
@@ -105,112 +89,59 @@ export default class App {
 
     setupEvents() {
         this._onResize = throttle(this.resize.bind(this), 200);
-        this._onClick = this.handleClick.bind(this);
-
         window.addEventListener('resize', this._onResize);
-        window.addEventListener('click', this._onClick);
     }
 
     subscribeToBus() {
         if (!this.bus) return;
         this._onRouteChange = (detail) => this.handleRouteChange(detail);
-        this._onPortfolioActive = (detail) => this.handlePortfolioActive(detail);
+        this._onPortfolioActive = (detail) => this.handlePortfolioShow(detail);
+        this._onPortfolioClear = () => this.handlePortfolioClear();
+        this._onPortfolioPreload = (detail) => this.handlePortfolioPreload(detail);
+
         this.bus.on('route:change', this._onRouteChange);
         this.bus.on('portfolio:active', this._onPortfolioActive);
+        this.bus.on('portfolio:clear', this._onPortfolioClear);
+        this.bus.on('portfolio:preload', this._onPortfolioPreload);
     }
 
-    // Navigation just animates the shared world offset toward the room index; the
-    // render loop applies it to every layer and the DOM strip in lockstep.
-    handleRouteChange({ name, index } = {}) {
-        this._routeName = name;
-        this._idle = name !== 'portfolio';
-
-        // Mobile: no horizontal pan. Keep the world at the About room so the
-        // circuits stay centred behind the (vertically scrolling) content and
-        // the off-screen image plane never slides in.
-        if (this.isMobile) {
-            gsap.killTweensOf(this._nav);
-            this._nav.x = 0;
-            return;
-        }
-
-        if (!this._navStarted) {
-            // Snap on first load so we don't pan in from the wrong room.
-            this._navStarted = true;
-            gsap.killTweensOf(this._nav);
-            this._nav.x = index;
-        } else {
-            gsap.to(this._nav, { x: index, duration: 1.1, ease: 'power3.inOut' });
-        }
+    handleRouteChange() {
+        // Single-page: no room pan. Ambient forms keep idling quietly.
+        this._idle = true;
     }
 
-    // Swap the plane texture for the freshly selected project. The MSDF title and
-    // the DOM copy are only revealed once the image has actually loaded.
-    handlePortfolioActive({ index, project } = {}) {
-        if (!project) return;
+    handlePortfolioPreload({ projects } = {}) {
+        if (!projects?.length) return;
+        this.plane.preload(projects.map((p) => p.image).filter(Boolean));
+    }
 
-        // Hide the current title while the new image loads.
-        this.text.setWorkVisible(false);
+    handlePortfolioShow({ project, reducedMotion } = {}) {
+        if (!project?.image || this.isMobile) return;
 
         const token = (this._activeToken || 0) + 1;
         this._activeToken = token;
 
-        this.plane.setTexture(project.image, () => {
-            // Ignore stale loads if the user already picked another project.
+        this.plane.dissolveTo(project.image, {
+            reducedMotion: !!reducedMotion,
+            duration: 0.55
+        }).then(() => {
             if (token !== this._activeToken) return;
-            this.text.setWorkTitle(project.title);
-            this.text.setWorkVisible(true);
-            if (this.bus) this.bus.emit('portfolio:reveal', { index });
+            if (this.bus) this.bus.emit('portfolio:reveal', { index: project.id });
         });
     }
 
-    // Drive every layer and the DOM strip from the single world offset so the
-    // scene, plane, headings, and HTML rooms all pan together as one space.
+    handlePortfolioClear() {
+        this._activeToken = (this._activeToken || 0) + 1;
+        this.plane.clear();
+    }
+
     applyWorld() {
-        const x = this._nav.x;
-        this.forms3D.panTo(x);
-        this.circuit.panTo(x);
-        this.plane.panTo(x);
-        this.text.panTo(x);
-
-        // Mobile stacks/scrolls rooms via CSS, so skip the horizontal strip pan.
-        if (this.isMobile) return;
-
-        if (!this._strip) this._strip = document.getElementById('strip');
-        if (this._strip) this._strip.style.transform = `translateX(${-x * 100}vw)`;
+        // Camera stays locked; plane and forms share the single viewport.
+        this.forms3D.panTo(0);
+        this.plane.panTo(0);
+        this.text.panTo(0);
     }
 
-    handleClick(event) {
-        // Mobile: taps are for scrolling and following links. Don't spawn forms or
-        // shoot connectors; nav links still route via their href (hashchange).
-        if (this.isMobile) return;
-
-        // Nav links shoot a connector from the menu toward the latest shape.
-        const navLink = event.target.closest && event.target.closest('#nav [data-route]');
-        if (navLink) {
-            this.shootConnector(navLink);
-            return;
-        }
-
-        // Let other real UI (links, buttons) behave normally without spawning.
-        if (event.target.closest && event.target.closest('a, button')) return;
-
-        // Only seed the ambient field while in the About room.
-        if (!this._idle) return;
-
-        const x = event.clientX / this.size.width;
-        const y = 1 - event.clientY / this.size.height;
-
-        this.circuit.spawnForm({ x, y });
-        this._lastTarget = this.circuit.lastCenter;
-        this.circuit.setEvolveTarget(this._lastTarget);
-        this.post.reseed(this._lastTarget);
-        this.post.triggerShake();
-    }
-
-    // High-frequency screen shake offset (UV units) derived from the current
-    // amplitude. Applied to the post pass and mirrored onto the DOM overlay so
-    // GPU content and HTML copy wobble together.
     applyShake(t) {
         const amp = this.post.uShake.value;
         const ox = (Math.sin(t * 127.0) + Math.sin(t * 211.0)) * amp * 0.006;
@@ -220,75 +151,34 @@ export default class App {
         this.post.uShakeOffset.value[1] = oy;
 
         if (this.overlay) {
-            // Sampling the FBO at uv+offset shifts content by -offset in screen
-            // space; y is flipped because UV is y-up while the DOM is y-down.
             this.overlay.style.transform = amp > 0.0001
                 ? `translate(${-ox * this.size.width}px, ${oy * this.size.height}px)`
                 : '';
         }
     }
 
-    // Grow a line+dot from the menu item's edge that random-walks across the
-    // viewport and collides with a target shape. The Work link aims at the
-    // portfolio image plane (and vanishes on impact); others hit the last shape.
-    shootConnector(link) {
-        const rect = link.getBoundingClientRect();
-        const fromX = clamp((rect.left + rect.width) / this.size.width, 0, 1);
-        const fromY = clamp(1 - (rect.top + rect.height * 0.5) / this.size.height, 0, 1);
-
-        const route = link.getAttribute('data-route');
-
-        // Work: grow from the menu toward the portfolio image and collide with it.
-        if (route === '/portfolio') {
-            const [toX, toY] = this.plane.connectTarget();
-            this.circuit.spawnPlaneConnector(fromX, fromY, toX, toY, () => this.post.triggerShake());
-            return;
-        }
-
-        // About, coming back from Work: grow from the image across to the About
-        // side (the clicked menu item), so the line clearly reaches About.
-        if (route === '/' && this._routeName === 'portfolio') {
-            const [imgX, imgY] = this.plane.connectTarget();
-            this.circuit.spawnPlaneConnector(imgX, imgY, fromX, fromY, () => this.post.triggerShake());
-            return;
-        }
-
-        const [toX, toY] = this._lastTarget || [0.78, 0.5];
-        this.circuit.spawnConnector(fromX, fromY, toX, toY, () => this.post.triggerShake());
-    }
-
     director(dt) {
-        if (!this._idle) return;
+        if (!this._idle || this.isMobile) return;
         this._spawnTimer += dt;
         if (this._spawnTimer < this._spawnEvery) return;
         this._spawnTimer = 0;
 
-        const active = this.circuit.activeCount + this.forms3D.activeCount;
-        if (active >= this._maxForms) return;
-
-        if (Math.random() < 0.35) {
-            this.forms3D.spawnForm();
-            this._lastTarget = this.forms3D.lastCenter;
-        } else {
-            this.circuit.spawnForm();
-            this._lastTarget = this.circuit.lastCenter;
-        }
-        // Steer the live circuit GA toward wherever the field last grew, and
-        // re-seed the ambient block glitch so it drifts with the evolving field.
-        this.circuit.setEvolveTarget(this._lastTarget);
-        this.post.reseed(this._lastTarget);
+        if (this.forms3D.activeCount >= this._maxForms) return;
+        this.forms3D.spawnForm();
     }
 
     resize() {
+        this.isMobile = window.matchMedia('(max-width: 600px)').matches;
+        this.plane.uAlpha.value = this.isMobile ? 0 : 1;
+
         this.size = this.measure();
         this.renderer.setSize(this.size.width, this.size.height);
         this.sceneRT.setSize(this.size.width * this.dpr, this.size.height * this.dpr);
-        this.circuit.resize(this.size.width, this.size.height);
         this.forms3D.resize(this.size.width, this.size.height);
         this.text.resize(this.size.width, this.size.height);
         this.plane.resize(this.size.width, this.size.height);
         this.post.resize();
-        this.text.setWide(window.innerWidth > 480);
+        this.text.setWide(false);
     }
 
     start() {
@@ -299,24 +189,17 @@ export default class App {
 
             this.director(dt);
             this.forms3D.update(t);
-            this.circuit.update(t);
             this.applyWorld();
             this.applyShake(t);
 
-            // Composite 3D (depth) then 2D (overlay) into one target.
             this.renderer.render({
                 scene: this.forms3D.scene,
                 camera: this.forms3D.camera,
                 target: this.sceneRT,
                 clear: true
             });
-            this.renderer.render({
-                scene: this.circuit.scene,
-                target: this.sceneRT,
-                clear: false
-            });
             this.plane.render(this.sceneRT);
-            this.text.render(this.sceneRT);
+            // TextManager intentionally skipped (DOM typography only).
 
             this.post.render(this.sceneRT.texture);
 
@@ -333,14 +216,14 @@ export default class App {
 
         if (this._onResize?.cancel) this._onResize.cancel();
         window.removeEventListener('resize', this._onResize);
-        window.removeEventListener('click', this._onClick);
 
         if (this.bus) {
             this.bus.off('route:change', this._onRouteChange);
             this.bus.off('portfolio:active', this._onPortfolioActive);
+            this.bus.off('portfolio:clear', this._onPortfolioClear);
+            this.bus.off('portfolio:preload', this._onPortfolioPreload);
         }
 
-        this.circuit.dispose();
         this.forms3D.dispose();
         this.text.dispose();
         this.plane.dispose();

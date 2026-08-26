@@ -4,6 +4,9 @@
         "title": "Soundtrack of My Life",
         "image": "insta-4.png",
         "description": "A data viz experiment in self-exploration — years of collected listening turned into a living map of taste, memory, and time. Orbit through decades of music and watch the archive rearrange itself into shapes that feel like a diary you can navigate.",
+        "year": "2025",
+        "with": null,
+        "feat": null,
         "links": [
             { "label": "Soundtrack of My Life", "url": "https://soundtrack-self.vercel.app/" }
         ]
@@ -12,7 +15,10 @@
         "id": "moving-photon",
         "title": "Moving Photon",
         "image": "insta-0.png",
-        "description": "I collaborated on developing the Virtual Experience for <a href=\"https://friendred.studio/2021/10/07/moving-photon/\" target=\"_blank\">Moving Photon</a>, an interactive installation/performance created by installation artist <a href=\"https://friendred.studio\" target=\"_blank\">Friendred Peng.</a> Participation in Moving Photon can be in 5 different ways, including a Phantom performance, interactive installation, interactive performance, interactive performance with EEG and a <a href=\"https://movingphoton.friendred.studio/\" target=\"_blank\">remote performance.</a>",
+        "description": "Interactive installation and performance collaboration with Friendred Peng — Phantom performance, EEG-driven interaction, and a remote performance experience.",
+        "year": "2021",
+        "with": "Friendred Peng",
+        "feat": null,
         "links": [
             { "label": "Moving Photon", "url": "https://friendred.studio/2021/10/07/moving-photon/" },
             { "label": "Friendred Studio", "url": "https://friendred.studio" },
@@ -23,7 +29,10 @@
         "id": "glitch-machine",
         "title": "Glitch Machine",
         "image": "insta-1.png",
-        "description": "A custom Glitch App build for <a href=\"https://www.instagram.com/jenna___marsh/\" target=\"_blank\">Jenna Marsh</a>, it lets you play with a image applying different filters and export the resulting image for printing.",
+        "description": "A custom glitch app built for Jenna Marsh — play with an image, apply different filters, and export the result for printing.",
+        "year": "2020",
+        "with": "Jenna Marsh",
+        "feat": null,
         "links": [
             { "label": "Jenna Marsh", "url": "https://www.instagram.com/jenna___marsh/" }
         ]
@@ -32,14 +41,20 @@
         "id": "noizu",
         "title": "Noizu",
         "image": "insta-2.png",
-        "description": "Custom build a Audio player for Linux and Mac. Building a light and simple player for linux, based on my old love to sonique and winamp. I do miss those programs when UI and UX were actually interesting and different.",
+        "description": "Custom audio player for Linux and Mac — a light, simple player inspired by Sonique and Winamp, when UI and UX were actually interesting and different.",
+        "year": "2019",
+        "with": null,
+        "feat": null,
         "links": []
     },
     {
         "id": "yaesta",
         "title": "YaEsta.com",
         "image": "insta-3.png",
-        "description": "I Develop a Physical and fully interactive installation with video Mapping and custom software projected to the tallest building in Quito, for the launch of the e-commerce site YaEsta.com. As a way to avoid tradicional publicity, i pitch to the owners this sort of engagement as a new way to call up attention of the public. i was also part of the Tech team managing the platform until it was acquire by other company.",
+        "description": "Physical interactive installation with video mapping projected onto the tallest building in Quito for the launch of YaEsta.com. Also part of the tech team managing the platform until acquisition.",
+        "year": "2016",
+        "with": null,
+        "feat": null,
         "links": [
             { "label": "YaEsta Pacman", "url": "https://www.youtube.com/watch?v=YHZd0TxPMkY&t=1s&ab_channel=UPDRONEInteligenciaAeron%C3%A1utica" }
         ]

@@ -20,8 +20,8 @@ export default class PostFX {
         // offset derived from it lives in uShakeOffset (also mirrored to the DOM).
         this.uShake = { value: 0 };
         this.uShakeOffset = { value: [0, 0] };
-        this.uBgColorA = { value: [1, 1, 1] };
-        this.uBgColorB = { value: [1, 1, 1] };
+        this.uBgColorA = { value: [0.9646, 0.9647, 0.9650] };
+        this.uBgColorB = { value: [0.9646, 0.9647, 0.9650] };
 
         // Ambient block-fracture glitch (ported from the Cinder blockss shader).
         // Kept deliberately subtle and always-on; the circuit GA re-seeds the
@@ -30,8 +30,9 @@ export default class PostFX {
         this.uBlockDir = { value: [1, 0] };
         this.uBlockSeed = { value: 0 };
         this.uBlockSize = { value: 0.5 };
-        this.uBlockRandomness = { value: 0.12 };
-        this.uBlockAmount = { value: 1.0 };
+        // Kept very quiet so the project dissolve grain remains the hero effect.
+        this.uBlockRandomness = { value: 0.04 };
+        this.uBlockAmount = { value: 0.08 };
 
         this.pass = this.post.addPass({
             fragment,

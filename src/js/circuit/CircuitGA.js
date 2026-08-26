@@ -34,6 +34,7 @@ export default class CircuitGA {
         this.pop = [];
         this.ranked = [];
         this.spawnsSinceGen = 0;
+        this.generation = 0;
 
         this._fill();
     }
@@ -102,5 +103,28 @@ export default class CircuitGA {
 
         this.pop = next;
         this._rank();
+        this.generation += 1;
+    }
+
+    // Compact stats for the identity rail (and any other live readout).
+    snapshot() {
+        if (!this.ranked.length) this._rank();
+        const size = this.ranked.length;
+        let best = 0;
+        let mean = 0;
+        if (size) {
+            best = this.ranked[0].f;
+            let sum = 0;
+            for (const r of this.ranked) sum += r.f;
+            mean = sum / size;
+        }
+        return {
+            generation: this.generation,
+            best,
+            mean,
+            size,
+            spawnsSinceGen: this.spawnsSinceGen,
+            evolveEvery: this.evolveEvery
+        };
     }
 }

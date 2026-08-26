@@ -4,14 +4,12 @@ import EventBus from './js/core/EventBus';
 import App from './js/app';
 import UI from './js/UI';
 import Router from './js/router/Router';
-import About from './js/pages/About';
-import Portfolio from './js/pages/Portafolio';
+import Home from './js/pages/Portafolio';
 
 window.onload = () => {
 	const bus = new EventBus();
 
-	// Inject the static layout (nav + contact) before the router resolves.
-	new UI();
+	new UI(bus);
 
 	new App(
 		{
@@ -20,34 +18,36 @@ window.onload = () => {
 		bus
 	);
 
+	// Single-page site. Legacy `#/portfolio` hashes fall back to `/`.
+	if (window.location.hash === '#/portfolio') {
+		window.location.hash = '#/';
+	}
+
 	const router = new Router({
 		bus,
 		mount: document.getElementById('terminal'),
 		routes: [
-			{ path: '/', view: About },
-			{ path: '/portfolio', view: Portfolio }
+			{ path: '/', view: Home }
 		]
 	});
 	router.start();
 
-	// Mobile: the bottom social bar only reveals once the active page is scrolled
-	// to its end. Each room's <main> is the scroll container (see _layout.scss).
+	// Mobile: reveal bottom contact once the page is scrolled near the end.
 	const contact = document.getElementById('contact');
-	const atEnd = (el) => el.scrollTop + el.clientHeight >= el.scrollHeight - 4;
-	const reveal = (el) => {
-		if (contact && el) contact.classList.toggle('contact--visible', atEnd(el));
+	const updateContact = () => {
+		if (!contact) return;
+		const main = document.querySelector('#home');
+		const isMobile = window.matchMedia('(max-width: 600px)').matches;
+		if (!isMobile || !main) {
+			contact.classList.remove('contact--visible');
+			return;
+		}
+		const doc = document.documentElement;
+		const nearEnd = window.scrollY + window.innerHeight >= doc.scrollHeight - 48;
+		contact.classList.toggle('contact--visible', nearEnd);
 	};
-	document.addEventListener('scroll', (event) => {
-		const el = event.target;
-		if (el && el.matches && el.matches('.room > main')) reveal(el);
-	}, true);
-	bus.on('route:change', () => {
-		requestAnimationFrame(() => {
-			const main = document.querySelector('.room--current > main');
-			if (main) reveal(main);
-			else if (contact) contact.classList.remove('contact--visible');
-		});
-	});
+	window.addEventListener('scroll', updateContact, { passive: true });
+	bus.on('route:change', () => requestAnimationFrame(updateContact));
 
 	simpleSign();
 };

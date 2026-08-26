@@ -24,8 +24,9 @@ const UNIT_REGION = { x0: 0, y0: 0, x1: 1, y1: 1 };
 // An orthographic camera is required: the illusion relies on the projected beam
 // endpoints coinciding, which perspective foreshortening would pull apart.
 export default class Forms3DManager {
-    constructor(gl, { aspect = 1 } = {}) {
+    constructor(gl, { aspect = 1, bus = null } = {}) {
         this.gl = gl;
+        this.bus = bus;
         this.scene = new Transform();
 
         this.viewSize = 1.2; // half-height of the orthographic frustum (world units)
@@ -63,16 +64,36 @@ export default class Forms3DManager {
     async loadLibrary(url = '/circuits.json') {
         try {
             const res = await fetch(url);
-            if (!res.ok) return;
+            if (!res.ok) {
+                this.publishGa();
+                return;
+            }
             const data = await res.json();
-            if (!Array.isArray(data.forms)) return;
+            if (!Array.isArray(data.forms)) {
+                this.publishGa();
+                return;
+            }
             const genomes = data.forms.map((f) => f.genome).filter(Boolean);
-            if (!genomes.length) return;
+            if (!genomes.length) {
+                this.publishGa();
+                return;
+            }
             this.ga.seed(genomes);
             this.gaReady = true;
         } catch (e) {
             // Keep the plain wireframes when the library can't be loaded.
         }
+        this.publishGa();
+    }
+
+    // Push current GA + active-form stats to the identity rail.
+    publishGa() {
+        if (!this.bus) return;
+        this.bus.emit('ga:update', {
+            ...this.ga.snapshot(),
+            active: this.activeCount,
+            ready: this.gaReady
+        });
     }
 
     setEvolveTarget(target) {
@@ -169,9 +190,9 @@ export default class Forms3DManager {
 
         const mesh = new Mesh(this.gl, { geometry, program, mode: this.gl.LINES });
         mesh.frustumCulled = false;
-        // Keep figures in the right half, inset from the edges so they don't clip.
+        // Keep figures behind the center-left preview, inset from edges.
         const hw = this.viewSize * this.aspect;
-        mesh.position.set(rand(0.18 * hw, 0.55 * hw), rand(-0.5, 0.5) * this.viewSize, 0);
+        mesh.position.set(rand(-0.42 * hw, -0.05 * hw), rand(-0.35, 0.4) * this.viewSize, 0);
         // Start tilted: impossible figures ease to lockRot; platonic solids spin.
         mesh.rotation.set(rand(-0.9, 0.9), rand(-1.3, 1.3), rand(-0.5, 0.5));
         mesh.scale.set(0.001);
@@ -214,6 +235,7 @@ export default class Forms3DManager {
         tl.to(uFade, { value: 0, duration: 0.8, ease: 'power2.in' }, '+=1.3');
         form.timeline = tl;
 
+        this.publishGa();
         return form;
     }
 
@@ -229,6 +251,8 @@ export default class Forms3DManager {
         if (form.dotProgram.remove) form.dotProgram.remove();
         if (form.geometry.remove) form.geometry.remove();
         if (form.program.remove) form.program.remove();
+
+        this.publishGa();
     }
 
     setAlpha(value, duration = 0.6) {

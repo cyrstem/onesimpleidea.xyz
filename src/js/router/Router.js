@@ -81,11 +81,30 @@ export default class Router {
             el.classList.toggle('item--current', isActive);
         });
 
+        const isMobile = window.matchMedia('(max-width: 600px)').matches;
+
         // Mark the active room so mobile CSS can show only the current page
         // (desktop ignores this class and relies on the horizontal strip pan).
         this.rooms.forEach((room) => {
             const isActive = room.getAttribute('data-route') === path;
             room.classList.toggle('room--current', isActive);
+
+            // Mobile bypasses the horizontal strip pan (see app.js), so each room
+            // must be explicitly hidden. The `hidden` attribute is a reliable
+            // fallback when CSS fails to load or `display: contents` on <main>
+            // confuses WebKit's subtree hiding.
+            if (isMobile) {
+                room.toggleAttribute('hidden', !isActive);
+            } else {
+                room.removeAttribute('hidden');
+            }
         });
+
+        if (isMobile) {
+            requestAnimationFrame(() => {
+                const main = document.querySelector('.room--current > main');
+                if (main) main.scrollTop = 0;
+            });
+        }
     }
 }

@@ -1,5 +1,11 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani&display=swap');
-$main-font:'Rajdhani', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+$main-font: 'Roboto Mono', monospace;
+
+// surya-aditya.com: body 1.4rem/1.5 @ 400, secondary 1.2rem (on html { font-size: 10px })
+$text-base: 1.4rem;
+$text-sm: 1.2rem;
+$text-fg: #454545;
 $font-color: black;
 $font-hover: #B7B5B5;
+$bg-color: oklab(97.315% 0 -.00011);

@@ -1,470 +1,375 @@
-	@import "_ui";
-	@import "_vars";
+@import "_ui";
+@import "_vars";
 
-	#container {
-		z-index: 0;
-		position: absolute;
-		width: 100vw;
-		height: 100vh;
+#container {
+	z-index: 0;
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+}
+
+// Full-viewport overlay for routed copy. Shake can still apply here.
+#terminal {
+	position: absolute;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	margin: 0;
+	pointer-events: none;
+}
+
+#strip {
+	display: flex;
+	flex-direction: row;
+	width: 100vw;
+	height: 100%;
+}
+
+.room {
+	position: relative;
+	flex: 0 0 100vw;
+	width: 100vw;
+	height: 100%;
+	pointer-events: none;
+
+	> main {
+		display: block;
+		pointer-events: auto;
 	}
 
-	// Full-viewport clip window. The shake transform is applied here; the rooms
-	// live in #strip inside, so navigation (strip translate) and shake never fight.
-	#terminal {
+	> main#home {
 		position: absolute;
-		z-index: 3;
 		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		overflow: hidden;
-		margin: 0;
+		right: 0;
+		width: min(42vw, 520px);
+		height: 100%;
+		padding: 5vh 3vw 8vh 0;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
+.home-scroll {
+	display: flex;
+	flex-direction: column;
+	gap: 4.5rem;
+	padding-right: 0.5rem;
+}
+
+.bio {
+	font-family: $main-font;
+	font-size: $text-base;
+	font-weight: 400;
+	line-height: 1.55;
+	letter-spacing: 0.02em;
+	color: $text-fg;
+
+	p {
+		margin: 0 0 1.2em;
 	}
 
-	// Horizontal strip holding one room per route, side by side. App pans this in
-	// lockstep with the 3D world offset so it reads as one continuous space.
-	#strip {
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	b {
+		color: black;
+		font-weight: 700;
+	}
+
+	a {
+		color: black;
+		font-weight: 400;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		transition: color 0.35s;
+	}
+
+	a:hover {
+		color: rgba(0, 0, 0, 0.55);
+	}
+}
+
+.works {
+	font-family: $main-font;
+	color: $text-fg;
+}
+
+.works-heading {
+	margin: 0 0 1.8rem;
+	font-size: $text-base;
+	font-weight: 400;
+	color: black;
+}
+
+.project-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1.6rem;
+}
+
+.project-item {
+	margin: 0;
+}
+
+.project-trigger {
+	display: flex;
+	align-items: baseline;
+	gap: 0.55rem;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-family: $main-font;
+	font-size: $text-base;
+	font-weight: 400;
+	color: black;
+	text-align: left;
+	cursor: pointer;
+	transition: color 0.35s;
+}
+
+.project-trigger:hover,
+.project-trigger:focus-visible,
+.project-trigger.is-active,
+.project-trigger.is-preview {
+	color: rgba(0, 0, 0, 0.55);
+	outline: none;
+}
+
+.project-index {
+	flex: 0 0 auto;
+	opacity: 0.7;
+}
+
+.project-title {
+	flex: 1 1 auto;
+}
+
+.project-meta {
+	margin: 0.7rem 0 0 2.6rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.45rem;
+	font-size: $text-sm;
+	line-height: 1.5;
+	color: $text-fg;
+}
+
+.project-meta[hidden] {
+	display: none !important;
+}
+
+.meta-row {
+	display: grid;
+	grid-template-columns: 4.2rem 1fr;
+	gap: 0.6rem;
+	align-items: start;
+}
+
+.meta-label {
+	color: black;
+	opacity: 0.75;
+}
+
+.meta-value a {
+	color: black;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	margin-right: 0.8rem;
+}
+
+.meta-value a:hover {
+	color: rgba(0, 0, 0, 0.55);
+}
+
+.works-more {
+	margin: 2.2rem 0 0;
+	font-size: $text-base;
+
+	a {
+		color: black;
+		text-decoration: none;
+		transition: color 0.35s;
+	}
+
+	a:hover {
+		color: rgba(0, 0, 0, 0.55);
+	}
+}
+
+.project-thumb {
+	display: none;
+}
+
+// Left identity rail
+#ui {
+	z-index: 1000;
+	position: absolute;
+	left: 2.2vw;
+	top: 5vh;
+	pointer-events: none;
+}
+
+#identity {
+	font-family: $main-font;
+	font-size: $text-sm;
+	font-weight: 400;
+	line-height: 1.55;
+	color: $text-fg;
+	pointer-events: none;
+
+	.identity-mark {
+		margin: 0 0 1.1rem;
+		color: black;
+	}
+
+	.identity-ga p {
+		margin: 0;
+		white-space: nowrap;
+	}
+
+	.ga-label {
+		display: inline-block;
+		min-width: 4.2rem;
+		color: black;
+	}
+}
+
+#contact {
+	z-index: 1000;
+	position: absolute;
+	left: 2.2vw;
+	bottom: 3vh;
+	text-align: left;
+
+	#links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
 		display: flex;
-		flex-direction: row;
-		width: 200vw;
-		height: 100%;
-		will-change: transform;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	a {
+		font-family: $main-font;
+		font-size: $text-sm;
+		font-weight: 400;
+		color: black;
+		text-decoration: none;
+		transition: color 0.35s;
+	}
+
+	a:hover {
+		color: rgba(0, 0, 0, 0.55);
+	}
+}
+
+#contact-info {
+	display: none;
+}
+
+.warning {
+	display: none;
+}
+
+@media all and (max-width: 600px) {
+	body {
+		overflow: auto;
+	}
+
+	#terminal {
+		position: relative;
+		width: 100%;
+		height: auto;
+		min-height: 100vh;
+		overflow: visible;
+		pointer-events: auto;
+	}
+
+	#strip {
+		width: 100vw;
+		flex-direction: column;
 	}
 
 	.room {
-		position: relative;
-		flex: 0 0 100vw;
+		flex: none;
 		width: 100vw;
-		height: 100%;
-
-		// The copy column, sitting clear of the left nav rail (#ui at 2vw).
-		// `display: block` overrides the global `main { display: contents }`, which
-		// would otherwise drop main's box and let the copy span the whole room.
-		> main {
-			display: block;
-			position: absolute;
-			top: 5vh;
-			left: 8vw;
-			width: 600px;
-			max-width: 80vw;
-		}
-
-		// Work view spans the room so the title row can right-align over the plane
-		// while the description column stays at its own width on the left.
-		> main#work {
-			width: 84vw;
-			max-width: 84vw;
-		}
+		min-height: 100vh;
+		pointer-events: auto;
 	}
 
-	.warning{
-		display:none ;
-	}
-
-	#content {
-
-		position: absolute;
+	.room > main#home {
+		position: relative;
 		width: 100%;
-		font-family: $main-font;
-		font-size: 1.5rem;
-		color: #3d3d3d;
-		// Extra top room clears the MSDF heading; no left padding so the text starts
-		// flush at the column edge (aligned with the nav menu).
-		padding: 7vh 2.3rem 2.3rem 0;
-
-		b {
-			color: black;
-		}
-
-		a {
-			color: black;
-			text-decoration: underline;
-			text-underline-offset: 3px;
-			transition: 0.4s;
-		}
-
-		a:hover {
-			color: rgba($color: #000000, $alpha: 0.55);
-		}
+		height: auto;
+		min-height: 100vh;
+		padding: 7.5rem 1.4rem 8rem;
+		overflow: visible;
 	}
 
-	#sites {
-		text-align: left;
-
-		ul {
-			list-style-type: none;
-			padding: 0.3rem;
-		}
-
-		a {
-			display: flex;
-			text-decoration: none;
-			padding: 5px;
-			width: fit-content;
-		}
-
-		span {
-			&first-child {
-				margin: 3px;
-				padding: 2px;
-			}
-
-			&:nth-child(2) {
-				padding-left: 2px;
-				flex-grow: 1;
-			}
-		}
-
-		a {
-			color: black;
-		}
-
-		a:hover {
-			background-color: rgba($color: #000000, $alpha: 1);
-			text-decoration: none;
-			color: rgba($color: #ffffff, $alpha: 1);
-		}
-
-		#links {
-			a:hover {
-
-				text-decoration: none;
-				background-color: transparent;
-
-			}
-		}
+	.home-scroll {
+		gap: 3rem;
 	}
 
-	#links {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: flex-start;
-
-		img {
-			padding: 0.9rem;
-		}
-
-	}
-
-	// Work view: project titles sit in a row at the top, now right-aligned so the
-	// list sits on the right (over the image side) instead of the left.
-	#ex {
-		font-family: $main-font;
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: flex-end;
-		gap: 1.4rem;
+	// Show inline thumbs on mobile (WebGL plane is hidden).
+	.project-item.is-open .project-thumb,
+	.project-item.is-active .project-thumb {
+		display: block;
 		width: 100%;
-
-		h1 {
-			margin: 0;
-			font-size: 1rem;
-			font-weight: 600;
-		}
-
-		a {
-			display: inline-block;
-			color: black;
-			text-decoration: none;
-			cursor: pointer;
-			background:linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-			transition: 0.6s;
-		}
-
-		a.item--current {
-			color: rgba($color: #000000, $alpha: 0.6);
-			--d: 100%;
-		}
-
-		a:hover {
-			color: rgba($color: #000000, $alpha: 0.6);
-			--d: 100%;
-		}
+		height: auto;
+		margin: 0.8rem 0 0.4rem;
+		filter: contrast(0.95);
 	}
 
-	// Left description column, styled like the About copy.
-	.infoFile{
-		font-family: $main-font;
-		font-size: 1.4rem;
-		width: 40vw;
-		margin-top: 9vh;
-		color: #3d3d3d;
-		display:block;
-
-		.info{
-			display: none;
-		}
-
-		.show__info{
-			display: block;
-		}
-
-		b {
-			color: black;
-		}
-
-		a {
-			color: black;
-			text-decoration: underline;
-			text-underline-offset: 3px;
-			transition: 0.4s;
-		}
-
-		a:hover {
-			color: rgba($color: #000000, $alpha: 0.55);
-		}
-
-		.project-links {
-			margin-top: 1.4rem;
-			display: flex;
-			flex-direction: row;
-			flex-wrap: wrap;
-			gap: 0.6rem 1.2rem;
-			font-size: 1rem;
-		}
+	.project-meta {
+		margin-left: 0;
 	}
 
 	#ui {
-		z-index: 1000;
-		position: absolute;
-		left: 2vw;
-		top: 50%;
-		transform: translateY(-50%);
+		left: 1.4rem;
+		top: 1.2rem;
+		right: 1.4rem;
+	}
+
+	#identity {
+		.identity-ga {
+			display: none;
+		}
 	}
 
 	#contact {
-		z-index: 1000;
-		position: absolute;
-		text-align: center;
-		left: 2vw;
-		bottom: 2vh;
+		left: 50%;
+		right: auto;
+		bottom: 0;
+		padding: 0.7rem 1.6rem;
+		background: rgba(255, 255, 255, 0.72);
+		backdrop-filter: blur(6px);
+		border-radius: 0.6rem 0.6rem 0 0;
+		opacity: 0;
+		pointer-events: none;
+		transform: translateX(-50%) translateY(120%);
+		transition: transform 0.45s ease, opacity 0.45s ease;
 
 		#links {
-			padding: 0px;
-			margin: 0px;
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-		}
-
-		a {
-			padding: -0.4rem;
-			background:
-				linear-gradient(rgba($color: #000000, $alpha: 1) 0 0) 0 100% /var(--d, 0) 1px no-repeat;
-			transition: 0.6s;
-		}
-
-		a:hover {
-			filter: brightness(0.25);
-			color: black;
-			text-decoration: none;
-			--d: 100%;
-		}
-
-		img {
-			width: 3.1rem;
-		}
-	}
-
-	#contact-info {
-		position: fixed;
-		right: 2vw;
-		bottom: 2vh;
-		z-index: 1001;
-		font-family: $main-font;
-		font-size: 1.2rem;
-		color: #3d3d3d;
-		text-align: right;
-
-		b {
-			color: black;
-		}
-	}
-
-	// Mobile (iPhone 13 mini / 375px and up, portrait): the desktop horizontal
-	// world-pan is bypassed (see app.js / Router.js). Navigation shows one room at a
-	// time and each room scrolls vertically over the live WebGL circuit background.
-	@media all and (max-width: 600px) {
-
-		// The "Full experience on Desktop" notice is no longer needed: this is a
-		// first-class mobile layout now.
-		.warning {
-			display: none;
-		}
-
-		main {
-			overflow: hidden;
-		}
-
-		#experiment {
-			display: none;
-		}
-
-		#terminal {
-			width: 100%;
-			max-width: 100%;
-			top: 0;
-			left: 0;
-		}
-
-		// No horizontal strip: stack to a single column and show only the active room
-		// (app.js no longer applies the translateX pan on mobile).
-		#strip {
-			width: 100vw;
-			flex-direction: column;
-			transform: none;
-		}
-
-		.room {
-			flex: none;
-			width: 100vw;
-			min-height: 100vh;
-			display: none;
-		}
-
-		.room--current {
-			display: block;
-		}
-
-		// Each room's content is the scroll container, full height, clearing the
-		// fixed top nav and the fixed bottom social bar.
-		.room > main,
-		.room > main#work {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			max-width: 100%;
-			height: 100vh;
-			overflow-y: auto;
-			-webkit-overflow-scrolling: touch;
-			scroll-behavior: smooth;
-			padding: 4.5rem 0 8rem;
-		}
-
-		// About copy scrolls directly over the circuits (no opaque background).
-		#content {
-			position: static;
-			font-family: $main-font;
-			font-size: 1.1rem;
-			width: 100%;
-			color: #3d3d3d;
-			padding: 0 1.4rem;
-
-			b {
-				color: black;
-			}
-		}
-
-		// Work: projects stacked image-then-text, one under another.
-		#work {
-			.work-list {
-				display: flex;
-				flex-direction: column;
-				gap: 2.5rem;
-				padding: 0 1.4rem;
-			}
-
-			.project-card {
-				display: flex;
-				flex-direction: column;
-
-				img {
-					width: 100%;
-					height: auto;
-					display: block;
-				}
-
-				h2 {
-					font-family: $main-font;
-					font-size: 1.3rem;
-					font-weight: 600;
-					margin: 0.9rem 0 0.4rem;
-					color: black;
-				}
-
-				p {
-					font-family: $main-font;
-					font-size: 1.05rem;
-					color: #3d3d3d;
-					margin: 0;
-				}
-
-				b {
-					color: black;
-				}
-
-				a {
-					color: black;
-					text-decoration: underline;
-					text-underline-offset: 3px;
-				}
-
-				.project-links {
-					margin-top: 0.9rem;
-					display: flex;
-					flex-direction: row;
-					flex-wrap: wrap;
-					gap: 0.5rem 1.1rem;
-					font-size: 0.95rem;
-				}
-			}
-		}
-
-		// Top-center nav, pinned while content scrolls.
-		#ui {
-			left: 50%;
-			top: 0;
-			transform: translateX(-50%);
-			padding: 0.7rem 1.2rem;
-			background: rgba(255, 255, 255, 0.7);
-			backdrop-filter: blur(6px);
-			border-radius: 0 0 0.6rem 0.6rem;
-		}
-
-		#nav {
 			flex-direction: row;
-			gap: 1.6rem;
-		}
-
-		// Social links: styled like the top nav (translucent blurred pill) but pinned
-		// to the bottom center, and only revealed once the page is scrolled to its end
-		// (see main.js). Hidden + slid down by default.
-		#contact {
-			display: block;
-			left: 50%;
-			right: auto;
-			bottom: 0;
-			padding: 0.7rem 1.6rem;
-			background: rgba(255, 255, 255, 0.7);
-			backdrop-filter: blur(6px);
-			border-radius: 0.6rem 0.6rem 0 0;
-			opacity: 0;
-			pointer-events: none;
-			transform: translateX(-50%) translateY(120%);
-			transition: transform 0.45s ease, opacity 0.45s ease;
-
-			#links {
-				flex-direction: row;
-				gap: 1.1rem;
-			}
-
-			// ~2x the previous icon size.
-			img {
-				width: 2.8rem;
-			}
-		}
-
-		#contact.contact--visible {
-			opacity: 1;
-			pointer-events: auto;
-			transform: translateX(-50%) translateY(0);
-		}
-
-		// Avoid clutter: the bottom social bar is the contact affordance on mobile.
-		#contact-info {
-			display: none;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 0.8rem 1.2rem;
 		}
 	}
+
+	#contact.contact--visible {
+		opacity: 1;
+		pointer-events: auto;
+		transform: translateX(-50%) translateY(0);
+	}
+}

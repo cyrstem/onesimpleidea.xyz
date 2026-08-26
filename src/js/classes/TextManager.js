@@ -32,7 +32,7 @@ const fragment = /* glsl */ `
 
         if (alpha < 0.01) discard;
 
-        gl_FragColor.rgb = vec3(0.0);
+        gl_FragColor.rgb = vec3(0.27);
         gl_FragColor.a = alpha;
     }
 `;
@@ -57,15 +57,15 @@ const fragment300 = /* glsl */ `#version 300 es
     out vec4 FragColor;
 ` + fragment;
 
-const FONT_JSON = 'fonts/Rajdhani-SemiBold.json';
-const FONT_PNG = 'fonts/Rajdhani-SemiBold.png';
+const FONT_JSON = 'fonts/RobotoMono-Regular.json';
+const FONT_PNG = 'fonts/RobotoMono-Regular.png';
 
 // Subtle random yaw so each heading leans slightly left or right in perspective.
 const TILT_YAW = 0.1;
 const TILT_PITCH = 0.035;
 
 export default class TextManager {
-    constructor(gl, { aboutText = 'about me', aspect = 1, size = 0.36 } = {}) {
+    constructor(gl, { aboutText = 'about me', aspect = 1, size = 0.30 } = {}) {
         this.gl = gl;
         this.size = size;
         this.scene = new Transform();
