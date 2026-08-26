@@ -20,9 +20,9 @@ export { PHENOTYPE_BOUNDS, clampPhenotype, decodeSdfGenome };
 // Ambient SDF Mandelbulb background. Visual params flow through setPhenotype()
 // so a future GA can drive the look without touching the render pipeline:
 //   decode(sdfGenome) → mandelbulb.setPhenotype(params)
-// Starts hidden (uReveal = 0); App calls reveal() once the live GA crosses
-// the unlock generation threshold. Each circuit-GA generation also breeds the
-// SDF genome (mutate / occasional crossover) so the bulb drifts with evolution.
+// App calls reveal() on boot so the bulb is visible immediately. Each
+// circuit-GA generation also breeds the SDF genome (mutate / occasional
+// crossover) so the bulb drifts with evolution.
 export default class MandelbulbManager {
     constructor(gl, { isMobile = false, seed = (Date.now() & 0xffffffff) } = {}) {
         this.gl = gl;
@@ -104,15 +104,16 @@ export default class MandelbulbManager {
         this.program = program;
 
         this.applyQualityProfile();
+        this.applyViewProfile();
         this._pushUniforms({ animate: false });
     }
 
-    // Fade the wireframe in once (idempotent). Used when GA generation unlocks.
+    // Show the wireframe (idempotent). duration 0 snaps on for first paint.
     reveal({ duration = 2.4, reducedMotion = false } = {}) {
         if (this.unlocked) return;
         this.unlocked = true;
         gsap.killTweensOf(this.uReveal);
-        if (reducedMotion || this._reducedMotion) {
+        if (reducedMotion || this._reducedMotion || duration <= 0) {
             this.uReveal.value = 1;
             return;
         }
@@ -228,9 +229,20 @@ export default class MandelbulbManager {
         this.uIterations.value = iters;
     }
 
+    applyViewProfile() {
+        if (this.isMobile) {
+            this.uViewOffset.value = [-0.12, 0.16];
+            this.uViewZoom.value = 2.15;
+        } else {
+            this.uViewOffset.value = [-0.52, 0.04];
+            this.uViewZoom.value = 2.65;
+        }
+    }
+
     setMobile(isMobile) {
         this.isMobile = !!isMobile;
         this.applyQualityProfile();
+        this.applyViewProfile();
     }
 
     _killPhenotypeTweens() {

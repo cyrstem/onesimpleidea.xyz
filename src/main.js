@@ -6,7 +6,7 @@ import UI from './js/UI';
 import Router from './js/router/Router';
 import Home from './js/pages/Portafolio';
 
-window.onload = () => {
+const boot = () => {
 	const bus = new EventBus();
 
 	new UI(bus);
@@ -51,3 +51,9 @@ window.onload = () => {
 
 	simpleSign();
 };
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', boot);
+} else {
+	boot();
+}

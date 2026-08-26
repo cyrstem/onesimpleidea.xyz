@@ -286,6 +286,13 @@
 		overflow: auto;
 	}
 
+	#container {
+		position: fixed;
+		inset: 0;
+		width: 100vw;
+		height: 100vh;
+	}
+
 	#terminal {
 		position: relative;
 		width: 100%;

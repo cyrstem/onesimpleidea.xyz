@@ -16,14 +16,13 @@ export default class App {
         this.container = stage.dom;
         this._raf = null;
 
-        // Idle director: sparse ambient 3D forms only.
+        // Idle director: sparse ambient 3D forms. First figure is spawned in
+        // init() so the field is visible on the first frame, including mobile.
         this._spawnEvery = 3.2;
         this._spawnTimer = 0;
         this._maxForms = 2;
         this._lastTime = undefined;
         this._idle = true;
-        // Wireframe Mandelbulb unlocks once the live circuit GA reaches this gen.
-        this._sdfUnlockGeneration = 20;
 
         this.init();
         this.setupEvents();
@@ -62,12 +61,15 @@ export default class App {
             isMobile: this.isMobile
         });
         this.mandelbulb.resize(this.size.width, this.size.height);
+        this.mandelbulb.reveal({ duration: 0 });
 
         this.forms3D = new Forms3DManager(this.gl, {
             aspect: this.size.width / this.size.height,
-            bus: this.bus
+            bus: this.bus,
+            isMobile: this.isMobile
         });
         this.forms3D.loadLibrary();
+        this.forms3D.spawnForm({ immediate: true });
 
         // MSDF headings are retired in favour of DOM typography; keep the
         // manager constructed so dispose paths stay simple, but never show it.
@@ -118,12 +120,7 @@ export default class App {
     }
 
     handleGaUpdate({ generation = 0 } = {}) {
-        const gen = generation | 0;
-        // Breed the SDF genome every circuit-GA generation (even before unlock).
-        this.mandelbulb.syncGeneration(gen);
-        if (!this.mandelbulb.unlocked && gen >= this._sdfUnlockGeneration) {
-            this.mandelbulb.reveal();
-        }
+        this.mandelbulb.syncGeneration(generation | 0);
     }
 
     handleRouteChange() {
@@ -179,7 +176,7 @@ export default class App {
     }
 
     director(dt) {
-        if (!this._idle || this.isMobile) return;
+        if (!this._idle) return;
         this._spawnTimer += dt;
         if (this._spawnTimer < this._spawnEvery) return;
         this._spawnTimer = 0;
@@ -192,6 +189,7 @@ export default class App {
         this.isMobile = window.matchMedia('(max-width: 600px)').matches;
         this.plane.uAlpha.value = this.isMobile ? 0 : 1;
         this.mandelbulb.setMobile(this.isMobile);
+        this.forms3D.setMobile(this.isMobile);
 
         this.size = this.measure();
         this.renderer.setSize(this.size.width, this.size.height);
@@ -205,7 +203,7 @@ export default class App {
     }
 
     start() {
-        const loop = (ms) => {
+        const tick = (ms) => {
             const t = ms * 0.001;
             const dt = this._lastTime === undefined ? 0 : t - this._lastTime;
             this._lastTime = t;
@@ -228,9 +226,14 @@ export default class App {
             // TextManager intentionally skipped (DOM typography only).
 
             this.post.render(this.sceneRT.texture);
+        };
 
+        const loop = (ms) => {
+            tick(ms);
             this._raf = requestAnimationFrame(loop);
         };
+        // Paint once now so the boot figure is on screen before the first rAF.
+        tick(typeof performance !== 'undefined' ? performance.now() : 0);
         this._raf = requestAnimationFrame(loop);
     }
 

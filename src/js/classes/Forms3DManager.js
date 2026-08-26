@@ -24,9 +24,10 @@ const UNIT_REGION = { x0: 0, y0: 0, x1: 1, y1: 1 };
 // An orthographic camera is required: the illusion relies on the projected beam
 // endpoints coinciding, which perspective foreshortening would pull apart.
 export default class Forms3DManager {
-    constructor(gl, { aspect = 1, bus = null } = {}) {
+    constructor(gl, { aspect = 1, bus = null, isMobile = false } = {}) {
         this.gl = gl;
         this.bus = bus;
+        this.isMobile = !!isMobile;
         this.scene = new Transform();
 
         this.viewSize = 1.2; // half-height of the orthographic frustum (world units)
@@ -166,7 +167,7 @@ export default class Forms3DManager {
         });
     }
 
-    spawnForm() {
+    spawnForm({ immediate = false } = {}) {
         const figure = buildForm();
 
         const segs = figure.segs.map((s) => ({ a: s.a, b: s.b, r: s.r }));
@@ -177,7 +178,7 @@ export default class Forms3DManager {
 
         const geometry = this.buildGeometry(segs, figure.scale);
         const uFade = { value: 1 };
-        const uProgress = { value: 0 };
+        const uProgress = { value: immediate ? 1 : 0 };
 
         const program = new Program(this.gl, {
             vertex,
@@ -190,12 +191,30 @@ export default class Forms3DManager {
 
         const mesh = new Mesh(this.gl, { geometry, program, mode: this.gl.LINES });
         mesh.frustumCulled = false;
-        // Keep figures behind the center-left preview, inset from edges.
         const hw = this.viewSize * this.aspect;
-        mesh.position.set(rand(-0.42 * hw, -0.05 * hw), rand(-0.35, 0.4) * this.viewSize, 0);
-        // Start tilted: impossible figures ease to lockRot; platonic solids spin.
-        mesh.rotation.set(rand(-0.9, 0.9), rand(-1.3, 1.3), rand(-0.5, 0.5));
-        mesh.scale.set(0.001);
+        // Desktop: sit behind the center-left preview. Mobile: more of the
+        // viewport is free, so keep figures toward the middle of the screen.
+        if (this.isMobile) {
+            mesh.position.set(rand(-0.22 * hw, 0.28 * hw), rand(-0.2, 0.38) * this.viewSize, 0);
+        } else {
+            mesh.position.set(rand(-0.42 * hw, -0.05 * hw), rand(-0.35, 0.4) * this.viewSize, 0);
+        }
+        const target = rand(0.62, 0.82);
+        const lock = figure.lockRot || { x: 0, y: 0, z: 0 };
+        const free = !!figure.free;
+        // Boot spawn is already drawn and sized so the first paint isn't empty.
+        // Later idle spawns still grow / populate in.
+        if (immediate) {
+            mesh.rotation.set(
+                free ? rand(-0.9, 0.9) : lock.x,
+                free ? rand(-1.3, 1.3) : lock.y,
+                free ? rand(-0.5, 0.5) : lock.z
+            );
+            mesh.scale.set(target);
+        } else {
+            mesh.rotation.set(rand(-0.9, 0.9), rand(-1.3, 1.3), rand(-0.5, 0.5));
+            mesh.scale.set(0.001);
+        }
         mesh.setParent(this.scene);
 
         this.lastCenter = this.projectToViewport(mesh.position);
@@ -213,9 +232,6 @@ export default class Forms3DManager {
         dotMesh.frustumCulled = false;
         dotMesh.setParent(mesh);
 
-        const target = rand(0.62, 0.82);
-        const lock = figure.lockRot || { x: 0, y: 0, z: 0 };
-        const free = !!figure.free;
         const form = {
             mesh, geometry, program, dotMesh, dotGeometry, dotProgram, uFade, uProgress,
             free,
@@ -225,14 +241,18 @@ export default class Forms3DManager {
         this.forms.push(form);
 
         const tl = gsap.timeline({ onComplete: () => this.removeForm(form) });
-        tl.to(mesh.scale, { x: target, y: target, z: target, duration: 0.8, ease: 'back.out(1.5)' }, 0);
-        // Impossible figures rotate ("lock") into alignment while populating;
-        // platonic solids skip the lock tween and free-spin in update() instead.
-        if (!free) {
-            tl.to(mesh.rotation, { x: lock.x, y: lock.y, z: lock.z, duration: 2.2, ease: 'power3.inOut' }, 0);
+        if (!immediate) {
+            tl.to(mesh.scale, { x: target, y: target, z: target, duration: 0.8, ease: 'back.out(1.5)' }, 0);
+            // Impossible figures rotate ("lock") into alignment while populating;
+            // platonic solids skip the lock tween and free-spin in update() instead.
+            if (!free) {
+                tl.to(mesh.rotation, { x: lock.x, y: lock.y, z: lock.z, duration: 2.2, ease: 'power3.inOut' }, 0);
+            }
+            tl.to(uProgress, { value: 1, duration: 1.5, ease: 'power1.inOut' }, 0.2);
+            tl.to(uFade, { value: 0, duration: 0.8, ease: 'power2.in' }, '+=1.3');
+        } else {
+            tl.to(uFade, { value: 0, duration: 0.8, ease: 'power2.in' }, 2.4);
         }
-        tl.to(uProgress, { value: 1, duration: 1.5, ease: 'power1.inOut' }, 0.2);
-        tl.to(uFade, { value: 0, duration: 0.8, ease: 'power2.in' }, '+=1.3');
         form.timeline = tl;
 
         this.publishGa();
@@ -263,6 +283,10 @@ export default class Forms3DManager {
     // width per room so the forms slide one screen to the left as you advance.
     panTo(world) {
         this.camera.position.x = world * (2 * this.viewSize * this.aspect);
+    }
+
+    setMobile(isMobile) {
+        this.isMobile = !!isMobile;
     }
 
     // Impossible figures' rotation is owned by their lock timeline; platonic
