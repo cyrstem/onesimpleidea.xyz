@@ -4,10 +4,12 @@ import Forms3DManager from './classes/Forms3DManager';
 import TextManager from './classes/TextManager';
 import PlaneManager from './classes/PlaneManager';
 import PostFX from './classes/PostFX';
+import MandelbulbManager from './classes/MandelbulbManager';
 
-// Lightweight OGL app for the single-page portfolio. 3D impossible figures stay
-// as a subdued background. 2D circuits / connectors are intentionally disabled
-// (CircuitManager is left in the codebase for later restoration).
+// Lightweight OGL app for the single-page portfolio. A raymarched Mandelbulb
+// fills the ambient background; 3D impossible figures sit on top. 2D circuits /
+// connectors are intentionally disabled (CircuitManager is left in the codebase
+// for later restoration).
 export default class App {
     constructor(stage, bus) {
         this.bus = bus;
@@ -20,6 +22,8 @@ export default class App {
         this._maxForms = 2;
         this._lastTime = undefined;
         this._idle = true;
+        // Wireframe Mandelbulb unlocks once the live circuit GA reaches this gen.
+        this._sdfUnlockGeneration = 20;
 
         this.init();
         this.setupEvents();
@@ -52,6 +56,12 @@ export default class App {
             minFilter: this.gl.LINEAR,
             magFilter: this.gl.LINEAR
         });
+
+        // Ambient SDF Mandelbulb — phenotype API is GA-ready via setPhenotype().
+        this.mandelbulb = new MandelbulbManager(this.gl, {
+            isMobile: this.isMobile
+        });
+        this.mandelbulb.resize(this.size.width, this.size.height);
 
         this.forms3D = new Forms3DManager(this.gl, {
             aspect: this.size.width / this.size.height,
@@ -98,11 +108,22 @@ export default class App {
         this._onPortfolioActive = (detail) => this.handlePortfolioShow(detail);
         this._onPortfolioClear = () => this.handlePortfolioClear();
         this._onPortfolioPreload = (detail) => this.handlePortfolioPreload(detail);
+        this._onGaUpdate = (detail) => this.handleGaUpdate(detail);
 
         this.bus.on('route:change', this._onRouteChange);
         this.bus.on('portfolio:active', this._onPortfolioActive);
         this.bus.on('portfolio:clear', this._onPortfolioClear);
         this.bus.on('portfolio:preload', this._onPortfolioPreload);
+        this.bus.on('ga:update', this._onGaUpdate);
+    }
+
+    handleGaUpdate({ generation = 0 } = {}) {
+        const gen = generation | 0;
+        // Breed the SDF genome every circuit-GA generation (even before unlock).
+        this.mandelbulb.syncGeneration(gen);
+        if (!this.mandelbulb.unlocked && gen >= this._sdfUnlockGeneration) {
+            this.mandelbulb.reveal();
+        }
     }
 
     handleRouteChange() {
@@ -170,10 +191,12 @@ export default class App {
     resize() {
         this.isMobile = window.matchMedia('(max-width: 600px)').matches;
         this.plane.uAlpha.value = this.isMobile ? 0 : 1;
+        this.mandelbulb.setMobile(this.isMobile);
 
         this.size = this.measure();
         this.renderer.setSize(this.size.width, this.size.height);
         this.sceneRT.setSize(this.size.width * this.dpr, this.size.height * this.dpr);
+        this.mandelbulb.resize(this.size.width, this.size.height);
         this.forms3D.resize(this.size.width, this.size.height);
         this.text.resize(this.size.width, this.size.height);
         this.plane.resize(this.size.width, this.size.height);
@@ -188,15 +211,18 @@ export default class App {
             this._lastTime = t;
 
             this.director(dt);
+            this.mandelbulb.update(t);
             this.forms3D.update(t);
             this.applyWorld();
             this.applyShake(t);
 
+            // Layer order: Mandelbulb → wireframe forms → project plane → post.
+            this.mandelbulb.render(this.sceneRT, { clear: true });
             this.renderer.render({
                 scene: this.forms3D.scene,
                 camera: this.forms3D.camera,
                 target: this.sceneRT,
-                clear: true
+                clear: false
             });
             this.plane.render(this.sceneRT);
             // TextManager intentionally skipped (DOM typography only).
@@ -222,8 +248,10 @@ export default class App {
             this.bus.off('portfolio:active', this._onPortfolioActive);
             this.bus.off('portfolio:clear', this._onPortfolioClear);
             this.bus.off('portfolio:preload', this._onPortfolioPreload);
+            this.bus.off('ga:update', this._onGaUpdate);
         }
 
+        this.mandelbulb.dispose();
         this.forms3D.dispose();
         this.text.dispose();
         this.plane.dispose();
