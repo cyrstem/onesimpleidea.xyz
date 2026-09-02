@@ -211,6 +211,7 @@ export default class App {
             this.director(dt);
             this.mandelbulb.update(t);
             this.forms3D.update(t);
+            this.post.update(dt);
             this.applyWorld();
             this.applyShake(t);
 
