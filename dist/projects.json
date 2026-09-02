@@ -8,7 +8,8 @@
         "with": "Parag K. Mital / The Garden in the Machine",
         "feat": "LACMA · Serendipity Arts Festival",
         "links": [
-            { "label": "The Game of Whispers", "url": "https://pkmital.com/home/works/the-game-of-whispers/" }
+            { "label": "The Game of Whispers", "url": "https://pkmital.com/home/works/the-game-of-whispers/" },
+            { "label": "NeurIPS 2025 paper", "url": "https://openreview.net/forum?id=pKXJ0wQ3Vn" }
         ]
     },
     {
