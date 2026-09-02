@@ -1,5 +1,17 @@
 [
     {
+        "id": "the-game-of-whispers",
+        "title": "The Game of Whispers",
+        "image": "whispers.jpg",
+        "description": "Five-channel audiovisual installation and video game reimagining Mughal miniature painting through AI, set in a rebuilt version of Delhi's Red Fort where LLM-driven NPCs spread rumors and misinformation. Commissioned by LACMA and premiered at the Serendipity Arts Festival in Panjim, Goa. I worked on the Unreal Engine side — world building and level assembly of the fort, audio, character animation, C++ systems and custom tooling for the autonomous characters.",
+        "year": "2024 — 2025",
+        "with": "Parag K. Mital / The Garden in the Machine",
+        "feat": "LACMA · Serendipity Arts Festival",
+        "links": [
+            { "label": "The Game of Whispers", "url": "https://pkmital.com/home/works/the-game-of-whispers/" }
+        ]
+    },
+    {
         "id": "soundtrack-of-my-life",
         "title": "Soundtrack of My Life",
         "image": "insta-4.png",
